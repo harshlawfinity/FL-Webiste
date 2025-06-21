@@ -1,26 +1,26 @@
-"use client";
+export { default } from "@/components/pages/AboutPage";
 
- 
-import AboutHero from "../../components/AboutHero.jsx";
-import NewAbout from "../../components/NewAbout.jsx";
-import WhyChooseUs from "../../components/WhyChooseUs.jsx";
-import OurStory from "./OurStory.jsx";
-import HowItWorks from "../../components/HowItWorks.jsx";
-import FinalCTA from "../../components/FinalCTA.jsx";
-
-const AboutUS = () => {
-  return (
-    <>
-     
-
-      <AboutHero />
-      <NewAbout />
-      <WhyChooseUs />
-      <OurStory />
-      <HowItWorks />
-      <FinalCTA />
-    </>
-  );
+export const metadata = {
+  title: "About Lawfinity India Private Limited",
+  description:
+    "Learn about Lawfinity India Private Limited, the team behind FactoryLicence.in. Trusted experts in factory licensing, compliance, and legal consultancy in India.",
+  openGraph: {
+    title: "About Lawfinity India Private Limited",
+    description:
+      "Learn about Lawfinity India Private Limited, the team behind FactoryLicence.in. Trusted experts in factory licensing, compliance, and legal consultancy in India.",
+    url: "https://factorylicence.in/about",
+    type: "website",
+    siteName: "FactoryLicence.in",
+    images: [
+      {
+        url: "https://factorylicence.in/assets/about-lawfinity-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "About Lawfinity India Private Limited",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://factorylicence.in/about",
+  },
 };
-
-export default AboutUS;
