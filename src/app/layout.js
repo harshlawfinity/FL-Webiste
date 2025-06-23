@@ -14,6 +14,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+          <link rel="icon" type="image/png" href="../../public/fav2.png" />
+
         {/* Meta Pixel Script */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`

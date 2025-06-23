@@ -98,7 +98,7 @@ const Nav = () => {
         {/* Mobile Toggle */}
         <div className="md:hidden">
           <button onClick={toggleMenu} aria-label="Toggle Menu" className=" text-black font-semibold">
-            {isOpen ? <FiX size={26} /> : <FiMenu size={26} />}
+            {isOpen ? <FiX size={26} /> : <FiMenu size={26}  className="text-black"/>}
           </button>
         </div>
       </div>
@@ -122,7 +122,7 @@ const Nav = () => {
             <div className="text-xl font-bold text-purple-700">Factory Licence</div>
           </Link>
           <button onClick={toggleMenu} aria-label="Close menu">
-            <FiX size={28} />
+            <FiX size={28} className="text-black" />
           </button>
         </div>
 
