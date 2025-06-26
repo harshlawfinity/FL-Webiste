@@ -8,19 +8,19 @@ const HeroFormModal = () => {
   const closeTimestampRef = useRef(null);
 
   // Show modal every 10 seconds unless it was closed recently
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const lastClosed = closeTimestampRef.current;
-  //     const now = Date.now();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const lastClosed = closeTimestampRef.current;
+      const now = Date.now();
 
-  //     // Reopen only if it was closed more than 60s ago
-  //     if (!lastClosed || now - lastClosed > 60000) {
-  //       setShowModal(true);
-  //     }
-  //   }, 10000); // check every 10s
+      // Reopen only if it was closed more than 60s ago
+      if (!lastClosed || now - lastClosed > 60000) {
+        setShowModal(true);
+      }
+    }, 10000); // check every 10s
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleClose = () => {
     setShowModal(false);
