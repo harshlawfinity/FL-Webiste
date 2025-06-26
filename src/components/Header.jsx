@@ -34,6 +34,40 @@ const Nav = () => {
         { name: "Uttar Pradesh", path: "/factory-licence-in-uttar-pradesh" },
       ],
     },
+
+    {
+      name: "Pollution NOC",
+      subNav: [
+        { name: "Delhi", path: "/pollution-noc-in-delhi" },
+        { name: "Haryana", path: "/pollution-noc-in-haryana" },
+        { name: "Uttar Pradesh", path: "/pollution-noc-in-uttar-pradesh" },
+      ],
+    },
+
+
+    {
+      name: "Fire NOC",
+      subNav: [
+        { name: "Delhi", path: "/fire-noc-in-delhi" },
+        { name: "Haryana", path: "/fire-noc-in-haryana" },
+        { name: "Uttar Pradesh", path: "/fire-noc-in-uttar-pradesh" },
+      ],
+    },
+
+    // {
+    //   name: "Pollution NOC",
+    //   subNav: [
+    //     { name: "Delhi", path: "https://delhi.pollutionnoc.factorylicence.in" },
+    //     {
+    //       name: "Haryana",
+    //       path: "https://haryana.pollutionnoc.factorylicence.in",
+    //     },
+    //     {
+    //       name: "Uttar Pradesh",
+    //       path: "https://uttarpradesh.pollutionnoc.factorylicence.in",
+    //     },
+    //   ],
+    // },
     { name: "About Us", path: "/about" },
     { name: "Contact Us", path: "/contact" },
     { name: "Payments", path: "/payments" },
@@ -47,7 +81,7 @@ const Nav = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex gap-8 text-sm font-medium">
+        <div className="hidden md:flex gap-6 text-sm font-medium">
           {navItems.map((item, i) => (
             <div
               key={i}
