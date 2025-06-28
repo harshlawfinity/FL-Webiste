@@ -153,6 +153,7 @@ const Page = () => {
       <FactoryLicenseGrid />
       <FactoryLicenseSection />
       <StatsSection />
+      
       <FeatureCard />
       <AssistanceSection />
       <TestimonialCarousel />

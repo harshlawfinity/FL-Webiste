@@ -123,10 +123,11 @@ const Nav = () => {
 
         {/* Desktop Button */}
         <div className="hidden md:flex items-center gap-3 text-black font-semibold">
-          <button className="border border-gray-400 px-4 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-gray-100 text-black font-semibold transition">
-            <PhoneCall size={18} />
-            +91 99107 74687
-          </button>
+<a href="tel:+919910774687" className="border border-gray-400 px-4 py-2 rounded-full text-xs md:text-sm flex items-center gap-2 hover:bg-gray-100 text-black font-semibold transition">
+  <PhoneCall size={18} />
+  +91 99107 74687
+</a>
+
         </div>
 
         {/* Mobile Toggle */}
@@ -196,13 +197,11 @@ const Nav = () => {
             </div>
           ))}
 
-          <button
-            className="mt-6 flex items-center gap-2 border border-black px-4 py-2 text-black font-semibold rounded-full text-black"
-            aria-label="Call us"
-          >
-            <PhoneCall size={20} />
-            +91 99107 74687
-          </button>
+         <a href="tel:+919910774687" className="border border-gray-400 px-4 py-2 rounded-full text-xs md:text-sm flex items-center gap-2 hover:bg-gray-100 text-black font-semibold transition">
+  <PhoneCall size={18} />
+  +91 99107 74687
+</a>
+
         </nav>
       </div>
     </nav>

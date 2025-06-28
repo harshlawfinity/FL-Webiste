@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-          <link rel="icon" type="image/png" href="../../public/fav2.png" />
+        <link rel="icon" type="image/png" href="../../public/fav2.png" />
 
         {/* Meta Pixel Script */}
         <Script id="meta-pixel" strategy="afterInteractive">
@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         {children}
-         <HeroFormModal />
+        <HeroFormModal />
         <Footer />
       </body>
     </html>
