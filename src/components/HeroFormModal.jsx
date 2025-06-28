@@ -17,7 +17,7 @@ const HeroFormModal = () => {
       if (!lastClosed || now - lastClosed > 60000) {
         setShowModal(true);
       }
-    }, 10000); // check every 10s
+    }, 20000); // check every 10s
 
     return () => clearInterval(interval);
   }, []);
