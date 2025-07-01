@@ -2,7 +2,15 @@
 
 import React from "react";
 import Link from "next/link";
-import { Mail, PhoneCall, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+import {
+  Mail,
+  PhoneCall,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
 import FL from "./FL2.jsx";
 
 export default function Footer() {
@@ -95,13 +103,25 @@ export default function Footer() {
 
         {/* Column 3 */}
         <div>
-          <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
-            Our Support
-          </h4>
-          <p className="text-purple-100 font-semibold text-2xl mb-3 flex gap-2 items-center">
-            <PhoneCall size={24} />
-            +91 99107 74687
-          </p>
+          <div>
+            <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
+              Our Support
+            </h4>
+            <p className="text-purple-100 font-semibold text-2xl mb-3 flex gap-2 items-center">
+              <PhoneCall size={24} />
+              +91 99107 74687
+            </p>
+          </div>
+
+          <div className="mt-8">
+            <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
+              Important Links
+            </h4>
+           <div className="flex gap-4">
+             <Link href='/contact' >Contact Us</Link >
+            <Link href="/payments" >Payments</Link>
+           </div>
+          </div>
         </div>
       </div>
 
