@@ -145,7 +145,7 @@ const UniversalNocFeeCalculator = () => {
         onClick={calculateFee}
         disabled={!isFormValid}
         className={`w-full py-3 rounded-xl font-semibold text-white 
-          ${isFormValid ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-300 cursor-not-allowed'}`}
+          ${isFormValid ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-600 cursor-not-allowed'}`}
       >
         Calculate Fee
       </button>
