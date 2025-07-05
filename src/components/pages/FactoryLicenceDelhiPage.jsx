@@ -31,6 +31,7 @@ import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionDelhi";
 import Image from "next/image";
 import Head from "next/head";
+import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -117,8 +118,10 @@ export default function FactoryLicenceDelhiPage() {
             </button>
           </div>
 
+
           {/* Right Video Section */}
           <div className="md:w-1/2 w-full">
+
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"

@@ -36,6 +36,8 @@ import AssistanceSection from "@/components/AssistanceSection";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import CallToActionSection from "@/components/CallToActionSection";
 import FaqSection from "@/components/FaqSection";
+import UniversalFeeCalculator from "@/components/UniversalFeeCalculator";
+
 
 const Page = () => {
   return (
@@ -150,7 +152,10 @@ const Page = () => {
 
       {/* Page Content */}
       <HeroSection />
+                  <UniversalFeeCalculator />
+
       <FactoryLicenseGrid />
+
       <FactoryLicenseSection />
       <StatsSection />
       

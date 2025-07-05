@@ -19,12 +19,13 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import FaqSectionPollutionDelhi from "@/components/FaqSectionPollutionDelhi";
-import img from '@/assets/pollution/delhi.png'
+import img from "@/assets/pollution/delhi.png";
 
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactForm from "@/components/ContactForm";
+import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 
 export default function PollutionNocLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -76,11 +77,14 @@ export default function PollutionNocLicenceDelhiPage() {
             </button>
           </div>
 
-           <div className="md:w-1/2 w-full">
+        
+
+          <div className="md:w-1/2 w-full">
+          
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -89,10 +93,11 @@ export default function PollutionNocLicenceDelhiPage() {
             </div>
           </div>
         </div>
-
-         
       </section>
 
+  <div className=" bg-zinc-1  md:py-10 flex items-center justify-center">
+            <PollutionFeeCalculatorDelhi />
+          </div>
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-14">
@@ -149,11 +154,34 @@ export default function PollutionNocLicenceDelhiPage() {
             }
           >
             <ul className="list-disc pl-6">
-             <li> Legal Compliance: Ensures that your business adheres to pollution control norms as prescribed by environmental authorities, avoiding legal penalties. </li>
-<li> Environmental Responsibility: Demonstrates your organization’s commitment to environmental protection and sustainable practices. </li>
-<li> Smooth Operations: Helps in uninterrupted operation of your unit without fear of closure or enforcement action. </li>
-<li> Credibility and Approvals: Required for applying for other licenses like factory license, fire NOC, building plan approvals and more. </li>
-<li> Eligibility for Tenders: Mandatory for participating in many government or private tenders. </li>
+              <li>
+                {" "}
+                Legal Compliance: Ensures that your business adheres to
+                pollution control norms as prescribed by environmental
+                authorities, avoiding legal penalties.{" "}
+              </li>
+              <li>
+                {" "}
+                Environmental Responsibility: Demonstrates your organization’s
+                commitment to environmental protection and sustainable
+                practices.{" "}
+              </li>
+              <li>
+                {" "}
+                Smooth Operations: Helps in uninterrupted operation of your unit
+                without fear of closure or enforcement action.{" "}
+              </li>
+              <li>
+                {" "}
+                Credibility and Approvals: Required for applying for other
+                licenses like factory license, fire NOC, building plan approvals
+                and more.{" "}
+              </li>
+              <li>
+                {" "}
+                Eligibility for Tenders: Mandatory for participating in many
+                government or private tenders.{" "}
+              </li>
             </ul>
           </Section>
 
@@ -199,18 +227,17 @@ export default function PollutionNocLicenceDelhiPage() {
             </ul>
           </Section>
 
-                 <Section
-                   id="steps"
-                   title={
-                     <>
-                       <FaListOl className="inline mr-2" />
-                       Steps
-                     </>
-                   }
-                 >
-                   <Image src={img} alt="image description" />
-                 </Section>
-       
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                Steps
+              </>
+            }
+          >
+            <Image src={img} alt="image description" />
+          </Section>
 
           <Section
             id="timelines"
@@ -318,12 +345,17 @@ export default function PollutionNocLicenceDelhiPage() {
                   </button>
                 ))}
               </nav>
+
             </div>
+            {/* <div className="mt-4">
+                                    <PollutionFeeCalculatorDelhi />
+
+            </div> */}
           </div>
         </aside>
       </section>
 
-<FaqSectionPollutionDelhi />
+      <FaqSectionPollutionDelhi />
       {/* Contact Form Popup */}
       {showPopup && (
         <div

@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         {children}
-        <HeroFormModal />
+        {/* <HeroFormModal /> */}
         <Footer />
       </body>
     </html>

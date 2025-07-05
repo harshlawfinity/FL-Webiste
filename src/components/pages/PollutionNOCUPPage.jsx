@@ -5,6 +5,7 @@ const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
 import img from '@/assets/pollution/up.png'
+import PollutionFeeCalculatorUttarPradesh from "@/components/PollutionFeeCalculatorUttarPradesh";
 
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -92,6 +93,10 @@ export default function PollutionNocLicenceHaryanaPage() {
 
         
       </section>
+         <div className=" bg-zinc-1  -20 flex items-center justify-center">
+
+      <PollutionFeeCalculatorUttarPradesh />
+      </div>
 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
