@@ -3,7 +3,7 @@ export async function POST(req) {
   const { state, form } = body;
 
   const stateConfigs = {
-    UP: {
+    Uttar_Pradesh: {
       types: ["CTE", "CTO"],
       categories: ["Red", "Orange", "Green"],
       ranges: {

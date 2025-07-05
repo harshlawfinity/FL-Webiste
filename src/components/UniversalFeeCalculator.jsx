@@ -40,34 +40,17 @@ const UniversalNocFeeCalculator = () => {
     setError(null);
   };
 
-  const calculateFee = async () => {
-  const inv = parseFloat(form.investment);
-  if (isNaN(inv) || inv <= 0) {
-    setError("Please enter a valid investment amount.");
-    setResult(null);
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/calculate-fee", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        state: selectedState,
-        form,
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    setResult({ ...form, ...data });
+  const calculateFee = () => {
+    const inv = parseFloat(form.investment);
+    if (isNaN(inv) || inv <= 0) {
+      setError("Please enter a valid investment amount.");
+      setResult(null);
+      return;
+    }
+    const res = stateConfig.calculateFee(form);
+    setResult({ ...form, ...res });
     setError(null);
-  } catch (err) {
-    setError(err.message || "Something went wrong");
-    setResult(null);
-  }
-};
-
+  };
 
   const isFormValid = form.investment && !isNaN(form.investment) && parseFloat(form.investment) > 0;
 
@@ -159,10 +142,10 @@ const UniversalNocFeeCalculator = () => {
       )}
 
       <button
-        onClick={()=>calculateFee()}
+        onClick={calculateFee}
         disabled={!isFormValid}
         className={`w-full py-3 rounded-xl font-semibold text-white 
-          ${isFormValid ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-600 cursor-not-allowed'}`}
+          ${isFormValid ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-300 cursor-not-allowed'}`}
       >
         Calculate Fee
       </button>

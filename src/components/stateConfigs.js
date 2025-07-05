@@ -8,7 +8,9 @@ const stateConfigs = {
     },
     calculateFee: (form) => {
       const inv = parseFloat(form.investment);
-      const slabs = form.type === "CTO" ? stateConfigs.UP.ranges.CTO : stateConfigs.UP.ranges.CTE;
+const slabs = form.type === "CTO"
+  ? stateConfigs.Uttar_Pradesh.ranges.CTO
+  : stateConfigs.Uttar_Pradesh.ranges.CTE;
       let index = slabs.slabs.findIndex((s) => inv <= s);
       index = index === -1 ? slabs.fees.length - 1 : index;
       const years = form.type === "CTO" ? parseInt(form.years) || 1 : 1;
