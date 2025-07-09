@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import Script from "next/script";
-import HeroFormModal from "@/components/HeroFormModal";
 
 export const metadata = {
   icons: {
@@ -14,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" href="../../public/fav2.png" />
+        <link rel="icon" type="image/png" href="/fav2.png" />
 
         {/* Meta Pixel Script */}
         <Script id="meta-pixel" strategy="afterInteractive">
@@ -32,17 +31,30 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* Noscript Fallback */}
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-WB9C1YGDMG"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-WB9C1YGDMG');
+          `}
+        </Script>
+      </head>
+      <body>
         <noscript>
           <img
             height="1"
             width="1"
             style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=777415601527541&ev=PageView&noscript=1"
+            alt=""
           />
         </noscript>
-      </head>
-      <body>
         <Header />
         {children}
         {/* <HeroFormModal /> */}
