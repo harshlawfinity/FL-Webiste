@@ -3,7 +3,7 @@ import ContactForm from "./ContactForm";
 export default function ContactUs() {
   return (
     <div className="mt-20">
-      <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-40 py-20  px-6">
+      <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-20 py-20  px-6">
         <div className="max-w-7xl mx-auto flex justify-center items-center text-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
@@ -13,7 +13,7 @@ export default function ContactUs() {
         </div>
       </div>
 
-      <div className="flex flex-col max-w-7xl mx-auto lg:flex-row justify-between mt-10 px-4     ">
+      <div className="flex flex-col max-w-7xl mx-auto lg:flex-row justify-between mt-10 px-4 gap-4    ">
         <div className="lg:w-1/2 space-y-6">
           <h1 className="text-4xl font-semibold text-gray-800">
             We are here to help you.
@@ -74,7 +74,7 @@ export default function ContactUs() {
         </div>
 
         {/* Right Section */}
-        <div className="lg:w-1/2  mt-10 lg:mt-0">
+        <div className="lg:w-1/2 flex items-center justify-center  mt-10 lg:mt-0 bg-[#7A3EF2]">
           <ContactForm />
         </div>
       </div>

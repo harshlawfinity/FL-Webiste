@@ -91,7 +91,7 @@ const HeroForm = () => {
 
   return (
     <div>
-      <div className="max-w-lg mx-auto bg-gray- md:p-8 p-0 rounded-2xl">
+      <div className="max-w-lg border-2 mx-auto bg-white - md:p-8 p-0 rounded-2xl">
         {/* Heading */}
         <div className="text-center mb-4">
           <h2 className="md:text-2xl text-xl font-semibold text-[#7A3EF2]">
