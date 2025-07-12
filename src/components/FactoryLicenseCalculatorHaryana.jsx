@@ -62,7 +62,7 @@ export default function FactoryLicenseCalculatorHaryana() {
 
   return (
     <div className=" ">
-      <h2 className="text-xl md:text-3xl font-semibold text-purple-600 text- center mb-4">
+      <h2 className="text-xl md:text-3xl font-semibold text-[#7A3EF2] text- center mb-4">
         Haryana Factory License Fee Calculator
       </h2>
 
@@ -70,7 +70,7 @@ export default function FactoryLicenseCalculatorHaryana() {
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4 text-black">
         {/* Horse Power */}
         <div>
-          <label className="block text-sm font-semibold text-purple-600 mb-1">
+          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Installed Power (in H.P.)
           </label>
           <select
@@ -90,7 +90,7 @@ export default function FactoryLicenseCalculatorHaryana() {
 
         {/* Workers */}
         <div>
-          <label className="block text-sm font-semibold text-purple-600 mb-1">
+          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Number of Workers
           </label>
           <select
@@ -112,7 +112,7 @@ export default function FactoryLicenseCalculatorHaryana() {
       {/* Button */}
       <button
         onClick={calculateFee}
-        className="mt-6 w-full py-1 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-all text-base"
+        className="mt-6 w-full py-1 rounded-xl bg-[#7A3EF2] text-white font-semibold hover:bg-purple-700 transition-all text-base"
       >
         Calculate Fees
       </button>
@@ -120,7 +120,7 @@ export default function FactoryLicenseCalculatorHaryana() {
       {/* Result */}
       {result && (
         <div className="mt-8">
-          <div className="flex items-center text-purple-600 text-xl font-semibold mb-4">
+          <div className="flex items-center text-[#7A3EF2] text-xl font-semibold mb-4">
             <FaCheckCircle className="mr-2" />
             Total Payable Fee
           </div>
