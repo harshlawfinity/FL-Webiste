@@ -64,8 +64,8 @@ const NocFeeCalculatorHaryana = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto bg-white p-10 rounded-3xl shadow-lg">
-      <h2 className="md:text-3xl text-xl font-bold text-purple-600 text-center md:mb-10 mb-5  ">
+    <div className="max-w-7xl mx-auto  ">
+      <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] text-ce nter md:mb-10 mb-5  ">
         Haryana Pollution NOC Fee Calculator
       </h2>
 
@@ -73,14 +73,14 @@ const NocFeeCalculatorHaryana = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black">
         {/* Type */}
         <div>
-          <label className="block text-xs md:text-sm font-semibold text-purple-600 mb-1">
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Type
           </label>
           <select
             name="type"
             value={form.type}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
             <option value="CTE">CTE</option>
             <option value="CTO">CTO</option>
@@ -90,7 +90,7 @@ const NocFeeCalculatorHaryana = () => {
         {/* Years */}
         {form.type === "CTO" && (
           <div>
-            <label className="block text-xs md:text-sm font-semibold text-purple-600 mb-1">
+            <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
               Years
             </label>
             <input
@@ -99,21 +99,21 @@ const NocFeeCalculatorHaryana = () => {
               value={form.years}
               onChange={handleChange}
               min="1"
-              className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-purple-400"
+              className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
             />
           </div>
         )}
 
         {/* Category */}
         <div>
-          <label className="block text-xs md:text-sm font-semibold text-purple-600 mb-1">
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Industry Category
           </label>
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
             <option value="Red">Red</option>
             <option value="Orange">Orange</option>
@@ -123,7 +123,7 @@ const NocFeeCalculatorHaryana = () => {
 
         {/* Investment */}
         <div>
-          <label className="block text-xs md:text-sm font-semibold text-purple-600 mb-1">
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Capital Investment (in lakhs)
           </label>
           <input
@@ -132,7 +132,7 @@ const NocFeeCalculatorHaryana = () => {
             value={form.investment}
             onChange={handleChange}
             placeholder="e.g., 1250"
-            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           />
         </div>
       </div>
@@ -140,7 +140,7 @@ const NocFeeCalculatorHaryana = () => {
       {/* Button */}
       <button
         onClick={calculateFee}
-        className="md:mt-10 mt-4 w-full py-3 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-all"
+        className="md:mt-10 mt-4 w-full py-2 rounded-xl bg-[#7A3EF2] text-white font-semibold hover:bg-purple-700 transition-all"
       >
         Calculate Fee
       </button>
@@ -148,7 +148,7 @@ const NocFeeCalculatorHaryana = () => {
       {result && (
   <div className="mt-6 w-full      ">
     {/* Title */}
-    <div className="flex items-center text-purple-600 text-xl font-semibold mb-6">
+    <div className="flex items-center text-[#7A3EF2] text-xl font-semibold mb-6">
       <FaCheckCircle className="mr-2 text-purple-600" />
       Result Summary
     </div>

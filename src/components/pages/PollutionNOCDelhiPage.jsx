@@ -4,6 +4,8 @@ import { lazy, Suspense, useEffect, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
+import { FaCalculator } from "react-icons/fa";
+
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
@@ -77,10 +79,7 @@ export default function PollutionNocLicenceDelhiPage() {
             </button>
           </div>
 
-        
-
           <div className="md:w-1/2 w-full">
-          
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
@@ -95,12 +94,12 @@ export default function PollutionNocLicenceDelhiPage() {
         </div>
       </section>
 
-  <div className=" bg-zinc-1  md:py-10 flex items-center justify-center">
-            <PollutionFeeCalculatorDelhi />
-          </div>
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
-        <div className="md:col-span-3 space-y-14">
+        <div className="md:col-span-3 space-y-4">
+          <Section id="calculator" className="mb-10">
+            <PollutionFeeCalculatorDelhi />
+          </Section>
           <Section
             id="what-is"
             title={
@@ -289,6 +288,11 @@ export default function PollutionNocLicenceDelhiPage() {
               <nav className="space-y-3 text-sm text-gray-700">
                 {[
                   {
+                    label: "Calculator",
+                    id: "calculator",
+                    icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
                     label: "Introduction",
                     id: "what-is",
                     icon: <FaIndustry className="inline mr-2" />,
@@ -333,11 +337,17 @@ export default function PollutionNocLicenceDelhiPage() {
                 ].map((item) => (
                   <button
                     key={item.id}
-                    onClick={() =>
-                      document
-                        .getElementById(item.id)
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
+                    onClick={() => {
+                      const el = document.getElementById(item.id);
+                      if (el) {
+                        const yOffset = -100;
+                        const y =
+                          el.getBoundingClientRect().top +
+                          window.pageYOffset +
+                          yOffset;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }}
                     className="cursor-pointer hover:text-[#7A3EF2] block text-left w-full"
                   >
                     {item.icon}
@@ -345,12 +355,7 @@ export default function PollutionNocLicenceDelhiPage() {
                   </button>
                 ))}
               </nav>
-
             </div>
-            {/* <div className="mt-4">
-                                    <PollutionFeeCalculatorDelhi />
-
-            </div> */}
           </div>
         </aside>
       </section>
@@ -388,7 +393,7 @@ export default function PollutionNocLicenceDelhiPage() {
 function Section({ id, title, children }) {
   return (
     <div id={id}>
-      <h2 className="text-3xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+      <h2 className="md:text-2xl text-xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
       {children}
     </div>
   );

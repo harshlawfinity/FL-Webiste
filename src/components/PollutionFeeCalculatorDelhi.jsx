@@ -54,21 +54,21 @@ const NocFeeDelhi = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-8 bg-white rounded-3xl shadow">
-      <h2 className="md:text-3xl text-xl font-bold text-center text-purple-600 mb-5 md:mb-10">
+    <div className="max-w-5xl mb-10 -mt-10 ">
+      <h2 className="md:text-2xl text-xl   font-bold text-  text-[#7A3EF2] mb-4 md:mb-10">
         Delhi Pollution NOC Fee Calculator
       </h2>
 
       {/* Form Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-black mb-6">
         {/* Type */}
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">Type</label>
+          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">Type</label>
           <select
             name="type"
             value={form.type}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
             <option value="CTE">CTE</option>
             <option value="CTO">CTO</option>
@@ -78,7 +78,7 @@ const NocFeeDelhi = () => {
         {/* Years (only for CTO) */}
         {form.type === "CTO" && (
           <div>
-            <label className="text-purple-600 font-medium block mb-1 text-sm">
+            <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
               Years
             </label>
             <input
@@ -87,21 +87,21 @@ const NocFeeDelhi = () => {
               min="1"
               value={form.years}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+              className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
             />
           </div>
         )}
 
         {/* Category */}
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">
+          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
             Industry Category
           </label>
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
              <option value="Orange">Orange</option>
             <option value="Green">Green</option>
@@ -110,7 +110,7 @@ const NocFeeDelhi = () => {
 
         {/* Investment */}
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">
+          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
             Capital Investment (in lakhs)
           </label>
           <input
@@ -119,7 +119,7 @@ const NocFeeDelhi = () => {
             value={form.investment}
             onChange={handleChange}
             placeholder="e.g., 600"
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           />
         </div>
       </div>
@@ -127,23 +127,23 @@ const NocFeeDelhi = () => {
       {/* Submit */}
       <button
         onClick={calculateFee}
-        className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition-all"
+        className="w-full py-2 text-sm  rounded bg-[#7A3EF2] hover:bg-purple-700 text-white font-semibold text-lg transition-all"
       >
         Calculate Fee
       </button>
 
       {/* Result Summary */}
       {result && (
-        <div className="mt-6">
-          <div className="flex items-center text-purple-600 text-lg font-semibold mb-6">
+        <div className="mt-4">
+          <div className="flex items-center text-[#7A3EF2] text-lg font-semibold mb-4">
             <FaCheckCircle className="mr-2" />
             Result Summary
           </div>
 
           <div className="">
           
-            <div className="flex justify-between text-lg">
-              <span className="font-xl text-black">Total Government Fee</span>
+            <div className="flex justify-between ">
+              <span className="md:font-sm  text-black">Total Government Fee</span>
               <span className="bg-[#a855f7] text-white font-semibold rounded-lg px-5 py-1">
                 ₹{result.fee.toLocaleString()}
               </span>

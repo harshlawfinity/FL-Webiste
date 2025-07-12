@@ -19,17 +19,20 @@ import {
   FaClock,
   FaExclamationTriangle,
 } from "react-icons/fa";
+import { FaCalculator } from "react-icons/fa";
+
 
 import uuu from "../../assets/uuu.webp";
 
 import ContactForm from "@/components/ContactForm";
 
- import bg1 from "../../assets/f1.webp";
+import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionUP";
+import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
 
-export default function FactoryLicenceDelhiPage() {
+export default function FactoryLicenceUttarPradeshPage() {
   const [showPopup, setShowPopup] = useState(false);
   const heroBackgrounds = [bg1, bg2, bg3];
   const [currentBg, setCurrentBg] = useState(0);
@@ -46,7 +49,6 @@ export default function FactoryLicenceDelhiPage() {
     <div>
       {/* Hero Section */}
 
- 
       <section className="relative text-white py-20 md:px-0 px-4 mt-20 overflow-hidden">
         {/* Rotating background images */}
         <div className="absolute inset-0 z-0">
@@ -65,7 +67,7 @@ export default function FactoryLicenceDelhiPage() {
         </div>
 
         {/* Hero Content */}
-         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
           {/* Left Content */}
           <div className="md:w-1/2">
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
@@ -88,7 +90,7 @@ export default function FactoryLicenceDelhiPage() {
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="  w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -99,9 +101,12 @@ export default function FactoryLicenceDelhiPage() {
         </div>
       </section>
       {/* Main Content */}
-     <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
+      <section className="max-w-7xl mx-auto py -16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         {/* Left Side Content */}
         <div className="md:col-span-3 space-y-14">
+          <Section id="calc">
+            <FactoryLicenseCalculatorUP />
+          </Section>
           <Section
             id="what-is"
             title={
@@ -246,59 +251,68 @@ export default function FactoryLicenceDelhiPage() {
           </Section>
 
           <section className="p max-w-7xl mx-auto">
-  <h2 className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]"             id="fee"
->
-    <HiOfficeBuilding className="text-[#7c4bdf]" />
-    Fee Structure  
-  </h2>
+            <h2
+              className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]"
+              id="fee"
+            >
+              <HiOfficeBuilding className="text-[#7c4bdf]" />
+              Fee Structure
+            </h2>
 
-<div className="md:w-full w-[90vw]">
-                          <TUP />
-                        </div>
-            
+            <div className="md:w-full w-[90vw]">
+              <TUP />
+            </div>
 
-  {/* Renewal Fee Section */}
-  <div className="mt-10">
-    <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-      <RiTimeLine className="text-[#7c4bdf]" />
-      Renewal Fee
-    </h3>
-    <div className="text-gray-700 text-sm space-y-2">
-      <p>
-        The license renewal process in Uttar Pradesh is now digital. It is in
-        automatic mode. The fee is calculated based on:
-      </p>
-      <ul className="list-disc list-inside pl-4">
-        <li>Installed HP and the number of workers.</li>
-        <li>Whether the renewal is within the stipulated time or delayed.</li>
-        <li>
-          System-generated charges and applicable penalties, if any.
-        </li>
-      </ul>
-      <p className="italic">
-        Note: The state may auto-calculate the renewal fee based on the entered
-        details. Exact amounts are viewable during the online application.
-      </p>
-    </div>
-  </div>
+            {/* Renewal Fee Section */}
+            <div className="mt-10">
+              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
+                <RiTimeLine className="text-[#7c4bdf]" />
+                Renewal Fee
+              </h3>
+              <div className="text-gray-700 text-sm space-y-2">
+                <p>
+                  The license renewal process in Uttar Pradesh is now digital.
+                  It is in automatic mode. The fee is calculated based on:
+                </p>
+                <ul className="list-disc list-inside pl-4">
+                  <li>Installed HP and the number of workers.</li>
+                  <li>
+                    Whether the renewal is within the stipulated time or
+                    delayed.
+                  </li>
+                  <li>
+                    System-generated charges and applicable penalties, if any.
+                  </li>
+                </ul>
+                <p className="italic">
+                  Note: The state may auto-calculate the renewal fee based on
+                  the entered details. Exact amounts are viewable during the
+                  online application.
+                </p>
+              </div>
+            </div>
 
-  {/* Amendment Fee Section */}
-  <div className="mt-8">
-    <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-      <AiOutlineEdit className="text-[#7c4bdf]" />
-      Amendment Fee
-    </h3>
-    <div className="text-gray-700 text-sm space-y-2">
-      <p>
-        The procedure for amendment in Uttar Pradesh has been digitalized and it can be handled through labour department’s web portal.
-      </p>
-      <p className="italic">
-        Note: No fixed fee breakdown is publicly available. The renewal and amendment follow online portal processes, sometimes implementing auto charge based on HP/worker thresholds, with late fee mechanisms.
-      </p>
-    </div>
-  </div>
-</section>
-
+            {/* Amendment Fee Section */}
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
+                <AiOutlineEdit className="text-[#7c4bdf]" />
+                Amendment Fee
+              </h3>
+              <div className="text-gray-700 text-sm space-y-2">
+                <p>
+                  The procedure for amendment in Uttar Pradesh has been
+                  digitalized and it can be handled through labour department’s
+                  web portal.
+                </p>
+                <p className="italic">
+                  Note: No fixed fee breakdown is publicly available. The
+                  renewal and amendment follow online portal processes,
+                  sometimes implementing auto charge based on HP/worker
+                  thresholds, with late fee mechanisms.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <Section
             id="steps"
@@ -400,6 +414,11 @@ export default function FactoryLicenceDelhiPage() {
               <nav className="space-y-3 text-sm text-gray-700">
                 {[
                   {
+                    label: "Calculator",
+                    id: "calc",
+                    icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
                     label: "What is a Factory Licence?",
                     id: "what-is",
                     icon: <FaIndustry className="inline mr-2" />,
@@ -447,13 +466,19 @@ export default function FactoryLicenceDelhiPage() {
                     ),
                   },
                 ].map((item) => (
-                  <button
+                 <button
                     key={item.id}
-                    onClick={() =>
-                      document
-                        .getElementById(item.id)
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
+                    onClick={() => {
+                      const el = document.getElementById(item.id);
+                      if (el) {
+                        const yOffset = -100;
+                        const y =
+                          el.getBoundingClientRect().top +
+                          window.pageYOffset +
+                          yOffset;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }}
                     className="cursor-pointer hover:text-[#7A3EF2] block text-left w-full"
                   >
                     {item.icon}
@@ -500,7 +525,7 @@ export default function FactoryLicenceDelhiPage() {
 function Section({ id, title, children }) {
   return (
     <div id={id}>
-      <h2 className="text-3xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+      <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
       {children}
     </div>
   );

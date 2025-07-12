@@ -45,19 +45,19 @@ const NocFeeUP = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-8 bg- rounded-3xl shadow">
-      <h2 className="md:text-3xl text-2xl font-bold text-center text-purple-600 md:mb-10 mb-5">
+    <div className="max-w-5xl mx-auto  ">
+      <h2 className="md:text-3xl text-2xl font-semibold   text-[#7A3EF2] md:mb-10 mb-5">
         Uttar Pradesh Pollution NOC Fee Calculator
       </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black mb-6">
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">Type</label>
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">Type</label>
           <select
             name="type"
             value={form.type}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
             <option value="CTE">CTE</option>
             <option value="CTO">CTO</option>
@@ -66,7 +66,7 @@ const NocFeeUP = () => {
 
         {form.type === "CTO" && (
           <div>
-            <label className="text-purple-600 font-medium block mb-1 text-sm">
+            <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
               Years
             </label>
             <input
@@ -75,20 +75,20 @@ const NocFeeUP = () => {
               min="1"
               value={form.years}
               onChange={handleChange}
-              className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+              className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
             />
           </div>
         )}
 
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Industry Category
           </label>
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           >
             <option value="Red">Red</option>
             <option value="Orange">Orange</option>
@@ -97,7 +97,7 @@ const NocFeeUP = () => {
         </div>
 
         <div>
-          <label className="text-purple-600 font-medium block mb-1 text-sm">
+          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Capital Investment (in lakhs)
           </label>
           <input
@@ -106,21 +106,21 @@ const NocFeeUP = () => {
             value={form.investment}
             onChange={handleChange}
             placeholder="e.g., 500"
-            className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-purple-400"
+            className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
           />
         </div>
       </div>
 
       <button
         onClick={calculateFee}
-        className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition-all"
+        className="w-full py-1 rounded-xl bg-[#7A3EF2] hover:bg-purple-700 text-white font-semibold text-lg transition-all"
       >
         Calculate Fee
       </button>
 
       {result && (
         <div className="mt-12 border-t pt-6">
-          <div className="flex items-center text-purple-600 text-lg font-semibold mb-6">
+          <div className="flex items-center text-[#7A3EF2] text-lg font-semibold mb-6">
             <FaCheckCircle className="mr-2" />
             Result Summary
           </div>
@@ -130,7 +130,7 @@ const NocFeeUP = () => {
              
             <div className="flex justify-between ">
               <span className="text-black">Government Fee</span>
-              <span className="bg-purple-600 text-white px-6 py-2 rounded-lg shadow">
+              <span className="bg-[#7A3EF2] text-white px-6 py-2 rounded-lg shadow">
                 ₹{result.fee.toLocaleString()}
               </span>
             </div>

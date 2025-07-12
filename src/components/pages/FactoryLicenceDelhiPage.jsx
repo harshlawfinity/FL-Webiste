@@ -9,6 +9,8 @@ const FaIndustry = lazy(() =>
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TD from "@/components/TD";
+import FactoryLicenseCalculatorDelhi from '@/components/FactoryLicenseCalculatorDelhi'
+import { FaCalculator } from "react-icons/fa";
 
 import { HiOfficeBuilding } from "react-icons/hi";
 import {
@@ -121,6 +123,7 @@ export default function FactoryLicenceDelhiPage() {
 
           {/* Right Video Section */}
           <div className="md:w-1/2 w-full">
+          
 
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
@@ -136,10 +139,17 @@ export default function FactoryLicenceDelhiPage() {
         </div>
       </section>
 
+
+
       {/* Main Content */}
-      <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
+      <section className="max-w-7xl mx-auto md:py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         {/* Left Side Content */}
-        <div className="md:col-span-3 space-y-14">
+     
+        <div className="md:col-span-3 space-y-6">
+             <Section id="calc">
+      <FactoryLicenseCalculatorDelhi />
+
+        </Section>
           <Section
             id="what-is"
             title={
@@ -439,6 +449,11 @@ export default function FactoryLicenceDelhiPage() {
               <nav className="space-y-3 text-sm text-gray-700">
                 {[
                   {
+                    label: "Calculator",
+                    id: "calc",
+                    icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
                     label: "What is a Factory Licence?",
                     id: "what-is",
                     icon: <FaIndustry className="inline mr-2" />,
@@ -488,11 +503,17 @@ export default function FactoryLicenceDelhiPage() {
                 ].map((item) => (
                   <button
                     key={item.id}
-                    onClick={() =>
-                      document
-                        .getElementById(item.id)
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
+                    onClick={() => {
+                      const el = document.getElementById(item.id);
+                      if (el) {
+                        const yOffset = -100;
+                        const y =
+                          el.getBoundingClientRect().top +
+                          window.pageYOffset +
+                          yOffset;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }}
                     className="cursor-pointer hover:text-[#7A3EF2] block text-left w-full"
                   >
                     {item.icon}
@@ -539,7 +560,7 @@ export default function FactoryLicenceDelhiPage() {
 function Section({ id, title, children }) {
   return (
     <div id={id}>
-      <h2 className="text-3xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+      <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
       {children}
     </div>
   );
