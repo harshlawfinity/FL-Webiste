@@ -138,9 +138,6 @@ export default function FactoryLicenceDelhiPage() {
           </div>
         </div>
       </section>
-
-
-
       {/* Main Content */}
       <section className="max-w-7xl mx-auto md:py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         {/* Left Side Content */}
