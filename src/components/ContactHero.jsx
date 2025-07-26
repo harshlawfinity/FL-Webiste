@@ -70,6 +70,17 @@ export default function ContactUs() {
                 <span className="font-medium"></span> +91 72338 11034
               </p>
             </div>
+            <div>
+              <h4 className="font-extrabold">Patna Office</h4>
+              <p className="mt-2 text-sm">
+                Shanti Garden apartment, Block A, 4th Floor, Flat no 401, shaubhagya sharma path ,chitrasen nagar, Near maruti suzuki service centre, Rupaspur - 800014
+
+              </p>
+              <p className="text-sm mt-2">
+                <span className="font-medium"></span>+91 99997 04687
+
+              </p>
+            </div>
           </div>
         </div>
 

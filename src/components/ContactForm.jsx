@@ -58,7 +58,6 @@ const HeroForm = () => {
       );
 
       if (response.status === 200) {
-        alert("Form submitted successfully!");
 
         setFormData({
           name: "",
@@ -69,7 +68,7 @@ const HeroForm = () => {
           pageSource: "",
         });
 
-        router.push("/thank-you");
+        router.push("/thankyou");
       } else {
         alert("Failed to submit the form. Please try again.");
       }
