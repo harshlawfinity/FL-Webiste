@@ -10,10 +10,75 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://factorylicence.in/#organization",
+        name: "Factory Licence",
+        url: "https://factorylicence.in/",
+        telephone: "+91 99107 74687",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "T-10, Pankaj Plaza, Pocket 7, Sector 12 Dwarka",
+          addressLocality: "Dwarka, New Delhi",
+          addressRegion: "Delhi",
+          postalCode: "110078",
+          addressCountry: "IN",
+        },
+        sameAs: [
+          "https://www.facebook.com/factorylicence",
+          "https://www.instagram.com/factorylicence.in/",
+          "https://www.linkedin.com/company/factorylicence/",
+          "https://www.youtube.com/@FactoryLicence",
+        ],
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ],
+            opens: "10:00",
+            closes: "19:00",
+          },
+        ],
+        areaServed: "IN",
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          telephone: "+91 99107 74687",
+          areaServed: ["IN"],
+          availableLanguage: ["en", "hi"],
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://factorylicence.in/#website",
+        url: "https://factorylicence.in/",
+        name: "Factory Licence",
+        publisher: { "@id": "https://factorylicence.in/#organization" },
+      },
+    ],
+  };
+
   return (
     <html lang="en">
       <head>
         <link rel="icon" type="image/png" href="/fav2.png" />
+        {/* Schema.org JSON-LD */}
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+
 
         {/* Google Tag Manager */}
         <Script id="gtm-script" strategy="beforeInteractive">
