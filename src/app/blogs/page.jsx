@@ -270,23 +270,23 @@ const Page = () => {
 // --------------------- Components ---------------------
 
 const BlogHero = ({ searchTerm, setSearchTerm, onSearch }) => (
-  <section className="relative w-full overflow-hidden pt-28 text-white bg-gradient-to-br from-[#4C1D95] via-[#6D28D9] to-[#8B5CF6]">
-    {/* Decorative blobs */}
-    <div className="pointer-events-none absolute -top-24 -right-20 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
-    <div className="pointer-events-none absolute -bottom-24 -left-20 h-96 w-96 rounded-full bg-fuchsia-300/20 blur-3xl" />
+  <section className="relative w-full overflow-hidden pt-24 sm:pt-28 text-white bg-gradient-to-br from-[#4C1D95] via-[#6D28D9] to-[#8B5CF6]">
+    {/* Decorative blobs (hide on small screens) */}
+    <div className="pointer-events-none hidden sm:block absolute -top-24 -right-20 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+    <div className="pointer-events-none hidden sm:block absolute -bottom-24 -left-20 h-96 w-96 rounded-full bg-fuchsia-300/20 blur-3xl" />
 
-    <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-12">
+    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 flex flex-col md:flex-row items-start md:items-center gap-8 sm:gap-12">
       {/* Copy */}
-      <div className="md:max-w-2xl">
+      <div className="w-full md:max-w-2xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs md:text-sm">
           <span className="h-2 w-2 rounded-full bg-fuchsia-300 inline-block" />
           Factory licensing & compliance insights
         </div>
 
-        <h1 className="mt-4 text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight">
+        <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight">
           Get your <span className="underline decoration-fuchsia-300/60 decoration-4 underline-offset-8">Factory Licence</span> right
         </h1>
-        <p className="mt-4 text-white/80 text-base md:text-lg max-w-xl">
+        <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-white/80 max-w-xl">
           Step‑by‑step guides on Factory Licence registration, Consent to Establish/Operate, safety norms, returns & audits—built for manufacturers and facility owners.
         </p>
 
@@ -296,36 +296,30 @@ const BlogHero = ({ searchTerm, setSearchTerm, onSearch }) => (
             e.preventDefault();
             onSearch();
           }}
-          className="mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-2 flex items-stretch gap-2 shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
+          className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-2  grid-cols-1  flex gap-2 shadow-[0_10px_30px_rgba(0,0,0,0.25)] w-full"
         >
-          <div className="flex items-center gap-2 px-3">
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 text-white/70">
-              <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/>
-            </svg>
+          <div className="flex items-center gap-2 p x-3">
+            
           </div>
           <input
             type="text"
             placeholder="Search topics: Factory Licence, CTE/CTO, Pollution NOC, safety returns…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="text-white placeholder-white/60 flex-1 bg-transparent px-1 py-3 text-sm md:text-base outline-none"
+            className="text-white placeholder-white/60 bg-transparent px-0 sm:px-1 py-3 text-sm md:text-base outline-none w-full"
             aria-label="Search blog"
           />
           <button
             type="submit"
-            className="px-4 py-3 text-sm md:text-base font-medium rounded-xl bg-white text-violet-800 hover:bg-fuchsia-50 active:scale-[0.99] transition"
+            className="w-full sm:w-auto md:px-4 px-0 py-3 text-sm md:text-base font-medium rounded-xl bg-white text-violet-800 hover:bg-fuchsia-50 active:scale-[0.99] transition"
           >
             Search
           </button>
         </form>
-
-        
       </div>
 
-      {/* Right side card */}
-      <div className="w-full md:w-[40%]">
-       
-      </div>
+      {/* Right side card (optional content area) */}
+      <div className="hidden md:block w-full md:w-[40%]" />
     </div>
   </section>
 );
