@@ -54,6 +54,8 @@ const Nav = () => {
       ],
     },
 
+   
+
     // {
     //   name: "Pollution NOC",
     //   subNav: [
@@ -69,6 +71,7 @@ const Nav = () => {
     //   ],
     // },
     { name: "About Us", path: "/about" },
+    { name: "Blogs", path: "/blogs" },
     
   ];
 
