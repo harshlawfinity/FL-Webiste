@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ContactForm from "./ContactFormBlogs.jsx";
 
 export default function SidebarContactForm({ service }) {
   const [formData, setFormData] = useState({
@@ -94,82 +95,7 @@ export default function SidebarContactForm({ service }) {
 
   return (
     <aside className="w-full   sticky top-32">
-      <div className="bg-white shadow border rounded-lg p-5">
-        <h4 className="text-lg font-medium mb-4">Need Help?</h4>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name*"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md text-sm ${
-                errors.name ? "border-red-500" : ""
-              }`}
-            />
-            {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-            )}
-          </div>
-
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email*"
-              value={formData.email}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md text-sm ${
-                errors.email ? "border-red-500" : ""
-              }`}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <input
-              type="tel"
-              name="contact"
-              placeholder="Phone* (10 digits)"
-              value={formData.contact}
-              onChange={(e) => {
-                const raw = e.target.value || "";
-                const digitsOnly = raw.replace(/\D+/g, "").slice(0, 10);
-                setFormData((prev) => ({ ...prev, contact: digitsOnly }));
-                setErrors((prev) => ({ ...prev, contact: "" }));
-              }}
-              className={`w-full px-3 py-2 border rounded-md text-sm ${
-                errors.contact ? "border-red-500" : ""
-              }`}
-              inputMode="numeric"
-              maxLength={10}
-              autoComplete="tel"
-              pattern="[0-9]{10}"
-            />
-            {errors.contact && (
-              <p className="text-red-500 text-xs mt-1">{errors.contact}</p>
-            )}
-          </div>
-
-          <input type="hidden" name="service" value={service || ""} />
-          <input type="hidden" name="pageUrl" value={formData.pageUrl} />
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full text-white py-2 rounded-md text-sm font-medium ${
-              isSubmitting
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#7a3ef2]  "
-            }`}
-          >
-            {isSubmitting ? "Submitting..." : "GET FREE CONSULTATION "}
-          </button>
-        </form>
-      </div>
+    <ContactForm />
     </aside>
   );
 }
