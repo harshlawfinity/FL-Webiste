@@ -1,10 +1,28 @@
 "use client";
 export const dynamic = "force-dynamic";
 
+
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import BlogCard from "@/components/BlogCard";
- import Image from "next/image";
+import Image from "next/image";
+
+// Estimate read time based on word count (avg 200 wpm)
+const getReadTime = (htmlOrText) => {
+  if (!htmlOrText) return "1 min read";
+  // Strip HTML tags and decode basic entities
+  const text = String(htmlOrText)
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+  const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
+};
 
 const Page = () => {
   const [blogs, setBlogs] = useState([]);
@@ -55,9 +73,7 @@ const Page = () => {
               month: "short",
               year: "numeric",
             }),
-            readTime: `${Math.ceil(
-              (blog.content || "").split(" ").length / 200
-            )} min read`,
+            readTime: getReadTime(blog.content || blog.metaDescription || blog.summary || blog.title),
             title: blog.title,
             summary: blog.metaDescription,
             authorName: blog.author || "Team Lawfinity",

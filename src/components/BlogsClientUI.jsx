@@ -130,7 +130,7 @@ export default function BlogsClientUI({ blog }) {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen md:mt-30 mt-24">
+    <div className="min-h-screen md:mt-20 mt-20">
       <Head>
         <title>{blog.metaTitle}</title>
         <meta name="description" content={blog.metaDescription} />
@@ -148,7 +148,7 @@ export default function BlogsClientUI({ blog }) {
        {/* Hero Section */}
       <section className="relative w-full max-w-7xl mx-auto overflow-hidden">
   {/* 16:9 aspect ratio box */}
-  <div className="pt-[56.25%]"></div>
+  <div className="pt-[56.25%] "></div>
 
   <img
     src={blog.image}

@@ -163,7 +163,7 @@ export default function SidebarContactForm({ service }) {
             className={`w-full text-white py-2 rounded-md text-sm font-medium ${
               isSubmitting
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-orange-500 hover:bg-orange-600"
+                : "bg-[#7a3ef2]  "
             }`}
           >
             {isSubmitting ? "Submitting..." : "GET FREE CONSULTATION "}

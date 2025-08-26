@@ -10,8 +10,7 @@ const BlogCard = ({
   title,
   summary,
   authorName,
-  authorImage,
-  views = 0, // ✅ New prop
+   views = 0, // ✅ New prop
 }) => {
   const toTitleCase = (str) =>
     str
@@ -22,6 +21,7 @@ const BlogCard = ({
 
   return (
     <div className="rounded-xl overflow-hidden bg-white shadow-sm">
+      {console.log(readTime)}
       <div className="relative h-52 w-full">
         <img
           src={image}
@@ -40,7 +40,7 @@ const BlogCard = ({
         {/* ✅ Date • Read Time • Views */}
         <p className="text-xs text-gray-500 mb-2 flex flex-wrap items-center gap-2">
           <span>{date}</span>
-          <span>• {readTime}</span>
+          {/* <span>• {readTime}</span> */}
           <span className="flex items-center gap-1">• <FaRegEye /> {views}</span>
         </p>
 
