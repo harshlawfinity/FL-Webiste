@@ -250,6 +250,12 @@ export default function FactoryLicenceDelhiPage() {
               <li className="text-justify ">
                 Sanctioned load from HVPNL / Latest Electricity Bill
               </li>
+              <li className="text-justify ">
+                Pollution NOC
+              </li>
+              <li className="text-justify ">
+               Fire NOC
+              </li>
             </ul>
           </Section>
 
