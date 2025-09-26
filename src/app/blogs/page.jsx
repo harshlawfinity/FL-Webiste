@@ -393,10 +393,10 @@ const BlogHero = ({ searchTerm, setSearchTerm, onSearch }) => (
       <span className="inline-block bg-purple-700/60 text-white text-sm px-4 py-1 rounded-full mb-6">
         • Factory licensing &amp; compliance insights
       </span>
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
+      <h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
         Get your <span className="underline decoration-2">Factory Licence</span> right
       </h1>
-      <p className="text-base sm:text-lg md:text-xl text-purple-100 mb-10">
+      <p className="text-sm sm:text-lg md:text-lg text-purple-100 mb-10">
         Step-by-step guides on Factory Licence registration, Consent to Establish/Operate,
         safety norms, returns &amp; audits—built for manufacturers and facility owners.
       </p>
