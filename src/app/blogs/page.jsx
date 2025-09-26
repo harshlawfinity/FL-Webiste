@@ -388,11 +388,11 @@ function Page() {
 
 // --- Supporting components ---
 const BlogHero = ({ searchTerm, setSearchTerm, onSearch }) => (
-  <section className="relative flex flex-col items-center justify-center text-center w-full bg-gradient-to-r from-purple-700 to-purple-600 text-white pt-28 pb-20 px-6">
+  <section className="relative flex mt-10 flex-col items-center  justify- center text-  w-full bg-gradient-to-r from-purple-700 to-purple-600 text-white pt-28 pb-20 px-6">
     <div className="max-w-3xl mx-auto relative z-10">
-      <span className="inline-block bg-purple-700/60 text-white text-sm px-4 py-1 rounded-full mb-6">
+      {/* <span className="inline-block bg-purple-700/60 text-white text-sm px-4 py-1 rounded-full mb-6">
         • Factory licensing &amp; compliance insights
-      </span>
+      </span> */}
       <h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
         Get your <span className="underline decoration-2">Factory Licence</span> right
       </h1>
