@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import BlogCard from "@/components/BlogCard";
  import Image from "next/image";
 
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://internal-panel-3e873.ondigitalocean.app";
 
 const PAGE_SIZE = 9;
 
