@@ -47,7 +47,7 @@ const BlogSection = () => {
             views: blog.views,
             title: blog.title,
             summary: blog.metaDescription,
-            author: blog.author || "Unknown",
+            author: blog.author || "Team FactoryLicence",
             date: new Date(blog.createdAt).toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",

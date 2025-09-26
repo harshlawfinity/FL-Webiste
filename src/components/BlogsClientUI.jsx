@@ -545,7 +545,7 @@ export default function BlogsClientUI({ blog }) {
             )}
 
             <p className="md:text-sm text-xs text-gray-700 mb-4">
-              ✍️ {blog.author || "Unknown"} •{" "}
+              ✍️ {blog.author || "Team Factory Licence"} •{" "}
               {new Date(blog.createdAt).toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "short",

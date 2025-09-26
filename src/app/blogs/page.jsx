@@ -92,7 +92,7 @@ function Page() {
           readTime: blog.readTime || undefined,
           title: blog.title,
           summary: blog.metaDescription,
-          authorName: blog.author || "Team Lawfinity",
+          authorName: blog.author || "Team Factory Licence",
           authorImage: "/authors/default.jpg",
           timestamp: new Date(blog.createdAt).getTime(),
           views: blog.views || 0,
