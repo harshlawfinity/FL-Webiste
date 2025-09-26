@@ -76,7 +76,7 @@ const Page = () => {
             readTime: getReadTime(blog.content || blog.metaDescription || blog.summary || blog.title),
             title: blog.title,
             summary: blog.metaDescription,
-            authorName: blog.author || "Team Lawfinity",
+            authorName: "Team FactoryLicence",
             authorImage: "/authors/default.jpg",
             timestamp: new Date(blog.createdAt).getTime(),
             views: blog.views || 0,

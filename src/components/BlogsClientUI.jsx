@@ -582,14 +582,16 @@ export default function BlogsClientUI({ blog }) {
             </div>
           )}
 
-          {/* 👇 Always render normalized HTML (shows inline images too) */}
-          {htmlToRender ? (
+         {/* 👇 Always render raw backend HTML (shows exactly as in DB) */}
+          {blog?.content ? (
             <div
               className="prose max-w-none"
-              dangerouslySetInnerHTML={{ __html: htmlToRender }}
+              dangerouslySetInnerHTML={{ __html: typeof blog.content === "string" ? blog.content : "" }}
             />
           ) : null}
         </div>
+
+        {console.log(blog.content)}
 
         <aside className="md:block hidden lg:w-1/4 space-y-6">
           {/* Table of Contents */}
@@ -873,6 +875,23 @@ export default function BlogsClientUI({ blog }) {
           margin: 0.6rem auto;
           border-radius: 0.25rem;
         }
+
+        /* Lists */
+:global(.prose ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+:global(.prose ol) {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+:global(.prose li) {
+  margin: 0.25rem 0;
+}
       `}</style>
     </div>
   );
