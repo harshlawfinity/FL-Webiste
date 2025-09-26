@@ -94,7 +94,7 @@ export default function SidebarContactForm({ service }) {
   };
 
   return (
-    <aside className="w-full   sticky top-32">
+    <aside className=" w-full  sticky   top-32">
     <ContactForm />
     </aside>
   );

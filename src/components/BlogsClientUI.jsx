@@ -278,7 +278,7 @@ function TableOfContents({ headings, activeId }) {
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 sticky top-32 ">
+    <div className="bg-white rounded-lg border border-gray-200 p-4  top-32 ">
       <h3 className="font-semibold text-gray-900 mb-3 text-sm">
         Table of Contents
       </h3>
@@ -300,11 +300,6 @@ function TableOfContents({ headings, activeId }) {
           ))}
         </ul>
       </nav>
-
-      <div className="mt-4 md:block hidden">
-         <BlogSidebarContactForm />
-      </div>
-     
     </div>
   );
 }
@@ -490,7 +485,7 @@ export default function BlogsClientUI({ blog }) {
   }
 
   return (
-    <div className="min-h-screen text-justify  md:mt-10 mt-20">
+    <div className="min-h-screen text-justify md:mt-20 mt-20">
       <Head>
         <title>{blog.metaTitle}</title>
         <meta name="description" content={blog.metaDescription} />
@@ -515,7 +510,7 @@ export default function BlogsClientUI({ blog }) {
       </section>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 md:mt-10 mt-0 flex flex-col lg:flex-row gap-8">
+      <div className="max-w-7xl mx-auto px-4 md:mt-10 mt-0 flex flex-col relative lg:flex-row gap-8">
         <div className="w-full lg:w-3/4">
           <div className="my-4">
             {(blog.category || blog.subCategory || blog.subSubCategory) && (
@@ -550,7 +545,7 @@ export default function BlogsClientUI({ blog }) {
             )}
 
             <p className="md:text-sm text-xs text-gray-700 mb-4">
-              ✍️ {blog.author || "Team Factory Licence"} •{" "}
+              ✍️ {blog.author || "Unknown"} •{" "}
               {new Date(blog.createdAt).toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "short",
@@ -562,11 +557,11 @@ export default function BlogsClientUI({ blog }) {
 
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{blog.title}</h1>
 
-          <aside className="md:hidden block   space-y-6">
-            {/* Table of Contents */}
-            <TableOfContents headings={headings} activeId={activeHeadingId} />
-
-            {/* Contact Form */}
+          <aside className="w-full lg:w-1/4 block lg:hidden  top-20">
+            {/* Desktop Table of Contents & Contact Form: only show on lg and up */}
+            <div className="">
+              <TableOfContents headings={headings} activeId={activeHeadingId} />
+            </div>
           </aside>
 
           {/* Cover image */}
@@ -582,23 +577,25 @@ export default function BlogsClientUI({ blog }) {
             </div>
           )}
 
-         {/* 👇 Always render raw backend HTML (shows exactly as in DB) */}
-          {blog?.content ? (
+          {/* 👇 Always render normalized HTML (shows inline images too) */}
+          {htmlToRender ? (
             <div
               className="prose max-w-none"
-              dangerouslySetInnerHTML={{ __html: typeof blog.content === "string" ? blog.content : "" }}
+              dangerouslySetInnerHTML={{
+                __html: optimizeInlineImages(htmlToRender),
+              }}
             />
           ) : null}
         </div>
 
-        {console.log(blog.content)}
-
-        <aside className="md:block hidden lg:w-1/4 space-y-6">
-          {/* Table of Contents */}
-          <TableOfContents headings={headings} activeId={activeHeadingId} />
-
-          {/* Contact Form */}
-        </aside>
+  <aside className="w-full lg:w-1/4 hidden lg:block right-0 lg:mt-6 lg:sticky lg:top-32">
+    {/* Desktop Table of Contents & Contact Form: only show on lg and up */}
+    <div className="z-10 sticky top-32">
+      <TableOfContents headings={headings} activeId={activeHeadingId} />
+      <BlogSidebarContactForm />
+    </div>
+     
+  </aside>
       </div>
 
       {/* Connected Services */}
@@ -621,9 +618,14 @@ export default function BlogsClientUI({ blog }) {
           </ul>
         </section>
       )}
-        <div className="  md:hidden block">
-           <BlogSidebarContactForm />
+
+      {/* Mobile Table of Contents & Contact Form: show above FAQs, only on mobile (lg:hidden) */}
+      <div className="lg:hidden max-w-7xl mx-auto px-4">
+        <div className="mb-6">
+          <BlogSidebarContactForm />
         </div>
+        <div className="mb-8"></div>
+      </div>
 
       {/* FAQs */}
       {blog.faqs?.length > 0 && (
@@ -877,21 +879,28 @@ export default function BlogsClientUI({ blog }) {
         }
 
         /* Lists */
-:global(.prose ul) {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0;
-}
+        :global(.prose ul) {
+          list-style-type: disc !important;
+          list-style-position: inside !important;
+          padding-left: 1.5rem;
+          margin: 0.75rem 0;
+        }
 
-:global(.prose ol) {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 0.75rem 0;
-}
+        // :global(.prose ol) {
+        //   list-style-type: decimal !important;
+        //   list-style-position: inside !important;
+        //   padding-left: 1.5rem;
+        //   margin: 0.75rem 0;
+        //   counter-reset: list-counter;
+        // }
 
-:global(.prose li) {
-  margin: 0.25rem 0;
-}
+        // :global(.prose ol li) {
+        //   display: list-item !important;
+        // }
+
+        :global(.prose li) {
+          margin: 0.25rem 0;
+        }
       `}</style>
     </div>
   );
