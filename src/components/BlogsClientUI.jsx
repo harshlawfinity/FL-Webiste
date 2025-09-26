@@ -56,7 +56,7 @@ function editorJsToHtml(data) {
       case "header":
         const level = d.level || 2;
         const text = d.text ?? "";
-        
+
         // Add ID to H2 headings for navigation
         if (level === 2) {
           h2Counter++;
@@ -111,17 +111,17 @@ function editorJsToHtml(data) {
 // Enhanced HTML processing to add IDs to H2 tags
 function processHtmlWithIds(html) {
   if (!html) return html;
-  
+
   let h2Counter = 0;
   return html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (match, attrs, content) => {
     h2Counter++;
     const id = `heading-${h2Counter}`;
-    
+
     // Check if ID already exists in attributes
-    if (attrs.includes('id=')) {
+    if (attrs.includes("id=")) {
       return match;
     }
-    
+
     return `<h2${attrs} id="${id}">${content}</h2>`;
   });
 }
@@ -129,17 +129,17 @@ function processHtmlWithIds(html) {
 // Extract H2 headings for table of contents
 function extractH2Headings(html) {
   if (!html) return [];
-  
+
   const headings = [];
   const h2Regex = /<h2[^>]*id="([^"]*)"[^>]*>(.*?)<\/h2>/gi;
   let match;
-  
+
   while ((match = h2Regex.exec(html)) !== null) {
     const id = match[1];
-    const text = match[2].replace(/<[^>]*>/g, ''); // Strip HTML tags
+    const text = match[2].replace(/<[^>]*>/g, ""); // Strip HTML tags
     headings.push({ id, text });
   }
-  
+
   return headings;
 }
 
@@ -153,7 +153,11 @@ function extractEditorData(blog, cutoffIso = "2025-09-09T11:09:48.673Z") {
   }
 
   // 2) content is already Editor.js object
-  if (blog?.content && typeof blog.content === "object" && Array.isArray(blog.content.blocks)) {
+  if (
+    blog?.content &&
+    typeof blog.content === "object" &&
+    Array.isArray(blog.content.blocks)
+  ) {
     return blog.content;
   }
 
@@ -263,8 +267,9 @@ function TableOfContents({ headings, activeId }) {
     const element = document.getElementById(id);
     if (element) {
       const yOffset = -100; // Offset for fixed header
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
@@ -274,7 +279,9 @@ function TableOfContents({ headings, activeId }) {
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 sticky top-32 ">
-      <h3 className="font-semibold text-gray-900 mb-3 text-sm">Table of Contents</h3>
+      <h3 className="font-semibold text-gray-900 mb-3 text-sm">
+        Table of Contents
+      </h3>
       <nav>
         <ul className="space-y-2">
           {headings.map((heading) => (
@@ -282,9 +289,9 @@ function TableOfContents({ headings, activeId }) {
               <button
                 onClick={() => scrollToHeading(heading.id)}
                 className={`text-left text-sm hover:text-blue-600 transition-colors duration-200 block w-full p-1 rounded ${
-                  activeId === heading.id 
-                    ? 'text-blue-600 bg-blue-50 font-medium' 
-                    : 'text-gray-700'
+                  activeId === heading.id
+                    ? "text-blue-600 bg-blue-50 font-medium"
+                    : "text-gray-700"
                 }`}
               >
                 {heading.text}
@@ -293,8 +300,11 @@ function TableOfContents({ headings, activeId }) {
           ))}
         </ul>
       </nav>
-                <BlogSidebarContactForm />
 
+      <div className="mt-4 md:block hidden">
+         <BlogSidebarContactForm />
+      </div>
+     
     </div>
   );
 }
@@ -313,10 +323,11 @@ export default function BlogsClientUI({ blog }) {
   const [readTime, setReadTime] = useState(null);
   const [activeHeadingId, setActiveHeadingId] = useState("");
 
-  console.log(blog)
+  console.log(blog);
 
   const BLOG_WEBSITE_URL =
-    process.env.BLOG_WEBSITE_URL || "https://internal-panel-3e873.ondigitalocean.app";
+    process.env.BLOG_WEBSITE_URL ||
+    "https://internal-panel-3e873.ondigitalocean.app";
 
   useEffect(() => {
     setMounted(true);
@@ -326,9 +337,12 @@ export default function BlogsClientUI({ blog }) {
     }
 
     if (!hasTrackedRef.current) {
-      fetch(`${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/views`, {
-        method: "POST",
-      });
+      fetch(
+        `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/views`,
+        {
+          method: "POST",
+        }
+      );
       hasTrackedRef.current = true;
     }
 
@@ -356,7 +370,9 @@ export default function BlogsClientUI({ blog }) {
     try {
       const html = extractHtml(blog);
       if (html) {
-        const extra = [blog.title, blog.metaDescription].filter(Boolean).join(" ");
+        const extra = [blog.title, blog.metaDescription]
+          .filter(Boolean)
+          .join(" ");
         const totalWords = countWords(`${extra} ${html}`);
         const minutes = Math.max(1, Math.ceil(totalWords / 200));
         setReadTime(minutes);
@@ -364,7 +380,9 @@ export default function BlogsClientUI({ blog }) {
         const editorData = extractEditorData(blog);
         if (editorData) {
           const bodyText = extractTextFromEditorJs(editorData);
-          const extra = [blog.title, blog.metaDescription].filter(Boolean).join(" ");
+          const extra = [blog.title, blog.metaDescription]
+            .filter(Boolean)
+            .join(" ");
           const totalWords = countWords(`${extra} ${bodyText}`);
           const minutes = Math.max(1, Math.ceil(totalWords / 200));
           setReadTime(minutes);
@@ -390,13 +408,13 @@ export default function BlogsClientUI({ blog }) {
         });
       },
       {
-      rootMargin: "-120px 0px -70% 0px", // top offset for fixed navbar
-      threshold: 0.3, // more reliable than 0.1
-    }
+        rootMargin: "-120px 0px -70% 0px", // top offset for fixed navbar
+        threshold: 0.3, // more reliable than 0.1
+      }
     );
 
     // Observe all H2 elements
-    const h2Elements = document.querySelectorAll('h2[id]');
+    const h2Elements = document.querySelectorAll("h2[id]");
     h2Elements.forEach((el) => observer.observe(el));
 
     return () => {
@@ -452,21 +470,24 @@ export default function BlogsClientUI({ blog }) {
   if (!mounted) return null;
 
   function optimizeCloudinary(url, width = 800) {
-  if (!url || !url.includes("res.cloudinary.com")) return url;
-  return url.replace("/upload/", `/upload/f_auto,q_auto,w_${width}/`);
-}
+    if (!url || !url.includes("res.cloudinary.com")) return url;
+    return url.replace("/upload/", `/upload/f_auto,q_auto,w_${width}/`);
+  }
 
   // 🔥 One normalized HTML for everything (shows images inline)
   const htmlToRender = getNormalizedHtml(blog);
   const headings = extractH2Headings(htmlToRender);
 
   function optimizeInlineImages(html) {
-  if (!html) return html;
-  return html.replace(/<img([^>]*)src="([^"]+)"([^>]*)>/gi, (match, before, url, after) => {
-    const optimized = optimizeCloudinary(url, 900);
-    return `<img${before}src="${optimized}"${after} loading="lazy" style="max-width:100%;height:auto;border-radius:6px" />`;
-  });
-}
+    if (!html) return html;
+    return html.replace(
+      /<img([^>]*)src="([^"]+)"([^>]*)>/gi,
+      (match, before, url, after) => {
+        const optimized = optimizeCloudinary(url, 900);
+        return `<img${before}src="${optimized}"${after} loading="lazy" style="max-width:100%;height:auto;border-radius:6px" />`;
+      }
+    );
+  }
 
   return (
     <div className="min-h-screen text-justify  mt-10">
@@ -489,14 +510,19 @@ export default function BlogsClientUI({ blog }) {
       </Head>
 
       {/* Hero Section */}
-      <section className="relative w-full max-w-7xl mx-auto overflow-hidden">{/* 16:9 box */}</section>
+      <section className="relative w-full max-w-7xl mx-auto overflow-hidden">
+        {/* 16:9 box */}
+      </section>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 md:mt-10 mt-0 flex flex-col lg:flex-row gap-8">
         <div className="w-full lg:w-3/4">
           <div className="my-4">
             {(blog.category || blog.subCategory || blog.subSubCategory) && (
-              <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 mb-3">
+              <nav
+                aria-label="Breadcrumb"
+                className="flex flex-wrap items-center gap-2 mb-3"
+              >
                 {[
                   { label: "Home", href: "/" },
                   { label: "Blogs", href: "/blogs" },
@@ -509,7 +535,10 @@ export default function BlogsClientUI({ blog }) {
                     <div key={idx} className="flex items-center">
                       {idx > 0 && <span className="px-2 text-gray-400">›</span>}
                       {item.href ? (
-                        <a href={item.href} className="text-blue-600 hover:underline">
+                        <a
+                          href={item.href}
+                          className="text-blue-600 hover:underline"
+                        >
                           {item.label}
                         </a>
                       ) : (
@@ -533,32 +562,39 @@ export default function BlogsClientUI({ blog }) {
 
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{blog.title}</h1>
 
+          <aside className="md:hidden block   space-y-6">
+            {/* Table of Contents */}
+            <TableOfContents headings={headings} activeId={activeHeadingId} />
+
+            {/* Contact Form */}
+          </aside>
+
           {/* Cover image */}
-         {/* Cover image */}
-{blog.image && (
-  <div className="w-full my-6">
-    <img
-      src={optimizeCloudinary(blog.image, 1200)}
-      alt={blog.title}
-      loading="lazy"
-      className="w-full h-auto object-cover rounded-md"
-    />
-  </div>
-)}
+          {/* Cover image */}
+          {blog.image && (
+            <div className="w-full my-6">
+              <img
+                src={optimizeCloudinary(blog.image, 1200)}
+                alt={blog.title}
+                loading="lazy"
+                className="w-full h-auto object-cover rounded-md"
+              />
+            </div>
+          )}
 
           {/* 👇 Always render normalized HTML (shows inline images too) */}
-         {htmlToRender ? (
-  <div
-    className="prose max-w-none"
-    dangerouslySetInnerHTML={{ __html: optimizeInlineImages(htmlToRender) }}
-  />
-) : null}
+          {htmlToRender ? (
+            <div
+              className="prose max-w-none"
+              dangerouslySetInnerHTML={{ __html: htmlToRender }}
+            />
+          ) : null}
         </div>
 
-        <aside className="w-full lg:w-1/4  ">
+        <aside className="md:block hidden lg:w-1/4 space-y-6">
           {/* Table of Contents */}
           <TableOfContents headings={headings} activeId={activeHeadingId} />
-          
+
           {/* Contact Form */}
         </aside>
       </div>
@@ -583,6 +619,9 @@ export default function BlogsClientUI({ blog }) {
           </ul>
         </section>
       )}
+        <div className="  md:hidden block">
+           <BlogSidebarContactForm />
+        </div>
 
       {/* FAQs */}
       {blog.faqs?.length > 0 && (
@@ -709,7 +748,10 @@ export default function BlogsClientUI({ blog }) {
         <div className="space-y-4 mb-8">
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <div key={comment._id} className="border rounded p-4 bg-gray-50 shadow-sm">
+              <div
+                key={comment._id}
+                className="border rounded p-4 bg-gray-50 shadow-sm"
+              >
                 <p className="font-semibold text-gray-800">{comment.name}</p>
                 <p className="text-gray-700 mt-1 whitespace-pre-line">
                   {comment.content}
@@ -738,7 +780,9 @@ export default function BlogsClientUI({ blog }) {
             type="submit"
             disabled={isSubmitting}
             className={`px-4 py-2 rounded text-white ${
-              isSubmitting ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              isSubmitting
+                ? "bg-blue-300 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
             {isSubmitting ? "Submitting..." : "Submit Comment"}
@@ -775,22 +819,22 @@ export default function BlogsClientUI({ blog }) {
 
         /* Headings */
         :global(.prose h1) {
-          font-size: 1.75rem;         /* 28px (smaller) */
-          line-height: 2.25rem;       /* 36px */
+          font-size: 1.75rem; /* 28px (smaller) */
+          line-height: 2.25rem; /* 36px */
           margin: 1.25rem 0 0.75rem;
           font-weight: 800;
           letter-spacing: -0.01em;
         }
         :global(.prose h2) {
-          font-size: 1.5rem;          /* 24px (smaller) */
-          line-height: 2rem;          /* 32px */
+          font-size: 1.5rem; /* 24px (smaller) */
+          line-height: 2rem; /* 32px */
           margin: 1rem 0 0.5rem;
           font-weight: 700;
-          scroll-margin-top: 100px;   /* Account for fixed header */
+          scroll-margin-top: 100px; /* Account for fixed header */
         }
         :global(.prose h3) {
-          font-size: 1.25rem;         /* 20px (smaller) */
-          line-height: 1.75rem;       /* 28px */
+          font-size: 1.25rem; /* 20px (smaller) */
+          line-height: 1.75rem; /* 28px */
           margin: 0.75rem 0 0.5rem;
           font-weight: 600;
         }
@@ -827,11 +871,9 @@ export default function BlogsClientUI({ blog }) {
           height: auto;
           display: block;
           margin: 0.6rem auto;
-  border-radius: 0.25rem;
-}
-`}</style>
+          border-radius: 0.25rem;
+        }
+      `}</style>
     </div>
   );
 }
-
-
