@@ -490,7 +490,7 @@ export default function BlogsClientUI({ blog }) {
   }
 
   return (
-    <div className="min-h-screen text-justify  mt-10">
+    <div className="min-h-screen text-justify  md:mt-10 mt-20">
       <Head>
         <title>{blog.metaTitle}</title>
         <meta name="description" content={blog.metaDescription} />
