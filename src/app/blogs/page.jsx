@@ -305,6 +305,7 @@ function Page() {
         {totalPages > 1 && (
           <div className="flex flex-col items-center gap-3 w-full">
             <div className="flex items-center gap-2 flex-wrap">
+              
               <button
                 className="px-3 py-1 rounded border bg-white text-gray-700 disabled:opacity-50"
                 onClick={() => setPage(1)}
