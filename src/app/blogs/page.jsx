@@ -299,7 +299,7 @@ function Page() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8 grid sm:grid-cols-2 lg:grid-cols-3 mt-10 gap-8">
         {renderBlogCards()}
       </div> 
- 
+  
       {/* Pagination Controls (new style) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16 flex flex-col items-center">
         {totalPages > 1 && (
