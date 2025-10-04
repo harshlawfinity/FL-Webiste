@@ -299,13 +299,13 @@ function Page() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-8 grid sm:grid-cols-2 lg:grid-cols-3 mt-10 gap-8">
         {renderBlogCards()}
       </div>
-
+ 
       {/* Pagination Controls (new style) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16 flex flex-col items-center">
         {totalPages > 1 && (
           <div className="flex flex-col items-center gap-3 w-full">
             <div className="flex items-center gap-2 flex-wrap">
-              
+
               <button
                 className="px-3 py-1 rounded border bg-white text-gray-700 disabled:opacity-50"
                 onClick={() => setPage(1)}
