@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import Script from "next/script";
+import TawkTo from "@/components/TawkTo";
 
 export const metadata = {
   icons: {
@@ -122,6 +123,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
+        <TawkTo/>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
