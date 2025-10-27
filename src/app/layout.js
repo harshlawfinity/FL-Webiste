@@ -5,8 +5,10 @@ import Script from "next/script";
 import TawkTo from "@/components/TawkTo";
 
 export const metadata = {
-  icons: {
-    icon: "/fav2.png",
+    icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
 };
 
