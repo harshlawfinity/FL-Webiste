@@ -5,11 +5,8 @@ import Script from "next/script";
 import TawkTo from "@/components/TawkTo";
 
 export const metadata = {
-    icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
+  title: 'Factory Licence Online in India – Fast Approval Guaranteed',
+  description: 'Apply for a factory licence online in India easily and securely.',
 };
 
 export default function RootLayout({ children }) {
@@ -74,8 +71,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" href="/fav2.png" />
-        {/* Schema.org JSON-LD */}
+         {/* Schema.org JSON-LD */}
         <Script
           id="schema-org"
           type="application/ld+json"
