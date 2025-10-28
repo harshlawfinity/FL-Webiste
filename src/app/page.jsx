@@ -60,11 +60,7 @@ const Page = () => {
           content="factory licence, factory license, online factory registration"
         />
 
-        {/* Favicon */}
-        <link rel="icon" href="/fav2.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="/fav2.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/fav2.ico" />
-
+       
         {/* Open Graph (Social Sharing) */}
         <meta
           property="og:title"
