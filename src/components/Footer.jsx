@@ -135,7 +135,7 @@ export default function Footer() {
           >
             factorylicence.in |
           </Link>{" "}
-          <span className="italic">Powered by Lawfinity India PVT. LTD.</span>
+          <span className="italic">Powered by Lawfinity India PVT LTD</span>
         </p>
         <div className="space-x-4">
           <Link
