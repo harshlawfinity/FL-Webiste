@@ -127,7 +127,7 @@ const Nav = () => {
         <div className="hidden md:flex items-center gap-3 text-black font-semibold">
 <a href="tel:+919910774687" className="border border-gray-400 px-4 py-2 rounded-full text-xs md:text-sm flex items-center gap-2 hover:bg-gray-100 text-black font-semibold transition">
   <PhoneCall size={18} />
-Talk To Expert
+ +91 99107 74687
 </a>
 
         </div>
