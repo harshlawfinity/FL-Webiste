@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import BlogsClientUI from '@/components/BlogsClientUI';
 
-const API_BASE = "https://internal-panel-3e873.ondigitalocean.app"  
+const API_BASE = "https://all-internal-panels-988fn.ondigitalocean.app"  
  
 // Naya function jo saare URLs ko rewrite karega
 const rewriteImageUrls = (blog) => {

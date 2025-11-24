@@ -322,7 +322,7 @@ export default function BlogsClientUI({ blog }) {
 
   const BLOG_WEBSITE_URL =
     process.env.BLOG_WEBSITE_URL ||
-    "https://internal-panel-3e873.ondigitalocean.app";
+    "https://all-internal-panels-988fn.ondigitalocean.app";
 
   useEffect(() => {
     setMounted(true);
@@ -494,7 +494,7 @@ export default function BlogsClientUI({ blog }) {
         <meta property="og:image" content={blog.image} />
         <meta
           property="og:url"
-          content={`https://internal-panel-3e873.ondigitalocean.app/blog/${blog.urlSlug}`}
+          content={`https://all-internal-panels-988fn.ondigitalocean.app/blog/${blog.urlSlug}`}
         />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="Lawfinity" />
