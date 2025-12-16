@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import BlogCard from "@/components/BlogCard";
  import Image from "next/image";
 
-const API_BASE = "https://all-internal-panels-988fn.ondigitalocean.app";
+const API_BASE = "https://internal.lawfinity.in";
 
 const PAGE_SIZE = 9;
 

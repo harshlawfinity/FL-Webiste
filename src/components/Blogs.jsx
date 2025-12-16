@@ -9,7 +9,7 @@ import { FaRegEye } from "react-icons/fa";
 const BlogSection = () => {
   const BLOG_WEBSITE_URL =
     process.env.BLOG_WEBSITE_URL ||
-    "https://lawfinity-blogs-webiste-goyd9.ondigitalocean.app";
+    "https://internal.lawfinity.in";
 
   const [blogs, setBlogs] = useState([]);
   const [cardIndex, setCardIndex] = useState(0);

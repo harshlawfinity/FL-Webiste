@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import BlogsClientUI from '@/components/BlogsClientUI';
 
-const API_BASE = "https://all-internal-panels-988fn.ondigitalocean.app"  
- 
+const API_BASE = "https://internal.lawfinity.in"
+
 // Naya function jo saare URLs ko rewrite karega
 const rewriteImageUrls = (blog) => {
   if (!blog) return null;
@@ -62,7 +62,8 @@ async function getBlog(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const blog = await safeFetchJson(`${API_BASE}/api/public/published-lf/${params.slug}`);
+  const resolvedParams = await params;
+  const blog = await safeFetchJson(`${API_BASE}/api/public/published-lf/${resolvedParams.slug}`);
   if (!blog) return {};
 
   // URLs ko rewrite karna metadata ke liye
@@ -87,10 +88,10 @@ export async function generateStaticParams() {
   const blogs = Array.isArray(list)
     ? list
     : Array.isArray(list?.blogs)
-    ? list.blogs
-    : Array.isArray(list?.data)
-    ? list.data
-    : [];
+      ? list.blogs
+      : Array.isArray(list?.data)
+        ? list.data
+        : [];
 
   return blogs
     .filter((b) => b && b.urlSlug)
@@ -98,7 +99,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogDetails({ params }) {
-  const blog = await getBlog(params.slug);
+  const resolvedParams = await params;
+  const blog = await getBlog(resolvedParams.slug);
   if (!blog) return notFound();
 
   return (
@@ -112,7 +114,7 @@ export default async function BlogDetails({ params }) {
           gtag('config', 'AW-17199345901');
         `}
       </Script>
-      <BlogsClientUI key={blog._id || blog.id || params.slug} blog={blog} />
+      <BlogsClientUI key={blog._id || blog.id || resolvedParams.slug} blog={blog} />
     </div>
   );
 }
