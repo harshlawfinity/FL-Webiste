@@ -11,6 +11,7 @@ const API_BASE = "https://all-internal-panels-988fn.ondigitalocean.app";
 
 const PAGE_SIZE = 9;
 
+
 function Page() {
   const router = useRouter();
   // Filters and search
