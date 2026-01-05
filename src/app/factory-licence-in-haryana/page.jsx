@@ -1,19 +1,19 @@
 export { default } from "@/components/pages/FactoryLicenceHaryanaPage";
 
 export const metadata = {
-  title: "Factory License in Haryana – Expert Factory Consultants",
+  title: "Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence",
   description:
-    "Get your factory license in Haryana with trusted consultants. Fast online process, expert support, and complete compliance for new setups or renewals.",
+    "Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana.",
   keywords: [
     "factory license haryana",
-    "consultants factory",
-    "factory licence in haryana",
-    "factory act registration haryana",
+    "factory license in haryana",
+    "factory licence fees in haryana",
+    "factory licence haryana",
   ],
   openGraph: {
-    title: "Factory License in Haryana – Expert Factory Consultants",
+    title: "Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence",
     description:
-      "Get your factory license in Haryana with trusted consultants. Fast online process, expert support, and complete compliance for new setups or renewals.",
+      "Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana.",
     url: "https://factorylicence.in/factory-licence-in-haryana",
     type: "website",
     siteName: "FactoryLicence.in",

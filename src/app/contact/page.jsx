@@ -1,13 +1,14 @@
 export { default } from "@/components/pages/ContactPage";
 
 export const metadata = {
-  title: "Contact Us | FactoryLicence.in – Expert Help with Factory Licensing & Compliance",
+  title: "Contact US – Factorylicence",
   description:
-    "Get in touch with FactoryLicence.in for professional assistance in factory license registration, renewal, and compliance. Quick response, expert support, and hassle-free service.",
+    "Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges.",
+  keywords: ["Contact US"],
   openGraph: {
-    title: "Contact Us | FactoryLicence.in – Expert Help with Factory Licensing & Compliance",
+    title: "Contact US – Factorylicence",
     description:
-      "Get in touch with FactoryLicence.in for professional assistance in factory license registration, renewal, and compliance. Quick response, expert support, and hassle-free service.",
+      "Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges.",
     url: "https://factorylicence.in/contact",
     type: "website",
     siteName: "FactoryLicence.in",
@@ -16,7 +17,7 @@ export const metadata = {
         url: "https://factorylicence.in/assets/contact-factory-licence-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Contact FactoryLicence.in",
+        alt: "Contact US – Factorylicence",
       },
     ],
   },

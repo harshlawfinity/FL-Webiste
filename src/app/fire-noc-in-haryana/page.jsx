@@ -3,16 +3,25 @@
 export { default } from "@/components/pages/FireNOCHaryanaPage";
 
 export const metadata = {
-  title: "Fire NOC in Haryana | Online Application & Approval – Factory Licence",
+  title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
   description:
-    "Apply for Fire NOC in Haryana with expert assistance from Factory Licence. Get end-to-end support for documentation & approvals. Quick & reliable process.",
-   
+    "Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process.",
+  keywords: [
+    "fire noc in haryana",
+    "download fire noc certificate haryana",
+    "fire noc apply online haryana",
+    "fire noc online haryana",
+    "fire noc renewal haryana",
+    "fire noc renewal haryana online",
+    "online fire noc haryana",
+    "renewal fire noc haryana",
+  ],
   openGraph: {
-    title: "Fire NOC in Haryana | Online Application & Approval – Factory Licence",
+    title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
     description:
-      "Apply for Fire NOC in Haryana with expert assistance from Factory Licence. Get end-to-end support for documentation & approvals. Quick & reliable process.",
-     type: "website",
-     
-   },
-  
+      "Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process.",
+    url: "https://factorylicence.in/fire-noc-in-haryana",
+    type: "website",
+    siteName: "FactoryLicence.in",
+  },
 };

@@ -27,10 +27,11 @@ import hhhhh from "../../assets/hhhhh.webp";
 
 import ContactForm from "@/components/ContactForm";
 
- import bg1 from "../../assets/f1.webp";
+import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionHaryana";
+import Head from "next/head";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -47,9 +48,42 @@ export default function FactoryLicenceDelhiPage() {
 
   return (
     <div>
+      <Head>
+        <title>Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence</title>
+        <meta
+          name="description"
+          content="Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana."
+        />
+        <meta
+          name="keywords"
+          content="factory license haryana, factory license in haryana, factory licence fees in haryana, factory licence haryana"
+        />
+        <meta
+          property="og:title"
+          content="Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana."
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/factory-licence-in-haryana"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://factorylicence.in/assets/factory-license-haryana-og.jpg"
+        />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+        <link
+          rel="canonical"
+          href="https://factorylicence.in/factory-licence-in-haryana"
+        />
+      </Head>
       {/* Hero Section */}
 
-     <section className="relative text-white py-20   md:px-0 px-4 mt-20 overflow-hidden">
+      <section className="relative text-white py-20   md:px-0 px-4 mt-20 overflow-hidden">
         {/* Rotating background images */}
         <div className="absolute inset-0 z-0">
           {heroBackgrounds.map((img, index) => (
@@ -61,13 +95,11 @@ export default function FactoryLicenceDelhiPage() {
               fetchpriority={index === 0 ? "high" : undefined}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } ${
-                index === 0
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } ${index === 0
                   ? ""
                   : "transition-opacity duration-1000 ease-in-out"
-              }`}
+                }`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -97,7 +129,7 @@ export default function FactoryLicenceDelhiPage() {
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="  w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -109,7 +141,7 @@ export default function FactoryLicenceDelhiPage() {
       </section>
 
       {/* Main Content */}
-     <section className="max-w-7xl  mx-auto md:py-4 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
+      <section className="max-w-7xl  mx-auto md:py-4 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         {/* Left Side Content */}
         <div className="md:col-span-3 space-y-14">
 
@@ -254,7 +286,7 @@ export default function FactoryLicenceDelhiPage() {
                 Pollution NOC
               </li>
               <li className="text-justify ">
-               Fire NOC
+                Fire NOC
               </li>
             </ul>
           </Section>
@@ -450,7 +482,7 @@ export default function FactoryLicenceDelhiPage() {
                     ),
                   },
                 ].map((item) => (
-                 <button
+                  <button
                     key={item.id}
                     onClick={() => {
                       const el = document.getElementById(item.id);

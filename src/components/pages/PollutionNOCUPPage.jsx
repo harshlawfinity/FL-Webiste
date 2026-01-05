@@ -27,6 +27,7 @@ import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactForm from "@/components/ContactForm";
+import Head from "next/head";
 
 export default function PollutionNocLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -42,6 +43,31 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
+      <Head>
+        <title>Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence</title>
+        <meta
+          name="description"
+          content="Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support."
+        />
+        <meta
+          name="keywords"
+          content="pollution noc in uttar pardesh, noc pollution control board in uttar pardesh, pollution noc certificate in uttar pardesh, noc from pollution control board in uttar pardesh, cto pollution control board in uttar pardesh, documents required for pollution noc, pollution noc for factory in uttar pardesh"
+        />
+        <meta
+          property="og:title"
+          content="Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support."
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -52,9 +78,8 @@ export default function PollutionNocLicenceHaryanaPage() {
               alt={`bg-${index}`}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -82,7 +107,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -92,16 +117,16 @@ export default function PollutionNocLicenceHaryanaPage() {
           </div>
         </div>
 
-        
+
       </section>
- 
- 
+
+
       {/* Main Content */}
       <section className="max-w-7xl mx-auto md:py-10 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-14">
           <Section id="calc">
 
-                  <PollutionFeeCalculatorUttarPradesh />
+            <PollutionFeeCalculatorUttarPradesh />
 
           </Section>
           <Section
@@ -237,18 +262,18 @@ export default function PollutionNocLicenceHaryanaPage() {
             </ul>
           </Section>
 
-                    <Section
-                      id="steps"
-                      title={
-                        <>
-                          <FaListOl className="inline mr-2" />
-                          Steps
-                        </>
-                      }
-                    >
-                      <Image src={img} alt="image description" />
-                    </Section>
-          
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                Steps
+              </>
+            }
+          >
+            <Image src={img} alt="image description" />
+          </Section>
+
 
           <Section
             id="timelines"
@@ -262,12 +287,12 @@ export default function PollutionNocLicenceHaryanaPage() {
             <li className="text-justify">
               CTE (Consent to Establish): 20 to 30 working days, depending on
               project size and category <br />
-             
-             </li>
 
-                        <li className="text-justify">CTO (Consent to Operate): 45 to 60 working days, post successful
+            </li>
+
+            <li className="text-justify">CTO (Consent to Operate): 45 to 60 working days, post successful
               inspection and documentation.
-                                      </li>
+            </li>
 
 
 

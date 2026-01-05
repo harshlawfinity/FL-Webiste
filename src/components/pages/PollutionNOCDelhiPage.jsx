@@ -28,6 +28,7 @@ import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactForm from "@/components/ContactForm";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
+import Head from "next/head";
 
 export default function PollutionNocLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -43,6 +44,23 @@ export default function PollutionNocLicenceDelhiPage() {
 
   return (
     <div>
+      <Head>
+        <title>Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence</title>
+        <meta
+          name="description"
+          content="Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses."
+        />
+        <meta name="keywords" content="pollution noc in delhi" />
+        <meta
+          property="og:title"
+          content="Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses."
+        />
+        <meta property="og:type" content="website" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -53,9 +71,8 @@ export default function PollutionNocLicenceDelhiPage() {
               alt={`bg-${index}`}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />

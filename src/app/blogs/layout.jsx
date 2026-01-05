@@ -1,13 +1,7 @@
-// app/pages/layout.jsx
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-export default function PagesLayout({ children }) {
+export default function BlogsLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-         <main>{children}</main>
-       </body>
-    </html>
+    <section>
+      {children}
+    </section>
   );
 }

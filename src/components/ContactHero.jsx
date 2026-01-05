@@ -1,3 +1,5 @@
+"use client";
+import Link from "next/link";
 import ContactForm from "./ContactForm";
 
 export default function ContactUs() {
@@ -6,8 +8,15 @@ export default function ContactUs() {
       <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-20 py-20  px-6">
         <div className="max-w-7xl mx-auto flex justify-center items-center text-center">
           <div>
+            <nav className="mb-4 text-sm text-purple-100 font-medium">
+              <Link href="/" className="hover:text-white cursor-pointer">
+                Home
+              </Link>
+              {" >> "}
+              <span className="text-white">Contact US</span>
+            </nav>
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
-              Contact Us
+              Contact US
             </h1>
           </div>
         </div>

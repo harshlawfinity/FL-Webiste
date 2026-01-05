@@ -51,22 +51,22 @@ export default function FactoryLicenceDelhiPage() {
   return (
     <div>
       <Head>
-        <title>Trusted Delhi Factory License Consultants – Apply Now</title>
+        <title>Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence</title>
         <meta
           name="description"
-          content="Apply for your factory license in Delhi online. Fast approval, expert support & end-to-end compliance for new units or renewals. Trusted licensing consultants."
+          content="Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle."
         />
         <meta
           name="keywords"
-          content="factory licence delhi, factory license in delhi, online factory license"
+          content="factory licence in delhi, factory license in delhi, delhi factory license, factory licence fees in delhi, north delhi municipal corporation factory licence renewal online, Factory Licence Renewal in Delhi, factory licence online application in delhi, how to renew factory license online delhi, how to apply for factory license in delhi"
         />
         <meta
           property="og:title"
-          content="Trusted Delhi Factory License Consultants – Apply Now"
+          content="Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence"
         />
         <meta
           property="og:description"
-          content="Apply for your factory license in Delhi online. Fast approval, expert support & end-to-end compliance for new units or renewals. Trusted licensing consultants."
+          content="Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle."
         />
         <meta
           property="og:url"

@@ -20,6 +20,7 @@ import bg3 from "../../assets/f3.webp";
 import img from '@/assets/fire/delhi.jpeg'
 import ContactForm from "@/components/ContactForm";
 import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
+import Head from "next/head";
 
 export default function FireNocLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -35,6 +36,26 @@ export default function FireNocLicenceDelhiPage() {
 
   return (
     <div>
+      <Head>
+        <title>Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence</title>
+        <meta
+          name="description"
+          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
+        />
+        <meta
+          name="keywords"
+          content="fire noc delhi, online application for fire noc delhi, fire noc delhi online, fire noc requirement in delhi, fire noc in delhi, apply for fire noc delhi, delhi fire noc renewal online apply, delhi fire service noc, fire noc apply online delhi"
+        />
+        <meta
+          property="og:title"
+          content="Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
+        />
+        <meta property="og:type" content="website" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -45,9 +66,8 @@ export default function FireNocLicenceDelhiPage() {
               alt={`bg-${index}`}
               width={1920}
               height={1080}
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -71,11 +91,11 @@ export default function FireNocLicenceDelhiPage() {
             </button>
           </div>
 
-           <div className="md:w-1/2 w-full">
+          <div className="md:w-1/2 w-full">
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -84,10 +104,10 @@ export default function FireNocLicenceDelhiPage() {
             </div>
           </div>
 
-         
+
         </div>
 
-       </section>
+      </section>
 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
@@ -254,7 +274,7 @@ export default function FireNocLicenceDelhiPage() {
               </>
             }
           >
-                        <Image src={img} alt="image description"/>
+            <Image src={img} alt="image description" />
 
           </Section>
 

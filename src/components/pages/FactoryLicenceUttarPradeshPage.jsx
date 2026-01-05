@@ -31,6 +31,7 @@ import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionUP";
 import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
+import Head from "next/head";
 
 export default function FactoryLicenceUttarPradeshPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -47,6 +48,39 @@ export default function FactoryLicenceUttarPradeshPage() {
 
   return (
     <div>
+      <Head>
+        <title>Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence</title>
+        <meta
+          name="description"
+          content="Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently."
+        />
+        <meta
+          name="keywords"
+          content="factory licence renewal online uttar pradesh, factory licence in uttar pradesh"
+        />
+        <meta
+          property="og:title"
+          content="Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently."
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/factory-licence-in-uttar-pradesh"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://factorylicence.in/assets/factory-license-up-og.jpg"
+        />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+        <link
+          rel="canonical"
+          href="https://factorylicence.in/factory-licence-in-uttar-pradesh"
+        />
+      </Head>
       {/* Hero Section */}
 
       <section className="relative text-white py-20 md:px-0 px-4 mt-20 overflow-hidden">
@@ -58,9 +92,8 @@ export default function FactoryLicenceUttarPradeshPage() {
               key={index}
               src={img}
               alt={`bg-${index}`}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
+                }`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -466,7 +499,7 @@ export default function FactoryLicenceUttarPradeshPage() {
                     ),
                   },
                 ].map((item) => (
-                 <button
+                  <button
                     key={item.id}
                     onClick={() => {
                       const el = document.getElementById(item.id);

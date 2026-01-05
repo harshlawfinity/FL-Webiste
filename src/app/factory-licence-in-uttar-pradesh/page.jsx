@@ -1,18 +1,17 @@
 export { default } from "@/components/pages/FactoryLicenceUttarPradeshPage";
 
 export const metadata = {
-  title: "Factory License in Uttar Pradesh – Fast & Easy",
+  title: "Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence",
   description:
-    "Apply factory license in Uttar Pradesh online. Expert guidance, fast approval & end-to-end support for new registrations and renewals. Get licensed today!",
+    "Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently.",
   keywords: [
+    "factory licence renewal online uttar pradesh",
     "factory licence in uttar pradesh",
-    "online factory license",
-    "factory registration up",
   ],
   openGraph: {
-    title: "Factory License in Uttar Pradesh – Fast & Easy",
+    title: "Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence",
     description:
-      "Apply factory license in Uttar Pradesh online. Expert guidance, fast approval & end-to-end support for new registrations and renewals. Get licensed today!",
+      "Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently.",
     url: "https://factorylicence.in/factory-licence-in-uttar-pradesh",
     type: "website",
     siteName: "FactoryLicence.in",

@@ -1,14 +1,38 @@
-import React from "react";
- 
+import Link from "next/link";
+
+export const metadata = {
+  title: "Refund Cancellation – Factorylicence",
+  description:
+    "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
+  keywords: ["Refund Cancellation"],
+  openGraph: {
+    title: "Refund Cancellation – Factorylicence",
+    description:
+      "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
+    url: "https://factorylicence.in/refund-cancellation",
+    type: "website",
+    siteName: "FactoryLicence.in",
+  },
+  alternates: {
+    canonical: "https://factorylicence.in/refund-cancellation",
+  },
+};
+
 const RefundCancellation = () => {
   return (
     <div className="mt-20">
-      
       <div>
         <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-40 py-20 md:px-0 px-4">
           <div className="max-w-7xl mx-auto">
+            <nav className="mb-4 text-sm text-purple-100 font-medium">
+              <Link href="/" className="hover:text-white cursor-pointer">
+                Home
+              </Link>
+              {" >> "}
+              <span className="text-white">Refund Cancellation</span>
+            </nav>
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
-              Refunds & Cancellations Policy
+              Refund Cancellation
             </h1>
           </div>
         </div>
@@ -27,27 +51,27 @@ const RefundCancellation = () => {
           </p>
 
           <p className="text-justify">
-At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.
-</p>
-
-          <p className="text-justify">
-If a cancellation request is made within <span className="font-semibold">24 hours</span> of successful payment, the client will be eligible for a <span className="font-semibold"> 100% refund  </span> of the total amount paid. This full refund will be issued without any deductions, provided that the request is communicated within the stipulated time frame. This policy is in place to accommodate any immediate changes in decision before our team initiates substantial work on the assignment.
-          <br />
-          <span className="text-sm italic">Please note that any Government fees paid on behalf of the client are non-refundable under any circumstances. However, the official fee receipt or acknowledgment issued by the relevant government department will be handed over to the client as proof of payment.</span>
+            At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.
           </p>
 
           <p className="text-justify">
-           For cancellation requests received after <span className="font-semibold"> 24 hours but within 7 calendar days </span> from the date of payment, a <span className="font-semibold"> deduction of 20% </span>  will be applied to the total amount paid. This deduction covers the administrative charges, documentation processing, and initial operational efforts carried out by our team during this period. The remaining 80% will be refunded to the client through the original payment method within a reasonable timeframe.
-
+            If a cancellation request is made within <span className="font-semibold">24 hours</span> of successful payment, the client will be eligible for a <span className="font-semibold"> 100% refund  </span> of the total amount paid. This full refund will be issued without any deductions, provided that the request is communicated within the stipulated time frame. This policy is in place to accommodate any immediate changes in decision before our team initiates substantial work on the assignment.
+            <br />
+            <span className="text-sm italic">Please note that any Government fees paid on behalf of the client are non-refundable under any circumstances. However, the official fee receipt or acknowledgment issued by the relevant government department will be handed over to the client as proof of payment.</span>
           </p>
 
           <p className="text-justify">
-If a client wishes to cancel the service after 7 days from the date of payment, the refund amount will be determined on a pro-rata basis, depending on the stage and percentage of work completed by our team. By this time, a significant portion of the service is usually underway or near completion. Therefore, the refundable amount, if any, will reflect the actual work progress, resources utilized, and time invested by our experts. The final decision regarding the refund in such cases will be made by our internal operations team after a thorough review.
+            For cancellation requests received after <span className="font-semibold"> 24 hours but within 7 calendar days </span> from the date of payment, a <span className="font-semibold"> deduction of 20% </span>  will be applied to the total amount paid. This deduction covers the administrative charges, documentation processing, and initial operational efforts carried out by our team during this period. The remaining 80% will be refunded to the client through the original payment method within a reasonable timeframe.
 
           </p>
 
           <p className="text-justify">
-For all refund-related queries, concerns, or cancellation requests, clients are required to send an email to refunds@factorylicence.in. The timestamp of the email received at this address will be considered the official time of refund intimation. This helps us maintain an accurate and transparent record of all refund communications. We advise clients to include their order number, registered email address, payment details, and a brief reason for cancellation to ensure faster processing.
+            If a client wishes to cancel the service after 7 days from the date of payment, the refund amount will be determined on a pro-rata basis, depending on the stage and percentage of work completed by our team. By this time, a significant portion of the service is usually underway or near completion. Therefore, the refundable amount, if any, will reflect the actual work progress, resources utilized, and time invested by our experts. The final decision regarding the refund in such cases will be made by our internal operations team after a thorough review.
+
+          </p>
+
+          <p className="text-justify">
+            For all refund-related queries, concerns, or cancellation requests, clients are required to send an email to refunds@factorylicence.in. The timestamp of the email received at this address will be considered the official time of refund intimation. This helps us maintain an accurate and transparent record of all refund communications. We advise clients to include their order number, registered email address, payment details, and a brief reason for cancellation to ensure faster processing.
 
           </p>
 

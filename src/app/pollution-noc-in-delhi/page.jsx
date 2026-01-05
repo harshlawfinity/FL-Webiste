@@ -3,16 +3,14 @@
 export { default } from "@/components/pages/PollutionNOCDelhiPage";
 
 export const metadata = {
-  title: "Pollution NOC in Delhi | Apply Online – Factory Licence",
+  title: "Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence",
   description:
-    "Get your Pollution Control NOC in Delhi hassle-free with Factory Licence. Expert support for CPCB/SPCB compliance,& approvals. Apply online now!",
-   
+    "Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses.",
+  keywords: ["pollution noc in delhi"],
   openGraph: {
-    title: "Pollution NOC in Delhi | Apply Online – Factory Licence",
+    title: "Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence",
     description:
-      "Get your Pollution Control NOC in Delhi hassle-free with Factory Licence. Expert support for CPCB/SPCB compliance,& approvals. Apply online now!",
-     type: "website",
-     
-   },
-  
+      "Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses.",
+    type: "website",
+  },
 };

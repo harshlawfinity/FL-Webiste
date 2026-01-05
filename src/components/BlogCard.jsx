@@ -10,7 +10,7 @@ const BlogCard = ({
   title,
   summary,
   authorName,
-   views = 0, // ✅ New prop
+  views = 0, // ✅ New prop
 }) => {
   const toTitleCase = (str) =>
     str
@@ -21,13 +21,11 @@ const BlogCard = ({
 
   return (
     <div className="rounded-xl overflow-hidden bg-white shadow-sm">
-      {console.log(readTime)}
       <div className="relative h-52 w-full">
         <img
           src={image}
           alt={title}
-          fill
-          className="w-full object-cover h-52"
+          className="w-full h-52 object-cover"
         />
         {category && (
           <span className="absolute top-3 left-3 bg-gray-900 text-white text-xs font-medium px-3 py-1 rounded-full">
@@ -54,10 +52,10 @@ const BlogCard = ({
 
         <div className="flex items-center justify-between w-full gap-2 text-xs mt-4">
           <p className="text-sm font-medium text-gray-500">{authorName}</p>
-          
-        <p className=" text-blue-600 font-medium  text-base  underline cursor-pointer">
-          Read More →
-        </p>
+
+          <p className=" text-blue-600 font-medium  text-base  underline cursor-pointer">
+            Read More →
+          </p>
         </div>
       </div>
     </div>

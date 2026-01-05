@@ -2,6 +2,7 @@
 
 import { lazy, Suspense, useEffect, useState } from "react";
 import Image from "next/image";
+import Head from "next/head";
 import {
   FaIndustry,
   FaQuestionCircle,
@@ -33,6 +34,31 @@ export default function FireNocLicenceHaryanaPage() {
 
   return (
     <div>
+      <Head>
+        <title>Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence</title>
+        <meta
+          name="description"
+          content="Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process."
+        />
+        <meta
+          name="keywords"
+          content="fire noc in haryana, download fire noc certificate haryana, fire noc apply online haryana, fire noc online haryana, fire noc renewal haryana, fire noc renewal haryana online, online fire noc haryana, renewal fire noc haryana"
+        />
+        <meta
+          property="og:title"
+          content="Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process."
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/fire-noc-in-haryana"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white py-40 md:py-20 mt- px-4 mt-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -43,9 +69,8 @@ export default function FireNocLicenceHaryanaPage() {
               alt={`bg-${index}`}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -72,7 +97,7 @@ export default function FireNocLicenceHaryanaPage() {
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen

@@ -27,6 +27,7 @@ import bg3 from "../../assets/f3.webp";
 import ContactForm from "@/components/ContactForm";
 import img from "@/assets/pollution/haryana.png";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
+import Head from "next/head";
 
 export default function PollutionNocLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -42,6 +43,31 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
+      <Head>
+        <title>Pollution NOC in Haryana, Apply & Renew Pollution NOC Online in Haryana - Factorylicence</title>
+        <meta
+          name="description"
+          content="Pollution NOC in Haryana - Apply online for pollution NOC in Haryana. Get NOC from Pollution Control Board in Haryana, CTO certificate, and pollution NOC for factory with expert support."
+        />
+        <meta
+          name="keywords"
+          content="pollution noc in haryana, noc pollution control board in haryana, pollution noc certificate in haryana, noc from pollution control board in haryana, cto pollution control board in haryana, pollution noc for factory in haryana, pollution noc Apply online in haryana"
+        />
+        <meta
+          property="og:title"
+          content="Pollution NOC in Haryana, Apply & Renew Pollution NOC Online in Haryana - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Pollution NOC in Haryana - Apply online for pollution NOC in Haryana. Get NOC from Pollution Control Board in Haryana, CTO certificate, and pollution NOC for factory with expert support."
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/pollution-noc-in-haryana"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -52,9 +78,8 @@ export default function PollutionNocLicenceHaryanaPage() {
               alt={`bg-${index}`}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -94,12 +119,12 @@ export default function PollutionNocLicenceHaryanaPage() {
       </section>
 
       {/* Main Content */}
-      
+
       <section className="max-w-7xl mx-auto md:py-10 py-4 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-14">
           <Section id="calc">
             <PollutionFeeCalculatorHaryana />
-           </Section>
+          </Section>
 
           <Section
             id="what-is"

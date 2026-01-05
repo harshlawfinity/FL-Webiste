@@ -3,16 +3,23 @@
 export { default } from "@/components/pages/FireNOCUPPage";
 
 export const metadata = {
-  title: "Fire NOC in Uttar Pradesh | Online Application & Approval – Factory Licence",
+  title: "Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence",
   description:
-    "Apply for Fire NOC in Uttar Pradesh with expert assistance from Factory Licence. Get end-to-end support for documentation & approvals. Quick & reliable process.",
-   
+    "Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily.",
+  keywords: [
+    "fire noc uttar pradesh",
+    "uttar pradesh fire service noc",
+    "fire noc apply online uttar pradesh",
+    "fire noc online uttar pradesh",
+    "fire noc renewal uttar pradesh",
+    "fire noc renewal online in uttar pradesh",
+    "online fire noc uttar pradesh",
+    "renewal fire noc uttar pradesh",
+  ],
   openGraph: {
-    title: "Fire NOC in Uttar Pradesh | Online Application & Approval – Factory Licence",
+    title: "Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence",
     description:
-      "Apply for Fire NOC in Uttar Pradesh with expert assistance from Factory Licence. Get end-to-end support for documentation & approvals. Quick & reliable process.",
-     type: "website",
-     
-   },
-  
+      "Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily.",
+    type: "website",
+  },
 };

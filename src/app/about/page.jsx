@@ -1,13 +1,14 @@
 export { default } from "@/components/pages/AboutPage";
 
 export const metadata = {
-  title: "About Lawfinity India Private Limited",
+  title: "About US - Factorylicence",
   description:
-    "Learn about Lawfinity India Private Limited, the team behind FactoryLicence.in. Trusted experts in factory licensing, compliance, and legal consultancy in India.",
+    "Factorylicence.in is your most trusted partner for all the services spanning from factory setup to factory management.",
+  keywords: ["About US"],
   openGraph: {
-    title: "About Lawfinity India Private Limited",
+    title: "About US - Factorylicence",
     description:
-      "Learn about Lawfinity India Private Limited, the team behind FactoryLicence.in. Trusted experts in factory licensing, compliance, and legal consultancy in India.",
+      "Factorylicence.in is your most trusted partner for all the services spanning from factory setup to factory management.",
     url: "https://factorylicence.in/about",
     type: "website",
     siteName: "FactoryLicence.in",
@@ -16,7 +17,7 @@ export const metadata = {
         url: "https://factorylicence.in/assets/about-lawfinity-og.jpg",
         width: 1200,
         height: 630,
-        alt: "About Lawfinity India Private Limited",
+        alt: "About US - Factorylicence",
       },
     ],
   },

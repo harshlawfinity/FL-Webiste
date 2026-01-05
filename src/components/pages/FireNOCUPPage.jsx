@@ -1,6 +1,7 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useState } from "react";
+import Head from "next/head";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -39,6 +40,26 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
+      <Head>
+        <title>Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence</title>
+        <meta
+          name="description"
+          content="Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily."
+        />
+        <meta
+          name="keywords"
+          content="fire noc uttar pradesh, uttar pradesh fire service noc, fire noc apply online uttar pradesh, fire noc online uttar pradesh, fire noc renewal uttar pradesh, fire noc renewal online in uttar pradesh, online fire noc uttar pradesh, renewal fire noc uttar pradesh"
+        />
+        <meta
+          property="og:title"
+          content="Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence"
+        />
+        <meta
+          property="og:description"
+          content="Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily."
+        />
+        <meta property="og:type" content="website" />
+      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -49,9 +70,8 @@ export default function PollutionNocLicenceHaryanaPage() {
               alt={`bg-${index}`}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-1000 ease-in-out`}
+              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-1000 ease-in-out`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -63,7 +83,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               Fire NOC Registration in Uttar Pradesh
             </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-             Ensure compliance and protect your building or business in Uttar Pradesh with expert Fire NOC assistance. We help simplify approvals, inspections, and documentation.
+              Ensure compliance and protect your building or business in Uttar Pradesh with expert Fire NOC assistance. We help simplify approvals, inspections, and documentation.
 
 
             </p>
@@ -75,11 +95,11 @@ export default function PollutionNocLicenceHaryanaPage() {
             </button>
           </div>
 
-           <div className="md:w-1/2 w-full">
+          <div className="md:w-1/2 w-full">
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -89,7 +109,7 @@ export default function PollutionNocLicenceHaryanaPage() {
           </div>
         </div>
 
-        
+
       </section>
 
       {/* Main Content */}
@@ -105,7 +125,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify">
-A Fire NOC (No Objection Certificate) is a statutory requirement which is issued by the Fire Services Department of Uttar Pradesh in order to ensure that buildings and commercial establishments have complied with the prescribed fire safety conditions. Under the Uttar Pradesh Fire Prevention and Fire Safety Act, 2005, obtaining a Fire NOC is mandatory for certain categories of buildings, before they can be occupied or engaged in any kind of operations. Lawfinity through its experts offers valuable guidance and complete support in obtaining Fire NOCs across the state, ensuring compliance with state rules and the National Building Code (NBC).
+              A Fire NOC (No Objection Certificate) is a statutory requirement which is issued by the Fire Services Department of Uttar Pradesh in order to ensure that buildings and commercial establishments have complied with the prescribed fire safety conditions. Under the Uttar Pradesh Fire Prevention and Fire Safety Act, 2005, obtaining a Fire NOC is mandatory for certain categories of buildings, before they can be occupied or engaged in any kind of operations. Lawfinity through its experts offers valuable guidance and complete support in obtaining Fire NOCs across the state, ensuring compliance with state rules and the National Building Code (NBC).
 
             </p>
           </Section>
@@ -120,7 +140,7 @@ A Fire NOC (No Objection Certificate) is a statutory requirement which is issued
             }
           >
             <p className="text-justify">
-A Fire NOC is crucial to verify that a building has proper fire safety measures in place, including alarms, sprinklers and emergency exits. Without this NOC, the property owners may be denied occupancy certificates and in certain cases face legal consequences. Lawfinity helps businesses to avoid such delays, fines and potential shutdowns by managing the entire Fire NOC process smoothly and compliantly.
+              A Fire NOC is crucial to verify that a building has proper fire safety measures in place, including alarms, sprinklers and emergency exits. Without this NOC, the property owners may be denied occupancy certificates and in certain cases face legal consequences. Lawfinity helps businesses to avoid such delays, fines and potential shutdowns by managing the entire Fire NOC process smoothly and compliantly.
 
             </p>
           </Section>
@@ -136,21 +156,21 @@ A Fire NOC is crucial to verify that a building has proper fire safety measures 
           >
             <ul className="list-disc pl-6">
               <li>
-Legal Assurance: A Fire NOC ensures your premises comply with fire safety regulations, helping avoid legal liabilities and closure notices.
+                Legal Assurance: A Fire NOC ensures your premises comply with fire safety regulations, helping avoid legal liabilities and closure notices.
               </li>
               <li>
-Safety for Occupants: It confirms the implementation of critical fire safety measures to protect employees, customers and assets.
+                Safety for Occupants: It confirms the implementation of critical fire safety measures to protect employees, customers and assets.
 
               </li>
               <li>
-Mandatory for Other Licenses: Fire NOC is a prerequisite for obtaining trade licenses, occupancy/completion certificates and project approvals.
+                Mandatory for Other Licenses: Fire NOC is a prerequisite for obtaining trade licenses, occupancy/completion certificates and project approvals.
               </li>
               <li>
-Insurance Support: It strengthens your case during fire insurance claims by proving adherence to safety protocols.
+                Insurance Support: It strengthens your case during fire insurance claims by proving adherence to safety protocols.
 
               </li>
               <li>
-             Insurance Support: Many insurance companies mandate a valid Fire NOC to approve fire insurance claims.
+                Insurance Support: Many insurance companies mandate a valid Fire NOC to approve fire insurance claims.
 
               </li>
 
@@ -171,43 +191,43 @@ Insurance Support: It strengthens your case during fire insurance claims by prov
             }
           >
             <p className="text-justify">
-In Uttar Pradesh, Fire NOC is mandatory for:
+              In Uttar Pradesh, Fire NOC is mandatory for:
 
 
 
             </p>
 
 
-             <li>
-Residential buildings above 15 meters in height
-              </li>
-              <li>
-Commercial establishments exceeding 500 square meters of built-up area
+            <li>
+              Residential buildings above 15 meters in height
+            </li>
+            <li>
+              Commercial establishments exceeding 500 square meters of built-up area
 
-              </li>
-              <li>
-Industrial premises, warehouses and factories dealing with inflammable substances
+            </li>
+            <li>
+              Industrial premises, warehouses and factories dealing with inflammable substances
 
-              </li>
-              <li>
-Educational institutions, hotels, hospitals, malls, banquet halls and high footfall areas
+            </li>
+            <li>
+              Educational institutions, hotels, hospitals, malls, banquet halls and high footfall areas
 
-              </li>
-              <li>
-Buildings requiring approval from local bodies like Noida Authority, GDA, LDA, etc.
+            </li>
+            <li>
+              Buildings requiring approval from local bodies like Noida Authority, GDA, LDA, etc.
 
-              </li>
-
-               
-
-<br />
-
-              <p>
-Lawfinity assists in assessing your building’s eligibility and ensures readiness before applying.
+            </li>
 
 
 
-              </p>
+            <br />
+
+            <p>
+              Lawfinity assists in assessing your building’s eligibility and ensures readiness before applying.
+
+
+
+            </p>
           </Section>
 
           <Section
@@ -226,24 +246,24 @@ Lawfinity assists in assessing your building’s eligibility and ensures readine
               </li>
               <li>Email id and mobile number of the applicant</li>
               <li>Building plan approved by development authority or municipality
-</li>
+              </li>
               <li>Fire safety equipment layout plan
-</li>
+              </li>
               <li>
-               Building Completion Certificate or Structural Stability Certificate
+                Building Completion Certificate or Structural Stability Certificate
 
               </li>
               <li>Architect’s certification of fire safety compliance
-</li>
+              </li>
               <li>Ownership/lease documents
-</li>
+              </li>
               <li>Photographs of installed fire safety systems
-</li>
+              </li>
               <li>Affidavit from owner/occupier on fire safety installations
-</li>
-              
+              </li>
+
             </ul>
-<br />
+            <br />
             <p>
               Lawfinity reviews and compiles all documentation to minimize errors or rejections.
 
@@ -251,17 +271,17 @@ Lawfinity assists in assessing your building’s eligibility and ensures readine
             </p>
           </Section>
 
-         <Section
-                     id="steps"
-                     title={
-                       <>
-                         <FaListOl className="inline mr-2" />
-                         Steps
-                       </>
-                     }
-                   >
-                     <Image src={img} alt="image description" />
-                   </Section>
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                Steps
+              </>
+            }
+          >
+            <Image src={img} alt="image description" />
+          </Section>
 
           <Section
             id="timelines"
@@ -273,14 +293,14 @@ Lawfinity assists in assessing your building’s eligibility and ensures readine
             }
           >
             <p className="text-justify">
-             The standard timeline to obtain a Fire NOC in Uttar Pradesh ranges between 20 to 30 working days, subject to complete documentation and successful inspection. Lawfinity ensures the process is expedited through proper planning, real-time follow-ups and professional coordination with local authorities.
+              The standard timeline to obtain a Fire NOC in Uttar Pradesh ranges between 20 to 30 working days, subject to complete documentation and successful inspection. Lawfinity ensures the process is expedited through proper planning, real-time follow-ups and professional coordination with local authorities.
 
 
               <br />
             </p>
 
- 
-           
+
+
           </Section>
 
           <Section
@@ -293,13 +313,13 @@ Lawfinity assists in assessing your building’s eligibility and ensures readine
             }
           >
             <p className="text-justify">
-             Failure to obtain or renew a Fire NOC in Uttar Pradesh may lead to:
+              Failure to obtain or renew a Fire NOC in Uttar Pradesh may lead to:
 
-<li>Penalties ranging from ₹25,000 to ₹50,000 or more </li>
-<li>Sealing of the premises or denial of occupancy </li>
-<li>Disconnection of water, electricity or trade licenses </li>
-<li>Criminal proceedings in case of fire-related incidents </li>  <br />
-Lawfinity helps you stay compliant and avoid such heavy penalties through timely consultation and action.
+              <li>Penalties ranging from ₹25,000 to ₹50,000 or more </li>
+              <li>Sealing of the premises or denial of occupancy </li>
+              <li>Disconnection of water, electricity or trade licenses </li>
+              <li>Criminal proceedings in case of fire-related incidents </li>  <br />
+              Lawfinity helps you stay compliant and avoid such heavy penalties through timely consultation and action.
             </p>
           </Section>
         </div>

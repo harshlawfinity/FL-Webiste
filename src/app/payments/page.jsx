@@ -1,17 +1,40 @@
-import React from "react";
- 
+import Link from "next/link";
+
+export const metadata = {
+  title: "Payments – Factorylicence",
+  description:
+    "Securely complete your payment for factory license services on Factorylicence.in. Fast, safe, and transparent payment process with full support.",
+  keywords: ["Payments"],
+  openGraph: {
+    title: "Payments – Factorylicence",
+    description:
+      "Securely complete your payment for factory license services on Factorylicence.in. Fast, safe, and transparent payment process with full support.",
+    url: "https://factorylicence.in/payments",
+    type: "website",
+    siteName: "FactoryLicence.in",
+  },
+  alternates: {
+    canonical: "https://factorylicence.in/payments",
+  },
+};
+
 const Payments = () => {
   return (
     <div>
-      
-
       <section className="relative bg-[#f4f4fa] py-20 px-4 md:px-0">
         <div className="max-w-7xl mt-10 mx-auto grid md:grid-cols-2 gap-12 items-center">
           {/* Left Column: Bank Info */}
           <div className="space-y-8">
-            <h2 className="text-4xl font-semibold text-[#1A1A1A] leading-tight tracking-tight">
+            <nav className="mb-4 text-sm text-gray-500 font-medium">
+              <Link href="/" className="hover:text-[#7A3EF2] cursor-pointer">
+                Home
+              </Link>
+              {" >> "}
+              <span className="text-gray-900">Payments</span>
+            </nav>
+            <h1 className="text-4xl font-semibold text-[#1A1A1A] leading-tight tracking-tight">
               Payment Information
-            </h2>
+            </h1>
             <div className="bg-white/70 backdrop-blur-lg p-8 rounded-xl shadow-md border border-gray-200 space-y-4 text-gray-800">
               <div className="flex justify-between text-sm md:text-base">
                 <span className="font-medium text-gray-500 ">Bank Name</span>
