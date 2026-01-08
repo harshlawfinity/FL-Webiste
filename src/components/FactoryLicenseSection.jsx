@@ -59,7 +59,7 @@ const FactoryLicenseSection = () => {
         <div className="w-full lg:w-1/2">
              <Image
               src={f4}
-              alt="Compliance Visual"
+              alt="Factory License Renewal"
               className="rounded-2xl w-full h-auto max-h-[480px] object-cover shadow-xl"
               loading="lazy"
               decoding="async"
@@ -96,7 +96,7 @@ const FactoryLicenseSection = () => {
           {/* Steps Image */}
              <Image
               src={steps[activeState].image}
-              alt={`${activeState} factory licence steps`}
+              alt={`Factory License Registration`}
               className="w-full max-h-[240px] object-contain"
               loading="lazy"
               decoding="async"

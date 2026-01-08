@@ -8,7 +8,7 @@ export default function FeatureCard() {
         <div className="md:w-1/2">
           <Image
             src={f1} // Replace with your image path
-            alt="Modern design visual"
+            alt="Factory Licence Renewal"
             className="rounded-3xl w-full h-auto object-cover"
             loading="lazy"
           />

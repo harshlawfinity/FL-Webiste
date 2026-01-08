@@ -377,7 +377,7 @@ export default function FactoryLicenceDelhiPage() {
             </ol>
           </Section>
 
-          <Image src={hhhhh} alt="" />
+          <Image src={hhhhh} alt="Factory Licence In Haryana" />
 
           <Section
             id="timelines"

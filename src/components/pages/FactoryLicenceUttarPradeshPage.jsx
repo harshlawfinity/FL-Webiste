@@ -382,7 +382,7 @@ export default function FactoryLicenceUttarPradeshPage() {
               </li>
             </ol>
           </Section>
-          <Image loading="lazy" src={uuu} alt="" />
+          <Image loading="lazy" src={uuu} alt="Factory Licence In Uttar Pradesh" />
 
           <Section
             id="timelines"

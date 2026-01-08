@@ -390,7 +390,7 @@ export default function FactoryLicenceDelhiPage() {
           <Image
             loading="lazy"
             src={ddddd}
-            alt="Factoy Licence In Delhi Steps"
+            alt="Factoy Licence In Delhi"
           />
 
           <Section

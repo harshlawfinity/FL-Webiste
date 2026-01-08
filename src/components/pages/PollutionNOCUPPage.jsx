@@ -75,7 +75,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             <Image
               key={index}
               src={img}
-              alt={`bg-${index}`}
+              alt={`Pollution Noc In Uttar Pradesh`}
               width="1920"
               height="1080"
               className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"

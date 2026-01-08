@@ -9,18 +9,21 @@ export default function AssistanceSection() {
       description:
         "100% accuracy in paperwork to avoid delays, rejections, or penalties.",
       image: zero, // Replace with your actual path
+      alt: "Factory Registration Certificate",
     },
     {
       title: "Ongoing Compliance Management",
       description:
         "We don’t stop at licences — we help you stay compliant year-round.",
       image: management, // Replace with your actual path
+      alt: "Factory Act Licence",
     },
     {
       title: "Support 24/7",
       description:
         "We help diagnose processes in the company. We provide recommendations on process optimization.",
       image: support, // Replace with your actual path
+      alt: "Mcd Factory Licence",
     },
   ];
 
@@ -38,7 +41,7 @@ export default function AssistanceSection() {
           >
             <Image
               src={feature.image}
-              alt={feature.title}
+              alt={feature.alt}
               className="w-24 h-24 mb-4 object-contain"
               loading="lazy"
               width="644"
