@@ -288,11 +288,10 @@ function TableOfContents({ headings, activeId }) {
             <li key={heading.id}>
               <button
                 onClick={() => scrollToHeading(heading.id)}
-                className={`text-left text-sm hover:text-blue-600 transition-colors duration-200 block w-full p-1 rounded ${
-                  activeId === heading.id
+                className={`text-left text-sm hover:text-blue-600 transition-colors duration-200 block w-full p-1 rounded ${activeId === heading.id
                     ? "text-blue-600 bg-blue-50 font-medium"
                     : "text-gray-700"
-                }`}
+                  }`}
               >
                 {heading.text}
               </button>
@@ -513,36 +512,34 @@ export default function BlogsClientUI({ blog }) {
       <div className="max-w-7xl mx-auto px-4 md:mt-10 mt-0 flex flex-col relative lg:flex-row gap-8">
         <div className="w-full lg:w-3/4">
           <div className="my-4">
-            {(blog.category || blog.subCategory || blog.subSubCategory) && (
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap items-center gap-2 mb-3"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Blogs", href: "/blogs" },
-                  blog.category && { label: blog.category },
-                  blog.subCategory && { label: blog.subCategory },
-                  blog.subSubCategory && { label: blog.subSubCategory },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <a
-                          href={item.href}
-                          className="text-blue-600 hover:underline"
-                        >
-                          {item.label}
-                        </a>
-                      ) : (
-                        <span>{item.label}</span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            )}
+            <nav
+              aria-label="Breadcrumb"
+              className="flex flex-wrap items-center gap-2 mb-3 text-sm"
+            >
+              {[
+                { label: "Home", href: "/" },
+                { label: "Blogs", href: "/blogs" },
+                { label: blog.title },
+              ]
+                .filter(Boolean)
+                .map((item, idx) => (
+                  <div key={idx} className="flex items-center">
+                    {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <span className="text-gray-600 truncate max-w-[200px] md:max-w-none">
+                        {item.label}
+                      </span>
+                    )}
+                  </div>
+                ))}
+            </nav>
 
             <p className="md:text-sm text-xs text-gray-700 mb-4">
               ✍️ {blog.author || "Team Factory Licence"} •{" "}
@@ -588,14 +585,14 @@ export default function BlogsClientUI({ blog }) {
           ) : null}
         </div>
 
-  <aside className="w-full lg:w-1/4 hidden lg:block right-0 lg:mt-6 lg:sticky lg:top-32">
-    {/* Desktop Table of Contents & Contact Form: only show on lg and up */}
-    <div className="z-10 sticky top-32">
-      <TableOfContents headings={headings} activeId={activeHeadingId} />
-      <BlogSidebarContactForm />
-    </div>
-     
-  </aside>
+        <aside className="w-full lg:w-1/4 hidden lg:block right-0 lg:mt-6 lg:sticky lg:top-32">
+          {/* Desktop Table of Contents & Contact Form: only show on lg and up */}
+          <div className="z-10 sticky top-32">
+            <TableOfContents headings={headings} activeId={activeHeadingId} />
+            <BlogSidebarContactForm />
+          </div>
+
+        </aside>
       </div>
 
       {/* Connected Services */}
@@ -783,11 +780,10 @@ export default function BlogsClientUI({ blog }) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-4 py-2 rounded text-white ${
-              isSubmitting
+            className={`px-4 py-2 rounded text-white ${isSubmitting
                 ? "bg-blue-300 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
-            }`}
+              }`}
           >
             {isSubmitting ? "Submitting..." : "Submit Comment"}
           </button>
