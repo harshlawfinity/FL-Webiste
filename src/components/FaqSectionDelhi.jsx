@@ -1,39 +1,39 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const faqs = [
   {
-    question: "Is a factory licence required for small-scale manufacturing units?",
-    answer: "Yes, if the unit employs 10 or more workers with power or 20 or more without power.",
+    question: "Is a factory license mandatory?",
+    answer: "Yes, a factory license is mandatory for any manufacturing establishment in India that meets the criteria specified under the Factories Act, 1948 (i.e., 10+ workers with power, or 20+ workers without power). Operating without it is illegal and can lead to severe penalties.",
   },
   {
-    question: "Can I operate my factory while the application is pending?",
-    answer: "No, you must receive the licence before commencing manufacturing operations.",
+    question: "What are the documents required for a factory license?",
+    answer: "Key documents required for a factory license include your approved factory plan, proof of premises ownership/occupancy, NOCs from the Fire and Pollution Control Boards, details of machinery and workers, business registration documents, and identity/address proofs of the occupier/manager.",
   },
   {
-    question: "What is the validity of a factory licence?",
-    answer: "Typically valid for 1 year; some states offer up to 5 years with renewal options.",
+    question: "Why is a factory license required?",
+    answer: "A factory license is required to ensure the health, safety, and welfare of workers, regulate working conditions, and promote environmental responsibility. It provides legal authorisation for your factory's operation and ensures compliance with statutory provisions, preventing accidents and ensuring fair labour practices.",
   },
   {
-    question: "Is the process online or offline?",
-    answer: "Most states, including Delhi offer online applications and processing.",
+    question: "What is the validity of the factory license?",
+    answer: "The factory license validity typically ranges from one to five years, depending on the specific state's factory rules. It's crucial to check your state's regulations and apply for factory license renewal before its expiry.",
   },
   {
-    question: "Who issues the Factory Licence in Delhi?",
-    answer: "The Labour Department, Government of NCT of Delhi.",
+    question: "Is GST applicable to factory license fees?",
+    answer: "Yes, GST is applicable on factory license fees as these are considered a service provided by the government. The applicable GST rate must be paid along with the license fee during the application or factory license renewal process.",
   },
   {
-    question: "Is physical inspection mandatory?",
-    answer: "Yes, the concerned authority inspects the premises before issuing the licence.",
+    question: "Can a licence be transferred?",
+    answer: "In most cases, a licence is non-transferable, and a fresh application must be made in case of ownership change.",
   },
   {
-    question: "Can factorylicence.in help with inspections and renewals?",
-    answer: "Yes, we offer end-to-end support including pre-inspection readiness and timely renewal services.",
+    question: "What happens if I don't renew my licence?",
+    answer: "Failure to renew leads to penalties and may result in the closure or sealing of the factory.",
   },
   {
-    question: "Are fire and pollution NOCs mandatory?",
-    answer: "Yes, especially for medium to large factories or those involved in chemical or hazardous production.",
+    question: "Can I apply without a Pollution NOC?",
+    answer: "In many states, a Pollution Control Board clearance is mandatory before applying for a factory licence.",
   },
 ];
 
@@ -79,9 +79,8 @@ export default function FaqSection() {
                     </button>
 
                     <div
-                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${
-                        openIndex === actualIndex ? 'max-h-96 pb-2' : 'max-h-0'
-                      }`}
+                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${openIndex === actualIndex ? 'max-h-96 pb-2' : 'max-h-0'
+                        }`}
                     >
                       <p>{faq.answer}</p>
                     </div>

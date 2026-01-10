@@ -7,6 +7,10 @@ import TawkTo from "@/components/TawkTo";
 export const metadata = {
   title: 'Factory Licence Online in India – Fast Approval Guaranteed',
   description: 'Apply for a factory licence online in India easily and securely.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -16,28 +16,28 @@ const faqs = [
     answer: "No, you must receive the licence before commencing manufacturing operations.",
   },
   {
-    question: "What is the validity of a factory licence?",
-    answer: "Typically valid for 1 year; some states offer up to 5 years with renewal options.",
+    question: "Is a factory license mandatory?",
+    answer: "Yes, a factory license is mandatory for any manufacturing establishment in India that meets the criteria specified under the Factories Act, 1948 (i.e., 10+ workers with power, or 20+ workers without power). Operating without it is illegal and can lead to severe penalties.",
   },
   {
-    question: "Is the process online or offline?",
-    answer: "Most states, including Uttar Pradesh  offer online applications and processing.",
+    question: "What are the documents required for a factory license?",
+    answer: "Key documents required for a factory license include your approved factory plan, proof of premises ownership/occupancy, NOCs from the Fire and Pollution Control Boards, details of machinery and workers, business registration documents, and identity/address proofs of the occupier/manager.",
   },
   {
-    question: "Who issues the Factory Licence in Uttar Pradesh?",
-    answer: "The Labour Department, Government  of Uttar Pradesh.",
+    question: "Who issues a factory license in India?",
+    answer: "The Chief Inspector of Factories under the respective State Labour Department or Directorate of Factories and Boilers is the authority that issues the factory license in India.",
   },
   {
-    question: "Is physical inspection mandatory?",
-    answer: "Yes, the concerned authority inspects the premises before issuing the licence.",
-  },
-  {
-    question: "Can factorylicence.in help with inspections and renewals?",
-    answer: "Yes, we offer end-to-end support including pre-inspection readiness and timely renewal services.",
+    question: "What is the validity of the factory license?",
+    answer: "The factory license validity typically ranges from one to five years, depending on the specific state's factory rules. It's crucial to check your state's regulations and apply for factory license renewal before its expiry.",
   },
   {
     question: "Are fire and pollution NOCs mandatory?",
     answer: "Yes, especially for medium to large factories or those involved in chemical or hazardous production.",
+  },
+  {
+    question: "Can Factorylicence.in help with inspections and renewals?",
+    answer: "Yes, we offer end-to-end support, including pre-inspection readiness and timely renewal services.",
   },
 ];
 
@@ -83,9 +83,8 @@ export default function FaqSection() {
                     </button>
 
                     <div
-                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${
-                        openIndex === actualIndex ? 'max-h-96 pb-2' : 'max-h-0'
-                      }`}
+                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${openIndex === actualIndex ? 'max-h-96 pb-2' : 'max-h-0'
+                        }`}
                     >
                       <p>{faq.answer}</p>
                     </div>

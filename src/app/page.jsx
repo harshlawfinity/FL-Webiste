@@ -80,6 +80,7 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import CallToActionSection from "@/components/CallToActionSection";
 import FaqSection from "@/components/FaqSection";
 import UniversalFeeCalculator from "@/components/UniversalFeeCalculator";
+import ExtendedContent from "@/components/ExtendedContent";
 
 const Page = () => {
   return (
@@ -215,6 +216,9 @@ const Page = () => {
       <AssistanceSection />
       <TestimonialCarousel />
       <CallToActionSection />
+
+
+      <ExtendedContent />
       <FaqSection />
     </>
   );

@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link";
+
   
 const FactoryLicence = () => {
   return (
@@ -15,7 +17,7 @@ const FactoryLicence = () => {
           <br /><br />
           We thoroughly understand that manoeuvring the regulatory framework in India can be daunting and the ultimate need behind our team coming into the picture. Our team has the perfect integration of Company Secretaries, Chartered Accountants, Advocates, Legal Advisors and experts who works closely with you to provide the leverage to achieve your specific business objectives. We are committed to assisting you and providing the solutions that has clarity, strategy and most importantly it is practically viable.
           <br /><br />
-          Our strength lies in making these intricate procedures easy to handle and allow the business owners and entrepreneurs to focus on their core business needs and to grow their organisation. When it comes to obtaining a Factory Licence, our well experienced team assists you at every stage, right from assessing the eligibility, preparing the documents, filing of applications, taking care of the inspections and ensuring all the post registration compliance requirements until they are fulfilled. We aim to keep the entire process precise, timely and hassle free, so that you can proceed further with confidence and conviction.
+          Our strength lies in making these intricate procedures easy to handle and allow the business owners and entrepreneurs to focus on their core business needs and to grow their organisation. When it comes to obtaining a <Link href="https://factorylicence.in" className="text-blue-500 hover:underline">Factory Licence</Link>, our well experienced team assists you at every stage, right from assessing the eligibility, preparing the documents, filing of applications, taking care of the inspections and ensuring all the post registration compliance requirements until they are fulfilled. We aim to keep the entire process precise, timely and hassle free, so that you can proceed further with confidence and conviction.
         </p>
       </section>
     </div>

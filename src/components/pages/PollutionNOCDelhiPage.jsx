@@ -122,21 +122,15 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaIndustry className="inline mr-2" />
-                Introduction and Its Compliance
+                <span className="bg- px-1">Pollution NOC In Delhi</span> Registration
               </>
             }
           >
+            <p className="text-justify mb-4">
+              Setting up and operating a factory will not be possible without a pollution NOC in Delhi. This license is issued by the Delhi Pollution Control Committee (DPCC) to ensure that the industry will not cause harm to the environment. There are two NOCs, viz., Consent to Establish (CTE) and Consent to Operate (CTO), under the Water (Prevention & Control of Pollution) Act, 1974, and the Air (Prevention & Control of Pollution) Act, 1981.
+            </p>
             <p className="text-justify">
-              The Pollution NOC or No Objection Certificate issued by DPCC is an
-              essential authorisation which indicates that the industrial or
-              commercial unit is operating in accordance with the standard
-              pollution norms. There are two NOCs viz., Consent to Establish
-              (CTE) and Consent to Operate (CTO) under the Water (Prevention &
-              Control of Pollution) Act, 1974 and the Air (Prevention & Control
-              of Pollution) Act, 1981. Get all round assistance in getting
-              Pollution NOC for Business in Delhi for hassle-free, legally
-              compliant working without causing any damage to the environment
-              from Lawfinity.
+              With Factorylicence.in you will get all-round assistance in getting a Pollution NOC for your business. Connect with our Consultant now!
             </p>
           </Section>
 
@@ -145,18 +139,12 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-                Why It Is Needed
+                Why Pollution NOC In Delhi Important?
               </>
             }
           >
             <p className="text-justify">
-              Pollution NOC is necessary to ensure that the operations of the
-              industry will not affect the environment. It is mandatory before
-              the establishment/ expansion of any manufacturing, service or
-              processing service. Where a business does not have this
-              permission it faces legal challenges, fines, being shut down and
-              being court prosecuted. Lawfinity makes your business compliances
-              easy and accurate.
+              The government will not allow you to run a factory if it is causing harm to the environment. To ensure that your business is not causing any kind of damage to the environment by polluting it in any way, you need to get a Pollution NOC. IF the business is found running without this pollution NOC, then it will face legal actions like fines, being court prosecuted, and even in some cases being shut down.
             </p>
           </Section>
 
@@ -165,38 +153,25 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaCheckCircle className="inline mr-2" />
-                Benefits and Advantages
+                Benefits Of Pollution NOC In Delhi
               </>
             }
           >
-            <ul className="list-disc pl-6">
-              <li>
-                {" "}
-                Legal Compliance: Ensures that your business adheres to
-                pollution control norms as prescribed by environmental
-                authorities, avoiding legal penalties.{" "}
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">
+                <strong>Legal Compliance</strong>: Ensures that your business adheres to pollution control norms as prescribed by environmental authorities, avoiding legal penalties.
               </li>
-              <li>
-                {" "}
-                Environmental Responsibility: Demonstrates your organization’s
-                commitment to environmental protection and sustainable
-                practices.{" "}
+              <li className="text-justify">
+                <strong>Environmental Responsibility</strong>: Demonstrates your organisation's commitment to environmental protection and sustainable practices.
               </li>
-              <li>
-                {" "}
-                Smooth Operations: Helps in uninterrupted operation of your unit
-                without fear of closure or enforcement action.{" "}
+              <li className="text-justify">
+                <strong>Smooth Operations</strong>: Helps in the uninterrupted operation of your unit without fear of closure or enforcement action.
               </li>
-              <li>
-                {" "}
-                Credibility and Approvals: Required for applying for other
-                licenses like factory license, fire NOC, building plan approvals
-                and more.{" "}
+              <li className="text-justify">
+                <strong>Credibility and Approvals</strong>: Required for applying for other licenses like <span className="bg- px-1">factory license</span>, fire NOC, building plan approvals, and more.
               </li>
-              <li>
-                {" "}
-                Eligibility for Tenders: Mandatory for participating in many
-                government or private tenders.{" "}
+              <li className="text-justify">
+                <strong>Eligibility for Tenders</strong>: Mandatory for participating in many government or private tenders.
               </li>
             </ul>
           </Section>
@@ -206,18 +181,20 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaUserCheck className="inline mr-2" />
-                Eligibility Criteria
+                Eligibility Criteria for Pollution NOC In Delhi
               </>
             }
           >
-            <p className="text-justify">
-              Any industrial, commercial, healthcare or construction unit
-              intending to establish or operate within Delhi must obtain the
-              Pollution NOC, especially if the activity falls under the red
-              orange or green category as classified by DPCC. Even small
-              businesses generating effluents, emissions or hazardous waste need
-              this certificate.
+            <p className="text-justify mb-4">
+              Any industrial, commercial, healthcare, or construction unit intending to establish or operate within Delhi must obtain the Pollution NOC, especially if the activity falls under the red, orange, or green category as classified by DPCC. Even small businesses generating effluents, emissions, or hazardous waste need this certificate.
             </p>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">DPCC Classification:</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Orange Category- 73 Industries</li>
+              <li className="text-justify">Red Category- 253 Industries</li>
+              <li className="text-justify">Green Category- 120 Industries</li>
+              <li className="text-justify">White Category- 203 Industries</li>
+            </ul>
           </Section>
 
           <Section
@@ -225,21 +202,21 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaFileAlt className="inline mr-2" />
-                Documents Required
+                Documents Required For Pollution NOC In Delhi
               </>
             }
           >
-            <ul className="list-disc pl-6">
-              <li>KYC documents of the applicant</li>
-              <li>Email id and mobile number of the applicant</li>
-              <li>Electricity bill or water bill of the premises</li>
-              <li>Site plan/layout</li>
-              <li>Manufacturing process details</li>
-              <li>List of raw materials and products</li>
-              <li>Consent application form</li>
-              <li>Authorization for hazardous waste (if applicable)</li>
-              <li>Proof of land ownership or rent agreement</li>
-              <li>Undertaking or affidavit as prescribed by DPCC</li>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">KYC documents of the applicant</li>
+              <li className="text-justify">Email ID and mobile number of the applicant</li>
+              <li className="text-justify">Electricity bill or water bill for the premises</li>
+              <li className="text-justify">Site plan/layout</li>
+              <li className="text-justify">Manufacturing process details</li>
+              <li className="text-justify">List of raw materials and products</li>
+              <li className="text-justify">Consent application form</li>
+              <li className="text-justify">Authorisation for hazardous waste (if applicable)</li>
+              <li className="text-justify">Proof of land ownership or rent agreement</li>
+              <li className="text-justify">Undertaking or affidavit as prescribed by DPCC</li>
             </ul>
           </Section>
 
@@ -248,33 +225,146 @@ export default function PollutionNocLicenceDelhiPage() {
             title={
               <>
                 <FaListOl className="inline mr-2" />
-                Steps
+                Steps To Apply For DPCC Pollution NOC
               </>
             }
           >
+            <p className="text-justify mb-4">
+              You have to go to the DPCC website to register for the Pollution NOC in Delhi and fill out the online form according to the classification of DPCC. Applying for the Pollution NOC can be frustrating, so to help you, we have given the steps below. Just follow these steps:
+            </p>
+            <ol className="list-decimal pl-6 space-y-4 text-gray-800 mb-6">
+              <li className="text-justify">
+                <strong>Identify Applicability & Category</strong>: Understand if your industry needs a consent to establish (CTE) or consent to operate (CTO) from the Delhi Pollution Control Committee (DPCC). Industries are categorised (Red, orange, green) based on pollution.
+              </li>
+              <li className="text-justify">
+                <strong>Documentation</strong>: Collect all the required documents and double-check to not miss any.
+              </li>
+              <li className="text-justify">
+                <strong>Apply on the DPCC Portal</strong>:
+                <ul className="list-[lower-alpha] pl-6 mt-2 space-y-1">
+                  <li>Visit the official DPCC website and create an account.</li>
+                  <li>Fill out the online application form for CTE or CTO.</li>
+                </ul>
+              </li>
+              <li className="text-justify">
+                <strong>Upload Documents & Pay Fees</strong>: Upload scanned documents and pay the prescribed government fee online (fees vary by industry category and investment).
+              </li>
+              <li className="text-justify">
+                <strong>Verification & Inspection</strong>: The DPCC scrutinises the application; officials may conduct a site visit to verify details and compliance.
+              </li>
+              <li className="text-justify">
+                <strong>Receive NOC</strong>: Upon successful verification, the electronic NOC (CTE/CTO certificate) is issued, allowing legal operation.
+              </li>
+            </ol>
             <Image src={img} alt="image description" />
           </Section>
 
           <Section
-            id="timelines"
+            id="fees"
             title={
               <>
-                <FaClock className="inline mr-2" />
-                Timelines
+                <FaCalculator className="inline mr-2" />
+                Fees For Pollution NOC In Delhi
               </>
             }
           >
+            <ul className="list-disc pl-6 space-y-4 text-gray-800">
+              <li className="text-justify">
+                <strong>White Category (Nil/Low Pollution)</strong>: Often Nil or Self-Declaration.
+              </li>
+              <li className="text-justify">
+                <strong>Green Category (Low Pollution)</strong>: Fees range from ₹100 (for &lt;₹5 lakh investment) up to ₹10,000 for CTE, and ₹200-₹20,000 for CTO, depending on capital.
+              </li>
+              <li className="text-justify">
+                <strong>Orange Category (Medium Pollution)</strong>: Fees increase with investment, e.g., ₹500 for CTE (&lt;₹5 lakh investment) up to ₹1,00,000 for CTE, and ₹1,000-₹2,00,000 for CTO.
+              </li>
+              <li className="text-justify">
+                <strong>Red Category (High Pollution)</strong>: Higher fees, starting from ₹25,000 for CTE up to ₹1,00,000, and ₹50,000 to ₹20,00,000 for CTO, based on investment.
+              </li>
+            </ul>
+          </Section>
+
+          <Section
+            id="who-needs"
+            title={
+              <>
+                <FaQuestionCircle className="inline mr-2" />
+                Who Needs To Obtain The Pollution NOC In Delhi?
+              </>
+            }
+          >
+            <p className="mb-4">Businesses involved in these activities need to obtain the Pollution NOC:</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
+              <li>The manufacturing units</li>
+              <li>Health care establishments</li>
+              <li>Traders</li>
+              <li>E-waste management entities</li>
+              <li>Solid waste management entities</li>
+              <li>Hazardous waste management entities</li>
+              <li>Battery waste management entities</li>
+              <li>Plastic waste management entities</li>
+              <li>Bio-medical waste management entities</li>
+            </ul>
             <p className="text-justify">
-              • Consent to Establish (CTE): Generally, takes 20 to 30 working
-              days.
-              <br />
-              • Consent to Operate (CTO): Usually granted within 45 to 60
-              working days from submission.
-              <br /> <br />
-              Delays may occur due to incomplete documents or inspection
-              failures. Lawfinity ensures timely follow-ups and proper
-              documentation for quicker approvals.
+              Factorylicence.in also assists in getting a Factory license in Delhi, Uttar Pradesh and Haryana. Contact us if you want to apply for any of these places.
             </p>
+          </Section>
+
+          <Section
+            id="renewal"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                Renewal Process Of Pollution NOC In Delhi
+              </>
+            }
+          >
+            <p className="text-justify mb-6">
+              The Pollution NOC is issued for a limited period. You have to renew it before the expiry date to continue your operations legally. Failure in renewing the NOC on time will cause you penalties or suspension of operations.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">When Should Pollution NOC Renewal Be Applied?</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-8">
+              <li className="text-justify">
+                The renewal application should be filed at least 60 to 90 days before the expiry of the existing CTO.
+              </li>
+              <li className="text-justify">
+                Operating with an expired NOC is treated as non-compliance, even if a renewal application is pending.
+              </li>
+            </ul>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">How To Apply For Pollution NOC Renewal In Delhi</h3>
+            <p className="text-justify mb-4">
+              The renewal process of the Pollution NOC in Delhi is very similar to the process of registration for the Pollution NOC:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">You have to log in to the DPCC portal with the existing credentials you created when applying for the pollution noc first time.</li>
+              <li className="text-justify">Then select the already registered industrial unit</li>
+              <li className="text-justify">And navigate to the CTO renewal service,</li>
+              <li className="text-justify">Click on it and fill in the details they will ask.</li>
+              <li className="text-justify">Upload required documents (the documents would be the same as the required when registering for the first time.</li>
+              <li className="text-justify">Just one copy of the existing CTO certificate will be required; otherwise, all the documents will be the same, like before.</li>
+              <li className="text-justify">At last, pay the renewal fees.</li>
+            </ul>
+          </Section>
+
+          <Section
+            id="renewal-cost"
+            title={
+              <>
+                <FaCalculator className="inline mr-2" />
+                How much does it cost for Pollution NOC Renewal in Delhi?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The cost of Pollution NOC renewal is equal to or a percentage of the original CTO fee, based on:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li>Industry category (Red/Orange/Green)</li>
+              <li>Capital investment</li>
+              <li>Duration of renewal</li>
+            </ul>
           </Section>
 
           <Section
@@ -287,11 +377,46 @@ export default function PollutionNocLicenceDelhiPage() {
             }
           >
             <p className="text-justify">
-              Operating without Pollution NOC may result in heavy penalties,
-              disconnection of utilities, legal prosecution and closure of the
-              unit. The fine amount depends on the category of the industry and
-              the nature of violation. Repeat violations can also lead to
-              cancellation of license and blacklisting.
+              Operating without a Pollution NOC may result in heavy penalties, disconnection of utilities, legal prosecution, and closure of the unit. The fine amount depends on the category of the industry and the nature of the violation. Repeat violations can also lead to the cancellation of the license and blacklisting.
+            </p>
+          </Section>
+
+          <Section
+            id="timelines"
+            title={
+              <>
+                <FaClock className="inline mr-2" />
+                Timelines
+              </>
+            }
+          >
+            <ul className="list-disc pl-6 space-y-4 text-gray-800">
+              <li className="text-justify">
+                <strong>CTE (Consent to Establish)</strong>: 20 to 30 working days, depending on project size and category.
+              </li>
+              <li className="text-justify">
+                <strong>CTO (Consent to Operate)</strong>: 45 to 60 working days, post successful inspection and documentation.
+              </li>
+              <li className="text-justify">
+                <strong>Renewal</strong>: 30 to 60 working days, post successful inspection and documentation.
+              </li>
+            </ul>
+          </Section>
+
+          <Section
+            id="how-help"
+            title={
+              <>
+                <FaQuestionCircle className="inline mr-2" />
+                How can we help you?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              We have been in this business of helping people get a legal license for their business for a long time. We provide help in obtaining different legal licences required for different types of businesses.
+            </p>
+            <p className="text-justify">
+              In this case of getting pollution NOC in Delhi, our professional consultant team will guide you in drafting the application for NOC, arranging and providing the required documents. Applying for a Pollution NOC will become easy with our end-to-end assistance.
             </p>
           </Section>
         </div>
@@ -340,9 +465,24 @@ export default function PollutionNocLicenceDelhiPage() {
                     icon: <FaListOl className="inline mr-2" />,
                   },
                   {
-                    label: "Timelines",
-                    id: "timelines",
-                    icon: <FaClock className="inline mr-2" />,
+                    label: "Fees",
+                    id: "fees",
+                    icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
+                    label: "Who Needs NOC?",
+                    id: "who-needs",
+                    icon: <FaQuestionCircle className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Process",
+                    id: "renewal",
+                    icon: <RiTimeLine className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Fees",
+                    id: "renewal-cost",
+                    icon: <FaCalculator className="inline mr-2" />,
                   },
                   {
                     label: "Penalties",
@@ -350,6 +490,21 @@ export default function PollutionNocLicenceDelhiPage() {
                     icon: (
                       <FaExclamationTriangle className="inline mr-2 text-red-500" />
                     ),
+                  },
+                  {
+                    label: "Timelines",
+                    id: "timelines",
+                    icon: <FaClock className="inline mr-2" />,
+                  },
+                  {
+                    label: "How We Help",
+                    id: "how-help",
+                    icon: <FaQuestionCircle className="inline mr-2" />,
+                  },
+                  {
+                    label: "FAQS",
+                    id: "faqs",
+                    icon: <FaQuestionCircle className="inline mr-2" />,
                   },
                 ].map((item) => (
                   <button
@@ -377,7 +532,9 @@ export default function PollutionNocLicenceDelhiPage() {
         </aside>
       </section>
 
-      <FaqSectionPollutionDelhi />
+      <div id="faqs">
+        <FaqSectionPollutionDelhi />
+      </div>
       {/* Contact Form Popup */}
       {showPopup && (
         <div

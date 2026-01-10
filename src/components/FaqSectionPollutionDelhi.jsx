@@ -4,14 +4,12 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   {
-    question: "Is Pollution NOC required for small-scale units in Delhi?",
-    answer:
-      "Yes, if the unit emits any kind of pollution (air, water, hazardous waste), it must obtain the NOC.",
+    question: "Is a Pollution NOC required for small-scale units in Delhi?",
+    answer: "Yes, if the unit emits any kind of pollution (air, water, hazardous waste), it must obtain the NOC.",
   },
   {
     question: "What is the difference between CTE and CTO?",
-    answer:
-      "CTE is required before setting up the unit, while CTO is required before actual operations begin.",
+    answer: "CTE is required before setting up the unit, while CTO is required before actual operations begin.",
   },
   {
     question: "Who issues the Pollution NOC in Delhi?",
@@ -19,33 +17,23 @@ const faqs = [
   },
   {
     question: "How long is the CTO valid?",
-    answer:
-      "The validity of CTO ranges from 1 to 5 years, depending on the industry type and DPCC’s discretion.",
+    answer: "The validity of CTO ranges from 1 to 5 years, depending on the industry type and DPCC’s discretion.",
   },
   {
     question: "Can I apply for both CTE and CTO together?",
-    answer:
-      "No, you must first obtain CTE, complete setup and then apply for CTO.",
+    answer: "No, you must first obtain CTE, complete the setup and then apply for CTO.",
   },
   {
-    question: "What happens if I operate without Pollution NOC?",
-    answer:
-      "It is considered a serious offense and may lead to penalties, closure or legal action.",
+    question: "What happens if I operate without a Pollution NOC?",
+    answer: "It is considered a serious offence and may lead to penalties, closure or legal action.",
   },
   {
     question: "Is renewal necessary?",
-    answer:
-      "Yes, failing to renew CTO before expiry can halt operations and attract fines.",
+    answer: "Yes, failing to renew the CTO before expiry can halt operations and attract fines.",
   },
   {
     question: "Can the NOC be cancelled?",
-    answer:
-      "Yes, if conditions are violated or if false information is provided.",
-  },
-  {
-    question: "Does Lawfinity handle site inspection coordination?",
-    answer:
-      "Yes, Lawfinity coordinates with authorities and helps in preparation for site inspections.",
+    answer: "Yes, if conditions are violated or if false information is provided.",
   },
 ];
 
@@ -90,11 +78,10 @@ export default function FaqSection() {
                     </button>
 
                     <div
-                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${
-                        openIndex === actualIndex
+                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${openIndex === actualIndex
                           ? "max-h-96 pb-2"
                           : "max-h-0"
-                      }`}
+                        }`}
                     >
                       <p>{faq.answer}</p>
                     </div>

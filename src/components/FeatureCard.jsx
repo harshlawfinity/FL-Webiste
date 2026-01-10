@@ -1,5 +1,6 @@
 import Image from "next/image";
 import f1 from "../assets/f1.webp";
+import Link from "next/link";
 export default function FeatureCard() {
   return (
     <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
@@ -34,7 +35,7 @@ export default function FeatureCard() {
           </p>
 
           <p className="text-gray-500 mb-6 text-xs md:text-sm text-justify">
-            Obtaining a Factory Licence is not just a mere paperwork exercise
+            Obtaining a <Link className="text-blue-500 hover:underline" href="https://factorylicence.in">Factory Licence</Link>  is not just a mere paperwork exercise
             but involves a comprehensive review of the layout of the factory,
             it’s safety measures, waste management system and compliance with
             various rules and regulations. The licence may need to be renewed

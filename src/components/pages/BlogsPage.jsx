@@ -403,7 +403,7 @@ const BlogHero = ({ searchTerm, setSearchTerm, onSearch }) => (
                 Latest Blog
             </h1>
             <p className="text-sm sm:text-lg md:text-lg text-purple-100 mb-10">
-                Stay updated with the latest factory license news and guides on Factorylicence.
+                Stay updated with the latest factory license news and guides on <Link className="text-white hover:text-blue-600" href="https://factorylicence.in" target="_blank">Factorylicence</Link>.
             </p>
             <form
                 onSubmit={(e) => {

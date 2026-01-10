@@ -29,7 +29,7 @@ export default function ContactUs() {
           </h1>
           <p className="text-gray-600">
             Get in touch with us via email, phone, or by filling out the form to
-            discover how factorylicence.in can solve your licencing challenges.
+            discover how <Link className="text-white hover:text-blue-600" href="https://factorylicence.in" target="_blank">factorylicence.in</Link> can solve your licencing challenges.
           </p>
           <p className="text-purple-600">info@factorylicence.in</p>
           <p className="text-purple-600">+91 99107 74687</p>

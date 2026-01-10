@@ -30,10 +30,11 @@ import ContactForm from "@/components/ContactForm";
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
-import FaqSection from "@/components/FaqSectionDelhi";
+import FaqSectionDelhi from "@/components/FaqSectionDelhi";
 import Image from "next/image";
 import Head from "next/head";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
+import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -83,7 +84,7 @@ export default function FactoryLicenceDelhiPage() {
           href="https://factorylicence.in/factory-licence-in-delhi"
         />
       </Head>
-      
+
       <section className="relative text-white py-20 md:px-0 px-4 mt-20 overflow-hidden">
         {/* Rotating background images */}
         <div className="absolute inset-0 z-0">
@@ -93,9 +94,8 @@ export default function FactoryLicenceDelhiPage() {
               key={index}
               src={img}
               alt={`bg-${index}`}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-                currentBg === index ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
+                }`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -123,12 +123,12 @@ export default function FactoryLicenceDelhiPage() {
 
           {/* Right Video Section */}
           <div className="md:w-1/2 w-full">
-          
+
 
             <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
               <iframe
                 className="w-full md:h-[350px] h-[200px]"
-                  src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
+                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -141,28 +141,35 @@ export default function FactoryLicenceDelhiPage() {
       {/* Main Content */}
       <section className="max-w-7xl mx-auto md:py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         {/* Left Side Content */}
-     
-        <div className="md:col-span-3 space-y-6">
-             <Section id="calc">
-      <FactoryLicenseCalculatorDelhi />
 
-        </Section>
+        <div className="md:col-span-3 space-y-6">
+          <Section id="calc">
+            <FactoryLicenseCalculatorDelhi />
+
+          </Section>
           <Section
             id="what-is"
             title={
               <>
                 <FaIndustry className="inline mr-2" />
-                What is a Factory Licence?
+                Factory Licence In Delhi: How to Apply, Documents, And Fee Structure
+
               </>
             }
           >
             <p className="text-justify">
-              A Factory Licence is a mandatory legal obligation under the
-              Factories Act, 1948, required for those premises which carry out
-              manufacturing processes employing 10 or more workers with the aid
-              of power or employing 20 or more workers without power. This
-              licence ensures that the factory has complied with the required
-              safety, health and welfare standards for the workers.{" "}
+              Planning to set up a manufacturing unit in the capital? Then, obtaining a factory licence in Delhi will be the first thing on your priority list. This licence is issued under the Factories Act, 1948 & Delhi Factories Rules, 1950. This licence is important to operate a Factory unit in Delhi. A Delhi factory license is a legal document that serves as a guarantee that your factory complies with all the essential requirements concerning health and safety, as well as the welfare facilities for working employees.
+
+            </p>
+            <br />
+            <p className="text-justify">
+              If a factory is found operating without a Factory licence in Delhi, then it will be eligible for legal actions and penalties by the government authorities. So make sure you get your Factory license before operating.
+
+            </p>
+            <br />
+            <p className="text-justify">
+              Factorylicence.in can help you here. We are one of the trustworthy legal services providers. We can help you get various licences like factory licence in Delhi, MCD factory licence renewal South Delhi, North Delhi Municipal Corporation factory licence renewal online, Factory Licence Renewal in Delhi, and factory licence online application in Delhi.
+
             </p>
           </Section>
 
@@ -171,35 +178,30 @@ export default function FactoryLicenceDelhiPage() {
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-                Why is it needed?
+                What Is The Need For A Factory Licence In Delhi?
+
               </>
             }
           >
             <ul className="list-disc pl-6 space-y-2 text-gray-800">
               <li className="text-justify ">
-                As operating a factory without one is a punishable offense under
-                the Factories Act, 1948, therefore, obtaining a Factory Licence
-                is essential for fulfilling legal compliance. Those factories
-                which are found running without a valid licence can face
-                considerable penalties, imposing heavy fines and in some cases
-                even imprisonment. This makes the licence a crucial requirement
-                for anyone planning to set up or operate a manufacturing plant
-                in India.
+                You will face legal actions against yourself and your factory if you try to run a manufacturing unit with the Factory licence in Delhi. The Factories Act 1948 made the Delhi factory license compulsory to have for setup and operate a manufacturing unit within the capital boundaries.
+
               </li>
+              <br />
               <li className="text-justify ">
-                Beyond the legal requirements, a factory licence also ensures
-                that the facility meets appropriate safety standards, which are
-                very crucial for safeguarding the health and well-being of
-                employees. It also validates the operational authenticity of the
-                business, making easy to secure other necessary approvals,
-                licences and participate in government tenders. To put it
-                simply, the factory licence not only keeps the business on the
-                right side of the law but also builds legitimacy and ensure the
-                trust with stakeholders.
+                A factory license also helps the unit by generating trust inside the hearts of suppliers, customers, and government agents. A manufacturing unit with a factory licence is eligible for the government scheme and benefits like industrial incentives, which non-licensed factories won’t get. Registered factories also get a much validation in the eyes of insurance companies as compared to non-licensed ones. A factory license is considered an important document for both the financial protection and longevity of a business.
+
               </li>
             </ul>
+
+            <br />
+            <p>
+              Contact us to help you with the registration process of the MCD factory licence renewal South Delhi.
+
+            </p>
           </Section>
-          <Section
+          {/* <Section
             id="benefits"
             title={
               <>
@@ -234,24 +236,36 @@ export default function FactoryLicenceDelhiPage() {
                 non-compliance.
               </li>
             </ul>
-          </Section>
+          </Section> */}
 
           <Section
             id="eligibility"
             title={
               <>
                 <FaUserCheck className="inline mr-2" />
-                Eligibility Criteria
+                Eligibility Criteria For A Factory Licence In Delhi Online
+
               </>
             }
           >
-            <p className="text-justify">
-              In Delhi, any manufacturing unit employing 10 or more workers with
-              power or 20 or more without power, must obtain a factory licence
-              from the Labour Department, Government of NCT of Delhi. The unit
-              must comply with the Delhi Factories Rules, 1950 and obtain
-              necessary clearances from the Municipal Corporation of Delhi
-              (MCD).
+            <p className="mb-4">If a factory meets these points, then it is eligible for the factory licence registration:</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify ">Factories with 10 or more workers, with the aid of power.</li>
+              <li className="text-justify ">Manufacturing unit with 20 or more workers operating without using power.</li>
+              <li className="text-justify ">Factories engaged in hazardous processes or dangerous operations as defined under the law.</li>
+              <li className="text-justify ">Startups and MSMEs involved in the production, processing, or assembling of goods.</li>
+              <li className="text-justify ">Importers are establishing a local manufacturing facility in India.</li>
+              <li className="text-justify ">Premises using machinery or power-driven tools for producing or modifying goods.</li>
+              <li className="text-justify ">Public or private sector enterprises that fall under the definition of a "factory" in the Factories Act, 1948.</li>
+              <li className="text-justify ">Industrial warehouses use machinery for processing, altering, repackaging, or handling goods.</li>
+              <li className="text-justify ">Export-Oriented Units (EOUs) are involved in any manufacturing activity.</li>
+              <li className="text-justify ">Entities that require pollution control or fire safety clearance due to operational risks are also subject to stricter regulatory oversight.</li>
+            </ul>
+            <br />
+            <p>
+              <Link className="text-[#7c4bdf] font-semibold hover:underline" href="https://factorylicence.in" target="_blank">Factorylicence.in</Link> can give you assistance for the factory licence online application in Delhi.
+              <br />
+              Call us now!
             </p>
           </Section>
 
@@ -260,39 +274,84 @@ export default function FactoryLicenceDelhiPage() {
             title={
               <>
                 <FaFileAlt className="inline mr-2" />
-                Documents Required in Delhi
+                Documents Required For Online Registration Of Factory Licence
               </>
             }
           >
+            <p className="mb-4 text-justify">
+              Documentation is the most crucial part of the Factory registration process. If you miss or submit any wrong documents, then your factory license application process will take more than usual because of the delay due to the wrong or missing documents.
+            </p>
+            <p className="mb-4 font-medium">
+              So it is good to double-check all the documents before submitting. We have mentioned the list required for the factory registration process. Documents required are:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-800">
               <li className="text-justify ">Building Plan Approval</li>
-              <li className="text-justify ">
-                Layout Plan as per Factories Act
-              </li>
-              <li className="text-justify ">
-                KYC Documents of Owners/Directors
-              </li>
-              <li className="text-justify ">
-                Business Registration documents of firm/company
-              </li>
-              <li className="text-justify ">
-                Sale Deed/ Rent Agreement of premises.
-              </li>
-              <li className="text-justify ">
-                Sanctioned load from HVPNL / Latest Electricity Bill
-              </li>
+              <li className="text-justify ">Layout Plan as per the Factories Act</li>
+              <li className="text-justify ">KYC Documents of Owners/Directors (Email id, Mobile No., PAN, Aadhaar, Voter id, Bank Statement, etc.)</li>
+              <li className="text-justify ">Incorporation documents (COI, Partnership Deed, LLP Agreement, etc.)</li>
+              <li className="text-justify ">Sale Deed/ Rent Agreement of premises.</li>
+              <li className="text-justify ">Sanctioned load from the authority / Latest Electricity Bill</li>
               <li className="text-justify ">DPCC NOC</li>
-              <li className="text-justify ">
-                Fire NOC (for premises above 250 sq metre)
-              </li>
+              <li className="text-justify ">Structural Stability certificate from an approved architect</li>
+              <li className="text-justify ">Fire NOC (for premises above 250 sq metres)</li>
               <li className="text-justify ">Property Tax Receipt</li>
+              <li className="text-justify ">Manufacturing process flow chart</li>
             </ul>
+            <br />
+            <p className="font-medium">
+              We have a team of professional Factory license consultants who can help you with the process of Factory Licence Renewal in Delhi. Go ahead and make a call now!
+            </p>
           </Section>
+
+
+
+
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                How To Apply Factory Licence Online Application In Delhi
+              </>
+            }
+          >
+            <p className="mb-4">Follow this simple process to apply for factory licence in Delhi:</p>
+            <ol className="list-decimal pl-6 space-y-3 text-gray-800">
+              <li className="text-justify ">
+                <strong>Document Preparation:</strong> Gather all the required documents as per the checklist.
+              </li>
+              <li className="text-justify ">
+                <strong>Online Application:</strong> Visit the MCD Portal and navigate to the Trade & Factory Licences section.
+              </li>
+              <li className="text-justify ">
+                <strong>Form Submission:</strong> Fill out the application form and upload necessary documents.
+              </li>
+              <li className="text-justify ">
+                <strong>Fee Payment:</strong> Pay the prescribed licence fee online.
+              </li>
+              <li className="text-justify ">
+                <strong>Inspection:</strong> Await inspection by the concerned authorities.
+              </li>
+              <li className="text-justify ">
+                <strong>Licence Issuance:</strong> Upon successful verification, the factory licence will be issued.
+              </li>
+            </ol>
+          </Section>
+
+
+
+          <Image
+            loading="lazy"
+            src={ddddd}
+            alt="Factoy Licence In Delhi"
+          />
+
+
 
           <section className="p max-w-7xl mx-auto" id="fee">
             <h2 className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
-              Fee Structure
+              Factory Licence Fees In Delhi
             </h2>
 
             <div className="md:w-full w-[90vw]">
@@ -351,64 +410,6 @@ export default function FactoryLicenceDelhiPage() {
               </ul>
             </div>
           </section>
-
-          <Section
-            id="steps"
-            title={
-              <>
-                <FaListOl className="inline mr-2" />
-                Steps to Get a Factory Licence
-              </>
-            }
-          >
-            <ol className="list-decimal pl-6 space-y-3 text-gray-800">
-              <li className="text-justify ">
-                Document Preparation: Gather all the required documents as per
-                the checklist.
-              </li>
-              <li className="text-justify ">
-                Online Application: Visit the MCD Portal and navigate to the
-                Trade & Factory Licences section.
-              </li>
-              <li className="text-justify ">
-                Form Submission: Fill out the application form and upload
-                necessary documents.
-              </li>
-              <li className="text-justify ">
-                Fee Payment: Pay the prescribed licence fee online.
-              </li>
-              <li className="text-justify ">
-                Inspection: Await inspection by the concerned authorities.
-              </li>
-              <li className="text-justify ">
-                Licence Issuance: Upon successful verification, the factory
-                licence will be issued.
-              </li>
-            </ol>
-          </Section>
-
-          <Image
-            loading="lazy"
-            src={ddddd}
-            alt="Factoy Licence In Delhi"
-          />
-
-          <Section
-            id="timelines"
-            title={
-              <>
-                <FaClock className="inline mr-2" />
-                Timelines
-              </>
-            }
-          >
-            <p className="text-justify">
-              Typically, the registration of a Factory Licence may take around
-              15 to 18 working days, depending on document readiness,
-              application filing and government processing time.
-            </p>
-          </Section>
-
           <Section
             id="penalties"
             title={
@@ -434,6 +435,95 @@ export default function FactoryLicenceDelhiPage() {
               </li>
             </ul>
           </Section>
+
+
+
+          <Section
+            id="timelines"
+            title={
+              <>
+                <FaClock className="inline mr-2" />
+                Timelines
+              </>
+            }
+          >
+            <p className="text-justify">
+              Standard Processing Time - The factory licence registration takes around 25 to 30 working days, depending on document readiness and government processing time.
+            </p>
+          </Section>
+
+          <Section
+            id="renewal-delhi"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                Factory Licence Renewal in Delhi
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              A Factory License in Delhi is usually valid for 1 to 5 years. Owners must apply for renewal before expiry to avoid penalties.
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
+              <li><strong>Grace Period:</strong> April is often considered the renewal grace period.</li>
+              <li><strong>Late Fee:</strong> Delay attracts a late fee of 25% of the license fee and further penalties.</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold text-[#7A3EF2] mb-4">Renewal Fee</h3>
+            <ul className="list-disc pl-6 space-y-4 text-gray-800 mb-6">
+              <li>
+                <strong>Within April (grace period):</strong>
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>License Fee = HP-rate × Total HP</li>
+                  <li>Permission Fee = Unit Charge (₹1000) + License Fee</li>
+                  <li>Processing Fee = 50% of License Fee</li>
+                  <li>Transaction Fee = ₹10</li>
+                  <li>Convenience Fee = 2.5937% of Total Amount</li>
+                </ul>
+              </li>
+              <li>
+                <strong>After April (up to year-end):</strong>
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>Same as above plus: Late fee = ₹150 (for first 3 months) + 5% of license fee per additional month</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Beyond one year:</strong>
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>Above charges + Arrear = ₹2,000 flat</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h3 className="text-xl font-semibold text-[#7A3EF2] mb-4">Amendment Fee</h3>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li>Processing Fee = ₹550 + 2.5937% Convenience Fee</li>
+              <li>Registration Charges = Nil</li>
+              <li>Amendment fee proper: Assessed by MCD officials at approval</li>
+            </ul>
+          </Section>
+
+          <Section
+            id="why-choose-us"
+            title={
+              <>
+                <FaCheckCircle className="inline mr-2" />
+                Why choose us?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The registration process of factory licence in delhi may seem easy, but a single mistake can cause a delay in the process. which will be a waste of time to save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
+            </p>
+            <p className="font-semibold text-[#7A3EF2]">
+              So don't waste more time, call <Link href="https://factorylicence.in" className="underline hover:text-blue-600">Factorylicence.in</Link> now and get your factory registered as soon as possible!
+            </p>
+          </Section>
+
+
+
+
+
         </div>
 
         {/* Right Side Navigation */}
@@ -497,6 +587,16 @@ export default function FactoryLicenceDelhiPage() {
                       <FaExclamationTriangle className="inline mr-2 text-red-500" />
                     ),
                   },
+                  {
+                    label: "Renewal",
+                    id: "renewal-delhi",
+                    icon: <RiTimeLine className="inline mr-2" />,
+                  },
+                  {
+                    label: "Why Choose Us",
+                    id: "why-choose-us",
+                    icon: <FaCheckCircle className="inline mr-2" />,
+                  },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -550,7 +650,7 @@ export default function FactoryLicenceDelhiPage() {
         </div>
       )}
 
-      <FaqSection />
+      <FaqSectionDelhi />
     </div>
   );
 }

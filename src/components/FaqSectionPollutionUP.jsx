@@ -5,48 +5,35 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 const faqs = [
   {
     question: "What is the role of UPPCB in Pollution NOC?",
-    answer:
-      "The Uttar Pradesh Pollution Control Board regulates pollution norms and grants the necessary CTE and CTO for businesses.",
+    answer: "The Uttar Pradesh Pollution Control Board regulates pollution norms and grants the necessary CTE and CTO for businesses.",
   },
   {
     question: "Is Pollution NOC needed for small businesses?",
-    answer:
-      "Yes, if the business generates any form of pollution or waste, even small units under Orange or Green categories need NOC.",
+    answer: "Yes, if the business generates any form of pollution or waste, even small units under Orange or Green categories need NOC.",
   },
   {
     question: "What is the validity of CTO?",
-    answer:
-      "CTO is valid for 1 to 5 years based on the category of industry and UPPCB norms.",
-  },
-  {
-    question: "Can Lawfinity help with renewal?",
-    answer:
-      "Absolutely. Lawfinity provides assistance with new applications, modifications and timely renewals.",
+    answer: "CTO is valid for 1 to 5 years based on the category of industry and UPPCB norms.",
   },
   {
     question: "Is Pollution NOC different for each state?",
-    answer:
-      "Yes, procedures and documents vary slightly. UPPCB has its own guidelines distinct from Delhi or Haryana.",
+    answer: "Yes, procedures and documents vary slightly. UPPCB has its own guidelines distinct from Delhi or Haryana.",
   },
   {
     question: "What happens if I delay my application?",
-    answer:
-      "Delays can lead to late fees, legal notices or denial of other licenses. Timely filing is critical.",
+    answer: "Delays can lead to late fees, legal notices or denial of other licenses. Timely filing is critical.",
   },
   {
     question: "What is the difference between red orange, green categories?",
-    answer:
-      "They represent the pollution level of your industry—Red being high, Orange medium, Green low and White negligible.",
+    answer: "They represent the pollution level of your industry—Red being high, Orange medium, Green low and White negligible.",
   },
   {
     question: "Can Pollution NOC be applied online in UP?",
-    answer:
-      "Yes, the entire application and tracking process is conducted online via the UPPCB portal.",
+    answer: "Yes, the entire application and tracking process is conducted online via the UPPCB portal.",
   },
   {
     question: "Is inspection always mandatory?",
-    answer:
-      "Usually, yes. UPPCB often conducts site inspections before granting CTO, especially for red and orange category units.",
+    answer: "Usually, yes. UPPCB often conducts site inspections before granting CTO, especially for red and orange category units.",
   },
 ];
 
@@ -91,9 +78,8 @@ export default function FaqSectionPollutionUp() {
                     </button>
 
                     <div
-                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${
-                        openIndex === actualIndex ? "max-h-96 pb-2" : "max-h-0"
-                      }`}
+                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${openIndex === actualIndex ? "max-h-96 pb-2" : "max-h-0"
+                        }`}
                     >
                       <p>{faq.answer}</p>
                     </div>

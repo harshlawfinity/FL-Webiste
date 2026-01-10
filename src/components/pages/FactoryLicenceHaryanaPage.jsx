@@ -32,6 +32,7 @@ import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionHaryana";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -153,17 +154,20 @@ export default function FactoryLicenceDelhiPage() {
             title={
               <>
                 <FaIndustry className="inline mr-2" />
-                What is a Factory Licence?
+                Factory Licence In Haryana: How to Apply, Documents, And Fee Structure
+
               </>
             }
           >
             <p className="text-justify">
-              A Factory Licence is a mandatory legal obligation under the
-              Factories Act, 1948, required for those premises which carry out
-              manufacturing processes employing 10 or more workers with the aid
-              of power or employing 20 or more workers without power. This
-              licence ensures that the factory has complied with the required
-              safety, health and welfare standards for the workers.{" "}
+              Do you intend to build a new factory in Haryana? However, are you aware of the regulatory requirements you must meet to register your factory license in Haryana? If not, don't worry, we can assist you with the entire factory registration procedure. All of the details regarding the registration process of the factory licence in Haryana, renewal, and factory licence fees in Haryana will be provided to you here.
+
+            </p>
+            <br />
+
+            <p className="text-justify">
+              Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance can help you obtain all the legal licences you need to set up and operate a factory in Haryana.
+
             </p>
           </Section>
 
@@ -172,36 +176,97 @@ export default function FactoryLicenceDelhiPage() {
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-                Why is it needed?
+                Why Factory Licence In Haryana Important?
               </>
             }
           >
             <ul className="list-disc pl-6 space-y-2 text-gray-800">
               <li className=" text-justify">
-                As operating a factory without one is a punishable offense under
-                the Factories Act, 1948, therefore, obtaining a Factory Licence
-                is essential for fulfilling legal compliance. Those factories
-                which are found running without a valid licence can face
-                considerable penalties, imposing heavy fines and in some cases
-                even imprisonment. This makes the licence a crucial requirement
-                for anyone planning to set up or operate a manufacturing plant
-                in India.
+                According to the Factories Act, 1948, without having a factory licence in Haryana, your factory will be considered illegal and will be liable for legal actions. If a factory is found operating without a factory licence in Haryana, then it will face penalties, heavy fines, and even imprisonment. A factory licence in Haryana is necessary if you want to avoid all these problems.
+
               </li>
               <li className=" text-justify">
-                Beyond the legal requirements, a factory licence also ensures
-                that the facility meets appropriate safety standards, which are
-                very crucial for safeguarding the health and well-being of
-                employees. It also validates the operational authenticity of the
-                business, making easy to secure other necessary approvals,
-                licences and participate in government tenders. To put it
-                simply, the factory licence not only keeps the business on the
-                right side of the law but also builds legitimacy and ensure the
-                trust with stakeholders.
+                A Factory license Haryana not only helps in protecting from legal actions, but it also increases the credibility of your business. Having a Factory License Haryana gives an assurance that the factory facility follows all the safety standards, governed by the government, to safeguard the health of the workers. This makes the process of getting approvals for other licences and participation in government tenders easy.
+
+              </li>
+              <li className=" text-justify">
+                Factory license Haryana keeps your business legal in the eyes of the law and builds trust among the stakeholders, benefiting you in every aspect. So don't lose this benefit, apply for a factory licence in Haryana now with Factorylicence.in !
+
               </li>
             </ul>
           </Section>
 
           <Section
+            id="eligibility"
+            title={
+              <>
+                <FaUserCheck className="inline mr-2" />
+                Eligibility Criteria For The Factory Licence In Haryana
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The eligibility criteria for the registration of the <span className="bg-green-300 px-1">Factory licence in Haryana</span> are:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-4">
+              <li className="text-justify">
+                Factories employing 10 or more workers with power.
+              </li>
+              <li className="text-justify">
+                Factories employing 20 or more workers without power.
+              </li>
+            </ul>
+            <p className="text-justify mb-4">
+              According to the Factories Act, 1948, and the Haryana Factories Rules, 1950, if your unit falls under any of these categories, it is mandatory to register it through the Labour Department, Government of Haryana.
+            </p>
+            <p className="text-justify">
+              Hire <Link href="/" className="text-blue-600 underline">factorylicence.in</Link> to help you with all the legal formalities to apply Factory license Haryana.
+            </p>
+          </Section>
+
+
+
+
+
+          <Section
+            id="documents"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Documents Required For Applying Factory Licence In Haryana
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The documentation process is a crucial step in the <span className="bg-green-300 px-1">Factory licence Haryana</span> registration process. Double-check all the required documents before final submission. This is the list of required documents:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify ">Building Plan Approval</li>
+              <li className="text-justify ">
+                Layout Plan as per the Factories Act
+              </li>
+              <li className="text-justify ">
+                KYC Documents of Owners/Directors
+              </li>
+              <li className="text-justify ">
+                Business Registration documents of the firm/company
+              </li>
+              <li className="text-justify ">
+                Sale Deed/ Rent Agreement of premises.
+              </li>
+              <li className="text-justify ">
+                Sanctioned load from HVPNL / Latest Electricity Bill
+              </li>
+              <li className="text-justify ">
+                Pollution NOC
+              </li>
+              <li className="text-justify ">
+                Fire NOC
+              </li>
+            </ul>
+          </Section>
+
+          {/* <Section
             id="benefits"
             title={
               <>
@@ -236,142 +301,44 @@ export default function FactoryLicenceDelhiPage() {
                 non-compliance.
               </li>
             </ul>
-          </Section>
+          </Section> */}
 
-          <Section
-            id="eligibility"
-            title={
-              <>
-                <FaUserCheck className="inline mr-2" />
-                Eligibility Criteria
-              </>
-            }
-          >
-            <p className="text-justify">
-              Factories in Haryana employing 10 or more workers with power or 20
-              or more without power, are required to register under the
-              Factories Act, 1948, through the Labour Department, Government of
-              Haryana. Compliance with the Haryana Factories Rules, 1950, is
-              mandatory.
-            </p>
-          </Section>
 
-          <Section
-            id="documents"
-            title={
-              <>
-                <FaFileAlt className="inline mr-2" />
-                Documents Required in Haryana
-              </>
-            }
-          >
-            <ul className="list-disc pl-6 space-y-2 text-gray-800">
-              <li className="text-justify ">Building Plan Approval</li>
-              <li className="text-justify ">
-                Layout Plan as per Factories Act
-              </li>
-              <li className="text-justify ">
-                KYC Documents of Owners/Directors
-              </li>
-              <li className="text-justify ">
-                Business Registration documents of firm/company
-              </li>
-              <li className="text-justify ">
-                Sale Deed/ Rent Agreement of premises.
-              </li>
-              <li className="text-justify ">
-                Sanctioned load from HVPNL / Latest Electricity Bill
-              </li>
-              <li className="text-justify ">
-                Pollution NOC
-              </li>
-              <li className="text-justify ">
-                Fire NOC
-              </li>
-            </ul>
-          </Section>
-
-          <section className="p max-w-7xl mx-auto overflow-hidden" id="fee">
-            <h2 className="text-3xl font-semibold flex items-center gap-2 mb-4 text-[#7c4bdf]">
-              <HiOfficeBuilding className="text-[#7c4bdf]" />
-              Fee Structure
-            </h2>
-            <div className="md:w-full w-[90vw]">
-              <TH />
-            </div>
-
-            {/* Renewal Fee Section */}
-            <div className="mt-10">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-                <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal Fee
-              </h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-700 text-sm">
-                <li>
-                  Haryana follows a HP and manpower based renewal fee structure.
-                  The exact amount may differ depending on the type and size of
-                  the factory.
-                </li>
-                <li>Renewal includes:</li>
-                <ul className="list-disc list-inside pl-4">
-                  <li>Applicable license fees based on HP and manpower.</li>
-                  <li>Processing charges and government treasury fees.</li>
-                  <li className="italic">
-                    Note: Exact renewal charges are disclosed during the
-                    application process on the Haryana Labour Department’s
-                    official portal.
-                  </li>
-                </ul>
-              </ul>
-            </div>
-
-            {/* Amendment Fee Section */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-                <AiOutlineEdit className="text-[#7c4bdf]" />
-                Amendment Fee
-              </h3>
-              <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-                <li>
-                  {" "}
-                  ₹100 per change (e.g., change in name, occupier, address).
-                </li>
-              </ul>
-            </div>
-          </section>
 
           <Section
             id="steps"
             title={
               <>
                 <FaListOl className="inline mr-2" />
-                Steps to Get a Factory Licence
+                How To Register For Factory Licence In Haryana?
               </>
             }
           >
+            <p className="text-justify mb-4">
+              You can apply for the licence by visiting the Haryana state's single Window clearance system or the Labour Department's portal. Just follow these steps:
+            </p>
             <ol className="list-decimal pl-6 space-y-3 text-gray-800">
               <li className="text-justify ">
-                Online Registration: Visit the Haryana Labour Department Portal
+                <strong>Online Registration</strong>: Visit the Haryana Labour Department Portal
                 and create an account.
               </li>
               <li className="text-justify ">
-                Application Form: Fill out the form with accurate factory
+                <strong>Application Form</strong>: Fill out the form with accurate factory
                 details.
               </li>
               <li className="text-justify ">
-                Document Upload: Upload all required documents in the specified
+                <strong>Document Upload</strong>: Upload all required documents in the specified
                 format.
               </li>
               <li className="text-justify ">
                 {" "}
-                Fee Payment: Pay the application fee through the online portal.
+                <strong>Fee Payment</strong>: Pay the application fee through the online portal.
               </li>
               <li className="text-justify ">
-                Inspection: The department will conduct an inspection of the
-                premises.
+                <strong>Inspection</strong>: The department will inspect the premises.
               </li>
               <li className="text-justify ">
-                Licence Approval: Post-inspection, the licence will be granted
+                <strong>Licence Approval</strong>: Post-inspection, the licence will be granted
                 if all criteria are met.
               </li>
             </ol>
@@ -379,44 +346,76 @@ export default function FactoryLicenceDelhiPage() {
 
           <Image src={hhhhh} alt="Factory Licence In Haryana" />
 
-          <Section
-            id="timelines"
-            title={
-              <>
-                <FaClock className="inline mr-2" />
-                Timelines
-              </>
-            }
-          >
-            <p className="text-justify">
-              The timeline for obtaining factory licence in the state of Haryana
-              generally takes 15 to 18 working days, subject to documents
-              availability and government approvals.{" "}
-            </p>
-          </Section>
+
+
+
+          <section className="p max-w-7xl mx-auto overflow-hidden" id="fee">
+            <h2 className="text-3xl font-semibold flex items-center gap-2 mb-4 text-[#7c4bdf]">
+              <HiOfficeBuilding className="text-[#7c4bdf]" />
+              Factory licence fees in Haryana
+            </h2>
+            <div className="md:w-full w-[90vw]">
+              <TH />
+            </div>
+
+            {/* Renewal & Amendment Section */}
+            <div className="mt-10" id="renewal">
+              <h2 className="text-3xl font-semibold text-[#7c4bdf] mb-4 flex items-center gap-2">
+                <RiTimeLine className="text-[#7c4bdf]" />
+                Renewal & Amendment For the Factory Licence in Haryana
+              </h2>
+              <p className="text-justify mb-4">
+                A <span className="bg-green-300 px-1 font-medium text-black">Factory License in Haryana</span> is generally issued for a duration of 1 to 5 years. The validity of the license can be chosen while applying for a factory licence Haryana. Renewal applications are due before expiration to avoid penalties.
+              </p>
+
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Renewal Fee</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
+                <li className="text-justify">
+                  Haryana follows an HP and manpower based renewal fee structure. The exact amount may differ depending on the type and size of the factory.
+                </li>
+                <li className="text-justify">
+                  <strong>Renewal includes:</strong>
+                  <ul className="list-disc pl-8 mt-2 space-y-1">
+                    <li>Applicable license fees based on HP and manpower.</li>
+                    <li>Processing charges and government treasury fees.</li>
+                    <li>Note: Exact renewal charges are disclosed during the application process on the Haryana Labour Department's official portal.</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Amendment Fee</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-8">
+                <li className="text-justify">
+                  ₹100 per change (e.g., change in name, occupier, address).
+                </li>
+              </ul>
+
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Penalties & Timelines</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
+                <li className="text-justify">
+                  Non-compliance with the Factories Act, 1948, may result in fines up to ₹1,00,000 or imprisonment up to 2 years.
+                </li>
+                <li className="text-justify">
+                  A late <Link href="/" className="text-blue-600 underline">factory licence renewal</Link> fee of 25% is payable, which is charged after the renewal application is submitted. The date of submission of the application will be noted to calculate the late fee.
+                </li>
+              </ul>
+
+              <p className="text-justify mt-8">
+                <strong>Timeline</strong> - The timeline for obtaining a factory licence in the state of Haryana generally takes 15 to 18 working days, subject to document availability and government approvals.
+              </p>
+            </div>
+          </section>
 
           <Section
-            id="penalties"
-            title={
-              <>
-                <FaExclamationTriangle className="inline mr-2 text-red-500" />
-                Penalties in Case of Non-Compliance
-              </>
-            }
+            id="why-choose"
+            title="Why choose us?"
           >
-            <ul className="text-justify list-disc pl-6 space-y-2 text-gray-800 ">
-              <li className="text-justify ">
-                Non-compliance with the Factories Act, 1948, may result in fines
-                up to ₹1,00,000 or imprisonment up to 2 years.
-                <br />
-              </li>
-              <li className="text-justify ">
-                A late factory licence renewal fees at 25% is payable, which is
-                charged after the application for renewal is submitted. The date
-                of submission of the application will be noted to calculate the
-                late fee.
-              </li>
-            </ul>
+            <p className="text-justify mb-4">
+              The registration process of a factory license in Haryana may seem easy, but a single mistake can cause a delay in the process. To save time and any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
+            </p>
+            <p className="text-justify">
+              So don't waste more time, call <Link href="/" className="text-blue-600 underline">Factorylicence.in</Link> now and get your factory registered as soon as possible!
+            </p>
           </Section>
         </div>
 
@@ -480,6 +479,16 @@ export default function FactoryLicenceDelhiPage() {
                     icon: (
                       <FaExclamationTriangle className="inline mr-2 text-red-500" />
                     ),
+                  },
+                  {
+                    label: "Why choose us?",
+                    id: "why-choose",
+                    icon: <FaQuestionCircle className="inline mr-2" />,
+                  },
+                  {
+                    label: "FAQS",
+                    id: "faqs",
+                    icon: <FaListOl className="inline mr-2" />,
                   },
                 ].map((item) => (
                   <button

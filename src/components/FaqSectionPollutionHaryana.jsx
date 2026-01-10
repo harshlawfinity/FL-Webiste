@@ -4,19 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is the difference between CTE and CTO in Haryana?",
-    answer: "CTE is required before setting up your project; CTO is needed before starting operations.",
-  },
-  {
-    question: "Who issues Pollution NOC in Haryana?",
-    answer: "The Haryana State Pollution Control Board (HSPCB) is the authority for granting Pollution NOCs.",
-  },
-  {
-    question: "Is Pollution NOC required for all industries?",
-    answer: "Yes, especially those falling under red orange or green categories as defined by HSPCB.",
-  },
-  {
-    question: "Can a business operate without CTO?",
+    question: "Can a business operate without a CTO?",
     answer: "No. Operating without a valid CTO is illegal and can lead to immediate shutdown and penalties.",
   },
   {
@@ -24,20 +12,36 @@ const faqs = [
     answer: "CTO is typically valid for 1 to 5 years, depending on the industry category.",
   },
   {
-    question: "Can Lawfinity help with NOC renewal?",
-    answer: "Yes, Lawfinity assists with new applications, renewals, modifications and compliance documentation.",
+    question: "What are the consequences of a delay in renewal?",
+    answer: "Delay can result in a penalty, cancellation of the existing license and legal proceedings.",
   },
   {
-    question: "What are the consequences of delay in renewal?",
-    answer: "Delay can result in penalty, cancellation of existing license and legal proceedings.",
-  },
-  {
-    question: "Does an IT company need Pollution NOC?",
+    question: "Does an IT company need a Pollution NOC?",
     answer: "Usually, IT companies fall under the white category, which may not require a NOC, but this depends on activities and location.",
   },
   {
-    question: "What if my unit is already in operation without a NOC?",
-    answer: "You must apply immediately. Lawfinity can assist with legal rectification and compliance regularization.",
+    question: "What if my unit is already in operation without an NOC?",
+    answer: "You must apply immediately. Lawfinity can assist with legal rectification and compliance regularisation.",
+  },
+  {
+    question: "What is HSPCB?",
+    answer: "The Haryana State Pollution Control Board (HSPCB) is a statutory body of the Government of Haryana in India, established to protect the environment and to control pollution in the state. It is responsible for the implementation of various environmental laws and regulations in the state. The board is headed by a Chairman, who is appointed by the Government of Haryana. The board is also responsible for issuing environmental clearances for various projects in the state.",
+  },
+  {
+    question: "What are the Benefits of HSPCB?",
+    answer: "The Haryana State Pollution Control Board (HSPCB) provides a number of benefits to the citizens of Haryana. These include protecting the environment, controlling pollution, and ensuring sustainable development through the implementation of environmental laws.",
+  },
+  {
+    question: "What is the H-category (HSPCB Categories)?",
+    answer: "H-category is a classification system used by the Haryana State Pollution Control Board (HSPCB) to categorise industries based on their pollution potential. Industries are classified into four categories: H1, H2, H3 and H4. H1 industries are those that have the highest potential to cause pollution, while H4 industries are those that have the least potential to cause pollution.",
+  },
+  {
+    question: "How has the HSPCB classified its Industrial activities?",
+    answer: "The Haryana State Pollution Control Board (HSPCB) has classified its industrial activities into four categories: H1, H2, H3 and H4. H1 industries are those that have the highest potential to cause pollution, while H4 industries are those that have the least potential to cause pollution. The classification is based on the type of activity, the amount of pollution generated, and the potential for environmental damage.",
+  },
+  {
+    question: "Does HSPCB grant consent to the industrial units located in a non-conforming area?",
+    answer: "No, the Haryana State Pollution Control Board (HSPCB) does not grant consent to the industrial units located in non-conforming areas. Non-conforming areas are those areas which are not suitable for industrial activities due to their proximity to residential areas, water bodies, or other sensitive areas.",
   },
 ];
 
@@ -82,9 +86,8 @@ export default function FaqSectionPollutionHaryana() {
                     </button>
 
                     <div
-                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${
-                        openIndex === actualIndex ? "max-h-96 pb-2" : "max-h-0"
-                      }`}
+                      className={`overflow-hidden px-6 transition-all duration-300 text-gray-600 text-base ${openIndex === actualIndex ? "max-h-96 pb-2" : "max-h-0"
+                        }`}
                     >
                       <p>{faq.answer}</p>
                     </div>

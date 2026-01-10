@@ -32,6 +32,7 @@ import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionUP";
 import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function FactoryLicenceUttarPradeshPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -145,17 +146,20 @@ export default function FactoryLicenceUttarPradeshPage() {
             title={
               <>
                 <FaIndustry className="inline mr-2" />
-                What is a Factory Licence?
+                Factory Licence In Uttar Pradesh: How To Apply, Documents, And Fee Structure
               </>
             }
           >
             <p className="text-justify">
-              A Factory Licence is a mandatory legal obligation under the
-              Factories Act, 1948, required for those premises which carry out
-              manufacturing processes employing 10 or more workers with the aid
-              of power or employing 20 or more workers without power. This
-              licence ensures that the factory has complied with the required
-              safety, health and welfare standards for the workers.{" "}
+              Do you intend to establish a manufacturing facility in Uttar Pradesh? The first item on your list of priorities would then be getting a <span className="n-300 px-1">factory licence in Uttar Pradesh</span>. This permit is granted in accordance with the Factories Act of 1948. A factory licence in Uttar Pradesh is essential in order to run a factory unit. A factory licence is a legal document that ensures your firm's compliance with the necessary health and safety regulations for the well-being of employees.
+            </p>
+            <br />
+            <p className="text-justify">
+              If a factory is discovered to be operating without a factory licence in Uttar Pradesh, the government authorities may take legal action against it and impose fines. Therefore, before operating, make sure you obtain your factory licence.
+            </p>
+            <br />
+            <p className="text-justify">
+              Whether you want to get a brand new Factory licence in Uttar Pradesh, or want to know about the <span className="n-300 px-1">Factory licence renewal online Uttar Pradesh</span>, we have the solution for your every query. Connect with our consultant fast and let us help you.
             </p>
           </Section>
 
@@ -164,33 +168,19 @@ export default function FactoryLicenceUttarPradeshPage() {
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-                Why is it needed?
+                Why The Factory Licence In Uttar Pradesh Important?
               </>
             }
           >
-            <ul className="list-disc pl-6 space-y-2 text-gray-800">
-              <li className="text-justify ">
-                As operating a factory without one is a punishable offense under
-                the Factories Act, 1948, therefore, obtaining a Factory Licence
-                is essential for fulfilling legal compliance. Those factories
-                which are found running without a valid licence can face
-                considerable penalties, imposing heavy fines and in some cases
-                even imprisonment. This makes the licence a crucial requirement
-                for anyone planning to set up or operate a manufacturing plant
-                in India.
-              </li>
-              <li className="text-justify ">
-                Beyond the legal requirements, a factory licence also ensures
-                that the facility meets appropriate safety standards, which are
-                very crucial for safeguarding the health and well-being of
-                employees. It also validates the operational authenticity of the
-                business, making easy to secure other necessary approvals,
-                licences and participate in government tenders. To put it
-                simply, the factory licence not only keeps the business on the
-                right side of the law but also builds legitimacy and ensure the
-                trust with stakeholders.
-              </li>
-            </ul>
+            <p className="text-justify mb-4">
+              The Factories Act of 1948 makes it illegal to operate a factory without a <span className="n-300 px-1">Factory license</span>; therefore, getting a factory licence in Uttar Pradesh is necessary to comply with the law. If a factory is discovered operating without a proper Factory licence, it will face severe fines and, in certain situations, even jail. For anyone wishing to establish or run a manufacturing facility in Uttar Pradesh, this makes the licence compulsory to have.
+            </p>
+            <p className="text-justify mb-4">
+              A factory licence guarantees that the establishment satisfies the necessary safety standards, which are essential for protecting the health and welfare of workers. In addition to the legal requirements, it confirms the business's operational legitimacy, making it easy to obtain additional licenses and permissions and take part in government Schemes and tenders.
+            </p>
+            <p className="text-justify">
+              Factorylicence.in can assist you in a struggling process like Factory Licence renewal online Uttar Pradesh. Hire us quickly so that we can help you with our assistance!
+            </p>
           </Section>
 
           <Section
@@ -198,34 +188,25 @@ export default function FactoryLicenceUttarPradeshPage() {
             title={
               <>
                 <FaCheckCircle className="inline mr-2" />
-                Benefits of Obtaining a Factory Licence
+                Benefits Of Factory Licence In Uttar Pradesh
               </>
             }
           >
-            <ul className="list-disc pl-6 space-y-2 text-gray-800">
-              <li className="text-justify ">
-                Legal Recognition: It provides a legal status to the
-                manufacturing unit, ensuring smooth business operations.{" "}
+            <ul className="list-disc pl-6 space-y-4 text-gray-800">
+              <li className="text-justify">
+                <strong>Legal Recognition</strong>: Your Factory gets a legal status, which helps in smooth business operations.
               </li>
-              <li className="text-justify ">
-                Enhanced Credibility: It builds trust among clients, suppliers
-                and stakeholders by demonstrating timely compliance with
-                statutory requirements.
+              <li className="text-justify">
+                <strong>Enhanced Credibility</strong>: It increases your business's credibility by building trust among clients, suppliers, and stakeholders by demonstrating timely compliance with statutory requirements.
               </li>
-              <li className="text-justify ">
-                Access to Government Schemes: It provides the eligibility for
-                various government incentives and schemes aimed at promoting
-                industrial growth.
+              <li className="text-justify">
+                <strong>Access to Government Schemes</strong>: It provides the eligibility for various government incentives and schemes aimed at promoting industrial growth.
               </li>
-              <li className="text-justify ">
-                Employee Welfare: It ensures that implementation of health,
-                safety and welfare measures for the employees, ultimately
-                leading to increased efficiency and productivity.
+              <li className="text-justify">
+                <strong>Employee Welfare</strong>: It ensures the implementation of health, safety, and welfare measures for the employees, ultimately leading to increased efficiency and productivity.
               </li>
-              <li className="text-justify ">
-                Avoidance of Penalties: It safeguards from falling into any kind
-                of legal actions, fines and potential shutdowns due to
-                non-compliance.
+              <li className="text-justify">
+                <strong>Avoidance of Penalties</strong>: It safeguards from falling into any kind of legal actions, fines, and potential shutdowns due to non-compliance.
               </li>
             </ul>
           </Section>
@@ -235,16 +216,23 @@ export default function FactoryLicenceUttarPradeshPage() {
             title={
               <>
                 <FaUserCheck className="inline mr-2" />
-                Eligibility Criteria
+                Eligibility Criteria For The Factory Licence In Uttar Pradesh
               </>
             }
           >
+            <p className="text-justify mb-4">
+              The eligibility criteria for the registration of the Factory licence in Uttar Pradesh are:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-4">
+              <li className="text-justify">
+                Factories employing 10 or more workers with power.
+              </li>
+              <li className="text-justify">
+                Factories employing 20 or more workers without power.
+              </li>
+            </ul>
             <p className="text-justify">
-              In Uttar Pradesh, any manufacturing unit with 10 or more workers
-              using power or 20 or more without power, must register under the
-              Factories Act, 1948, via the Labour Department, Government of
-              Uttar Pradesh. The application process is facilitated through the
-              Nivesh Mitra portal.
+              According to the Factories Act, 1948, if your unit falls under any of these categories, registration through the Labour Department, Government of Uttar Pradesh, becomes mandatory for you.
             </p>
           </Section>
 
@@ -253,23 +241,26 @@ export default function FactoryLicenceUttarPradeshPage() {
             title={
               <>
                 <FaFileAlt className="inline mr-2" />
-                Documents Required in Uttar Pradesh
+                Documents Required For Applying Factory Licence In Uttar Pradesh
               </>
             }
           >
+            <p className="text-justify mb-4">
+              The most crucial step in the Factory licence registration is the Documentation process. You have to be sure that each document is right and that you are not missing any required documents for submission. This is the list of required documents:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-800">
               <li className="text-justify ">Building Plan Approval</li>
               <li className="text-justify ">
-                Layout Plan as per Factories Act
+                Layout Plan as per the Factories Act
               </li>
               <li className="text-justify ">
                 KYC Documents of Owners/Directors
               </li>
               <li className="text-justify ">
-                Business Registration documents of firm/company
+                Business Registration documents of the firm/company
               </li>
               <li className="text-justify ">
-                Structural Stability certificate from approved architect.
+                Structural Stability certificate from an approved architect.
               </li>
               <li className="text-justify ">
                 Sale Deed/ Rent Agreement of premises.
@@ -278,10 +269,44 @@ export default function FactoryLicenceUttarPradeshPage() {
                 Manufacturing process flow chart
               </li>
               <li className="text-justify ">
-                CA certificate showing Capital investment.
+                CA certificate showing Capital investment.
               </li>
             </ul>
           </Section>
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                How To Register For Factory Licence In Uttar Pradesh?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              You can apply for the licence by visiting the Nivesh Mitra Portal Window clearance system or the Labour Department's portal. Just follow these steps:
+            </p>
+            <ol className="list-decimal pl-6 space-y-3 text-gray-800">
+              <li className="text-justify">
+                <strong>Portal Access</strong>: Register on the Nivesh Mitra Portal (niveshmitra.up.nic.in).
+              </li>
+              <li className="text-justify">
+                <strong>Application Submission</strong>: Fill in the application form with factory details and upload the necessary documents.
+              </li>
+              <li className="text-justify">
+                <strong>Form Submission</strong>: Fill out the application form and upload the necessary documents.
+              </li>
+              <li className="text-justify">
+                <strong>Fee Payment</strong>: Pay the requisite fee online.
+              </li>
+              <li className="text-justify">
+                <strong>Inspection</strong>: The Labour Department will schedule an inspection of the factory premises.
+              </li>
+              <li className="text-justify">
+                <strong>Licence Issuance</strong>: After successful verification, the factory licence will be issued.
+              </li>
+            </ol>
+          </Section>
+          <Image loading="lazy" src={uuu} alt="Factory Licence In Uttar Pradesh" />
 
           <section className="p max-w-7xl mx-auto">
             <h2
@@ -289,152 +314,77 @@ export default function FactoryLicenceUttarPradeshPage() {
               id="fee"
             >
               <HiOfficeBuilding className="text-[#7c4bdf]" />
-              Fee Structure
+              Factory licence fees in Uttar Pradesh
             </h2>
 
             <div className="md:w-full w-[90vw]">
               <TUP />
             </div>
 
-            {/* Renewal Fee Section */}
-            <div className="mt-10">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
+            {/* Consolidated Renewal, Amendment, Penalties & Timeline Section */}
+            <div className="mt-12" id="renewal">
+              <h2 className="text-3xl font-semibold text-[#7c4bdf] mb-4 flex items-center gap-2">
                 <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal Fee
-              </h3>
-              <div className="text-gray-700 text-sm space-y-2">
-                <p>
-                  The license renewal process in Uttar Pradesh is now digital.
-                  It is in automatic mode. The fee is calculated based on:
-                </p>
-                <ul className="list-disc list-inside pl-4">
-                  <li>Installed HP and the number of workers.</li>
-                  <li>
-                    Whether the renewal is within the stipulated time or
-                    delayed.
-                  </li>
-                  <li>
-                    System-generated charges and applicable penalties, if any.
-                  </li>
-                </ul>
-                <p className="italic">
-                  Note: The state may auto-calculate the renewal fee based on
-                  the entered details. Exact amounts are viewable during the
-                  online application.
-                </p>
-              </div>
-            </div>
+                Renewal & Amendment For the Factory Licence in Uttar Pradesh
+              </h2>
+              <p className="text-justify mb-4">
+                A factory licence must be renewed before it expires. If it is not renewed on time, the license may become invalid, and penalties can apply. <span className="n-300 px-1">Factory licence renewal online Uttar Pradesh</span> is an easy process if you follow these steps:
+              </p>
 
-            {/* Amendment Fee Section */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-                <AiOutlineEdit className="text-[#7c4bdf]" />
-                Amendment Fee
-              </h3>
-              <div className="text-gray-700 text-sm space-y-2">
-                <p>
-                  The procedure for amendment in Uttar Pradesh has been
-                  digitalized and it can be handled through labour department’s
-                  web portal.
-                </p>
-                <p className="italic">
-                  Note: No fixed fee breakdown is publicly available. The
-                  renewal and amendment follow online portal processes,
-                  sometimes implementing auto charge based on HP/worker
-                  thresholds, with late fee mechanisms.
-                </p>
-              </div>
+              <ol className="list-decimal pl-6 space-y-2 text-gray-800 mb-6">
+                <li className="text-justify">Log in to the <Link href="https://niveshmitra.up.nic.in" target="_blank" className="text-blue-600 underline">Nivesh Mitra portal</Link></li>
+                <li className="text-justify">Go to the license renewal section</li>
+                <li className="text-justify">Check the pre-filled details</li>
+                <li className="text-justify">Upload any fresh documents if needed</li>
+                <li className="text-justify">Pay the renewal fee</li>
+                <li className="text-justify">Submit and track the status</li>
+              </ol>
+
+              <p className="text-justify mb-4">The Renewal fees for the factory licence in Uttar Pradesh are calculated based on:</p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
+                <li className="text-justify">Installed HP and the number of workers.</li>
+                <li className="text-justify">Whether the renewal is within the stipulated time or delayed.</li>
+                <li className="text-justify">System-generated charges and applicable penalties, if any.</li>
+              </ul>
+
+              <p className="text-justify mb-8">
+                <strong>Note</strong>: The state may auto-calculate the renewal fee based on the entered details. Exact amounts are viewable during the online application.
+              </p>
+
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Amendment Fee</h3>
+              <p className="text-justify mb-4">
+                The procedure for amendment in Uttar Pradesh has been digitalised, and it can be handled through the labour department’s web portal.
+              </p>
+              <p className="text-justify mb-8 italic">
+                <strong>Note</strong>: No fixed fee breakdown is publicly available. The renewal and amendment follow online portal processes, sometimes implementing auto charge based on HP/worker thresholds, with late fee mechanisms.
+              </p>
+
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Penalties & Timeline</h3>
+              <ul className="list-disc pl-6 space-y-4 text-gray-800 mb-8">
+                <li className="text-justify">
+                  Running a factory without registration is a punishable offence and can lead to penalties up to ₹1,00,000 or imprisonment up to 2 years or both.
+                </li>
+                <li className="text-justify">
+                  A penalty for delayed renewal of a factory licence is a late fee of 25% of the renewal fee for the calendar year. This penalty applies when the renewal application is submitted after the deadline, which is 30 days before the licence expiry date. The system automatically calculates the total fee, including the late fee, which needs to be paid online.
+                </li>
+              </ul>
+
+              <p className="text-justify mt-8">
+                <strong>Timeline</strong> - The registration of a Factory Licence in the state of Uttar Pradesh typically takes 15 to 18 working days, depending on document verification and government approvals.
+              </p>
             </div>
           </section>
-
-          <Section
-            id="steps"
-            title={
-              <>
-                <FaListOl className="inline mr-2" />
-                Steps to Get a Factory Licence
-              </>
-            }
-          >
-            <ol className="list-decimal pl-6 space-y-3 text-gray-800">
-              <li className="text-justify ">
-                Portal Access: Register on the Nivesh Mitra Portal
-                (niveshmitra.up.nic.in).
-              </li>
-              <li className="text-justify ">
-                Application Submission: Fill in the application form with
-                factory details and upload necessary documents.
-              </li>
-              <li className="text-justify ">
-                Form Submission: Fill out the application form and upload
-                necessary documents.
-              </li>
-              <li className="text-justify ">
-                Fee Payment: Pay the requisite fee online.
-              </li>
-              <li className="text-justify ">
-                Inspection: The Labour Department will schedule an inspection of
-                the factory premises.
-              </li>
-              <li className="text-justify ">
-                Licence Issuance: After successful verification, the factory
-                licence will be issued.
-              </li>
-            </ol>
-          </Section>
-          <Image loading="lazy" src={uuu} alt="Factory Licence In Uttar Pradesh" />
-
-          <Section
-            id="timelines"
-            title={
-              <>
-                <FaClock className="inline mr-2" />
-                Timelines
-              </>
-            }
-          >
+          <Section id="why-choose" title="Why Choose us?">
+            <p className="text-justify mb-4">
+              Even though registering a factory licence in Uttar Pradesh might appear simple, one error could cause the procedure to take longer than expected. You will require a qualified factory licence consultant who will walk you through the process to save time and avoid any potential rejection.
+            </p>
+            <p className="text-justify mb-4">
+              Our staff of knowledgeable legal counsel will offer you all-encompassing assistance to guarantee your applications are devoid of errors.
+            </p>
             <p className="text-justify">
-              The registration of a Factory Licence in the state of Uttar
-              Pradesh typically takes 15 to 18 working days, depending on
-              document verification and government approvals.{" "}
+              Therefore, don't waste any more time and register your factory right now by giving <Link href="/" className="text-blue-600 underline">Factorylicence.in</Link> a call!
             </p>
           </Section>
-
-          <Section
-            id="penalties"
-            title={
-              <>
-                <FaExclamationTriangle className="inline mr-2 text-red-500" />
-                Penalties in Case of Non-Compliance
-              </>
-            }
-          >
-            <ul className="text-justify list-disc pl-6 space-y-2 text-gray-800 ">
-              <li className="text-justify ">
-                Running a factory without registration is a punishable offense
-                and can lead to penalties up to ₹1,00,000 or imprisonment up to
-                2 years or both. <br />
-              </li>
-              <li className="text-justify ">
-                A penalty for delayed renewal of a factory licence is a late fee
-                of 25% of the renewal fee for the calendar year. This penalty
-                applies when the renewal application is submitted after the
-                deadline, which is 30 days before the licence expiry date. The
-                system automatically calculates the total fee, including the
-                late fee, which needs to be paid online.
-              </li>
-            </ul>
-          </Section>
-
-          {/* <div className="pt-8">
-            <img
-              loading="lazy"
-
-              src={fl1}
-              alt="Factory Registration Process"
-              className="rounded-lg shadow-md w-full"
-            />
-          </div> */}
         </div>
 
         {/* Right Side Navigation */}
@@ -493,10 +443,20 @@ export default function FactoryLicenceUttarPradeshPage() {
                   },
                   {
                     label: "Penalties",
-                    id: "penalties",
+                    id: "renewal",
                     icon: (
                       <FaExclamationTriangle className="inline mr-2 text-red-500" />
                     ),
+                  },
+                  {
+                    label: "Why choose us?",
+                    id: "why-choose",
+                    icon: <FaQuestionCircle className="inline mr-2" />,
+                  },
+                  {
+                    label: "FAQS",
+                    id: "faq-section",
+                    icon: <FaListOl className="inline mr-2" />,
                   },
                 ].map((item) => (
                   <button
@@ -551,7 +511,9 @@ export default function FactoryLicenceUttarPradeshPage() {
         </div>
       )}
 
-      <FaqSection />
+      <div id="faq-section">
+        <FaqSection />
+      </div>
     </div>
   );
 }
