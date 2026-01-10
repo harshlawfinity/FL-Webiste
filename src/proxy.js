@@ -4,16 +4,21 @@ export function proxy(request) {
   const url = request.nextUrl.clone();
   const host = request.headers.get("host");
 
-  // Skip redirects for localhost to avoid SSL errors during development
-  if (host && (host.includes("localhost") || host.includes("127.0.0.1"))) {
+  // Skip redirects for local development (localhost, 127.0.0.1, or any port-based local URL)
+  if (
+    host && 
+    (host.includes("localhost") || 
+     host.includes("127.0.0.1") || 
+     host.includes(":3000"))
+  ) {
     return NextResponse.next();
   }
 
   // 1. WWW to Non-WWW Redirect
   if (host && host.startsWith("www.")) {
-    const newHost = host.replace("www.", "");
-    url.host = newHost;
-    url.protocol = "https:"; // Enforce HTTPS during redirect
+    url.hostname = host.replace("www.", "");
+    url.port = ""; // Explicitly remove dev ports (like :3000) if they leaked in
+    url.protocol = "https:"; // Enforce production HTTPS
     return NextResponse.redirect(url, 301);
   }
 
@@ -21,6 +26,7 @@ export function proxy(request) {
   const proto = request.headers.get("x-forwarded-proto");
   if (proto === "http") {
     url.protocol = "https:";
+    url.port = ""; // Ensure standard HTTPS port
     return NextResponse.redirect(url, 301);
   }
 
