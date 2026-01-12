@@ -333,7 +333,7 @@ export default function FactoryLicenceDelhiPage() {
                 <strong>Inspection:</strong> Await inspection by the concerned authorities.
               </li>
               <li className="text-justify ">
-                <strong>Licence Issuance:</strong> Upon successful verification, the factory licence will be issued.
+                <strong>Licence Issuance:</strong> Upon successful verification, the <a href="https://factorylicence.in/" className="text-blue-500 underline">factory licence</a> will be issued.
               </li>
             </ol>
           </Section>

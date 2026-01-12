@@ -196,8 +196,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               </li>
               <li>
                 Access to Further Approvals: A Pollution NOC is often a
-                prerequisite for securing other licenses such as Factory
-                License, Fire NOC and Building Plan Approval.
+                prerequisite for securing other licenses such as   <a href="https://factorylicence.in/"  className="text-blue-600 underline">Factory License</a>, Fire NOC and Building Plan Approval.
               </li>
               <li>
                 Sustainability Goals: Encourages adoption of environmentally

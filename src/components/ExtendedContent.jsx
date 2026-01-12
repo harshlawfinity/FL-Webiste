@@ -232,7 +232,7 @@ const ExtendedContent = () => {
 
                     <div className="mt-12 p-6 bg-purple-50 rounded-2xl border border-purple-100 text-center">
                         <p className="text-gray-700 font-medium">
-                            We can assist you with online factory registration in India. And also provide help in getting Pollution NOC in Delhi, Pollution NOC in Haryana, and Pollution NOC in Uttar pardesh.
+                            We can assist you with online factory registration in India. And also provide help in getting <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-delhi">Pollution NOC in Delhi</a> , <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-haryana">Pollution NOC in Haryana</a>, and <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-uttar-pradesh">Pollution NOC in Uttar Pradesh</a>.
                         </p>
                     </div>
                 </div>
@@ -352,7 +352,7 @@ const ExtendedContent = () => {
 
                         <div className="mt-10 pt-8 border-t border-purple-400/30">
                             <p className="text-center text-sm md:text-base font-medium">
-                                Are you also looking for the Fire NOC Delhi, Fire NOC in Haryana, Fire NOC Uttar Pradesh? If yes, then register your query now!
+                                Are you also looking for the <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-delhi">Fire NOC Delhi</a>, <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-haryana">Fire NOC in Haryana</a>, <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</a>? If yes, then register your query now!
                             </p>
                         </div>
                     </div>

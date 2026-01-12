@@ -259,7 +259,7 @@ export default function FireNocLicenceDelhiPage() {
                 <strong>Prepare Documents</strong>: Gather required documents like sanctioned plans, fire safety drawings, ownership proof, and identity proofs (Aadhaar, etc.).
               </li>
               <li className="text-justify">
-                <strong>Online Application</strong>: Create an account on the Delhi Fire Service portal (or <a href="https://delhifireservice.delhi.gov.in/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">NIUA-UPYOG</a>) and fill out the application form.
+                <strong>Online Application</strong>: Create an account on the Delhi Fire Service portal (or <a href="https://upyog.niua.in/homepage/fire-no-objection-certificate-issuance/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">NIUA-UPYOG</a>) and fill out the application form.
               </li>
               <li className="text-justify">
                 <strong>Upload Documents</strong>: Submit digital copies of all supporting documents.
