@@ -110,6 +110,37 @@ export default function FactoryLicenceDelhiPage() {
         <div className=" max-w-7xl   mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
           {/* Left Content */}
           <div className="md:w-1/2">
+
+      {/* Breadcrumb */}
+      <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex flex-wrap mb-4 items-center gap-2 text-sm"
+        >
+          {[
+            { label: "Home", href: "/" },
+            { label: "Factory Licence Registration & Renewal Services in Haryana" },
+          ]
+            .filter(Boolean)
+            .map((item, idx) => (
+              <div key={idx} className="flex items-center">
+                {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className="text- blue-600 hover:underline"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="text -gray-600">
+                    {item.label}
+                  </span>
+                )}
+              </div>
+            ))}
+        </nav>
+      </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Factory Licence Registration in Haryana
             </h1>
@@ -140,6 +171,7 @@ export default function FactoryLicenceDelhiPage() {
           </div>
         </div>
       </section>
+
 
       {/* Main Content */}
       <section className="max-w-7xl  mx-auto md:py-4 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">

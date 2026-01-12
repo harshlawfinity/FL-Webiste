@@ -28,6 +28,7 @@ import ContactForm from "@/components/ContactForm";
 import img from "@/assets/pollution/haryana.png";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function PollutionNocLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -87,6 +88,36 @@ export default function PollutionNocLicenceHaryanaPage() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
+           {/* Breadcrumb */}
+                <div className="max-w-7xl mx-auto md:px-0 px -4 mt-6">
+                  <nav
+                    aria-label="Breadcrumb"
+                    className="flex flex-wrap mb-4 items-center gap-2 text-sm"
+                  >
+                    {[
+                      { label: "Home", href: "/" },
+                      { label: "Pollution NOC Registration in Haryana" },
+                    ]
+                      .filter(Boolean)
+                      .map((item, idx) => (
+                        <div key={idx} className="flex items-center">
+                          {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                          {item.href ? (
+                            <Link
+                              href={item.href}
+                              className="text- blue-600 hover:underline"
+                            >
+                              {item.label}
+                            </Link>
+                          ) : (
+                            <span className="text -gray-600">
+                              {item.label}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                  </nav>
+                </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Pollution NOC Registration in Haryana
             </h1>
