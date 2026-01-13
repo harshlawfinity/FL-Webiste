@@ -4,36 +4,36 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is the role of UPPCB in Pollution NOC?",
-    answer: "The Uttar Pradesh Pollution Control Board regulates pollution norms and grants the necessary CTE and CTO for businesses.",
+    question: "Q1. What is the cost of Uttar Pradesh Pollution Certificate?",
+    answer: "The State Pollution Control Board charges a fee of Rs. 250 to Rs. 1 lac for the filing of the Consent to Establish, depending on the capital investment made by the Project Proponent. In addition, an annual renewal fee is charged, which is usually half the value of the initial application fee. The waste management authorisation is valid for 5 years.",
   },
   {
-    question: "Is Pollution NOC needed for small businesses?",
-    answer: "Yes, if the business generates any form of pollution or waste, even small units under Orange or Green categories need NOC.",
+    question: "Q2. How Much time will it take to get an Uttar Pradesh Pollution Control Board NOC Certificate?",
+    answer: "The time required to obtain a letter of consent or rejection is 120 days from the date of application.",
   },
   {
-    question: "What is the validity of CTO?",
-    answer: "CTO is valid for 1 to 5 years based on the category of industry and UPPCB norms.",
+    question: "Q3. What is the UP Pollution Control Board?",
+    answer: "The Uttar Pradesh Pollution Control Board (UPPCB) is a government agency responsible for controlling and monitoring pollution in the state of Uttar Pradesh, India. It was established in 1974 under the Water (Prevention and Control of Pollution) Act, 1974. The UPPCB is responsible for the implementation of various environmental laws and regulations, and for monitoring and controlling pollution in the state.",
   },
   {
-    question: "Is Pollution NOC different for each state?",
-    answer: "Yes, procedures and documents vary slightly. UPPCB has its own guidelines distinct from Delhi or Haryana.",
+    question: "Q4. What is H-category (UPPCB Categories)?",
+    answer: "H-category is a classification of industries in Uttar Pradesh that are considered to be highly polluting. These industries are subject to more stringent regulations and monitoring by the UPPCB. Industries in this category include chemical, petrochemical, pharmaceutical, and fertiliser plants.",
   },
   {
-    question: "What happens if I delay my application?",
-    answer: "Delays can lead to late fees, legal notices or denial of other licenses. Timely filing is critical.",
+    question: "Q5. Does UPPCB grant consent to the industrial units located in a non-conforming area?",
+    answer: "No, the UPPCB does not grant consent to the industrial units located in non-conforming areas. Non-conforming areas are locations that are not suitable for industrial activities due to their proximity to residential areas, water bodies, or other sensitive areas.",
   },
   {
-    question: "What is the difference between red orange, green categories?",
-    answer: "They represent the pollution level of your industry—Red being high, Orange medium, Green low and White negligible.",
+    question: "Q6. How much time does UPPCB take in deciding an application for consent to Establish/ Operate?",
+    answer: "The UPPCB usually takes around 30 days to decide on an application for consent to Establish/ Operate. However, this may vary depending on the complexity of the application and the availability of resources.",
   },
   {
-    question: "Can Pollution NOC be applied online in UP?",
-    answer: "Yes, the entire application and tracking process is conducted online via the UPPCB portal.",
+    question: "Q7. What is the validity of the UP Pollution Control Certificate or the UPPCB Certificate?",
+    answer: "The UP Pollution Control Certificate or the UPPCB Certificate is valid for a period of five years from the date of issue.",
   },
   {
-    question: "Is inspection always mandatory?",
-    answer: "Usually, yes. UPPCB often conducts site inspections before granting CTO, especially for red and orange category units.",
+    question: "Q8. Who requires a UP Pollution Control Certificate?",
+    answer: "Any industrial unit located in the state of Uttar Pradesh that is engaged in activities that may cause pollution is required to obtain a UP Pollution Control Certificate from the UPPCB.",
   },
 ];
 

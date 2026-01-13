@@ -199,7 +199,7 @@ export default function PollutionNocLicenceDelhiPage() {
                 <strong>Smooth Operations</strong>: Helps in the uninterrupted operation of your unit without fear of closure or enforcement action.
               </li>
               <li className="text-justify">
-                <strong>Credibility and Approvals</strong>: Required for applying for other licenses like <span className="bg- px-1">factory license</span>, fire NOC, building plan approvals, and more.
+                <strong>Credibility and Approvals</strong>: Required for applying for other licenses like <a href="https://factorylicence.in/" className="text-blue-600 underline font-">factory license</a>, fire NOC, building plan approvals, and more.
               </li>
               <li className="text-justify">
                 <strong>Eligibility for Tenders</strong>: Mandatory for participating in many government or private tenders.
@@ -337,7 +337,7 @@ export default function PollutionNocLicenceDelhiPage() {
               <li>Bio-medical waste management entities</li>
             </ul>
             <p className="text-justify">
-              Factorylicence.in also assists in getting a Factory license in Delhi, Uttar Pradesh and Haryana. Contact us if you want to apply for any of these places.
+              <a href="https://factorylicence.in/" className="text-blue-600 hover:underline">Factorylicence.in</a> also assists in getting a Factory license in Delhi, Uttar Pradesh and Haryana. Contact us if you want to apply for any of these places.
             </p>
           </Section>
 

@@ -170,17 +170,13 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify">
-              Pollution NOC in Uttar Pradesh is an essential environmental
-              clearance provided by the UPPCB. It consists of two stages:
-              Consent to Establish (CTE) and Consent to Operate (CTO) under the
-              Water (Prevention and Control of Pollution) Act, 1974 and the Air
-              (Prevention and Control of Pollution) Act, 1981. Any business or
-              commercial establishment which would be producing waste,
-              discharging effluent or discharging any contaminant should obtain
-              this NOC before they even commence with operations. At Lawfinity,
-              we provide complete assistance for securing a Pollution NOC in
-              Uttar Pradesh, facilitating hassle free compliance and
-              documentation for your new and existing enterprise.
+        Without a pollution NOC in Uttar Pradesh, a factory cannot be established or run. The NOC pollution control board in Uttar Pradesh (or UPPCB) granted this licence in order to guarantee that the industry will not negatively impact the environment. Under the Water (Prevention & Control of Pollution) Act of 1974 and the Air (Prevention & Control of Pollution) Act of 1981, there are two NOCs: Consent to Establish (CTE) and Consent to Operate (CTO) that you need to obtain before establishing and operating a business.
+
+            </p>
+            <br />
+            <p className="text-justify">
+Hire Factorylicence.in and ensure your Pollution NOC in Uttar Pradesh with our comprehensive support. We also help the CTO pollution control board in Uttar Pradesh. Get in touch with our consultant right now!
+
             </p>
           </Section>
 
@@ -189,19 +185,18 @@ export default function PollutionNocLicenceHaryanaPage() {
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-                Why It Is Needed
+Why Pollution NOC In Uttar Pradesh Important?
               </>
             }
           >
             <p className="text-justify">
-              Pollution NOC is very vital to have to make sure that your
-              business is environmentally friendly and does not cause any damage
-              to the surroundings as per the laws of Uttar Pradesh. The fact
-              sheet shows the commitment of the units to responsible,
-              sustainable operations and can help prevent legal or reputation
-              issues, or the need to shut down operation. By handling this
-              difficult approval process, Lawfinity helps your project stay
-              within the confines of the law.
+          Having a Pollution NOC in Uttar Pradesh is an assurance that you provide to the government of Uttar Pradesh that your factory or business doesn’t cause any kind of harm to the government by polluting it in any way. Factories found running without a pollution NOC certificate in Uttar Pradesh can face many legal problems, like penalties, being prosecuted in court, and even being shut down of the business in some cases.
+
+            </p>
+            <br />
+            <p className="text-justify">
+            With Factorylicence.in you will get all-round assistance in getting a Pollution NOC for factory in Uttar Pradesh. Connect with our Consultant now!
+
             </p>
           </Section>
 
@@ -210,7 +205,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             title={
               <>
                 <FaCheckCircle className="inline mr-2" />
-                Benefits and Advantages
+Advantages Of NOC In Uttar Pradesh Important?
               </>
             }
           >
@@ -241,28 +236,8 @@ export default function PollutionNocLicenceHaryanaPage() {
             </ul>
           </Section>
 
-          <Section
-            id="eligibility"
-            title={
-              <>
-                <FaUserCheck className="inline mr-2" />
-                Eligibility Criteria
-              </>
-            }
-          >
-            <p className="text-justify">
-              In Uttar Pradesh, all manufacturing units, processing industries,
-              hospitals, hotels and businesses involved in any process that may
-              affect the environment must obtain Pollution NOC. Units are
-              classified into red orange, green and white categories based on
-              pollution load. Even small-scale units falling under orange and
-              green categories require formal consent. Lawfinity evaluates your
-              category and eligibility before initiating the application
-              process.
-            </p>
-          </Section>
 
-          <Section
+             <Section
             id="documents"
             title={
               <>
@@ -293,45 +268,252 @@ export default function PollutionNocLicenceHaryanaPage() {
           </Section>
 
           <Section
-            id="steps"
+            id="eligibility"
             title={
               <>
-                <FaListOl className="inline mr-2" />
-                Steps
+                <FaUserCheck className="inline mr-2" />
+Eligibility Criteria for Pollution NOC In Uttar Pradesh
               </>
             }
           >
-            <Image src={img} alt="image description" />
+            <p className="text-justify mb-6">
+              In Uttar Pradesh, all manufacturing units, processing industries, hospitals, hotels, and businesses involved in any process that may affect the environment must obtain a Pollution NOC. Units are classified into red, orange, green, and white categories based on pollution load. Even small-scale units falling under the orange and green categories require formal consent.
+            </p>
+
+         
+          </Section>
+
+         
+
+          <Section id="classification" title={
+            <>
+              <FaFileAlt className="inline mr-2" />
+              Classification Of Pollution NOC categories In Uttar Pradesh
+
+            </>
+          }>
+
+               <div className="space-y-6">
+              {/* White Category */}
+              <div className="bg-white border-l-4 border-gray-400 p-5 rounded-lg shadow-sm">
+                <h3 className="text-xl font-bold text-gray-800 mb-2">1. White Category</h3>
+                <p className="text-gray-700 mb-3">No NOC required, but intimation must be given.</p>
+                <div>
+                  <p className="font-semibold text-gray-700 mb-2">Examples:</p>
+                  <ul className="list-disc pl-6 text-gray-600 space-y-1">
+                    <li>Organic manure</li>
+                    <li>Assembling units with no effluent</li>
+                    <li>Chalk making</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Green Category */}
+              <div className="bg-green-50 border-l-4 border-green-500 p-5 rounded-lg shadow-sm">
+                <h3 className="text-xl font-bold text-green-800 mb-2">2. Green Category</h3>
+                <p className="text-green-700 mb-3">Low-risk activities.</p>
+                <div>
+                  <p className="font-semibold text-green-700 mb-2">Examples:</p>
+                  <ul className="list-disc pl-6 text-green-600 space-y-1">
+                    <li>Notebook making</li>
+                    <li>Packaging units</li>
+                    <li>Printing units</li>
+                    <li>Small-scale assembly</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Orange Category */}
+              <div className="bg-orange-50 border-l-4 border-orange-500 p-5 rounded-lg shadow-sm">
+                <h3 className="text-xl font-bold text-orange-800 mb-2">3. Orange Category</h3>
+                <p className="text-orange-700 mb-3">Moderate pollution potential.</p>
+                <div>
+                  <p className="font-semibold text-orange-700 mb-2">Examples:</p>
+                  <ul className="list-disc pl-6 text-orange-600 space-y-1">
+                    <li>Food processing</li>
+                    <li>Mechanical workshops</li>
+                    <li>Pharma distribution/storage</li>
+                    <li>Warehouses handling chemicals</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Red Category */}
+              <div className="bg-red-50 border-l-4 border-red-500 p-5 rounded-lg shadow-sm">
+                <h3 className="text-xl font-bold text-red-800 mb-2">4. Red Category</h3>
+                <p className="text-red-700 mb-3">High pollution risk industries.</p>
+                <div>
+                  <p className="font-semibold text-red-700 mb-2">Examples:</p>
+                  <ul className="list-disc pl-6 text-red-600 space-y-1">
+                    <li>Steel</li>
+                    <li>Chemical manufacturing</li>
+                    <li>Large-scale engineering units</li>
+                    <li>Plastic moulding</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
+
           </Section>
 
 
-          <Section
-            id="timelines"
+           <Section
+            id="documents"
             title={
               <>
-                <FaClock className="inline mr-2" />
-                Timelines
+                <FaFileAlt className="inline mr-2" />
+Documents Required For Pollution NOC In Uttar Pradesh
               </>
             }
           >
-            <li className="text-justify">
-              CTE (Consent to Establish): 20 to 30 working days, depending on
-              project size and category <br />
+            <ul className="list-disc pl-6">
+              <li>
+                KYC documents of the applicant (Pan, Aadhaar, Voter id, Passport
+                etc.)
+              </li>
+              <li>Email id and mobile number of the applicant</li>
+              <li>Ownership proof or rent agreement of the premises</li>
+              <li>Site layout and plant design</li>
+              <li>
+                Project Report and process flow chart (Showing capital
+                investment in Land & Plant Machinery)
+              </li>
+              <li>Details of raw materials and final products</li>
+              <li>Water and energy consumption details</li>
+              <li>Waste generation and disposal plan</li>
+              <li>Effluent treatment mechanism (if applicable)</li>
+              <li>Copy of previous CTO (in case of renewal)</li>
+              <li>Authorization for hazardous waste (if applicable)</li>
+            </ul>
+          </Section>
 
-            </li>
-
-            <li className="text-justify">CTO (Consent to Operate): 45 to 60 working days, post successful
-              inspection and documentation.
-            </li>
-
-
-
-            <br />
-
-            <p>
-              Lawfinity accelerates this timeline by handling all documentation,
-              portal management and liaison with UPPCB authorities.
+          <Section
+            id="fees"
+            title={
+              <>
+                <FaCalculator className="inline mr-2" />
+                Fees for Pollution NOC in UP
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Fees depend on the category, size of the business, and pollution potential.
             </p>
+
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 mb-4">
+              <h3 className="font-bold text-lg mb-3 text-gray-800">Typical UPPCB Fee Range</h3>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li><strong>White Category:</strong> No fee</li>
+                <li><strong>Green Category:</strong> ₹5,000 – ₹15,000</li>
+                <li><strong>Orange Category:</strong> ₹10,000 – ₹50,000</li>
+                <li><strong>Red Category:</strong> ₹50,000 – ₹2,00,000</li>
+              </ul>
+            </div>
+
+            <p className="text-sm text-gray-600 italic">
+              <strong>Note:</strong> Government fees are separate from consultancy charges.
+            </p>
+          </Section>
+
+          <Section
+            id="who-needs"
+            title={
+              <>
+                <HiOfficeBuilding className="inline mr-2" />
+                Who Needs To Obtain The Pollution NOC In Uttar Pradesh?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Businesses involved in these activities need to obtain the Pollution NOC:
+            </p>
+
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Manufacturing Entities</li>
+              <li>Health Care Establishments</li>
+              <li>Traders</li>
+              <li>E-waste Management entities.</li>
+              <li>Solid Waste Management entities</li>
+              <li>Hazardous Waste Management entities</li>
+              <li>Battery Waste Management entities</li>
+              <li>Plastic Waste Management entities</li>
+              <li>Bio-Medical Waste Management entities</li>
+            </ul>
+          </Section>
+
+          <Section
+            id="renewal-process"
+            title={
+              <>
+                <AiOutlineEdit className="inline mr-2" />
+                Renewal Process of Pollution NOC in Uttar Pradesh
+              </>
+            }
+          >
+            <p className="text-justify">
+              The Pollution NOC is issued for a limited period. You have to renew it before the expiry date to continue your operations legally. Failure in renewing the NOC on time will cause you penalties or suspension of operations.
+            </p>
+          </Section>
+
+          <Section
+            id="renewal-timing"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                When Should Pollution NOC Renewal Be Applied?
+              </>
+            }
+          >
+            <ul className="list-disc pl-6 space-y-2">
+              <li>The renewal application should be filed at least 60 to 90 days before the expiry of the existing CTO.</li>
+              <li>Operating with an expired NOC is treated as non-compliance, even if a renewal application is pending.</li>
+            </ul>
+          </Section>
+
+          <Section
+            id="renewal-steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                How To Apply For Pollution NOC Renewal In Uttar Pradesh
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The renewal process of the Pollution NOC in Uttar Pradesh is very similar to the process of registration for the Pollution NOC:
+            </p>
+
+            <ul className="list-disc pl-6 space-y-2">
+              <li>You have to log in to the Nivesh Mitra portal with the existing credentials you created when applying for the pollution NOC for first time.</li>
+              <li>Then select the already registered industrial unit</li>
+              <li>And navigate to the CTO renewal service.</li>
+              <li>Click on it and fill in the details they will ask.</li>
+              <li>Upload required documents. Most documents would be the same as the required when registering for the first time.</li>
+              <li>Just one copy of the existing CTO certificate will be required; otherwise, all the documents will be the same, as before.</li>
+              <li>At last, pay the renewal fees.</li>
+            </ul>
+          </Section>
+
+          <Section
+            id="renewal-cost"
+            title={
+              <>
+                <FaCalculator className="inline mr-2" />
+                How much does it cost For Pollution NOC Renewal In Uttar Pradesh?
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              The cost of Pollution NOC renewal is equal to or a percentage of the original CTO fee, based on:
+            </p>
+
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Industry category (Red/Orange/Green)</strong></li>
+              <li><strong>Capital investment</strong></li>
+              <li><strong>Duration of renewal</strong></li>
+            </ul>
           </Section>
 
           <Section
@@ -344,14 +526,51 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify">
-              Operating without Pollution NOC in Uttar Pradesh is a punishable
-              offense. Businesses may face fines, notices, sealing of premises,
-              disconnection of utilities and prosecution. Non-compliance may
-              also lead to revocation of other permits. Lawfinity ensures timely
-              registration and renewal to keep your business safe from such
-              consequences.
+              Operating without a Pollution NOC in Uttar Pradesh is a punishable offence. Businesses may face fines, notices, sealing of premises, disconnection of utilities, and prosecution. Non-compliance may also lead to the revocation of other permits. Factorylicence.in ensures timely registration and renewal to keep your business safe from such consequences.
             </p>
           </Section>
+
+          <Section
+            id="timelines"
+            title={
+              <>
+                <FaClock className="inline mr-2" />
+                Timelines
+              </>
+            }
+          >
+            <ul className="list-disc pl-6 space-y-3">
+              <li>
+                <strong>CTE (Consent to Establish):</strong> 20 to 30 working days, depending on project size and category
+              </li>
+              <li>
+                <strong>CTO (Consent to Operate):</strong> 45 to 60 working days, post successful inspection and documentation.
+              </li>
+              <li>
+                <strong>Renewal:</strong> 30 to 60 working days, post successful inspection and documentation.
+              </li>
+            </ul>
+            
+            <p className="mt-4 text-justify">
+              <a href="https://factorylicence.in/" className="text-blue-600 underline font-semibold">Factorylicenc.in</a> accelerates this timeline by handling all documentation, portal management with UPPCB authorities.
+            </p>
+          </Section>
+
+          <Section
+            id="why-choose-us"
+            title={
+              <>
+                <FaCheckCircle className="inline mr-2" />
+                Why Choose us?
+              </>
+            }
+          >
+            <p className="text-justify">
+              Factorylicence.in is a trusted law consulting firm that helps businesses and industries obtain the Pollution Noc certificate in Uttar Pradesh, Delhi and Haryana. With expert guidance and end-to-end application support, our team ensures the process is smooth, compliant, and hassle-free so your operations can run without interruptions.
+            </p>
+          </Section>
+
+
         </div>
 
         {/* Sidebar Quick Links */}
@@ -384,8 +603,8 @@ export default function PollutionNocLicenceHaryanaPage() {
                     icon: <FaCheckCircle className="inline mr-2" />,
                   },
                   {
-                    label: "Eligibility Criteria",
-                    id: "eligibility",
+                    label: "Classification",
+                    id: "classification",
                     icon: <FaUserCheck className="inline mr-2" />,
                   },
                   {
@@ -394,9 +613,34 @@ export default function PollutionNocLicenceHaryanaPage() {
                     icon: <FaFileAlt className="inline mr-2" />,
                   },
                   {
-                    label: "Steps",
-                    id: "steps",
+                    label: "Fees",
+                    id: "fees",
+                    icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
+                    label: "Who Needs",
+                    id: "who-needs",
+                    icon: <HiOfficeBuilding className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Process",
+                    id: "renewal-process",
+                    icon: <AiOutlineEdit className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Timing",
+                    id: "renewal-timing",
+                    icon: <RiTimeLine className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Steps",
+                    id: "renewal-steps",
                     icon: <FaListOl className="inline mr-2" />,
+                  },
+                  {
+                    label: "Renewal Cost",
+                    id: "renewal-cost",
+                    icon: <FaCalculator className="inline mr-2" />,
                   },
                   {
                     label: "Timelines",
@@ -409,6 +653,11 @@ export default function PollutionNocLicenceHaryanaPage() {
                     icon: (
                       <FaExclamationTriangle className="inline mr-2 text-red-500" />
                     ),
+                  },
+                  {
+                    label: "Why Choose us?",
+                    id: "why-choose-us",
+                    icon: <FaCheckCircle className="inline mr-2" />,
                   },
                 ].map((item) => (
                   <button

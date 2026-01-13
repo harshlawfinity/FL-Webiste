@@ -302,7 +302,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               </li>
             </ol>
             <p className="mb-6 text-justify">
-              Factorylicence.in makes the procedure of <span className="400 px-1">renewal fire NOC Uttar Pradesh</span> simple. Get your Fire noc renewed with our help now!
+              <a href="https://factorylicence.in/" className="text-blue-600 hover:underline">Factorylicence.in</a> makes the procedure of <span className="400 px-1">renewal fire NOC Uttar Pradesh</span> simple. Get your Fire noc renewed with our help now!
             </p>
             <Image src={img} alt="Fire NOC Process" className="w-full h-auto rounded-lg shadow-md" />
           </Section>
