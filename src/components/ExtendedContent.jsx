@@ -193,7 +193,7 @@ const ExtendedContent = () => {
                             ))}
                         </div>
                         <p className="mt-8 text-sm text-gray-500 font-medium italic border-t border-gray-100 pt-6">
-                            We can help you get the factory license certificate for all states, like Factory license in Delhi, Factory license Haryana, Factory licence in Uttar Pradesh. Call us, we would like to help you.
+                            We can help you get the factory license certificate for all states, like <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-delhi">Factory license in Delhi</a>, <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-haryana">Factory license Haryana</a>, <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-uttar-pradesh">Factory licence in Uttar Pradesh</a>. Call us, we would like to help you.
                         </p>
                     </div>
                 </div>
@@ -352,7 +352,7 @@ const ExtendedContent = () => {
 
                         <div className="mt-10 pt-8 border-t border-purple-400/30">
                             <p className="text-center text-sm md:text-base font-medium">
-                                Are you also looking for the <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-delhi">Fire NOC Delhi</a>, <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-haryana">Fire NOC in Haryana</a>, <a className='text-blue-500 underline' href="https://factorylicence.in/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</a>? If yes, then register your query now!
+                                Are you also looking for the <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-delhi">Fire NOC Delhi</a>, <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-haryana">Fire NOC in Haryana</a>, <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</a>? If yes, then register your query now!
                             </p>
                         </div>
                     </div>

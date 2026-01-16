@@ -337,7 +337,7 @@ export default function PollutionNocLicenceDelhiPage() {
               <li>Bio-medical waste management entities</li>
             </ul>
             <p className="text-justify">
-              <a href="https://factorylicence.in/" className="text-blue-600 hover:underline">Factorylicence.in</a> also assists in getting a Factory license in Delhi, Uttar Pradesh and Haryana. Contact us if you want to apply for any of these places.
+              Factorylicence.in also assists in getting a Factory license in Delhi, Uttar Pradesh and Haryana. Contact us if you want to apply for any of these places.
             </p>
           </Section>
 

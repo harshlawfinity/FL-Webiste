@@ -552,7 +552,7 @@ Documents Required For Pollution NOC In Uttar Pradesh
             </ul>
             
             <p className="mt-4 text-justify">
-              <a href="https://factorylicence.in/" className="text-blue-600 underline font-semibold">Factorylicenc.in</a> accelerates this timeline by handling all documentation, portal management with UPPCB authorities.
+              Factorylicence.in accelerates this timeline by handling all documentation, portal management with UPPCB authorities.
             </p>
           </Section>
 

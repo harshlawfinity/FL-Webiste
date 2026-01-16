@@ -252,7 +252,7 @@ export default function FactoryLicenceDelhiPage() {
               According to the Factories Act, 1948, and the Haryana Factories Rules, 1950, if your unit falls under any of these categories, it is mandatory to register it through the Labour Department, Government of Haryana.
             </p>
             <p className="text-justify">
-              Hire <Link href="/" className="text-blue-600 underline">factorylicence.in</Link> to help you with all the legal formalities to apply Factory license Haryana.
+              Hire factorylicence.in to help you with all the legal formalities to apply Factory license Haryana.
             </p>
           </Section>
 

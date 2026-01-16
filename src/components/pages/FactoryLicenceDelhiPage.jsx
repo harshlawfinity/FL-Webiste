@@ -548,7 +548,7 @@ export default function FactoryLicenceDelhiPage() {
               The registration process of factory licence in delhi may seem easy, but a single mistake can cause a delay in the process. which will be a waste of time to save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
             </p>
             <p className="font-semibold text-[#7A3EF2]">
-              So don't waste more time, call <Link href="https://factorylicence.in" className="underline hover:text-blue-600">Factorylicence.in</Link> now and get your factory registered as soon as possible!
+              So don't waste more time, call Factorylicence.in now and get your factory registered as soon as possible!
             </p>
           </Section>
 
