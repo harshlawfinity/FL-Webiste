@@ -265,6 +265,12 @@ const nextConfig = {
         destination: "/fire-noc-in-delhi",
         statusCode: 301,
       },
+
+       {
+        source: "/blogs/how-to-apply-for-fire-noc-renewal-documents-fees-and-timeline-in-uttar-prad",
+        destination: "/fire-noc-in-uttar-pradesh",
+        statusCode: 301,
+      },
     ];
   },
 };

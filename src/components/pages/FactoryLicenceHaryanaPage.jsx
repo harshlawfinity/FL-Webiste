@@ -238,7 +238,7 @@ export default function FactoryLicenceDelhiPage() {
             }
           >
             <p className="text-justify mb-4">
-              The eligibility criteria for the registration of the <span className="bg-green-300 px-1">Factory licence in Haryana</span> are:
+              The eligibility criteria for the registration of the <span className="n-300 px-1">Factory licence in Haryana</span> are:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-4">
               <li className="text-justify">
@@ -270,7 +270,7 @@ export default function FactoryLicenceDelhiPage() {
             }
           >
             <p className="text-justify mb-4">
-              The documentation process is a crucial step in the <span className="bg-green-300 px-1">Factory licence Haryana</span> registration process. Double-check all the required documents before final submission. This is the list of required documents:
+              The documentation process is a crucial step in the <span className="n-300 px-1">Factory licence Haryana</span> registration process. Double-check all the required documents before final submission. This is the list of required documents:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-800">
               <li className="text-justify ">Building Plan Approval</li>
@@ -397,7 +397,7 @@ export default function FactoryLicenceDelhiPage() {
                 Renewal & Amendment For the Factory Licence in Haryana
               </h2>
               <p className="text-justify mb-4">
-                A <span className="bg-green-300 px-1 font-medium text-black">Factory License in Haryana</span> is generally issued for a duration of 1 to 5 years. The validity of the license can be chosen while applying for a factory licence Haryana. Renewal applications are due before expiration to avoid penalties.
+                A <span className="n-300 px-1 font-medium text-black">Factory License in Haryana</span> is generally issued for a duration of 1 to 5 years. The validity of the license can be chosen while applying for a factory licence Haryana. Renewal applications are due before expiration to avoid penalties.
               </p>
 
               <h3 className="text-xl font-bold text-gray-800 mb-2">Renewal Fee</h3>
