@@ -22,4 +22,8 @@ export const metadata = {
       "Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily.",
     type: "website",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

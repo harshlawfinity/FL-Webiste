@@ -16,6 +16,10 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/blogs",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function Page() {

@@ -65,6 +65,10 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 import React from "react";

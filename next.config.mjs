@@ -255,6 +255,16 @@ const nextConfig = {
         destination: "/",
         statusCode: 301,
       },
+      {
+        source: "/blogs/how-to-apply-for-fire-noc-in-delhi-step-by-step",
+        destination: "/fire-noc-in-delhi",
+        statusCode: 301,
+      },
+      {
+        source: "/blogs/fire-noc-in-delhi-complete-guide-for-industries",
+        destination: "/fire-noc-in-delhi",
+        statusCode: 301,
+      },
     ];
   },
 };

@@ -36,4 +36,8 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/factory-licence-in-delhi",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

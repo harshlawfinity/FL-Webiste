@@ -79,6 +79,10 @@ export async function generateMetadata({ params }) {
       url: rewrittenBlog.canonicalUrl || undefined,
       images: rewrittenBlog.image ? [{ url: rewrittenBlog.image }] : undefined,
     },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 

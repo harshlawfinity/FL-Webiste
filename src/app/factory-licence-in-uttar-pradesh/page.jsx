@@ -27,4 +27,8 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/factory-licence-in-uttar-pradesh",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

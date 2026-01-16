@@ -24,4 +24,8 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/contact",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

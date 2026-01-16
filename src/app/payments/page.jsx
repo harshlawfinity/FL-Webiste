@@ -16,6 +16,10 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/payments",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const Payments = () => {

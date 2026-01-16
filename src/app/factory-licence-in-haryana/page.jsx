@@ -29,4 +29,8 @@ export const metadata = {
   alternates: {
     canonical: "https://factorylicence.in/factory-licence-in-haryana",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };

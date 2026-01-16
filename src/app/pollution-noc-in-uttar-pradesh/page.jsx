@@ -23,5 +23,9 @@ export const metadata = {
     type: "website",
     siteName: "FactoryLicence.in",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
