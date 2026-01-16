@@ -5,16 +5,16 @@ import Script from "next/script";
 import TawkTo from "@/components/TawkTo";
 
 export const metadata = {
-  title: 'Factory Licence Online in India – Fast Approval Guaranteed',
-  description: 'Apply for a factory licence online in India easily and securely.',
+  title: "Factory Licence Online in India – Fast Approval Guaranteed",
+  description:
+    "Apply for a factory licence online in India easily and securely.",
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
 export default function RootLayout({ children }) {
-
   const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -75,13 +75,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-         {/* Schema.org JSON-LD */}
+        {/* Schema.org JSON-LD */}
         <Script
           id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
-
 
         {/* Google Tag Manager */}
         <Script id="gtm-script" strategy="beforeInteractive">
@@ -125,7 +124,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
-        <TawkTo/>
+        <TawkTo />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
