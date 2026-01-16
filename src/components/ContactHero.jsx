@@ -24,9 +24,9 @@ export default function ContactUs() {
 
       <div className="flex flex-col max-w-7xl mx-auto lg:flex-row justify-between mt-10 px-4 gap-4    ">
         <div className="lg:w-1/2 space-y-6">
-          <h1 className="text-4xl font-semibold text-gray-800">
+          <h2 className="text-4xl font-semibold text-gray-800">
             We are here to help you.
-          </h1>
+          </h2>
           <p className="text-gray-600">
             Get in touch with us via email, phone, or by filling out the form to
             discover how <Link className="text-white hover:text-blue-600" href="https://factorylicence.in" target="_blank">factorylicence.in</Link> can solve your licencing challenges.

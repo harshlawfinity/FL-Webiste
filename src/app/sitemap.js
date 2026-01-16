@@ -4,8 +4,7 @@ const API_BASE = "https://internal.lawfinity.in";
 async function safeFetchJson(url) {
   try {
     const res = await fetch(url, {
-      cache: "no-store",
-      next: { revalidate: 3600 }, // Revalidate every hour
+      next: { revalidate: 3600 }, // Cache and revalidate every hour
     });
     if (!res.ok) return null;
 
@@ -20,57 +19,55 @@ async function safeFetchJson(url) {
   }
 }
 
-// Function to fetch ALL blogs using pagination
+// Function to fetch ALL blogs using parallel requests for better performance
 async function fetchAllBlogs() {
-  const allBlogs = [];
-  let page = 1;
-  let hasMore = true;
-  const pageSize = 50; // Fetch 50 blogs per request
-
+  const pageSize = 100; // Increased page size for fewer requests
+  const firstUrl = `${API_BASE}/api/public/published-lf?page=1&limit=${pageSize}`;
+  
   try {
-    while (hasMore) {
-      const url = `${API_BASE}/api/public/published-lf?page=${page}&limit=${pageSize}`;
-      const blogData = await safeFetchJson(url);
+    const firstPageData = await safeFetchJson(firstUrl);
+    if (!firstPageData) return [];
 
-      if (!blogData) {
-        break;
+    const blogs = Array.isArray(firstPageData)
+      ? firstPageData
+      : Array.isArray(firstPageData?.blogs)
+      ? firstPageData.blogs
+      : Array.isArray(firstPageData?.data)
+      ? firstPageData.data
+      : [];
+
+    const total = firstPageData.total || blogs.length;
+    const allBlogs = [...blogs];
+
+    if (total > pageSize) {
+      const remainingPages = Math.ceil(Math.min(total, 1000) / pageSize);
+      const promises = [];
+
+      for (let page = 2; page <= remainingPages; page++) {
+        const url = `${API_BASE}/api/public/published-lf?page=${page}&limit=${pageSize}`;
+        promises.push(safeFetchJson(url));
       }
 
-      // Handle different response structures
-      const blogs = Array.isArray(blogData)
-        ? blogData
-        : Array.isArray(blogData?.blogs)
-        ? blogData.blogs
-        : Array.isArray(blogData?.data)
-        ? blogData.data
-        : [];
-
-      if (blogs.length === 0) {
-        hasMore = false;
-      } else {
-        allBlogs.push(...blogs);
-
-        // Check if we've fetched all blogs
-        const total = blogData.total || 0;
-        if (allBlogs.length >= total) {
-          hasMore = false;
-        } else {
-          page++;
+      const results = await Promise.all(promises);
+      results.forEach(pageData => {
+        if (pageData) {
+          const pageBlogs = Array.isArray(pageData)
+            ? pageData
+            : Array.isArray(pageData?.blogs)
+            ? pageData.blogs
+            : Array.isArray(pageData?.data)
+            ? pageData.data
+            : [];
+          allBlogs.push(...pageBlogs);
         }
-      }
-
-      // Safety limit to prevent infinite loops (max 1000 blogs)
-      if (allBlogs.length >= 1000) {
-        console.warn("Reached maximum blog limit for sitemap (1000)");
-        hasMore = false;
-      }
+      });
     }
 
     console.log(`Fetched ${allBlogs.length} blogs for sitemap`);
     return allBlogs;
   } catch (error) {
     console.error("Error fetching all blogs for sitemap:", error);
-    return allBlogs; // Return whatever we've fetched so far
+    return [];
   }
 }
 
