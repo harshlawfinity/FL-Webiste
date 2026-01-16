@@ -446,7 +446,7 @@ export default function FactoryLicenceDelhiPage() {
               The registration process of a factory license in Haryana may seem easy, but a single mistake can cause a delay in the process. To save time and any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
             </p>
             <p className="text-justify">
-              So don't waste more time, call <Link href="/" className="text-blue-600 underline">Factorylicence.in</Link> now and get your factory registered as soon as possible!
+              So don't waste more time, call Factorylicence.in now and get your factory registered as soon as possible!
             </p>
           </Section>
         </div>
