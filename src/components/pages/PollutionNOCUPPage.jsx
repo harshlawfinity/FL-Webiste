@@ -26,7 +26,7 @@ import FaqSectionPollutionUP from "@/components/FaqSectionPollutionUP"; // You c
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
-import ContactForm from "@/components/ContactForm";
+import ContactFormModal from "@/components/ContactFormModal";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -689,30 +689,7 @@ Documents Required For Pollution NOC In Uttar Pradesh
       <FaqSectionPollutionUP />
 
       {/* Contact Form Popup */}
-      {showPopup && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="bg-white p-6 rounded-lg max-w-md w-full relative shadow-lg">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-3 text-gray-500 text-3xl"
-              aria-label="Close contact form"
-            >
-              ×
-            </button>
-            <Suspense
-              fallback={
-                <div className="py-10 text-center">Loading form...</div>
-              }
-            >
-              <ContactForm />
-            </Suspense>
-          </div>
-        </div>
-      )}
+      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </div>
   );
 }

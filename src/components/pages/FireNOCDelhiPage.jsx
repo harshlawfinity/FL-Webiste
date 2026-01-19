@@ -22,7 +22,7 @@ import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import img from '@/assets/fire/delhi.jpeg'
-import ContactForm from "@/components/ContactForm";
+import ContactFormModal from "@/components/ContactFormModal";
 import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
 import Head from "next/head";
 import Link from "next/link";
@@ -81,36 +81,36 @@ export default function FireNocLicenceDelhiPage() {
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="md:w-1/2">
 
-           {/* Breadcrumb */}
-                <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
-                  <nav
-                    aria-label="Breadcrumb"
-                    className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-                  >
-                    {[
-                      { label: "Home", href: "/" },
-                      { label: "Fire NOC Registration in Delhi" },
-                    ]
-                      .filter(Boolean)
-                      .map((item, idx) => (
-                        <div key={idx} className="flex items-center">
-                          {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                          {item.href ? (
-                            <Link
-                              href={item.href}
-                              className="text- blue-600 hover:underline"
-                            >
-                              {item.label}
-                            </Link>
-                          ) : (
-                            <span className="text -gray-600">
-                              {item.label}
-                            </span>
-                          )}
-                        </div>
-                      ))}
-                  </nav>
-                </div>
+            {/* Breadcrumb */}
+            <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
+              <nav
+                aria-label="Breadcrumb"
+                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
+              >
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "Fire NOC Registration in Delhi" },
+                ]
+                  .filter(Boolean)
+                  .map((item, idx) => (
+                    <div key={idx} className="flex items-center">
+                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="text- blue-600 hover:underline"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <span className="text -gray-600">
+                          {item.label}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+              </nav>
+            </div>
             <h1 className="text-4xl md:text-5xl font-semibold mb-4">
               Fire NOC Registration in Delhi
             </h1>
@@ -554,30 +554,7 @@ export default function FireNocLicenceDelhiPage() {
       <FaqSectionFireDelhi />
 
       {/* Popup Contact Form */}
-      {showPopup && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="bg-white p-6 rounded-lg max-w-md w-full relative shadow-lg">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-3 text-gray-500 text-3xl"
-              aria-label="Close contact form"
-            >
-              ×
-            </button>
-            <Suspense
-              fallback={
-                <div className="py-10 text-center">Loading form...</div>
-              }
-            >
-              <ContactForm />
-            </Suspense>
-          </div>
-        </div>
-      )}
+      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </div>
   );
 }

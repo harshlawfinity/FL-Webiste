@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, lazy } from "react";
-
-import ContactForm from "./ContactForm";
+import { useState, useEffect } from "react";
+import ContactFormModal from "./ContactFormModal";
+import { useContactModal } from "@/hooks/useContactModal";
 const HeroSection = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
@@ -32,12 +32,12 @@ const HeroSection = () => {
     <section className="relative w-full h-[100vh] md:h-[600px] mt-20 overflow-hidden bg-[#7c4bdf]">
       <main className="w-full h-full flex items-center justify-center px-4 sm:px-6">
         <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-between items-center gap-8">
-          
+
           {/* Text Section */}
           <article className="text-white w-full lg:w-1/2">
             <p className="md:text-5xl text-4xl capitalize font-semibold md:mb-6 mb-2">
               From Paperwork To Permit
-               factory licence done right
+              factory licence done right
             </p>
 
             <p className="text-sm   mb-6 sm:mb-8">
@@ -80,7 +80,7 @@ const HeroSection = () => {
                   </button>
                 </>
               ) : (
-                 <iframe
+                <iframe
                   className="absolute top-0 left-0 w-full h-full"
                   src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                   title="Factory Licence Walkthrough"
@@ -95,24 +95,7 @@ const HeroSection = () => {
       </main>
 
       {/* Contact Form Modal */}
-      {showPopup && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="bg-gray-50 p-6 rounded-lg max-w-md w-full relative shadow-lg">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-3 text-gray-500 text-4xl"
-              aria-label="Close contact form"
-            >
-              ×
-            </button>
-            <ContactForm />
-          </div>
-        </div>
-      )}
+      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </section>
   );
 };

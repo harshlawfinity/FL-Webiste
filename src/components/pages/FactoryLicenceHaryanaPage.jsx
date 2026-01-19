@@ -25,7 +25,7 @@ import {
 
 import hhhhh from "../../assets/hhhhh.webp";
 
-import ContactForm from "@/components/ContactForm";
+import ContactFormModal from "@/components/ContactFormModal";
 
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
@@ -111,36 +111,36 @@ export default function FactoryLicenceDelhiPage() {
           {/* Left Content */}
           <div className="md:w-1/2">
 
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
-        <nav
-          aria-label="Breadcrumb"
-          className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-        >
-          {[
-            { label: "Home", href: "/" },
-            { label: "Factory Licence Registration & Renewal Services in Haryana" },
-          ]
-            .filter(Boolean)
-            .map((item, idx) => (
-              <div key={idx} className="flex items-center">
-                {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="text- blue-600 hover:underline"
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <span className="text -gray-600">
-                    {item.label}
-                  </span>
-                )}
-              </div>
-            ))}
-        </nav>
-      </div>
+            {/* Breadcrumb */}
+            <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
+              <nav
+                aria-label="Breadcrumb"
+                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
+              >
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "Factory Licence Registration & Renewal Services in Haryana" },
+                ]
+                  .filter(Boolean)
+                  .map((item, idx) => (
+                    <div key={idx} className="flex items-center">
+                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="text- blue-600 hover:underline"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <span className="text -gray-600">
+                          {item.label}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+              </nav>
+            </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Factory Licence Registration in Haryana
             </h1>
@@ -198,7 +198,7 @@ export default function FactoryLicenceDelhiPage() {
             <br />
 
             <p className="text-justify">
-              Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance can help you obtain all the <a href="https://factorylicence.in/"  className="text-blue-600 underline">factory licences</a> you need to set up and operate a factory in Haryana.
+              Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance can help you obtain all the <a href="https://factorylicence.in/" className="text-blue-600 underline">factory licences</a> you need to set up and operate a factory in Haryana.
 
             </p>
           </Section>
@@ -549,31 +549,7 @@ export default function FactoryLicenceDelhiPage() {
       </section>
 
       {/* Contact Form Popup */}
-      {showPopup && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="bg-white p-6 rounded-lg max-w-md w-full relative shadow-lg">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-3 text-gray-500 text-3xl"
-              semi
-              aria-label="Close contact form"
-            >
-              ×
-            </button>
-            <Suspense
-              fallback={
-                <div className="py-10 text-center">Loading form...</div>
-              }
-            >
-              <ContactForm />
-            </Suspense>
-          </div>
-        </div>
-      )}
+      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
 
       <FaqSection />
     </div>
