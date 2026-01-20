@@ -331,7 +331,7 @@ export default function PollutionNocLicenceHaryanaPage() {
                 <strong>Follow-up</strong>: Respond to notices and follow up with authorities to ensure a smooth process.
               </li>
             </ol>
-            <Image src={img} alt="image description" className="w-full h-auto rounded-l g s hadow-md" />
+            <Image src={img} alt="Pollution Noc In Haryana" className="w-full h-auto rounded-l g s hadow-md" />
           </Section>
 
           <Section

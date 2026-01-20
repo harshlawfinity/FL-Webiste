@@ -287,7 +287,7 @@ export default function PollutionNocLicenceDelhiPage() {
                 <strong>Receive NOC</strong>: Upon successful verification, the electronic NOC (CTE/CTO certificate) is issued, allowing legal operation.
               </li>
             </ol>
-            <Image src={img} alt="image description" />
+            <Image src={img} alt="Pollution Noc In Delhi" />
           </Section>
 
           <Section

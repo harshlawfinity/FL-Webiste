@@ -288,7 +288,7 @@ export default function FireNocLicenceHaryanaPage() {
                 <strong>Upload and Submit Documents</strong>: The applicant must attach all essential papers to the application form after completing all mandatory fields. Once all required documents are attached, click the "Save" button to submit.
               </li>
             </ol>
-            <Image src={img} alt="image description" className="w-full h-auto rounded-lg" />
+            <Image src={img} alt="Fire Noc In Haryana" className="w-full h-auto rounded-lg" />
           </Section>
 
           <Section

@@ -309,7 +309,7 @@ export default function FireNocLicenceDelhiPage() {
                 <strong>Approval & Download</strong>: Receive SMS notifications; download your digital Fire NOC from the portal upon approval.
               </li>
             </ol>
-            <Image src={img} alt="image description" className="w-full h-auto rounded-lg" />
+            <Image src={img} alt="Fire Noc In Delhi" className="w-full h-auto rounded-lg" />
           </Section>
 
           <Section
