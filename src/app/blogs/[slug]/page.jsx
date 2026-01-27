@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import BlogsClientUI from '@/components/BlogsClientUI';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const API_BASE = "https://internal.lawfinity.in"
 
 // Naya function jo saare URLs ko rewrite karega
@@ -33,37 +36,34 @@ const rewriteImageUrls = (blog) => {
   return blog;
 };
 
-async function safeFetchJson(url, init) {
+async function getBlog(slug) {
   try {
-    const res = await fetch(url, { cache: 'no-store', ...init });
-    if (!res.ok) return null;
-
-    const ct = res.headers.get('content-type') || '';
-    if (!ct.includes('application/json')) {
+    console.log(`[getBlog] Fetching blog with slug: ${slug}`);
+    
+    // Use local API route instead of external API
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blogs/${slug}`, {
+      cache: 'no-store'
+    });
+    
+    if (!res.ok) {
+      console.log(`[getBlog] API returned ${res.status}`);
       return null;
     }
-    const json = await res.json();
 
-    if (json && typeof json === 'object') {
-      if ('data' in json) return json.data;
-      if ('blog' in json) return json.blog;
-    }
-    return json;
-  } catch {
+    const blog = await res.json();
+    console.log(`[getBlog] Fetched blog:`, blog?.title);
+    
+    return rewriteImageUrls(blog);
+  } catch (e) {
+    console.error(`[getBlog] Error fetching blog:`, e);
     return null;
   }
 }
 
-async function getBlog(slug) {
-  const data = await safeFetchJson(`${API_BASE}/api/public/published-fl/${slug}`);
-  const blog = data || null;
-  // URLs ko rewrite karna
-  return rewriteImageUrls(blog);
-}
-
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const blog = await safeFetchJson(`${API_BASE}/api/public/published-fl/${resolvedParams.slug}`);
+  const blog = await getBlog(resolvedParams.slug);
+  
   if (!blog) return {};
 
   // URLs ko rewrite karna metadata ke liye
@@ -86,21 +86,22 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export async function generateStaticParams() {
-  const list = await safeFetchJson(`${API_BASE}/api/public/published-fl`);
-
-  const blogs = Array.isArray(list)
-    ? list
-    : Array.isArray(list?.blogs)
-      ? list.blogs
-      : Array.isArray(list?.data)
-        ? list.data
-        : [];
-
-  return blogs
-    .filter((b) => b && b.urlSlug)
-    .map((b) => ({ slug: b.urlSlug }));
-}
+// Static params generation disabled - route is force-dynamic
+// export async function generateStaticParams() {
+//   const list = await safeFetchJson(`${API_BASE}/api/public/published-fl`);
+//
+//   const blogs = Array.isArray(list)
+//     ? list
+//     : Array.isArray(list?.blogs)
+//       ? list.blogs
+//       : Array.isArray(list?.data)
+//         ? list.data
+//         : [];
+//
+//   return blogs
+//     .filter((b) => b && b.urlSlug)
+//     .map((b) => ({ slug: b.urlSlug }));
+// }
 
 export default async function BlogDetails({ params }) {
   const resolvedParams = await params;
