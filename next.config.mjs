@@ -271,6 +271,11 @@ const nextConfig = {
         destination: "/fire-noc-in-uttar-pradesh",
         statusCode: 301,
       },
+       {
+        source: "/blogs/fire-noc-cost-and-validity-in-delhi",
+        destination: "/fire-noc-in-delhi",
+        statusCode: 301,
+      },
     ];
   },
 };
