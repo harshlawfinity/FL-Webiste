@@ -22,8 +22,8 @@ async function safeFetchJson(url) {
 // Function to fetch ALL blogs using parallel requests for better performance
 async function fetchAllBlogs() {
   const pageSize = 100; // Increased page size for fewer requests
-  const firstUrl = `${API_BASE}/api/public/published-lf?page=1&limit=${pageSize}`;
-  
+  const firstUrl = `${API_BASE}/api/public/published-fl?page=1&limit=${pageSize}`;
+
   try {
     const firstPageData = await safeFetchJson(firstUrl);
     if (!firstPageData) return [];
@@ -31,10 +31,10 @@ async function fetchAllBlogs() {
     const blogs = Array.isArray(firstPageData)
       ? firstPageData
       : Array.isArray(firstPageData?.blogs)
-      ? firstPageData.blogs
-      : Array.isArray(firstPageData?.data)
-      ? firstPageData.data
-      : [];
+        ? firstPageData.blogs
+        : Array.isArray(firstPageData?.data)
+          ? firstPageData.data
+          : [];
 
     const total = firstPageData.total || blogs.length;
     const allBlogs = [...blogs];
@@ -44,20 +44,20 @@ async function fetchAllBlogs() {
       const promises = [];
 
       for (let page = 2; page <= remainingPages; page++) {
-        const url = `${API_BASE}/api/public/published-lf?page=${page}&limit=${pageSize}`;
+        const url = `${API_BASE}/api/public/published-fl?page=${page}&limit=${pageSize}`;
         promises.push(safeFetchJson(url));
       }
 
       const results = await Promise.all(promises);
-      results.forEach(pageData => {
+      results.forEach((pageData) => {
         if (pageData) {
           const pageBlogs = Array.isArray(pageData)
             ? pageData
             : Array.isArray(pageData?.blogs)
-            ? pageData.blogs
-            : Array.isArray(pageData?.data)
-            ? pageData.data
-            : [];
+              ? pageData.blogs
+              : Array.isArray(pageData?.data)
+                ? pageData.data
+                : [];
           allBlogs.push(...pageBlogs);
         }
       });

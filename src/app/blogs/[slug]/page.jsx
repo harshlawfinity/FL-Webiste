@@ -55,7 +55,7 @@ async function safeFetchJson(url, init) {
 }
 
 async function getBlog(slug) {
-  const data = await safeFetchJson(`${API_BASE}/api/public/published-lf/${slug}`);
+  const data = await safeFetchJson(`${API_BASE}/api/public/published-fl/${slug}`);
   const blog = data || null;
   // URLs ko rewrite karna
   return rewriteImageUrls(blog);
@@ -63,7 +63,7 @@ async function getBlog(slug) {
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const blog = await safeFetchJson(`${API_BASE}/api/public/published-lf/${resolvedParams.slug}`);
+  const blog = await safeFetchJson(`${API_BASE}/api/public/published-fl/${resolvedParams.slug}`);
   if (!blog) return {};
 
   // URLs ko rewrite karna metadata ke liye
@@ -87,7 +87,7 @@ export async function generateMetadata({ params }) {
 }
 
 export async function generateStaticParams() {
-  const list = await safeFetchJson(`${API_BASE}/api/public/published-lf`);
+  const list = await safeFetchJson(`${API_BASE}/api/public/published-fl`);
 
   const blogs = Array.isArray(list)
     ? list
