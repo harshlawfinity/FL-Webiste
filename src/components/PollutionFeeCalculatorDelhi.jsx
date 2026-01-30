@@ -63,8 +63,9 @@ const NocFeeDelhi = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-black mb-6">
         {/* Type */}
         <div>
-          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">Type</label>
+          <label htmlFor="delhi-type-select" className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">Type</label>
           <select
+            id="delhi-type-select"
             name="type"
             value={form.type}
             onChange={handleChange}
@@ -78,10 +79,11 @@ const NocFeeDelhi = () => {
         {/* Years (only for CTO) */}
         {form.type === "CTO" && (
           <div>
-            <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
+            <label htmlFor="delhi-years-input" className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
               Years
             </label>
             <input
+              id="delhi-years-input"
               type="number"
               name="years"
               min="1"
@@ -94,10 +96,11 @@ const NocFeeDelhi = () => {
 
         {/* Category */}
         <div>
-          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
+          <label htmlFor="delhi-category-select" className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
             Industry Category
           </label>
           <select
+            id="delhi-category-select"
             name="category"
             value={form.category}
             onChange={handleChange}
@@ -110,10 +113,11 @@ const NocFeeDelhi = () => {
 
         {/* Investment */}
         <div>
-          <label className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
+          <label htmlFor="delhi-investment-input" className="text-[#7A3EF2] font-medium block mb-1 md:text-sm text-xs">
             Capital Investment (in lakhs)
           </label>
           <input
+            id="delhi-investment-input"
             type="number"
             name="investment"
             value={form.investment}

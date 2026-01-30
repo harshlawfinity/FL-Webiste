@@ -62,10 +62,11 @@ const UniversalNocFeeCalculator = () => {
 
       {/* State Selector */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-purple-600 mb-1">
+        <label htmlFor="state-select" className="block text-sm font-medium text-purple-600 mb-1">
           Select State
         </label>
         <select
+          id="state-select"
           value={selectedState}
           onChange={handleStateChange}
           className="w-full p-3 rounded-xl border text-black border-gray-300 focus:ring-2 focus:ring-purple-400"
@@ -79,8 +80,9 @@ const UniversalNocFeeCalculator = () => {
       {/* Dynamic Form */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black mb-6">
         <div>
-          <label className="text-sm font-semibold text-purple-600 block mb-1">Type</label>
+          <label htmlFor="type-select" className="text-sm font-semibold text-purple-600 block mb-1">Type</label>
           <select
+            id="type-select"
             name="type"
             value={form.type}
             onChange={handleChange}
@@ -107,8 +109,9 @@ const UniversalNocFeeCalculator = () => {
         )}
 
         <div>
-          <label className="text-sm font-semibold text-purple-600 block mb-1">Category</label>
+          <label htmlFor="category-select" className="text-sm font-semibold text-purple-600 block mb-1">Category</label>
           <select
+            id="category-select"
             name="category"
             value={form.category}
             onChange={handleChange}
@@ -121,10 +124,11 @@ const UniversalNocFeeCalculator = () => {
         </div>
 
         <div>
-          <label className="text-sm font-semibold text-purple-600 block mb-1">
+          <label htmlFor="investment-input" className="text-sm font-semibold text-purple-600 block mb-1">
             Investment (in lakhs)
           </label>
           <input
+            id="investment-input"
             type="text"
             name="investment"
             value={Number(form.investment || 0).toLocaleString()}

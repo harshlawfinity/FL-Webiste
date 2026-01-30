@@ -89,17 +89,13 @@ export default function FactoryLicenceDelhiPage() {
         <div className="absolute inset-0 z-0">
           {heroBackgrounds.map((img, index) => (
             <Image
+              priority={index === 0}
               key={index}
               src={img}
               alt={`bg-${index}`}
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchpriority={index === 0 ? "high" : undefined}
               width="1920"
               height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } ${index === 0
-                  ? ""
-                  : "transition-opacity duration-1000 ease-in-out"
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
                 }`}
             />
           ))}
@@ -112,7 +108,7 @@ export default function FactoryLicenceDelhiPage() {
           <div className="md:w-1/2">
 
             {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
+            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
               <nav
                 aria-label="Breadcrumb"
                 className="flex flex-wrap mb-4 items-center gap-2 text-sm"
@@ -128,12 +124,12 @@ export default function FactoryLicenceDelhiPage() {
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="text- blue-600 hover:underline"
+                          className="text-gray-50"
                         >
                           {item.label}
                         </Link>
                       ) : (
-                        <span className="text -gray-600">
+                        <span className="text-gray-50">
                           {item.label}
                         </span>
                       )}
@@ -158,9 +154,9 @@ export default function FactoryLicenceDelhiPage() {
 
           {/* Right Video Section */}
           <div className="md:w-1/2 w-full">
-            <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
+            <div className="relative w-full aspect-video md:h-[350px] md:aspect-auto overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]">
               <iframe
-                className="  w-full md:h-[350px] h-[200px]"
+                className="absolute top-0 left-0 w-full h-full"
                 src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
                 title="Factory Licence Walkthrough"
                 allow="autoplay; encrypted-media"

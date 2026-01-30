@@ -70,10 +70,11 @@ export default function FactoryLicenseCalculatorHaryana() {
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4 text-black">
         {/* Horse Power */}
         <div>
-          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
+          <label htmlFor="haryana-power-select" className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Installed Power (in H.P.)
           </label>
           <select
+            id="haryana-power-select"
             name="hpIndex"
             value={form.hpIndex}
             onChange={handleChange}
@@ -90,10 +91,11 @@ export default function FactoryLicenseCalculatorHaryana() {
 
         {/* Workers */}
         <div>
-          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
+          <label htmlFor="haryana-workers-select" className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Number of Workers
           </label>
           <select
+            id="haryana-workers-select"
             name="workerIndex"
             value={form.workerIndex}
             onChange={handleChange}

@@ -67,10 +67,11 @@ export default function FactoryLicenseCalculatorUP() {
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4 text-black">
         {/* Horse Power */}
         <div>
-          <label className="block text-sm font-semibold text-purple-600 mb-1">
+          <label htmlFor="up-power-select" className="block text-sm font-semibold text-purple-600 mb-1">
             Installed Power (in H.P.)
           </label>
           <select
+            id="up-power-select"
             name="hpIndex"
             value={form.hpIndex}
             onChange={handleChange}
@@ -87,10 +88,11 @@ export default function FactoryLicenseCalculatorUP() {
 
         {/* Workers */}
         <div>
-          <label className="block text-sm font-semibold text-purple-600 mb-1">
+          <label htmlFor="up-workers-select" className="block text-sm font-semibold text-purple-600 mb-1">
             Number of Workers
           </label>
           <select
+            id="up-workers-select"
             name="workerIndex"
             value={form.workerIndex}
             onChange={handleChange}

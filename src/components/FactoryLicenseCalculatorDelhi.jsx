@@ -64,10 +64,11 @@ const FactoryLicenseCalculatorDelhi = () => {
       {/* Form */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
+          <label htmlFor="unit-type-select" className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Select Unit Type
           </label>
           <select
+            id="unit-type-select"
             value={unitType}
             onChange={(e) => {
               setUnitType(e.target.value);
@@ -83,10 +84,11 @@ const FactoryLicenseCalculatorDelhi = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
+          <label htmlFor="hp-select" className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Select Horsepower (HP)
           </label>
           <select
+            id="hp-select"
             value={hpIndex}
             onChange={(e) => setHpIndex(e.target.value)}
             className="w-full p-1 text-sm rounded border border-gray-300 focus:ring-2 focus:ring-purple-400"
@@ -102,10 +104,11 @@ const FactoryLicenseCalculatorDelhi = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-[#7A3EF2] mb-1">
+          <label htmlFor="years-input" className="block text-sm font-semibold text-[#7A3EF2] mb-1">
             Number of Years
           </label>
           <input
+            id="years-input"
             type="number"
             min="1"
             value={years}

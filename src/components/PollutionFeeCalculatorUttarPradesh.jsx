@@ -52,8 +52,9 @@ const NocFeeUP = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black mb-6">
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">Type</label>
+          <label htmlFor="up-noc-type-select" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">Type</label>
           <select
+            id="up-noc-type-select"
             name="type"
             value={form.type}
             onChange={handleChange}
@@ -66,10 +67,11 @@ const NocFeeUP = () => {
 
         {form.type === "CTO" && (
           <div>
-            <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+            <label htmlFor="up-noc-years-input" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
               Years
             </label>
             <input
+              id="up-noc-years-input"
               type="number"
               name="years"
               min="1"
@@ -81,10 +83,11 @@ const NocFeeUP = () => {
         )}
 
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+          <label htmlFor="up-noc-category-select" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Industry Category
           </label>
           <select
+            id="up-noc-category-select"
             name="category"
             value={form.category}
             onChange={handleChange}
@@ -97,10 +100,11 @@ const NocFeeUP = () => {
         </div>
 
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+          <label htmlFor="up-noc-investment-input" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Capital Investment (in lakhs)
           </label>
           <input
+            id="up-noc-investment-input"
             type="number"
             name="investment"
             value={form.investment}
@@ -126,8 +130,8 @@ const NocFeeUP = () => {
           </div>
 
           <div className="space-y-4 text-lg">
-           
-             
+
+
             <div className="flex justify-between ">
               <span className="text-black">Government Fee</span>
               <span className="bg-[#7A3EF2] text-white px-6 py-2 rounded-lg shadow">

@@ -3,6 +3,14 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 import Script from "next/script";
 import TawkTo from "@/components/TawkTo";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Factory Licence Online in India – Fast Approval Guaranteed",
@@ -76,6 +84,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* Schema.org JSON-LD */}
+
+        {/* Schema.org JSON-LD */}
         <Script
           id="schema-org"
           type="application/ld+json"
@@ -83,7 +93,7 @@ export default function RootLayout({ children }) {
         />
 
         {/* Google Tag Manager */}
-        <Script id="gtm-script" strategy="beforeInteractive">
+        <Script id="gtm-script" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -123,7 +133,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body>
+      <body className={`${poppins.variable} font-sans`}>
         <TawkTo />
         {/* Google Tag Manager (noscript) */}
         <noscript>

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import ContactFormModal from "./ContactFormModal";
 import { useContactModal } from "@/hooks/useContactModal";
 const HeroSection = () => {
@@ -63,13 +64,13 @@ const HeroSection = () => {
             <div className="relative w-full aspect-[16/9] min-h-[200px] bg-black rounded-lg overflow-hidden flex items-center justify-center">
               {!showVideo ? (
                 <>
-                  <img
+                  <Image
                     src="/static/factory-cover.webp"
                     alt="Factory Licence Video Preview"
                     className="absolute top-0 left-0 w-full h-full object-cover"
-                    loading="eager"
-                    width="1280"
-                    height="720"
+                    priority
+                    width={1280}
+                    height={720}
                   />
                   <button
                     onClick={handlePlayClick}

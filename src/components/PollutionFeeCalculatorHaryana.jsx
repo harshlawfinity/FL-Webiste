@@ -73,10 +73,11 @@ const NocFeeCalculatorHaryana = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black">
         {/* Type */}
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+          <label htmlFor="haryana-noc-type-select" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Type
           </label>
           <select
+            id="haryana-noc-type-select"
             name="type"
             value={form.type}
             onChange={handleChange}
@@ -90,10 +91,11 @@ const NocFeeCalculatorHaryana = () => {
         {/* Years */}
         {form.type === "CTO" && (
           <div>
-            <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+            <label htmlFor="haryana-noc-years-input" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
               Years
             </label>
             <input
+              id="haryana-noc-years-input"
               type="number"
               name="years"
               value={form.years}
@@ -106,10 +108,11 @@ const NocFeeCalculatorHaryana = () => {
 
         {/* Category */}
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+          <label htmlFor="haryana-noc-category-select" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Industry Category
           </label>
           <select
+            id="haryana-noc-category-select"
             name="category"
             value={form.category}
             onChange={handleChange}
@@ -123,10 +126,11 @@ const NocFeeCalculatorHaryana = () => {
 
         {/* Investment */}
         <div>
-          <label className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
+          <label htmlFor="haryana-noc-investment-input" className="block text-xs md:text-sm font-medium text-[#7A3EF2] mb-1 tracking-tighter">
             Capital Investment (in lakhs)
           </label>
           <input
+            id="haryana-noc-investment-input"
             type="number"
             name="investment"
             value={form.investment}
@@ -146,41 +150,41 @@ const NocFeeCalculatorHaryana = () => {
       </button>
 
       {result && (
-  <div className="mt-6 w-full      ">
-    {/* Title */}
-    <div className="flex items-center text-[#7A3EF2] text-xl font-semibold mb-6">
-      <FaCheckCircle className="mr-2 text-purple-600" />
-      Result Summary
-    </div>
+        <div className="mt-6 w-full      ">
+          {/* Title */}
+          <div className="flex items-center text-[#7A3EF2] text-xl font-semibold mb-6">
+            <FaCheckCircle className="mr-2 text-purple-600" />
+            Result Summary
+          </div>
 
-    {/* Fee Breakdown */}
-    <div className="grid grid-cols-1 gap-4 text-black text-base font-medium">
-      {/* Performance Security */}
-      <div className="flex  w-full justify-between">
-        <span className="text-gray-600 mb-1">Performance Security</span>
-        <span className="">
-          ₹{result.security.toLocaleString()}
-        </span>
-      </div>
+          {/* Fee Breakdown */}
+          <div className="grid grid-cols-1 gap-4 text-black text-base font-medium">
+            {/* Performance Security */}
+            <div className="flex  w-full justify-between">
+              <span className="text-gray-600 mb-1">Performance Security</span>
+              <span className="">
+                ₹{result.security.toLocaleString()}
+              </span>
+            </div>
 
-      {/* Government Fee (Approx.) */}
-      <div className="flex  w-full justify-between">
-        <span className="text-gray-600 mb-1">Government Fee (Approx.)</span>
-        <span className="">
-          ₹{result.fee.toLocaleString()}
-        </span>
-      </div>
+            {/* Government Fee (Approx.) */}
+            <div className="flex  w-full justify-between">
+              <span className="text-gray-600 mb-1">Government Fee (Approx.)</span>
+              <span className="">
+                ₹{result.fee.toLocaleString()}
+              </span>
+            </div>
 
-      {/* Total Fee */}
-      <div className="flex  w-full justify-between">
-        <span className="text-gray-600 mb-1">Total Estimated Fee</span>
-        <span className="bg-purple-700 text-white px-4 py-2 rounded-lg shadow text-lg font-bold">
-          ₹{(result.security + result.fee).toLocaleString()}
-        </span>
-      </div>
-    </div>
-  </div>
-)}
+            {/* Total Fee */}
+            <div className="flex  w-full justify-between">
+              <span className="text-gray-600 mb-1">Total Estimated Fee</span>
+              <span className="bg-purple-700 text-white px-4 py-2 rounded-lg shadow text-lg font-bold">
+                ₹{(result.security + result.fee).toLocaleString()}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

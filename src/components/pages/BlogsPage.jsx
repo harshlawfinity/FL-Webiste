@@ -329,8 +329,8 @@ function BlogsPage() {
                                 <button
                                     key={num}
                                     className={`px-3 py-1 rounded border ${num === page
-                                            ? "bg-purple-500 text-white border-purple-500"
-                                            : "bg-white text-gray-700"
+                                        ? "bg-purple-500 text-white border-purple-500"
+                                        : "bg-white text-gray-700"
                                         }`}
                                     onClick={() => handlePageChange(num)}
                                     disabled={num === page}
@@ -468,8 +468,8 @@ const BlogHeader = ({
                                 <button
                                     onClick={() => setFilterType("Most Recent")}
                                     className={`px-3 py-1.5 text-sm rounded ${filterType === "Most Recent"
-                                            ? "bg-purple-600 text-white"
-                                            : "bg-white text-gray-700 hover:bg-zinc-50"
+                                        ? "bg-purple-600 text-white"
+                                        : "bg-white text-gray-700 hover:bg-zinc-50"
                                         }`}
                                 >
                                     Most Recent
@@ -477,8 +477,8 @@ const BlogHeader = ({
                                 <button
                                     onClick={() => setFilterType("Most Viewed")}
                                     className={`px-3 py-1.5 text-sm rounded ${filterType === "Most Viewed"
-                                            ? "bg-purple-600 text-white"
-                                            : "bg-white text-gray-700 hover:bg-zinc-50"
+                                        ? "bg-purple-600 text-white"
+                                        : "bg-white text-gray-700 hover:bg-zinc-50"
                                         }`}
                                 >
                                     Most Viewed
@@ -488,12 +488,13 @@ const BlogHeader = ({
                     </div>
                 </div>
                 <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <label className="block">
-                        <span className="block text-xs font-medium text-zinc-600 mb-1">
+                    <div>
+                        <label htmlFor="blog-category-select" className="block text-xs font-medium text-zinc-600 mb-1">
                             Category
-                        </span>
+                        </label>
                         <div className="relative">
                             <select
+                                id="blog-category-select"
                                 className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 pr-9 text-sm"
                                 value={selectedCategory}
                                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -508,13 +509,14 @@ const BlogHeader = ({
                                 ▾
                             </span>
                         </div>
-                    </label>
-                    <label className="block">
-                        <span className="block text-xs font-medium text-zinc-600 mb-1">
+                    </div>
+                    <div>
+                        <label htmlFor="blog-subcategory-select" className="block text-xs font-medium text-zinc-600 mb-1">
                             Subcategory
-                        </span>
+                        </label>
                         <div className="relative">
                             <select
+                                id="blog-subcategory-select"
                                 className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 pr-9 text-sm"
                                 value={selectedSubCategory}
                                 onChange={(e) => setSelectedSubCategory(e.target.value)}
@@ -530,7 +532,7 @@ const BlogHeader = ({
                                 ▾
                             </span>
                         </div>
-                    </label>
+                    </div>
                 </div>
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap gap-2">
