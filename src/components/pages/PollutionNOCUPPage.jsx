@@ -88,36 +88,36 @@ export default function PollutionNocLicenceHaryanaPage() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-           {/* Breadcrumb */}
-                <div className="max-w-7xl mx-auto md:px-0 px -4 mt-6">
-                  <nav
-                    aria-label="Breadcrumb"
-                    className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-                  >
-                    {[
-                      { label: "Home", href: "/" },
-                      { label: "Pollution NOC Registration in Uttar Pradesh" },
-                    ]
-                      .filter(Boolean)
-                      .map((item, idx) => (
-                        <div key={idx} className="flex items-center">
-                          {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                          {item.href ? (
-                            <Link
-                              href={item.href}
-                              className="text- blue-600 hover:underline"
-                            >
-                              {item.label}
-                            </Link>
-                          ) : (
-                            <span className="text -gray-600">
-                              {item.label}
-                            </span>
-                          )}
-                        </div>
-                      ))}
-                  </nav>
-                </div>
+            {/* Breadcrumb */}
+            <div className="max-w-7xl mx-auto md:px-0 px -4 mt-6">
+              <nav
+                aria-label="Breadcrumb"
+                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
+              >
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "Pollution NOC Registration in Uttar Pradesh" },
+                ]
+                  .filter(Boolean)
+                  .map((item, idx) => (
+                    <div key={idx} className="flex items-center">
+                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="text- blue-600 hover:underline"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <span className="text -gray-600">
+                          {item.label}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+              </nav>
+            </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Pollution NOC Registration in Uttar Pradesh
             </h1>
@@ -170,12 +170,12 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify">
-        Without a pollution NOC in Uttar Pradesh, a factory cannot be established or run. The NOC pollution control board in Uttar Pradesh (or UPPCB) granted this licence in order to guarantee that the industry will not negatively impact the environment. Under the Water (Prevention & Control of Pollution) Act of 1974 and the Air (Prevention & Control of Pollution) Act of 1981, there are two NOCs: Consent to Establish (CTE) and Consent to Operate (CTO) that you need to obtain before establishing and operating a business.
+              Without a pollution NOC in Uttar Pradesh, a factory cannot be established or run. The NOC pollution control board in Uttar Pradesh (or UPPCB) granted this licence in order to guarantee that the industry will not negatively impact the environment. Under the Water (Prevention & Control of Pollution) Act of 1974 and the Air (Prevention & Control of Pollution) Act of 1981, there are two NOCs: Consent to Establish (CTE) and Consent to Operate (CTO) that you need to obtain before establishing and operating a business.
 
             </p>
             <br />
             <p className="text-justify">
-Hire Factorylicence.in and ensure your Pollution NOC in Uttar Pradesh with our comprehensive support. We also help the CTO pollution control board in Uttar Pradesh. Get in touch with our consultant right now!
+              Hire Factorylicence.in and ensure your Pollution NOC in Uttar Pradesh with our comprehensive support. We also help the CTO pollution control board in Uttar Pradesh. Get in touch with our consultant right now!
 
             </p>
           </Section>
@@ -185,17 +185,17 @@ Hire Factorylicence.in and ensure your Pollution NOC in Uttar Pradesh with our c
             title={
               <>
                 <FaQuestionCircle className="inline mr-2" />
-Why Pollution NOC In Uttar Pradesh Important?
+                Why Pollution NOC In Uttar Pradesh Important?
               </>
             }
           >
             <p className="text-justify">
-          Having a Pollution NOC in Uttar Pradesh is an assurance that you provide to the government of Uttar Pradesh that your factory or business doesn’t cause any kind of harm to the government by polluting it in any way. Factories found running without a pollution NOC certificate in Uttar Pradesh can face many legal problems, like penalties, being prosecuted in court, and even being shut down of the business in some cases.
+              Having a Pollution NOC in Uttar Pradesh is an assurance that you provide to the government of Uttar Pradesh that your factory or business doesn’t cause any kind of harm to the government by polluting it in any way. Factories found running without a pollution NOC certificate in Uttar Pradesh can face many legal problems, like penalties, being prosecuted in court, and even being shut down of the business in some cases.
 
             </p>
             <br />
             <p className="text-justify">
-            With Factorylicence.in you will get all-round assistance in getting a Pollution NOC for factory in Uttar Pradesh. Connect with our Consultant now!
+              With Factorylicence.in you will get all-round assistance in getting a Pollution NOC for factory in Uttar Pradesh. Connect with our Consultant now!
 
             </p>
           </Section>
@@ -205,7 +205,7 @@ Why Pollution NOC In Uttar Pradesh Important?
             title={
               <>
                 <FaCheckCircle className="inline mr-2" />
-Advantages Of NOC In Uttar Pradesh Important?
+                Advantages Of NOC In Uttar Pradesh Important?
               </>
             }
           >
@@ -222,7 +222,7 @@ Advantages Of NOC In Uttar Pradesh Important?
               </li>
               <li>
                 Access to Further Approvals: A Pollution NOC is often a
-                prerequisite for securing other licenses such as <a href="https://factorylicence.in/"  className="text-blue-600 underline">Factory License</a>, Fire NOC and Building Plan Approval.
+                prerequisite for securing other licenses such as <a href="https://factorylicence.in/" className="text-blue-600 underline">Factory License</a>, Fire NOC and Building Plan Approval.
               </li>
               <li>
                 Sustainability Goals: Encourages adoption of environmentally
@@ -236,54 +236,23 @@ Advantages Of NOC In Uttar Pradesh Important?
             </ul>
           </Section>
 
-
-             <Section
-            id="documents"
-            title={
-              <>
-                <FaFileAlt className="inline mr-2" />
-                Documents Required
-              </>
-            }
-          >
-            <ul className="list-disc pl-6">
-              <li>
-                KYC documents of the applicant (Pan, Aadhaar, Voter id, Passport
-                etc.)
-              </li>
-              <li>Email id and mobile number of the applicant</li>
-              <li>Ownership proof or rent agreement of the premises</li>
-              <li>Site layout and plant design</li>
-              <li>
-                Project Report and process flow chart (Showing capital
-                investment in Land & Plant Machinery)
-              </li>
-              <li>Details of raw materials and final products</li>
-              <li>Water and energy consumption details</li>
-              <li>Waste generation and disposal plan</li>
-              <li>Effluent treatment mechanism (if applicable)</li>
-              <li>Copy of previous CTO (in case of renewal)</li>
-              <li>Authorization for hazardous waste (if applicable)</li>
-            </ul>
-          </Section>
-
           <Section
             id="eligibility"
             title={
               <>
                 <FaUserCheck className="inline mr-2" />
-Eligibility Criteria for Pollution NOC In Uttar Pradesh
+                Eligibility Criteria for Pollution NOC In Uttar Pradesh
               </>
             }
           >
             <p className="text-justify mb-6">
               In Uttar Pradesh, all manufacturing units, processing industries, hospitals, hotels, and businesses involved in any process that may affect the environment must obtain a Pollution NOC. Units are classified into red, orange, green, and white categories based on pollution load. Even small-scale units falling under the orange and green categories require formal consent.
             </p>
-
-         
           </Section>
 
-         
+
+        
+
 
           <Section id="classification" title={
             <>
@@ -293,7 +262,7 @@ Eligibility Criteria for Pollution NOC In Uttar Pradesh
             </>
           }>
 
-               <div className="space-y-6">
+            <div className="space-y-6">
               {/* White Category */}
               <div className="bg-white border-l-4 border-gray-400 p-5 rounded-lg shadow-sm">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">1. White Category</h3>
@@ -348,7 +317,8 @@ Eligibility Criteria for Pollution NOC In Uttar Pradesh
                     <li>Steel</li>
                     <li>Chemical manufacturing</li>
                     <li>Large-scale engineering units</li>
-                    <li>Plastic moulding</li>
+                    <li>Plastic moulding
+</li>
                   </ul>
                 </div>
               </div>
@@ -358,36 +328,275 @@ Eligibility Criteria for Pollution NOC In Uttar Pradesh
 
           </Section>
 
-
-           <Section
+          <Section
             id="documents"
             title={
               <>
                 <FaFileAlt className="inline mr-2" />
-Documents Required For Pollution NOC In Uttar Pradesh
+                Documents Required For Pollution NOC In Uttar Pradesh
               </>
             }
           >
-            <ul className="list-disc pl-6">
-              <li>
-                KYC documents of the applicant (Pan, Aadhaar, Voter id, Passport
-                etc.)
-              </li>
-              <li>Email id and mobile number of the applicant</li>
-              <li>Ownership proof or rent agreement of the premises</li>
-              <li>Site layout and plant design</li>
-              <li>
-                Project Report and process flow chart (Showing capital
-                investment in Land & Plant Machinery)
-              </li>
-              <li>Details of raw materials and final products</li>
-              <li>Water and energy consumption details</li>
-              <li>Waste generation and disposal plan</li>
-              <li>Effluent treatment mechanism (if applicable)</li>
-              <li>Copy of previous CTO (in case of renewal)</li>
-              <li>Authorization for hazardous waste (if applicable)</li>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">KYC documents of the applicant (Pan, Aadhaar, Voter ID, Passport, etc.)</li>
+              <li className="text-justify">Email ID and mobile number of the applicant</li>
+              <li className="text-justify">Ownership proof or rent agreement of the premises</li>
+              <li className="text-justify">Site layout and plant design</li>
+              <li className="text-justify">Project Report and process flow chart (Showing capital investment in Land & Plant Machinery)</li>
+              <li className="text-justify">Details of raw materials and final products</li>
+              <li className="text-justify">Water and energy consumption details</li>
+              <li className="text-justify">Waste generation and disposal plan</li>
+              <li className="text-justify">Effluent treatment mechanism (if applicable)</li>
+              <li className="text-justify">Copy of previous CTO (in case of renewal)</li>
+              <li className="text-justify">Authorisation for hazardous waste (if applicable)</li>
             </ul>
           </Section>
+
+          <Section
+            id="cte-before-starting"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Consent to Establish (CTE) – Before Starting Operations
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Consent to Establish (CTE) is an obligatory environmental approval issued by the State
+              Pollution Control Board (SPCB) that permits an industry or project to establish a new facility
+              or extend an existing one. This consent is necessary before any construction activity,
+              installation of machinery, or operation that may cause pollution.
+            </p>
+            <p className="text-justify mb-6">
+              The Government of India has made it compulsory to obtain CTE to ensure that a project
+              takes sufficient measures to control pollution right from the planning stage itself. By obtaining
+              CTE, it becomes possible to avoid damaging the environment, achieve sustainable
+              development, and comply with the relevant environmental laws.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Document list for the CTE:</h3>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Covering letter clearly describing the business/industry & activities.</li>
+              <li className="text-justify">PAN card of the owner/authorised person.</li>
+              <li className="text-justify">Aadhar card of the owner/authorised person.</li>
+              <li className="text-justify">GST Certificate (if applicable).</li>
+              <li className="text-justify">Copy of the sale deed/rent agreement/lease deed (land proof).</li>
+              <li className="text-justify">MOA/AOA or partnership deed (if company/partnership).</li>
+              <li className="text-justify">Layout plan of the unit showing processing, utilities, and control devices.</li>
+              <li className="text-justify">Schematic diagram or process diagram.</li>
+              <li className="text-justify">Detailed manufacturing process description.</li>
+              <li className="text-justify">Details of water & wastewater balance.</li>
+              <li className="text-justify">Details of material balance.</li>
+              <li className="text-justify">Land-use classification certificate.</li>
+              <li className="text-justify">Auditor's certificate (CA certificate).</li>
+              <li className="text-justify">Groundwater clearance certificate.</li>
+              <li className="text-justify">Sewage Treatment Plant (STP) proposal (if applicable).</li>
+              <li className="text-justify">Effluent Treatment Plant (ETP) proposal (if applicable).</li>
+              <li className="text-justify">Air pollution control measures plan.</li>
+              <li className="text-justify">Material Safety Data Sheets (MSDS) / risk assessment & emergency plan.</li>
+              <li className="text-justify">Environmental Clearance (if applicable)</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="cto-after-establishing"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Consent to Operate (CTO) – After Establishing Unit
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Consent to Operate (CTO) is an approval from the State Pollution Control Board (SPCB) that
+              allows an industry or establishment to start or continue its operations after fulfilling the
+              environmental compliance requirements. CTO is issued only after checking that the unit is
+              installed and functioning with the required pollution control measures.
+            </p>
+            <p className="text-justify mb-6">
+              The purpose of the CTO is to ensure that the monitoring of emissions, effluents, and waste
+              management practices is done continuously during the operational phase. The Government
+              of India makes it mandatory to have a CTO to safeguard the health of the public and the
+              environment by ensuring that industries operate in accordance with approved standards and
+              conditions. Failure to have a CTO is considered a violation of the law for running a business
+              that causes pollution.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Document list for the CTO:</h3>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Copy of the issued CTE.</li>
+              <li className="text-justify">Details of actual products manufactured.</li>
+              <li className="text-justify">Audited balance sheet.</li>
+              <li className="text-justify">Effluent/wastewater analysis report.</li>
+              <li className="text-justify">Pollution control equipment performance data.</li>
+              <li className="text-justify">Site compliance certificate & declaration.</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="bmw-authorization"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Bio-Medical Waste Authorization (BMW)
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Bio-medical waste refers to any waste generated during the diagnosis, treatment or
+              immunisation of humans or animals or during related research activities. Such waste often
+              contains infectious materials and poses serious health and environmental risks if not
+              managed properly.
+            </p>
+            <p className="text-justify mb-6">
+              To address this, the Government of India introduced the Bio-Medical Waste Management
+              Rules, 2016, requiring all Healthcare Facilities and waste handlers to obtain Bio-Medical
+              Waste Authorisation. This authorisation ensures the proper collection, storage, transport,
+              treatment, and disposal of biomedical waste in a safe and eco-friendly manner, preventing
+              the spread of diseases and protecting public health.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Bio-Medical Waste Authorization</h3>
+            <p className="text-gray-800 mb-2">(For Hospitals, Nursing Homes, Labs, Clinics, Blood Banks, Veterinary, Pathology, etc.)</p>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Aadhaar & PAN of Owner</li>
+              <li className="text-justify">GST Certificate</li>
+              <li className="text-justify">Rent Agreement / Ownership proof</li>
+              <li className="text-justify">BMW Agreement.</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="hwm-authorization"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Hazardous Waste Management Authorization (HWM)
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Hazardous waste refers to waste materials that are toxic, corrosive, flammable, reactive, or
+              otherwise harmful to human health and the environment. Such waste is commonly
+              generated by industries during manufacturing, processing, treatment, or disposal activities
+              and requires careful handling to avoid pollution and health hazards.
+            </p>
+            <p className="text-justify mb-6">
+              To regulate this, the Government of India introduced the Hazardous and Other Wastes
+              (Management and Transboundary Movement) Rules, 2016, which mandate industries and
+              waste handlers to obtain Hazardous Waste Management Authorisation. This authorisation
+              ensures that hazardous waste is properly identified, collected, stored, transported, treated,
+              and disposed of in an environmentally sound manner, reducing risks to public health and
+              promoting sustainable industrial practices.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Hazardous Waste Management Authorization</h3>
+            <p className="text-gray-800 mb-2">(For industries generating chemical waste, oil waste, sludge, paint waste, ETP sludge, etc.)</p>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800 mb-6">
+              <li className="text-justify">UPPCB Application Form</li>
+              <li className="text-justify">Consent to Operate (CTO)</li>
+              <li className="text-justify">PAN, Aadhaar of Occupier</li>
+              <li className="text-justify">GST Certificate</li>
+              <li className="text-justify">Factory / Unit Registration</li>
+              <li className="text-justify">Manufacturing process flow chart</li>
+              <li className="text-justify">Hazardous waste category & quantity</li>
+              <li className="text-justify">Waste storage area layout</li>
+              <li className="text-justify">MSDS of chemicals</li>
+              <li className="text-justify">Authorization letter</li>
+              <li className="text-justify">Agreement with authorised waste recycler/disposer</li>
+              <li className="text-justify">Annual return (Form-4)</li>
+              <li className="text-justify">Site photographs</li>
+              <li className="text-justify">CA certificate</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="scrap-import"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Scrap Import Waste Management
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Scrap import refers to the import of recyclable materials such as metal, paper, plastic, or
+              electronic scrap for reuse, recycling, or recovery purposes. If not regulated properly, scrap
+              imports may contain hazardous substances or non-compliant materials that can pose
+              serious environmental and health risks.
+            </p>
+            <p className="text-justify mb-6">
+              To regulate this, the Government of India, under the Hazardous and Other Wastes
+              (Management and Transboundary Movement) Rules, 2016, requires importers to obtain a
+              Scrap Import Authorisation from the concerned authority. This authorisation ensures that
+              only permitted and safe scrap materials are imported, handled, stored, and processed in
+              compliance with environmental norms, thereby preventing illegal dumping and promoting
+              safe and sustainable recycling practices.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required for Scrap Import Authorisation</h3>
+            <p className="text-gray-800 mb-2">(For import of metal scrap, plastic scrap, paper scrap, e-waste scrap, etc.)</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Application Form (SPCB / Online Portal)</li>
+              <li className="text-justify">Import Export Code (IEC)</li>
+              <li className="text-justify">Consent to Operate (CTO) from the State Pollution Control Board</li>
+              <li className="text-justify">PAN Card of Importer / Company</li>
+              <li className="text-justify">GST Registration Certificate</li>
+              <li className="text-justify">Aadhaar & PAN of Proprietor / Directors / Partners</li>
+              <li className="text-justify">Factory / Unit Registration Certificate</li>
+              <li className="text-justify">Process flow chart for scrap utilisation</li>
+              <li className="text-justify">Details of scrap type, category, and quantity to be imported</li>
+              <li className="text-justify">Valid Chartered Engineer Certificate (from exporting country)</li>
+              <li className="text-justify">Pre-shipment Inspection Certificate (PSIC), if applicable</li>
+              <li className="text-justify">Layout plan of scrap storage and processing area</li>
+              <li className="text-justify">Authorisation letter (if application filed through a consultant)</li>
+              <li className="text-justify">Agreement with authorised recycler/processor (if applicable)</li>
+              <li className="text-justify">Previous import details (if any)</li>
+              <li className="text-justify">Site photographs of the factory and storage area</li>
+              <li className="text-justify">CA Certificate for financial details</li>
+            </ul>
+          </Section>
+
+
+          <Section
+            id="steps"
+            title={
+              <>
+                <FaListOl className="inline mr-2" />
+                Steps To Apply For Pollution NOC In Uttar Pradesh
+              </>
+            }
+          >
+            <p className="text-justify mb-6">
+              You have to visit the Nivesh Mitra Portal and apply through it to get the NOC from Pollution
+              Control Board in Uttar Pradesh. To make the application process easy for you, we have
+              listed all the steps; you just have to follow them.
+            </p>
+            <ol className="list-decimal pl-6 space-y-4 text-gray-800">
+              <li className="text-justify">
+                <strong>Registration:</strong> Go to the Nivesh Mitra portal, register with your details, and get login credentials.
+              </li>
+              <li className="text-justify">
+                <strong>Login & Unit Creation:</strong> Log in, fill the Common Application Form (CAF) with project details (address, production, etc.), and create your unit.
+              </li>
+              <li className="text-justify">
+                <strong>Apply for CTE/CTO:</strong> Select "UP Pollution Control Board," then choose "Consent to Establish (CTE)" and/or "Consent to Operate (CTO)" under the Air/Water Acts, and proceed to fill in details.
+              </li>
+              <li className="text-justify">
+                <strong>Fee Payment:</strong> Pay the consolidated application fee online.
+              </li>
+              <li className="text-justify">
+                <strong>Document Submission:</strong> Upload necessary documents like site plans, process flow, pollution control equipment details, ETP/APCS completion certificates, and environmental impact reports.
+              </li>
+              <li className="text-justify">
+                <strong>Verification & Inspection:</strong> UPPPCB processes the application, conducts an inspection, and may raise queries on the portal for you to reply to.
+              </li>
+              <li className="text-justify">
+                <strong>Approval:</strong> Upon satisfaction, the NOC (CTE/CTO) is issued.
+              </li>
+            </ol>
+          </Section>
+
 
           <Section
             id="fees"
@@ -550,7 +759,7 @@ Documents Required For Pollution NOC In Uttar Pradesh
                 <strong>Renewal:</strong> 30 to 60 working days, post successful inspection and documentation.
               </li>
             </ul>
-            
+
             <p className="mt-4 text-justify">
               Factorylicence.in accelerates this timeline by handling all documentation, portal management with UPPCB authorities.
             </p>
@@ -603,6 +812,11 @@ Documents Required For Pollution NOC In Uttar Pradesh
                     icon: <FaCheckCircle className="inline mr-2" />,
                   },
                   {
+                    label: "Eligibility Criteria",
+                    id: "eligibility",
+                    icon: <FaUserCheck className="inline mr-2" />,
+                  },
+                  {
                     label: "Classification",
                     id: "classification",
                     icon: <FaUserCheck className="inline mr-2" />,
@@ -613,9 +827,39 @@ Documents Required For Pollution NOC In Uttar Pradesh
                     icon: <FaFileAlt className="inline mr-2" />,
                   },
                   {
+                    label: "Consent to Establish (CTE)",
+                    id: "cte-before-starting",
+                    icon: <FaFileAlt className="inline mr-2" />,
+                  },
+                  {
+                    label: "Consent to Operate (CTO)",
+                    id: "cto-after-establishing",
+                    icon: <FaFileAlt className="inline mr-2" />,
+                  },
+                  {
+                    label: "Bio-Medical Waste Authorization (BMW)",
+                    id: "bmw-authorization",
+                    icon: <FaFileAlt className="inline mr-2" />,
+                  },
+                  {
+                    label: "Hazardous Waste Management Authorization (HWM)",
+                    id: "hwm-authorization",
+                    icon: <FaFileAlt className="inline mr-2" />,
+                  },
+                  {
+                    label: "Scrap Import Waste Management",
+                    id: "scrap-import",
+                    icon: <FaFileAlt className="inline mr-2" />,
+                  },
+                  {
                     label: "Fees",
                     id: "fees",
                     icon: <FaCalculator className="inline mr-2" />,
+                  },
+                  {
+                    label: "Steps",
+                    id: "steps",
+                    icon: <FaListOl className="inline mr-2" />,
                   },
                   {
                     label: "Who Needs",
@@ -683,14 +927,15 @@ Documents Required For Pollution NOC In Uttar Pradesh
             </div>
           </div>
         </aside>
-      </section>
+      </section >
 
       {/* FAQs */}
-      <FaqSectionPollutionUP />
+      < FaqSectionPollutionUP />
 
       {/* Contact Form Popup */}
-      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
-    </div>
+      < ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)
+      } />
+    </div >
   );
 }
 

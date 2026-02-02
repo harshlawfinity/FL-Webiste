@@ -253,6 +253,180 @@ export default function PollutionNocLicenceDelhiPage() {
           </Section>
 
           <Section
+            id="cte-before-starting"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Consent to Establish (CTE) – Before Starting Operations
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Consent to Establish (CTE) is an obligatory environmental approval issued by the State Pollution Control Board (SPCB) that permits an industry or project to establish a new facility or extend an existing one. This consent is necessary before any construction activity, installation of machinery, or operation that may cause pollution.
+            </p>
+            <p className="text-justify mb-6">
+              The Government of India has made it compulsory to obtain CTE to ensure that a project takes sufficient measures to control pollution right from the planning stage itself. By obtaining CTE, it becomes possible to avoid damaging the environment, achieve sustainable development, and comply with the relevant environmental laws.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Document list for the CTE:</h3>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Covering letter clearly describing the business/industry & activities.</li>
+              <li className="text-justify">PAN card of the owner/authorised person.</li>
+              <li className="text-justify">Aadhar card of the owner/authorised person.</li>
+              <li className="text-justify">GST Certificate (if applicable).</li>
+              <li className="text-justify">Copy of the sale deed/rent agreement/lease deed (land proof).</li>
+              <li className="text-justify">MOA/AOA or partnership deed (if company/partnership).</li>
+              <li className="text-justify">Layout plan of the unit showing processing, utilities, and control devices.</li>
+              <li className="text-justify">Schematic diagram or process diagram.</li>
+              <li className="text-justify">Detailed manufacturing process description.</li>
+              <li className="text-justify">Details of water & wastewater balance.</li>
+              <li className="text-justify">Details of material balance.</li>
+              <li className="text-justify">Land-use classification certificate.</li>
+              <li className="text-justify">Auditor's certificate (CA certificate).</li>
+              <li className="text-justify">Groundwater clearance certificate.</li>
+              <li className="text-justify">Sewage Treatment Plant (STP) proposal (if applicable).</li>
+              <li className="text-justify">Effluent Treatment Plant (ETP) proposal (if applicable).</li>
+              <li className="text-justify">Air pollution control measures plan.
+              </li>
+              <li className="text-justify">Material Safety Data Sheets (MSDS) / risk assessment & emergency plan.
+
+              </li>
+              <li className="text-justify">Environmental Clearance (if applicable)
+
+
+              </li>
+            </ol>
+          </Section>
+
+          <Section
+            id="cto-after-establishing"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Consent to Operate (CTO) – After Establishing Unit
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Consent to Operate (CTO) is an approval from the State Pollution Control Board (SPCB) that allows an industry or establishment to start or continue its operations after fulfilling the environmental compliance requirements. CTO is issued only after checking that the unit is installed and functioning with the required pollution control measures.
+            </p>
+            <p className="text-justify mb-6">
+              The purpose of the CTO is to ensure that the monitoring of emissions, effluents, and waste management practices is done continuously during the operational phase. The Government of India makes it mandatory to have a CTO to safeguard the health of the public and the environment by ensuring that industries operate in accordance with approved standards and conditions. Failure to have a CTO is considered a violation of the law for running a business that causes pollution.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Document list for the CTO:</h3>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Copy of the issued CTE.</li>
+              <li className="text-justify">Details of actual products manufactured.</li>
+              <li className="text-justify">Audited balance sheet.</li>
+              <li className="text-justify">Effluent/wastewater analysis report.</li>
+              <li className="text-justify">Pollution control equipment performance data.</li>
+              <li className="text-justify">Site compliance certificate & declaration.</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="bmw-authorization"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Bio-Medical Waste Authorization (BMW)
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Bio-medical waste refers to any waste generated during the diagnosis, treatment or immunisation of humans or animals or during related research activities. Such waste often contains infectious materials and poses serious health and environmental risks if not managed properly.
+            </p>
+            <p className="text-justify mb-6">
+              To address this, the Government of India introduced the Bio-Medical Waste Management Rules, 2016, requiring all Healthcare Facilities and waste handlers to obtain Bio-Medical Waste Authorisation. This authorisation ensures the proper collection, storage, transport, treatment, and disposal of biomedical waste in a safe and eco-friendly manner, preventing the spread of diseases and protecting public health.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Bio-Medical Waste Authorization</h3>
+            <p className="text-gray-800 mb-2">(For Hospitals, Nursing Homes, Labs, Clinics, Blood Banks, Veterinary, Pathology, etc.)</p>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Aadhaar & PAN of Owner</li>
+              <li className="text-justify">GST Certificate</li>
+              <li className="text-justify">Rent Agreement / Ownership proof</li>
+              <li className="text-justify">BMW Agreement.</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="hwm-authorization"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Hazardous Waste Management Authorisation (HWM)
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Hazardous waste refers to waste materials that are toxic, corrosive, flammable, reactive, or otherwise harmful to human health and the environment. Such waste is commonly generated by industries during manufacturing, processing, treatment, or disposal activities and requires careful handling to avoid pollution and health hazards.
+            </p>
+            <p className="text-justify mb-6">
+              To regulate this, the Government of India introduced the Hazardous and Other Wastes (Management and Transboundary Movement) Rules, 2016, which mandate industries and waste handlers to obtain Hazardous Waste Management Authorisation. This authorisation ensures that hazardous waste is properly identified, collected, stored, transported, treated, and disposed of in an environmentally sound manner, reducing risks to public health and promoting sustainable industrial practices.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Hazardous Waste Management Authorisation</h3>
+            <p className="text-gray-800 mb-2">(For industries generating chemical waste, oil waste, sludge, paint waste, ETP sludge, etc.)</p>
+            <ol className="list-decimal pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">UPPCB Application Form</li>
+              <li className="text-justify">Consent to Operate (CTO)</li>
+              <li className="text-justify">PAN, Aadhaar of Occupier</li>
+              <li className="text-justify">GST Certificate</li>
+              <li className="text-justify">Factory / Unit Registration</li>
+              <li className="text-justify">Manufacturing process flow chart</li>
+              <li className="text-justify">Hazardous waste category & quantity</li>
+              <li className="text-justify">Waste storage area layout</li>
+              <li className="text-justify">MSDS of chemicals</li>
+              <li className="text-justify">Authorization letter</li>
+              <li className="text-justify">Agreement with authorised waste recycler/disposer</li>
+              <li className="text-justify">Annual return (Form-4)</li>
+              <li className="text-justify">Site photographs</li>
+              <li className="text-justify">CA certificate</li>
+            </ol>
+          </Section>
+
+          <Section
+            id="scrap-import-waste"
+            title={
+              <>
+                <FaFileAlt className="inline mr-2" />
+                Scrap Import Waste Management
+              </>
+            }
+          >
+            <p className="text-justify mb-4">
+              Scrap import refers to the import of recyclable materials such as metal, paper, plastic, or electronic scrap for reuse, recycling, or recovery purposes. If not regulated properly, scrap imports may contain hazardous substances or non-compliant materials that can pose serious environmental and health risks.
+            </p>
+            <p className="text-justify mb-6">
+              To regulate this, the Government of India, under the Hazardous and Other Wastes (Management and Transboundary Movement) Rules, 2016, requires importers to obtain a Scrap Import Authorisation from the concerned authority. This authorisation ensures that only permitted and safe scrap materials are imported, handled, stored, and processed in compliance with environmental norms, thereby preventing illegal dumping and promoting safe and sustainable recycling practices.
+            </p>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required for Scrap Import Authorisation</h3>
+            <p className="text-gray-800 mb-2">(For import of metal scrap, plastic scrap, paper scrap, e-waste scrap, etc.)</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-800">
+              <li className="text-justify">Application Form (SPCB / Online Portal)</li>
+              <li className="text-justify">Import Export Code (IEC)</li>
+              <li className="text-justify">Consent to Operate (CTO) from the State Pollution Control Board</li>
+              <li className="text-justify">PAN Card of Importer / Company</li>
+              <li className="text-justify">GST Registration Certificate</li>
+              <li className="text-justify">Aadhaar & PAN of Proprietor / Directors / Partners</li>
+              <li className="text-justify">Factory / Unit Registration Certificate</li>
+              <li className="text-justify">Process flow chart for scrap utilisation</li>
+              <li className="text-justify">Details of scrap type, category, and quantity to be imported</li>
+              <li className="text-justify">Valid Chartered Engineer Certificate (from exporting country)</li>
+              <li className="text-justify">Pre-shipment Inspection Certificate (PSIC), if applicable</li>
+              <li className="text-justify">Layout plan of scrap storage and processing area</li>
+              <li className="text-justify">Authorisation letter (if application filed through a consultant)</li>
+              <li className="text-justify">Agreement with authorised recycler/processor (if applicable)</li>
+              <li className="text-justify">Previous import details (if any)</li>
+              <li className="text-justify">Site photographs of the factory and storage area</li>
+              <li className="text-justify">CA Certificate for financial details</li>
+            </ul>
+          </Section>
+
+          <Section
             id="steps"
             title={
               <>
