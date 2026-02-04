@@ -64,6 +64,7 @@ export default function FireNocLicenceHaryanaPage() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="FactoryLicence.in" />
+        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-haryana" />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white py-40 md:py-20 mt- px-4 mt-0 overflow-hidden">
@@ -102,7 +103,7 @@ export default function FireNocLicenceHaryanaPage() {
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="text-gray-50"
+                          className="text-white hover:underline"
                         >
                           {item.label}
                         </Link>

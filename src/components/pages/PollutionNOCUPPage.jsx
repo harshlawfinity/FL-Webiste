@@ -45,10 +45,10 @@ export default function PollutionNocLicenceHaryanaPage() {
   return (
     <div>
       <Head>
-        <title>Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence</title>
+        <title>Pollution NOC in Uttar Pradesh – Apply Online & Certificate</title>
         <meta
           name="description"
-          content="Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support."
+          content="Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation."
         />
         <meta
           name="keywords"
@@ -56,11 +56,11 @@ export default function PollutionNocLicenceHaryanaPage() {
         />
         <meta
           property="og:title"
-          content="Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence"
+          content="Pollution NOC in Uttar Pradesh – Apply Online & Certificate"
         />
         <meta
           property="og:description"
-          content="Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support."
+          content="Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation."
         />
         <meta
           property="og:url"
@@ -68,6 +68,10 @@ export default function PollutionNocLicenceHaryanaPage() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="FactoryLicence.in" />
+        <link
+          rel="canonical"
+          href="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
+        />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
@@ -96,7 +100,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               >
                 {[
                   { label: "Home", href: "/" },
-                  { label: "Pollution NOC Registration in Uttar Pradesh" },
+                  { label: "Pollution NOC Registration in uttar pradesh" },
                 ]
                   .filter(Boolean)
                   .map((item, idx) => (
@@ -105,12 +109,12 @@ export default function PollutionNocLicenceHaryanaPage() {
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="text- blue-600 hover:underline"
+                          className="text-white hover:underline"
                         >
                           {item.label}
                         </Link>
                       ) : (
-                        <span className="text -gray-600">
+                        <span className="text-gray-50">
                           {item.label}
                         </span>
                       )}
@@ -119,7 +123,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC Registration in Uttar Pradesh
+              Pollution NOC in Uttar Pradesh – Certificate, CTO & Apply Online
             </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure safety compliance and secure Pollution Department clearance
@@ -251,7 +255,7 @@ export default function PollutionNocLicenceHaryanaPage() {
           </Section>
 
 
-        
+
 
 
           <Section id="classification" title={
@@ -318,7 +322,7 @@ export default function PollutionNocLicenceHaryanaPage() {
                     <li>Chemical manufacturing</li>
                     <li>Large-scale engineering units</li>
                     <li>Plastic moulding
-</li>
+                    </li>
                   </ul>
                 </div>
               </div>

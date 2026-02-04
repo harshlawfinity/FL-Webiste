@@ -46,21 +46,33 @@ export default function PollutionNocLicenceDelhiPage() {
   return (
     <div>
       <Head>
-        <title>Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence</title>
+        <title>Pollution NOC in Delhi – Waste Authorization & License Online</title>
         <meta
           name="description"
-          content="Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses."
+          content="Get Pollution NOC in Delhi with Bio Medical Waste Authorization in Delhi, Hazardous Waste Management"
         />
-        <meta name="keywords" content="pollution noc in delhi" />
+        <meta
+          name="keywords"
+          content="pollution noc in delhi, bio medical waste authorization, Bio Medical Waste Authorization in delhi"
+        />
         <meta
           property="og:title"
-          content="Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence"
+          content="Pollution NOC in Delhi – Waste Authorization & License Online"
         />
         <meta
           property="og:description"
-          content="Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses."
+          content="Get Pollution NOC in Delhi with Bio Medical Waste Authorization in Delhi, Hazardous Waste Management"
+        />
+        <meta
+          property="og:url"
+          content="https://factorylicence.in/pollution-noc-in-delhi"
         />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+        <link
+          rel="canonical"
+          href="https://factorylicence.in/pollution-noc-in-delhi"
+        />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
@@ -113,7 +125,7 @@ export default function PollutionNocLicenceDelhiPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC Registration in Delhi
+              Pollution NOC in Delhi – Bio Medical & Hazardous Waste Authorization
             </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure safety compliance and secure Pollution Department clearance

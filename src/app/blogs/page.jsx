@@ -1,12 +1,12 @@
 import BlogsPage from "@/components/pages/BlogsPage";
 
 export const metadata = {
-  title: "Latest Factory License – Factorylicence",
+  title: "Latest Factorry License - Factorylicence",
   description:
     "Stay updated with the latest factory license news and guides on Factorylicence. Explore expert blogs on factory licence registration, renewal, laws, and compliance requirements.",
-  keywords: ["Latest Factory License"],
+  keywords: ["Latest Factorry License"],
   openGraph: {
-    title: "Latest Factory License – Factorylicence",
+    title: "Latest Factorry License - Factorylicence",
     description:
       "Stay updated with the latest factory license news and guides on Factorylicence. Explore expert blogs on factory licence registration, renewal, laws, and compliance requirements.",
     url: "https://factorylicence.in/blogs",

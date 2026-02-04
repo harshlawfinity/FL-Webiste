@@ -64,7 +64,10 @@ export default function PollutionNocLicenceHaryanaPage() {
           property="og:description"
           content="Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily."
         />
+        <meta property="og:url" content="https://factorylicence.in/fire-noc-in-uttar-pradesh" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-uttar-pradesh" />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
@@ -102,12 +105,12 @@ export default function PollutionNocLicenceHaryanaPage() {
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="text- blue-600 hover:underline"
+                          className="text-white hover:underline"
                         >
                           {item.label}
                         </Link>
                       ) : (
-                        <span className="text -gray-600">
+                        <span className="text-gray-50">
                           {item.label}
                         </span>
                       )}

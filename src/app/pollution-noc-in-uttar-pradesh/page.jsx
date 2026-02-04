@@ -3,9 +3,9 @@
 export { default } from "@/components/pages/PollutionNOCUPPage";
 
 export const metadata = {
-  title: "Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence",
+  title: "Pollution NOC in Uttar Pradesh – Apply Online & Certificate",
   description:
-    "Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support.",
+    "Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation.",
   keywords: [
     "pollution noc in uttar pardesh",
     "noc pollution control board in uttar pardesh",
@@ -16,12 +16,15 @@ export const metadata = {
     "pollution noc for factory in uttar pardesh",
   ],
   openGraph: {
-    title: "Pollution NOC in Uttar Pardesh, Apply & Renew Pollution NOC Online in Uttar Pardesh - Factorylicence",
+    title: "Pollution NOC in Uttar Pradesh – Apply Online & Certificate",
     description:
-      "Pollution NOC in Uttar Pardesh - Get pollution NOC in Uttar Pradesh from the Pollution Control Board. Apply for pollution NOC certificate, CTO approval, and factory pollution NOC with complete document support.",
+      "Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation.",
     url: "https://factorylicence.in/pollution-noc-in-uttar-pradesh",
     type: "website",
     siteName: "FactoryLicence.in",
+  },
+  alternates: {
+    canonical: "https://factorylicence.in/pollution-noc-in-uttar-pradesh",
   },
   robots: {
     index: true,

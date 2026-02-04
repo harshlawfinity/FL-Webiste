@@ -52,22 +52,22 @@ export default function FactoryLicenceDelhiPage() {
   return (
     <div>
       <Head>
-        <title>Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence</title>
+        <title>Factory Licence in Delhi – Online Application, Fees & Renewal</title>
         <meta
           name="description"
-          content="Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle."
+          content="Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help."
         />
         <meta
           name="keywords"
-          content="factory licence in delhi, factory license in delhi, delhi factory license, factory licence fees in delhi, north delhi municipal corporation factory licence renewal online, Factory Licence Renewal in Delhi, factory licence online application in delhi, how to renew factory license online delhi, how to apply for factory license in delhi"
+          content="factory licence in delhi, factory license in delhi, delhi factory license, factory licence fees in delhi, north delhi municipal corporation factory licence renewal online, Factory Licence Renewal in Delhi, factory licence online application in delhi"
         />
         <meta
           property="og:title"
-          content="Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence"
+          content="Factory Licence in Delhi – Online Application, Fees & Renewal"
         />
         <meta
           property="og:description"
-          content="Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle."
+          content="Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help."
         />
         <meta
           property="og:url"
@@ -139,7 +139,7 @@ export default function FactoryLicenceDelhiPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Factory Licence Registration in Delhi
+              Factory Licence in Delhi – Apply Online, Fees & Renewal Support
             </h1>
             <p className="text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure compliance and legal security for your manufacturing unit

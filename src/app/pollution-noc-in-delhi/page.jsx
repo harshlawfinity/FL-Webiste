@@ -3,15 +3,24 @@
 export { default } from "@/components/pages/PollutionNOCDelhiPage";
 
 export const metadata = {
-  title: "Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence",
+  title: "Pollution NOC in Delhi – Waste Authorization & License Online",
   description:
-    "Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses.",
-  keywords: ["pollution noc in delhi"],
+    "Get Pollution NOC in Delhi with Bio Medical Waste Authorization in Delhi, Hazardous Waste Management",
+  keywords: [
+    "pollution noc in delhi",
+    "bio medical waste authorization",
+    "Bio Medical Waste Authorization in delhi",
+  ],
   openGraph: {
-    title: "Pollution NOC in Delhi, Apply & Renew Pollution NOC Online in Delhi - Factorylicence",
+    title: "Pollution NOC in Delhi – Waste Authorization & License Online",
     description:
-      "Pollution NOC in Delhi - Apply for Pollution NOC in Delhi with online licence application, renewal, certificate assistance, fees guidance and documentation support for industries and businesses.",
+      "Get Pollution NOC in Delhi with Bio Medical Waste Authorization in Delhi, Hazardous Waste Management",
+    url: "https://factorylicence.in/pollution-noc-in-delhi",
     type: "website",
+    siteName: "FactoryLicence.in",
+  },
+  alternates: {
+    canonical: "https://factorylicence.in/pollution-noc-in-delhi",
   },
   robots: {
     index: true,

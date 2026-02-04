@@ -16,11 +16,16 @@ export const metadata = {
     "online fire noc uttar pradesh",
     "renewal fire noc uttar pradesh",
   ],
+  alternates: {
+    canonical: "https://factorylicence.in/fire-noc-in-uttar-pradesh",
+  },
   openGraph: {
     title: "Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence",
     description:
       "Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily.",
+    url: "https://factorylicence.in/fire-noc-in-uttar-pradesh",
     type: "website",
+    siteName: "FactoryLicence.in",
   },
   robots: {
     index: true,

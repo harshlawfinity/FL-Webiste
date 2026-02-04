@@ -13,9 +13,14 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Factory Licence Online in India – Fast Approval Guaranteed",
+  title: "Factory Licence Registration & Renewal Online in India | Apply Now",
   description:
-    "Apply for a factory licence online in India easily and securely.",
+    "Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help.",
+  keywords:
+    "factory license, factory licence, factory license renewal, factory license registration, factory license renewal online, factory license fees, Factory Licence Renewal, factory registration certificate, factory act licence, mcd factory licence, factory licence online, factory licence registration, apply factory license, apply for factory license, factory licence apply online, factory licence online, factory licence renewal fees, factory licence renewal fees online payment, factory licence renewal online, factory registration online, online factory licence, online factory licence renewal, online registration of factory licence, renewal of factory license online, factory licence fees, factory licence online application, Online Factory Registration in India, Factory License Consultant, factory license application, factory registration process, factory act license, factory licence certificate, factory licence mcd, factory license for construction site, licence factory, license for factory, mcd licence for factory, mcd license for factory, online factory license, how to pay factory license fee online, how to renew factory license online, how to apply for factory license",
+  alternates: {
+    canonical: "https://factorylicence.in/",
+  },
   robots: {
     index: true,
     follow: true,

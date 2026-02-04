@@ -59,7 +59,10 @@ export default function FireNocLicenceDelhiPage() {
           property="og:description"
           content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
         />
+        <meta property="og:url" content="https://factorylicence.in/fire-noc-in-delhi" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="FactoryLicence.in" />
+        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-delhi" />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">

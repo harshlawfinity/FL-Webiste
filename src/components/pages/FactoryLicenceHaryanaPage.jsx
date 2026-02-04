@@ -50,22 +50,22 @@ export default function FactoryLicenceDelhiPage() {
   return (
     <div>
       <Head>
-        <title>Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence</title>
+        <title>Factory License in Haryana – Online Apply, Fees & Registration</title>
         <meta
           name="description"
-          content="Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana."
+          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
         />
         <meta
           name="keywords"
-          content="factory license haryana, factory license in haryana, factory licence fees in haryana, factory licence haryana"
+          content="factory license haryana, factory license in haryana, factory license in haryana, factory licence fees in haryana, factory licence haryana"
         />
         <meta
           property="og:title"
-          content="Factory License in Haryana, Apply & Renew Factory Licence Online in Haryana - Factorylicence"
+          content="Factory License in Haryana – Online Apply, Fees & Registration"
         />
         <meta
           property="og:description"
-          content="Apply for Factory Licence in Haryana with expert support for online application, registration, renewal, fees, documents and certificate assistance. Get complete guidance for smooth and fast factory licence approval in Haryana."
+          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
         />
         <meta
           property="og:url"
@@ -138,7 +138,7 @@ export default function FactoryLicenceDelhiPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Factory Licence Registration in Haryana
+              Factory License in Haryana – Apply Online & Check Fees
             </h1>
             <p className="text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure compliance and legal security for your manufacturing unit

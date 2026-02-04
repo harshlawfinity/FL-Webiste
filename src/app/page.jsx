@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Factory License Registration, Online Factory Licence Renewal Services in India - Factorylicence",
+  title: "Factory Licence Registration & Renewal Online in India | Apply Now",
   description:
-    "Factory License Renewal Online - Apply for factory licence registration and renewal online with expert consultant support. Get complete guidance on factory licence fees, MCD factory licence, registration certificate, and Factory Act compliance through a smooth online process.",
+    "Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help.",
   keywords: [
     "factory license",
     "factory licence",
@@ -13,7 +13,7 @@ export const metadata = {
     "factory registration certificate",
     "factory act licence",
     "mcd factory licence",
-    "factory license online",
+    "factory licence online",
     "factory licence registration",
     "apply factory license",
     "apply for factory license",
@@ -47,9 +47,9 @@ export const metadata = {
     "how to apply for factory license",
   ],
   openGraph: {
-    title: "Factory License Registration, Online Factory Licence Renewal Services in India - Factorylicence",
+    title: "Factory Licence Registration & Renewal Online in India | Apply Now",
     description:
-      "Factory License Renewal Online - Apply for factory licence registration and renewal online with expert consultant support. Get complete guidance on factory licence fees, MCD factory licence, registration certificate, and Factory Act compliance through a smooth online process.",
+      "Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help.",
     url: "https://factorylicence.in/",
     type: "website",
     siteName: "FactoryLicence.in",
@@ -93,26 +93,26 @@ const Page = () => {
       <Head>
         {/* Page Title & Metadata */}
         <title>
-          Factory License Registration, Online Factory Licence Renewal Services in India - Factorylicence
+          Factory Licence Registration & Renewal Online in India | Apply Now
         </title>
         <meta
           name="description"
-          content="Factory License Renewal Online - Apply for factory licence registration and renewal online with expert consultant support. Get complete guidance on factory licence fees, MCD factory licence, registration certificate, and Factory Act compliance through a smooth online process."
+          content="Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help."
         />
         <meta
           name="keywords"
-          content="factory license, factory licence, factory license renewal, factory license registration, factory license renewal online, factory license fees, Factory Licence Renewal, factory registration certificate, factory act licence, mcd factory licence, factory license online, factory licence registration, apply factory license, apply for factory license, factory licence apply online, factory licence online, factory licence renewal fees, factory licence renewal fees online payment, factory licence renewal online, factory registration online, online factory licence, online factory licence renewal, online registration of factory licence, renewal of factory license online, factory licence fees, factory licence online application, Online Factory Registration in India, Factory License Consultant, factory license application, factory registration process, factory act license, factory licence certificate, factory licence mcd, factory license for construction site, licence factory, license for factory, mcd licence for factory, mcd license for factory, online factory license, how to pay factory license fee online, how to renew factory license online, how to apply for factory license"
+          content="factory license, factory licence, factory license renewal, factory license registration, factory license renewal online, factory license fees, Factory Licence Renewal, factory registration certificate, factory act licence, mcd factory licence, factory licence online, factory licence registration, apply factory license, apply for factory license, factory licence apply online, factory licence online, factory licence renewal fees, factory licence renewal fees online payment, factory licence renewal online, factory registration online, online factory licence, online factory licence renewal, online registration of factory licence, renewal of factory license online, factory licence fees, factory licence online application, Online Factory Registration in India, Factory License Consultant, factory license application, factory registration process, factory act license, factory licence certificate, factory licence mcd, factory license for construction site, licence factory, license for factory, mcd licence for factory, mcd license for factory, online factory license, how to pay factory license fee online, how to renew factory license online, how to apply for factory license"
         />
 
 
         {/* Open Graph (Social Sharing) */}
         <meta
           property="og:title"
-          content="Factory License Registration, Online Factory Licence Renewal Services in India - Factorylicence"
+          content="Factory Licence Registration & Renewal Online in India | Apply Now"
         />
         <meta
           property="og:description"
-          content="Factory License Renewal Online - Apply for factory licence registration and renewal online with expert consultant support. Get complete guidance on factory licence fees, MCD factory licence, registration certificate, and Factory Act compliance through a smooth online process."
+          content="Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help."
         />
         <meta property="og:url" content="https://factorylicence.in/" />
         <meta property="og:type" content="website" />

@@ -8,13 +8,13 @@ const Contact = () => {
   return (
     <div>
       <Head>
-        <title>Contact US – Factorylicence</title>
+        <title>Contact US - Factorylicence</title>
         <meta
           name="description"
           content="Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges."
         />
         <meta name="keywords" content="Contact US" />
-        <meta property="og:title" content="Contact US – Factorylicence" />
+        <meta property="og:title" content="Contact US - Factorylicence" />
         <meta
           property="og:description"
           content="Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges."

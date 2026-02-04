@@ -1,12 +1,12 @@
 export { default } from "@/components/pages/ContactPage";
 
 export const metadata = {
-  title: "Contact US – Factorylicence",
+  title: "Contact US - Factorylicence",
   description:
     "Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges.",
   keywords: ["Contact US"],
   openGraph: {
-    title: "Contact US – Factorylicence",
+    title: "Contact US - Factorylicence",
     description:
       "Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges.",
     url: "https://factorylicence.in/contact",

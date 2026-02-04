@@ -16,7 +16,7 @@ export default function ContactUs() {
               <span className="text-white">Contact US</span>
             </nav>
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
-              Contact US
+              Contact Us
             </h1>
           </div>
         </div>

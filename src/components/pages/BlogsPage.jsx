@@ -254,18 +254,19 @@ function BlogsPage() {
     return (
         <div>
             <Head>
-                <title>Latest Factory License – Factorylicence</title>
+                <title>Latest Factorry License - Factorylicence</title>
                 <meta
                     name="description"
                     content="Stay updated with the latest factory license news and guides on Factorylicence. Explore expert blogs on factory licence registration, renewal, laws, and compliance requirements."
                 />
-                <meta name="keywords" content="Latest Factory License" />
-                <meta property="og:title" content="Latest Factory License – Factorylicence" />
+                <meta name="keywords" content="Latest Factorry License" />
+                <meta property="og:title" content="Latest Factorry License - Factorylicence" />
                 <meta
                     property="og:description"
                     content="Stay updated with the latest factory license news and guides on Factorylicence. Explore expert blogs on factory licence registration, renewal, laws, and compliance requirements."
                 />
                 <meta property="og:type" content="website" />
+                <link rel="canonical" href="https://factorylicence.in/blogs" />
             </Head>
             <BlogHero
                 searchTerm={searchTerm}

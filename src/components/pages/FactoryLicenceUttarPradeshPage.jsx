@@ -50,7 +50,7 @@ export default function FactoryLicenceUttarPradeshPage() {
   return (
     <div>
       <Head>
-        <title>Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence</title>
+        <title>Factory Licence in Uttar Pradesh – Online Renewal & Apply</title>
         <meta
           name="description"
           content="Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently."
@@ -61,7 +61,7 @@ export default function FactoryLicenceUttarPradeshPage() {
         />
         <meta
           property="og:title"
-          content="Factory License in Uttar Pradesh, Apply & Renew Factory Licence Online in Uttar Pradesh - Factorylicence"
+          content="Factory Licence in Uttar Pradesh – Online Renewal & Apply"
         />
         <meta
           property="og:description"
@@ -137,7 +137,7 @@ export default function FactoryLicenceUttarPradeshPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Factory Licence Registration in Uttar Pradesh
+              Factory Licence in Uttar Pradesh – Apply & Renewal Online Support
             </h1>
             <p className="text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure compliance and legal security for your manufacturing unit

@@ -16,10 +16,19 @@ export const metadata = {
     "delhi fire service noc",
     "fire noc apply online delhi",
   ],
+  alternates: {
+    canonical: "https://factorylicence.in/fire-noc-in-delhi",
+  },
   openGraph: {
     title: "Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence",
     description:
       "Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process.",
+    url: "https://factorylicence.in/fire-noc-in-delhi",
     type: "website",
+    siteName: "FactoryLicence.in",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };

@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Payments – Factorylicence",
+  title: "Payments - Factorylicence",
   description:
     "Securely complete your payment for factory license services on Factorylicence.in. Fast, safe, and transparent payment process with full support.",
   keywords: ["Payments"],
   openGraph: {
-    title: "Payments – Factorylicence",
+    title: "Payments - Factorylicence",
     description:
       "Securely complete your payment for factory license services on Factorylicence.in. Fast, safe, and transparent payment process with full support.",
     url: "https://factorylicence.in/payments",

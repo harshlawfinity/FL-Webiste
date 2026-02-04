@@ -45,10 +45,10 @@ export default function PollutionNocLicenceHaryanaPage() {
   return (
     <div>
       <Head>
-        <title>Pollution NOC in Haryana, Apply & Renew Pollution NOC Online in Haryana - Factorylicence</title>
+        <title>Pollution NOC in Haryana – Apply Online, Certificate & Fees</title>
         <meta
           name="description"
-          content="Pollution NOC in Haryana - Apply online for pollution NOC in Haryana. Get NOC from Pollution Control Board in Haryana, CTO certificate, and pollution NOC for factory with expert support."
+          content="Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services."
         />
         <meta
           name="keywords"
@@ -56,11 +56,11 @@ export default function PollutionNocLicenceHaryanaPage() {
         />
         <meta
           property="og:title"
-          content="Pollution NOC in Haryana, Apply & Renew Pollution NOC Online in Haryana - Factorylicence"
+          content="Pollution NOC in Haryana – Apply Online, Certificate & Fees"
         />
         <meta
           property="og:description"
-          content="Pollution NOC in Haryana - Apply online for pollution NOC in Haryana. Get NOC from Pollution Control Board in Haryana, CTO certificate, and pollution NOC for factory with expert support."
+          content="Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services."
         />
         <meta
           property="og:url"
@@ -68,6 +68,10 @@ export default function PollutionNocLicenceHaryanaPage() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="FactoryLicence.in" />
+        <link
+          rel="canonical"
+          href="https://factorylicence.in/pollution-noc-in-haryana"
+        />
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
@@ -105,12 +109,12 @@ export default function PollutionNocLicenceHaryanaPage() {
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="text- blue-600 hover:underline"
+                          className="text-white hover:underline"
                         >
                           {item.label}
                         </Link>
                       ) : (
-                        <span className="text -gray-600">
+                        <span className="text-gray-50">
                           {item.label}
                         </span>
                       )}
@@ -119,7 +123,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC Registration in Haryana
+              Pollution NOC in Haryana – Apply Online with Certificate & CTO Support
             </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure safety compliance and secure Pollution Department clearance

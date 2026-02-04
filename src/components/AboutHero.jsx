@@ -19,7 +19,7 @@ export default function HeroSection() {
           <span className="text-gray-900">About US</span>
         </nav>
         <h1 className="text-4xl max-w-4xl md:text-5xl font-semibold text-gray-900 capitalize">
-          About US
+          About Us
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl">
           Factorylicence.in is your most trusted partner for all the services spanning from factory setup to factory management.

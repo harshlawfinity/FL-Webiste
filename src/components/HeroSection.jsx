@@ -36,10 +36,9 @@ const HeroSection = () => {
 
           {/* Text Section */}
           <article className="text-white w-full lg:w-1/2">
-            <p className="md:text-5xl text-4xl capitalize font-semibold md:mb-6 mb-2">
-              From Paperwork To Permit
-              factory licence done right
-            </p>
+            <h1 className="md:text-5xl text-4xl capitalize font-semibold md:mb-6 mb-2">
+              Factory Licence Registration & Renewal Online in India – Apply Now
+            </h1>
 
             <p className="text-sm   mb-6 sm:mb-8">
               Whether you're setting up a new manufacturing unit or updating an
@@ -55,8 +54,6 @@ const HeroSection = () => {
                 Get Started
               </button>
             </div>
-
-            <h1 className="hidden">Get Your Factory Licence – Fast, Simple & Compliant</h1>
           </article>
 
           {/* Video/Image Section */}

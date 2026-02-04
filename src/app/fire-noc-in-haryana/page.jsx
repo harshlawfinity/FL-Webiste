@@ -16,6 +16,9 @@ export const metadata = {
     "online fire noc haryana",
     "renewal fire noc haryana",
   ],
+  alternates: {
+    canonical: "https://factorylicence.in/fire-noc-in-haryana",
+  },
   openGraph: {
     title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
     description:

@@ -3,9 +3,9 @@
 export { default } from "@/components/pages/FactoryLicenceDelhiPage";
 
 export const metadata = {
-  title: "Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence",
+  title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
   description:
-    "Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle.",
+    "Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help.",
   keywords: [
     "factory licence in delhi",
     "factory license in delhi",
@@ -14,13 +14,11 @@ export const metadata = {
     "north delhi municipal corporation factory licence renewal online",
     "Factory Licence Renewal in Delhi",
     "factory licence online application in delhi",
-    "how to renew factory license online delhi",
-    "how to apply for factory license in delhi",
   ],
   openGraph: {
-    title: "Factory License in Delhi, Apply & Renew Factory Licence Online in Delhi - Factorylicence",
+    title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
     description:
-      "Get factory license services in Delhi - Easily apply for factory licence registration or renewal, check factory licence fees and complete MCD factory licence renewal for South and North Delhi without any hassle.",
+      "Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help.",
     url: "https://factorylicence.in/factory-licence-in-delhi",
     type: "website",
     siteName: "FactoryLicence.in",

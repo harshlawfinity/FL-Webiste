@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Refund Cancellation – Factorylicence",
+  title: "Refund Cancellation - Factorylicence",
   description:
     "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
   keywords: ["Refund Cancellation"],
   openGraph: {
-    title: "Refund Cancellation – Factorylicence",
+    title: "Refund Cancellation - Factorylicence",
     description:
       "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
     url: "https://factorylicence.in/refund-cancellation",
