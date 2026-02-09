@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import TawkTo from "@/components/TawkTo";
 import { Poppins } from "next/font/google";
+import TrackingScript from "@/components/TrackingScript";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -139,6 +140,8 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body className={`${poppins.variable} font-sans`}>
+                 <TrackingScript />
+
         <TawkTo />
         {/* Google Tag Manager (noscript) */}
         <noscript>
