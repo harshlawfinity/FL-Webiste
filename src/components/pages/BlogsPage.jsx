@@ -10,6 +10,10 @@ import Link from "next/link";
 const API_BASE = "https://internal.lawfinity.in";
 const PAGE_SIZE = 9;
 
+
+
+
+
 function BlogsPage() {
     const router = useRouter();
     // Filters and search
