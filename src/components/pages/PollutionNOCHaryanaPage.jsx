@@ -45,14 +45,51 @@ export default function PollutionNocLicenceHaryanaPage() {
   return (
     <div>
       <Head>
-        <title>Pollution NOC in Haryana – Apply Online, Certificate & Fees</title>
+        <title>Pollution NOC in Haryana | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
         <meta
           name="description"
-          content="Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services."
+          content="Get Pollution NOC in Haryana with expert consultants for hazardous waste authorization, scrap import license, biomedical waste license, plastic & paper waste management and pollution board approvals."
         />
         <meta
           name="keywords"
-          content="pollution noc in haryana, noc pollution control board in haryana, pollution noc certificate in haryana, noc from pollution control board in haryana, cto pollution control board in haryana, pollution noc for factory in haryana, pollution noc Apply online in haryana"
+          content="pollution noc in haryana,
+noc pollution control board in haryana,
+pollution noc certificate in haryana
+noc from pollution control board in haryana
+cto pollution control board in haryana
+pollution noc for factory in haryana
+pollution noc Apply online in haryana
+aluminium scrap management Haryana
+aluminum scrape management
+brass scrap management Haryana
+copper scrap management Haryana
+iron and steel scrap management Haryana
+metal scrap import license Haryana
+paper waste management in Haryana
+plastic waste management in Haryana
+scrap import consultant Haryana
+scrap import waste management in Haryana
+scrap recycling & waste management Haryana
+waste management scrap import Haryana
+hazardous waste authorization Haryana
+hazardous waste consultant Haryana
+hazardous waste disposal authorization Haryana
+hazardous waste handling permission Haryana
+hazardous waste license Haryana
+hazardous waste management authorisation Haryana
+hazardous waste management authorization in Haryana
+waste management authorization Haryana
+bio medical waste authorization in Haryana
+bio medical waste consultant in Haryana
+bio medical waste license Haryana
+biomedical waste authorization consultant Haryana
+biomedical waste consultant Haryana
+biomedical waste management authorization Haryana
+biomedical waste permission Haryana
+bmw authorization Haryana
+clinic biomedical waste license Haryana
+medical waste disposal authorization Haryana
+medical waste recycling authorization Haryana"
         />
         <meta
           property="og:title"
@@ -123,7 +160,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               </nav>
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC in Haryana – Apply Online with Certificate & CTO Support
+              Pollution NOC & Waste Management Authorization Consultant in Haryana
             </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
               Ensure safety compliance and secure Pollution Department clearance
@@ -387,17 +424,17 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify mb-4">
-              Bio-medical waste refers to any waste generated during the diagnosis, treatment or
-              immunisation of humans or animals or during related research activities. Such waste often
-              contains infectious materials and poses serious health and environmental risks if not
-              managed properly.
+              Bio-medical waste can be defined as any waste generated during the diagnosis, treatment, or immunisation of human or animal beings or during related research activities. Bio-medical waste may contain infectious agents and can be hazardous to health and the environment if not disposed of properly, especially in populated areas such as Haryana.
+
             </p>
             <p className="text-justify mb-6">
-              To address this, the Government of India introduced the Bio-Medical Waste Management
-              Rules, 2016, requiring all Healthcare Facilities and waste handlers to obtain Bio-Medical
-              Waste Authorisation. This authorisation ensures the proper collection, storage, transport,
-              treatment, and disposal of biomedical waste in a safe and eco-friendly manner, preventing
-              the spread of diseases and protecting public health.
+              To counter this problem, the Government of India has come up with the Bio-Medical Waste Management Rules, 2016, which state that all Healthcare Facilities and waste handlers must obtain the necessary authorisation. Healthcare facilities must obtain bio medical waste authorization in Haryana and biomedical waste management authorization haryana to be fully compliant with the rules. Healthcare facilities must also obtain BMW authorization haryana, along with bio medical waste license Haryana or clinic biomedical waste license Haryana, depending on the type of facility.
+
+            </p>
+
+            <p className="text-justify mb-6" >
+              Hospitals, clinics, labs, and research institutions must also obtain biomedical waste permission Haryana, along with medical waste disposal authorization haryana and medical waste recycling authorization haryana.
+
             </p>
 
             <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Bio-Medical Waste Authorisation</h3>
@@ -420,18 +457,17 @@ export default function PollutionNocLicenceHaryanaPage() {
             }
           >
             <p className="text-justify mb-4">
-              Hazardous waste refers to waste materials that are toxic, corrosive, flammable, reactive, or
-              otherwise harmful to human health and the environment. Such waste is commonly
-              generated by industries during manufacturing, processing, treatment, or disposal activities
-              and requires careful handling to avoid pollution and health hazards.
+              Hazardous waste refers to waste materials that are toxic, corrosive, flammable, reactive, or otherwise harmful to human health and the environment. Such waste is commonly generated by industries during manufacturing, processing, treatment, or disposal activities and requires careful handling to avoid pollution and health hazards.
+
+
             </p>
             <p className="text-justify mb-6">
-              To regulate this, the Government of India introduced the Hazardous and Other Wastes
-              (Management and Transboundary Movement) Rules, 2016, which mandate industries and
-              waste handlers to obtain Hazardous Waste Management Authorisation. This authorisation
-              ensures that hazardous waste is properly identified, collected, stored, transported, treated,
-              and disposed of in an environmentally sound manner, reducing risks to public health and
-              promoting sustainable industrial practices.
+              The Government of India has established the Hazardous and Other Wastes (Management and Transboundary Movement) Rules, 2016, which require industries and waste handlers to obtain the necessary approval before dealing with hazardous waste. Industries operating in the capital city are required to obtain hazardous waste management authorization haryana to ensure that they comply with environmental laws and standards. The hazardous waste management authorization haryana ensures that hazardous waste is identified, collected, stored, transported, treated, and disposed of in an environmentally sound manner.
+
+            </p>
+            <p className="text-justify mb-6">
+              Industries are also required to obtain hazardous waste authorization haryana and, if necessary, hazardous waste disposal authorization haryana to dispose of waste in a safe manner using approved facilities. Additionally, industries are required to obtain hazardous waste handling permission haryana and a hazardous waste license haryana before commencing operations that involve hazardous waste.
+
             </p>
 
             <h3 className="text-xl font-bold text-gray-800 mb-4">Documents Required For Hazardous Waste Management Authorisation</h3>
