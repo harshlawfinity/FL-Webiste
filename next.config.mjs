@@ -276,6 +276,11 @@ const nextConfig = {
         destination: "/fire-noc-in-delhi",
         statusCode: 301,
       },
+       {
+        source: "/blogs/how-to-register-a-factory-licence-in-delhi",
+        destination: "/factory-licence-in-delhi",
+        statusCode: 301,
+      },
     ];
   },
 };
