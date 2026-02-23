@@ -281,6 +281,11 @@ const nextConfig = {
         destination: "/factory-licence-in-delhi",
         statusCode: 301,
       },
+       {
+        source: "/blogs/fire-noc-for-restaurants-and-food-factories-in-delhi",
+        destination: "/fire-noc-in-delhi",
+        statusCode: 301,
+      },
     ];
   },
 };
