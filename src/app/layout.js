@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import Script from "next/script";
-import TawkTo from "@/components/TawkTo";
+import FactoryTawkTo from "@/components/FactoryTawkTo";
 import { Poppins } from "next/font/google";
 import TrackingScript from "@/components/TrackingScript";
 
@@ -87,8 +87,14 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Must run first: suppress "Unable to store cookie" from third-party scripts when cookies are blocked */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
+          }}
+        />
         {/* Schema.org JSON-LD */}
 
         {/* Schema.org JSON-LD */}
@@ -139,10 +145,33 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body className={`${poppins.variable} font-sans`}>
-                 <TrackingScript />
+      <body className={`${poppins.variable} font-sans`} suppressHydrationWarning>
+        {/* Strip extension-injected attributes before React hydrates to avoid hydration mismatch (e.g. fdprocessedid, data-lt-installed) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function(){
+  var attrs = ['fdprocessedid','data-lt-installed','form_signature','alternative_form_signature','field_signature','visibility_annotation'];
+  function strip(){
+    try {
+      attrs.forEach(function(attr){
+        document.querySelectorAll('['+attr+']').forEach(function(el){ el.removeAttribute(attr); });
+      });
+    } catch(e){}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', strip);
+  else strip();
+  try {
+    var obs = new MutationObserver(strip);
+    obs.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: attrs });
+  } catch(e){}
+})();
+            `.trim(),
+          }}
+        />
+        <TrackingScript />
 
-        <TawkTo />
+        <FactoryTawkTo />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

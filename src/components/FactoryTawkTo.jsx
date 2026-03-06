@@ -2,10 +2,10 @@
 import { useEffect, useRef } from "react";
 import Script from "next/script";
 
-const CALLBACK_GUARD_KEY = "__factoryRealtimeCallbacksAttached";
+const FACTORY_CALLBACK_GUARD_KEY = "__factoryModuleTawkCallbacksAttached";
 const DUPLICATE_WINDOW_MS = 5000;
 
-export default function TawkTo() {
+export default function FactoryTawkTo() {
   const dedupeMapRef = useRef(new Map());
   const resetInProgressRef = useRef(false);
 
@@ -39,13 +39,12 @@ export default function TawkTo() {
 
     const getChatId = () => {
       const api = window.Tawk_API || {};
-
       try {
         if (typeof api.getChatId === "function") {
           return api.getChatId();
         }
       } catch (error) {
-        console.warn("[tawk:frontend] getChatId failed", error);
+        console.warn("[factory:tawk:frontend] getChatId failed", error);
       }
 
       return null;
@@ -98,11 +97,11 @@ export default function TawkTo() {
         return;
       }
 
-      const time = getMessageTime(messagePayload);
+      const timestamp = getMessageTime(messagePayload);
       const clientMessageId =
         messagePayload?.id ||
         messagePayload?.messageId ||
-        `${senderType}-${time}-${message}`;
+        `${senderType}-${timestamp}-${message}`;
       const fingerprint = `${chatId}|${senderType}|${clientMessageId}`;
 
       if (isRecentDuplicate(fingerprint)) {
@@ -110,7 +109,7 @@ export default function TawkTo() {
       }
 
       try {
-        const res = await fetch("/api/tawk/realtime", {
+        const res = await fetch("/api/factory/tawk/realtime", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -118,17 +117,20 @@ export default function TawkTo() {
           body: JSON.stringify({
             chatId,
             senderType,
-            message,
-            time,
+            message: {
+              msg: message,
+              type: messagePayload?.type || "msg",
+            },
+            timestamp,
             clientMessageId,
           }),
         });
 
         if (!res.ok) {
-          console.warn("[tawk:frontend] realtime append failed", res.status);
+          console.warn("[factory:tawk:frontend] realtime append failed", res.status);
         }
       } catch (error) {
-        console.warn("[tawk:frontend] realtime append error", error);
+        console.warn("[factory:tawk:frontend] realtime append error", error);
       }
     };
 
@@ -138,7 +140,6 @@ export default function TawkTo() {
       }
 
       resetInProgressRef.current = true;
-
       const api = window.Tawk_API || {};
 
       try {
@@ -146,7 +147,7 @@ export default function TawkTo() {
           api.endChat();
         }
       } catch (error) {
-        console.warn("[tawk:frontend] endChat reset call failed", error);
+        console.warn("[factory:tawk:frontend] endChat reset failed", error);
       }
 
       setTimeout(() => {
@@ -155,9 +156,9 @@ export default function TawkTo() {
             api.hideWidget();
           }
         } catch (error) {
-          console.warn("[tawk:frontend] hideWidget failed", error);
+          console.warn("[factory:tawk:frontend] hideWidget failed", error);
         }
-      }, 200);
+      }, 250);
 
       setTimeout(() => {
         try {
@@ -165,9 +166,9 @@ export default function TawkTo() {
             api.showWidget();
           }
         } catch (error) {
-          console.warn("[tawk:frontend] showWidget failed", error);
+          console.warn("[factory:tawk:frontend] showWidget failed", error);
         }
-      }, 900);
+      }, 950);
 
       setTimeout(() => {
         resetInProgressRef.current = false;
@@ -175,31 +176,32 @@ export default function TawkTo() {
     };
 
     const api = window.Tawk_API || {};
-
-    if (!api[CALLBACK_GUARD_KEY]) {
-      api.onChatMessageVisitor = (messagePayload) => {
-        sendRealtimeMessage("visitor", messagePayload);
-      };
-
-      api.onChatMessageAgent = (messagePayload) => {
-        sendRealtimeMessage("agent", messagePayload);
-      };
-
-      api.onChatStarted = () => {
-        resetInProgressRef.current = false;
-      };
-
-      api.onChatEnded = () => {
-        performControlledReset();
-      };
-
-      api[CALLBACK_GUARD_KEY] = true;
+    if (api[FACTORY_CALLBACK_GUARD_KEY]) {
+      return;
     }
+
+    api.onChatMessageVisitor = (messagePayload) => {
+      sendRealtimeMessage("visitor", messagePayload);
+    };
+
+    api.onChatMessageAgent = (messagePayload) => {
+      sendRealtimeMessage("agent", messagePayload);
+    };
+
+    api.onChatStarted = () => {
+      resetInProgressRef.current = false;
+    };
+
+    api.onChatEnded = () => {
+      performControlledReset();
+    };
+
+    api[FACTORY_CALLBACK_GUARD_KEY] = true;
   }, []);
 
   return (
     <Script
-      id="tawkto-script"
+      id="factory-tawkto-script"
       strategy="lazyOnload"
       src="https://embed.tawk.to/68e0e68ebe3099194f45662e/1j6n8986r"
       charSet="UTF-8"
