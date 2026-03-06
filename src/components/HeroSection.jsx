@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import ContactFormModal from "./ContactFormModal";
 import { useContactModal } from "@/hooks/useContactModal";
+
+
+
+
 const HeroSection = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
