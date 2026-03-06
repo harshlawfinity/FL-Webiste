@@ -54,6 +54,7 @@ export async function connectFactoryDb() {
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 10000,
       };
+      baseOptions.dbName = "chats";
 
       if (!primaryUri && fallbackUri) {
         baseOptions.directConnection = true;
@@ -77,12 +78,14 @@ export async function connectFactoryDb() {
         console.warn(
           `[factory:db] primary connect failed, retrying direct uri=${maskUri(fallbackUri)}`
         );
-        const conn = await mongoose.connect(fallbackUri, {
+        const fallbackOptions = {
           bufferCommands: false,
           maxPoolSize: 10,
           serverSelectionTimeoutMS: 10000,
           directConnection: true,
-        });
+        };
+        fallbackOptions.dbName = "chats";
+        const conn = await mongoose.connect(fallbackUri, fallbackOptions);
         console.info(`[factory:db] connected via direct uri=${maskUri(fallbackUri)}`);
         return conn;
       }

@@ -88,6 +88,7 @@ export async function connectWebhookDb() {
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 10000,
       };
+      primaryOptions.dbName = "chats";
 
       // directConnection only for single-host URI (replica set = multiple hosts = no directConnection)
       const isSingleHost = primaryUri && !primaryUri.includes(",");
@@ -119,6 +120,7 @@ export async function connectWebhookDb() {
           maxPoolSize: 10,
           serverSelectionTimeoutMS: 10000,
         };
+        directOptions.dbName = "chats";
         if (!directMongoUri.includes(",")) {
           directOptions.directConnection = true;
         }
