@@ -165,6 +165,15 @@ export async function POST(req) {
   const hitAt = new Date().toISOString();
   console.info(`[tawk:webhook] hit=${hitAt}`);
 
+  // Production debug: ensure env is available (Vercel/hosting env vars must be set)
+  console.log("[tawk:webhook] env check", {
+    mongo:
+      !!process.env.MONGODB_URI ||
+      !!process.env.WEBHOOK_MONGO_URI ||
+      !!process.env.WEBHOOK_MONGODB_URI,
+    secret: !!process.env.TAWK_WEBHOOK_SECRET,
+  });
+
   try {
     const rawBody = await req.text();
     const signature =
@@ -201,6 +210,7 @@ export async function POST(req) {
       body?.time || body?.timestamp || entity?.time || entity?.timestamp
     );
 
+    console.log("[tawk:webhook] event:", body?.event ?? body?.eventName ?? eventName);
     console.info(
       `[tawk:webhook] event=${eventName || "unknown"} chatId=${chatId || "n/a"}`
     );
