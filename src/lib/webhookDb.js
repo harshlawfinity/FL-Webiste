@@ -39,6 +39,27 @@ function maskUri(uriValue) {
   return uriValue.replace(/\/\/([^@]+)@/, "//***:***@");
 }
 
+/** Database name for Tawk chat data. All collections live under this DB. */
+const WEBHOOK_DB_NAME = "factoryChat";
+
+/**
+ * If URI has no database path (e.g. ...host/?ssl=...), append /factoryChat before query params.
+ * Does not change credentials or query parameters.
+ */
+function ensureDatabaseInUri(uri, dbName) {
+  if (!uri || !dbName) return uri;
+  const q = uri.indexOf("?");
+  const pathPart = q >= 0 ? uri.slice(0, q) : uri;
+  const queryPart = q >= 0 ? uri.slice(q) : "";
+  const lastSlash = pathPart.lastIndexOf("/");
+  const afterSlash = pathPart.slice(lastSlash + 1);
+  const hasDbSegment =
+    afterSlash && !afterSlash.includes(":") && !/^\d+$/.test(afterSlash);
+  if (hasDbSegment) return uri;
+  const sep = pathPart.endsWith("/") ? "" : "/";
+  return pathPart + sep + dbName + queryPart;
+}
+
 function getMongoUri() {
   const from = (v) => normalizeUri(v);
   const uri =
@@ -82,13 +103,14 @@ export async function connectWebhookDb() {
 
   if (!cache.promise) {
     cache.promise = (async () => {
-      const primaryUri = mongoUri || directMongoUri;
+      let primaryUri = mongoUri || directMongoUri;
+      primaryUri = ensureDatabaseInUri(primaryUri, WEBHOOK_DB_NAME);
       const primaryOptions = {
         bufferCommands: false,
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 10000,
+        dbName: WEBHOOK_DB_NAME,
       };
-      primaryOptions.dbName = "chats";
 
       // directConnection only for single-host URI (replica set = multiple hosts = no directConnection)
       const isSingleHost = primaryUri && !primaryUri.includes(",");
@@ -97,7 +119,9 @@ export async function connectWebhookDb() {
       }
 
       try {
-        return await mongoose.connect(primaryUri, primaryOptions);
+        const conn = await mongoose.connect(primaryUri, primaryOptions);
+        console.log("[Mongo] connected to DB:", mongoose.connection.name);
+        return conn;
       } catch (primaryError) {
         const canFallback =
           Boolean(mongoUri) &&
@@ -115,16 +139,19 @@ export async function connectWebhookDb() {
           `[tawk:db] primary connect failed, retrying direct uri=${maskUri(directMongoUri)}`
         );
 
+        let fallbackUri = ensureDatabaseInUri(directMongoUri, WEBHOOK_DB_NAME);
         const directOptions = {
           bufferCommands: false,
           maxPoolSize: 10,
           serverSelectionTimeoutMS: 10000,
+          dbName: WEBHOOK_DB_NAME,
         };
-        directOptions.dbName = "chats";
-        if (!directMongoUri.includes(",")) {
+        if (!fallbackUri.includes(",")) {
           directOptions.directConnection = true;
         }
-        return mongoose.connect(directMongoUri, directOptions);
+        const conn = await mongoose.connect(fallbackUri, directOptions);
+        console.log("[Mongo] connected to DB:", mongoose.connection.name);
+        return conn;
       }
     })();
   }

@@ -32,6 +32,23 @@ function maskUri(uriValue) {
   return uriValue.replace(/\/\/([^@]+)@/, "//***:***@");
 }
 
+/** Database name for Factory Tawk chat data. Same DB as webhook for consistency. */
+const FACTORY_DB_NAME = "factoryChat";
+
+function ensureDatabaseInUri(uri, dbName) {
+  if (!uri || !dbName) return uri;
+  const q = uri.indexOf("?");
+  const pathPart = q >= 0 ? uri.slice(0, q) : uri;
+  const queryPart = q >= 0 ? uri.slice(q) : "";
+  const lastSlash = pathPart.lastIndexOf("/");
+  const afterSlash = pathPart.slice(lastSlash + 1);
+  const hasDbSegment =
+    afterSlash && !afterSlash.includes(":") && !/^\d+$/.test(afterSlash);
+  if (hasDbSegment) return uri;
+  const sep = pathPart.endsWith("/") ? "" : "/";
+  return pathPart + sep + dbName + queryPart;
+}
+
 export async function connectFactoryDb() {
   if (cache.conn) {
     return cache.conn;
@@ -48,13 +65,14 @@ export async function connectFactoryDb() {
 
   if (!cache.promise) {
     cache.promise = (async () => {
-      const uri = primaryUri || fallbackUri;
+      let uri = primaryUri || fallbackUri;
+      uri = ensureDatabaseInUri(uri, FACTORY_DB_NAME);
       const baseOptions = {
         bufferCommands: false,
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 10000,
+        dbName: FACTORY_DB_NAME,
       };
-      baseOptions.dbName = "chats";
 
       if (!primaryUri && fallbackUri) {
         baseOptions.directConnection = true;
@@ -62,6 +80,7 @@ export async function connectFactoryDb() {
 
       try {
         const conn = await mongoose.connect(uri, baseOptions);
+        console.log("[Mongo] connected to DB:", mongoose.connection.name);
         console.info(`[factory:db] connected uri=${maskUri(uri)}`);
         return conn;
       } catch (primaryError) {
@@ -78,15 +97,17 @@ export async function connectFactoryDb() {
         console.warn(
           `[factory:db] primary connect failed, retrying direct uri=${maskUri(fallbackUri)}`
         );
+        let directUri = ensureDatabaseInUri(fallbackUri, FACTORY_DB_NAME);
         const fallbackOptions = {
           bufferCommands: false,
           maxPoolSize: 10,
           serverSelectionTimeoutMS: 10000,
           directConnection: true,
+          dbName: FACTORY_DB_NAME,
         };
-        fallbackOptions.dbName = "chats";
-        const conn = await mongoose.connect(fallbackUri, fallbackOptions);
-        console.info(`[factory:db] connected via direct uri=${maskUri(fallbackUri)}`);
+        const conn = await mongoose.connect(directUri, fallbackOptions);
+        console.log("[Mongo] connected to DB:", mongoose.connection.name);
+        console.info(`[factory:db] connected via direct uri=${maskUri(directUri)}`);
         return conn;
       }
     })();
