@@ -27,6 +27,8 @@ import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactFormModal from "@/components/ContactFormModal";
+import ContactForm from "@/components/ContactForm";
+import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 import Head from "next/head";
 import Link from "next/link";
@@ -171,20 +173,11 @@ Pollution NOC & Waste Management Authorization Consultant in Delhi            </
           </div>
 
           <div className="md:w-1/2 w-full">
-            <div className="relative w-full aspect-video md:h-[350px] md:aspect-auto overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
-                title="Factory Licence Walkthrough"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                frameBorder="0"
-              />
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>
-
+      <HeroVideoSection />
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-4">

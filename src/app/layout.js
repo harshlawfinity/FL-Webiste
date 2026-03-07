@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 import Script from "next/script";
-import FactoryTawkTo from "@/components/FactoryTawkTo";
+import FloatingGetStartedButton from "@/components/FloatingGetStartedButton";
 import { Poppins } from "next/font/google";
 import TrackingScript from "@/components/TrackingScript";
 
@@ -171,7 +171,7 @@ export default function RootLayout({ children }) {
         />
         <TrackingScript />
 
-        <FactoryTawkTo />
+        <FloatingGetStartedButton />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

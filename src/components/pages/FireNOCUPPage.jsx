@@ -29,6 +29,8 @@ import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactFormModal from "@/components/ContactFormModal";
+import ContactForm from "@/components/ContactForm";
+import HeroVideoSection from "@/components/HeroVideoSection";
 import img from '@/assets/fire/up.png'
 import Link from "next/link";
 
@@ -135,22 +137,11 @@ export default function PollutionNocLicenceHaryanaPage() {
           </div>
 
           <div className="md:w-1/2 w-full">
-            <div className="relative w-full md:h-[350px] overflow-hidden rounded-lg bg-black flex flex-col items-center justify-end bg-[#7A3EF2]  w-full  ">
-              <iframe
-                className="w-full md:h-[350px] h-[200px]"
-                src="https://www.youtube.com/embed/BxMLFYIWyxE?autoplay=1&rel=0"
-                title="Factory Licence Walkthrough"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                frameBorder="0"
-              />
-            </div>
+            <ContactForm />
           </div>
         </div>
-
-
       </section>
-
+      <HeroVideoSection />
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-14">

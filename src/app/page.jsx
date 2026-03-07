@@ -75,6 +75,7 @@ import React from "react";
 import Head from "next/head";
 
 import HeroSection from "@/components/HeroSection";
+import HeroVideoSection from "@/components/HeroVideoSection";
 import FactoryLicenseGrid from "@/components/FactoryLicenseGrid";
 import FactoryLicenseSection from "@/components/FactoryLicenseSection";
 import StatsSection from "@/components/StatsSection";
@@ -209,6 +210,7 @@ const Page = () => {
 
       {/* Page Content */}
       <HeroSection />
+      <HeroVideoSection />
       <UniversalFeeCalculator />
 
       <FactoryLicenseGrid />
