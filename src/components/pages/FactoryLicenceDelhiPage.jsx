@@ -87,7 +87,7 @@ export default function FactoryLicenceDelhiPage() {
         />
       </Head>
 
-      <section className="relative text-white py-20 md:px-0 px-4 mt-20 overflow-hidden">
+      <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         {/* Rotating background images */}
         <div className="absolute inset-0 z-0">
           {heroBackgrounds.map((img, index) => (

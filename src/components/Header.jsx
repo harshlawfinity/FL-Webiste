@@ -77,7 +77,7 @@ const Nav = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 h-20 transition-all duration-300 ${isScrolled ? "bg-white shadow" : "bg-white"}`}>
-      <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-4 md:px-6">
+      <div className="max-w-7xl mx-auto flex justify-between items-center h-full">
         <Link href="/" aria-label="Factory Licence Home">
           <div><FL /></div>
         </Link>

@@ -42,7 +42,7 @@ const FL = () => {
       {/* Sliding Factory Text (only when animation has started) */}
       {startAnimation && (
         <div
-          className={`absolute ml-2 left-0 top-0 h-full flex items-center text-2xl font-semibold text-[#7A3EF2] transition-all duration-100 ease-in-out ${
+          className={`absolute left-0 top-0 h-full flex items-center text-2xl font-semibold text-[#7A3EF2] transition-all duration-100 ease-in-out ${
             showImage ? 'opacity-0 translate-y-full' : 'opacity-100 translate-y-0'
           }`}
         >
@@ -52,7 +52,7 @@ const FL = () => {
 
       {/* Initial Static Text (before animation starts) */}
       {!startAnimation && (
-        <div className="text-2xl ml-2 font-semibold text-[#7A3EF2]">
+        <div className="text-2xl font-semibold text-[#7A3EF2]">
           Factory
         </div>
       )}
