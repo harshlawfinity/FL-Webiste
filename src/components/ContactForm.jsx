@@ -42,14 +42,16 @@ const HeroForm = () => {
       const istTime = new Date(now.getTime() + istOffset);
       const timestamp = istTime.toISOString().replace("T", " ").split(".")[0];
 
+      const pageSourceValue = typeof window !== "undefined" ? window.location.href : formData.pageSource;
+
       const formBody = new URLSearchParams();
       formBody.append("name", formData.name);
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
       formBody.append("description", formData.description);
-      formBody.append("pageSource", formData.pageSource);
+      formBody.append("pageSource", pageSourceValue);
       formBody.append("timestamp", timestamp);
-      formBody.append("source", "organic");  
+      formBody.append("source", "organic");
 
       const response = await fetch("/api/submit-contact", {
         method: "POST",
@@ -57,7 +59,7 @@ const HeroForm = () => {
       });
 
       if (response.ok) {
-         router.push("/thankyou");
+        router.push("/thankyou");
       } else {
         const err = await response.json();
         console.error("Server error:", err);
@@ -74,7 +76,7 @@ const HeroForm = () => {
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      pageSource: pathname,
+      pageSource: typeof window !== "undefined" ? window.location.href : pathname,
     }));
   }, [pathname]);
 
