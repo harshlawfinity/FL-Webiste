@@ -82,12 +82,19 @@ export default function ContactUs() {
             <div>
               <h4 className="font-extrabold">Patna Office</h4>
               <p className="mt-2 text-sm">
-                Shanti Garden apartment, Block A, 4th Floor, Flat no 401, shaubhagya sharma path ,chitrasen nagar, Near maruti suzuki service centre, Rupaspur - 800014
-
+                Anju Niwas, Nagina Vatika Danapur , Near Crescent Garden Rukanpura 800014
               </p>
               <p className="text-sm mt-2">
                 <span className="font-medium"></span>+91 99997 04687
-
+              </p>
+            </div>
+            <div>
+              <h4 className="font-extrabold">Mumbai Office</h4>
+              <p className="mt-2 text-sm">
+                No. 712, Shivai Plaza, 7th Floor, Marol Industrial Co-Operative, Andheri-Kurla Road, Andheri ( East ), Mumbai-400059
+              </p>
+              <p className="text-sm mt-2">
+                <span className="font-medium"></span>+91 99997 04687
               </p>
             </div>
           </div>
