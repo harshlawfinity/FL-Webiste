@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/FireNOCHaryanaPage";
+import FireNOCHaryanaPage from "@/components/pages/FireNOCHaryanaPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
@@ -32,3 +34,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-haryana");
+  return (
+    <>
+      <FireNOCHaryanaPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

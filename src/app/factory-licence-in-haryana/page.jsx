@@ -1,4 +1,6 @@
-export { default } from "@/components/pages/FactoryLicenceHaryanaPage";
+import FactoryLicenceHaryanaPage from "@/components/pages/FactoryLicenceHaryanaPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Factory License in Haryana – Online Apply, Fees & Registration",
@@ -35,3 +37,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-haryana");
+  return (
+    <>
+      <FactoryLicenceHaryanaPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

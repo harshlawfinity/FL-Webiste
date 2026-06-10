@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/PollutionNOCUPPage";
+import PollutionNOCUPPage from "@/components/pages/PollutionNOCUPPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Pollution NOC in Uttar Pradesh – Apply Online & Certificate",
@@ -32,3 +34,12 @@ export const metadata = {
   },
 };
 
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-uttar-pradesh");
+  return (
+    <>
+      <PollutionNOCUPPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

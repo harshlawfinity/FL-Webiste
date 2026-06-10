@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/PollutionNOCHaryanaPage";
+import PollutionNOCHaryanaPage from "@/components/pages/PollutionNOCHaryanaPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Pollution NOC in Haryana – Apply Online, Certificate & Fees",
@@ -63,3 +65,12 @@ export const metadata = {
   },
 };
 
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-haryana");
+  return (
+    <>
+      <PollutionNOCHaryanaPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}
