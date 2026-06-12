@@ -1,7 +1,9 @@
 const CMS_BASE_URL =
   process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL ||
   process.env.CRM_CMS_BASE_URL ||
-  "http://localhost:3000";
+  (process.env.NODE_ENV === "production"
+    ? "https://internal.lawfinity.in"
+    : "http://localhost:3000");
 
 async function fetchCms(path) {
   try {

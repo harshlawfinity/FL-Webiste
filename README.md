@@ -37,6 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Environment variables
 
+For CMS content sync, configure (optional — production defaults to `https://internal.lawfinity.in`):
+
+- `CRM_CMS_BASE_URL` or `NEXT_PUBLIC_CRM_CMS_BASE_URL`
+
 For Tawk chat persistence, configure:
 
 - `TAWK_WEBHOOK_SECRET`
