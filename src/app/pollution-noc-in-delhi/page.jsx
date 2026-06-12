@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/PollutionNOCDelhiPage";
+import PollutionNOCDelhiPage from "@/components/pages/PollutionNOCDelhiPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Pollution NOC in Delhi – Waste Authorization & License Online",
@@ -27,3 +29,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-delhi");
+  return (
+    <>
+      <PollutionNOCDelhiPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

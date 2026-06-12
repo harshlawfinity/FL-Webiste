@@ -1,4 +1,6 @@
 import BlogsPage from "@/components/pages/BlogsPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsStaticPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Latest Factorry License - Factorylicence",
@@ -22,6 +24,12 @@ export const metadata = {
   },
 };
 
-export default function Page() {
-  return <BlogsPage />;
+export default async function Page() {
+  const cmsPage = await getFactoryCmsStaticPage("blogs");
+  return (
+    <>
+      <BlogsPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
 }

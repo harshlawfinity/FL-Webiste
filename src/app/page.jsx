@@ -86,8 +86,12 @@ import CallToActionSection from "@/components/CallToActionSection";
 import FaqSection from "@/components/FaqSection";
 import UniversalFeeCalculator from "@/components/UniversalFeeCalculator";
 import ExtendedContent from "@/components/ExtendedContent";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsStaticPage } from "@/lib/cms";
 
-const Page = () => {
+const Page = async () => {
+  const cmsPage = await getFactoryCmsStaticPage("home");
+
   return (
     <>
       {/* Geo and Structured Data */}
@@ -226,6 +230,7 @@ const Page = () => {
 
       <ExtendedContent />
       <FaqSection />
+      <FactoryCmsDomSync page={cmsPage} />
     </>
   );
 };

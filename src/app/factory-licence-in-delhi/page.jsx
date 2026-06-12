@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/FactoryLicenceDelhiPage";
+import FactoryLicenceDelhiPage from "@/components/pages/FactoryLicenceDelhiPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
@@ -39,3 +41,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-delhi");
+  return (
+    <>
+      <FactoryLicenceDelhiPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

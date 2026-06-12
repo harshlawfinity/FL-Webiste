@@ -1,6 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
-export { default } from "@/components/pages/FireNOCUPPage";
+import FireNOCUPPage from "@/components/pages/FireNOCUPPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence",
@@ -32,3 +34,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-uttar-pradesh");
+  return (
+    <>
+      <FireNOCUPPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

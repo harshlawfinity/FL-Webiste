@@ -1,4 +1,6 @@
-export { default } from "@/components/pages/AboutPage";
+import AboutPage from "@/components/pages/AboutPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsStaticPage } from "@/lib/cms";
 
 export const metadata = {
   title: "About US - Factorylicence",
@@ -29,3 +31,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsStaticPage("about");
+  return (
+    <>
+      <AboutPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}

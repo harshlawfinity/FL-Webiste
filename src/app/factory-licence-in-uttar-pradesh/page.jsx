@@ -1,4 +1,6 @@
-export { default } from "@/components/pages/FactoryLicenceUttarPradeshPage";
+import FactoryLicenceUttarPradeshPage from "@/components/pages/FactoryLicenceUttarPradeshPage";
+import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const metadata = {
   title: "Factory Licence in Uttar Pradesh – Online Renewal & Apply",
@@ -32,3 +34,13 @@ export const metadata = {
     follow: true,
   },
 };
+
+export default async function Page() {
+  const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-uttar-pradesh");
+  return (
+    <>
+      <FactoryLicenceUttarPradeshPage />
+      <FactoryCmsDomSync page={cmsPage} />
+    </>
+  );
+}
