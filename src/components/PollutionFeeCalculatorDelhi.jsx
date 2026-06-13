@@ -56,8 +56,7 @@ const NocFeeDelhi = () => {
   return (
     <div className="max-w-5xl mb-10 -mt-10 ">
       <h2 className="md:text-2xl text-xl   font-bold text-  text-[#7A3EF2] mb-4 md:mb-10">
-        Delhi Pollution NOC Fee Calculator
-      </h2>
+      Delhi Pollution NOC Fee Calculator & Consent Fee Estimator      </h2>
 
       {/* Form Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-black mb-6">

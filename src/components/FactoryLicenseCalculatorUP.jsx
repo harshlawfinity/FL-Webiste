@@ -60,8 +60,7 @@ export default function FactoryLicenseCalculatorUP() {
   return (
     <div className=" ">
       <h2 className="text-xl md:text-3xl font-semibold text-purple-600 text- center mb-4">
-        Uttar Pradesh Factory License Fee Calculator
-      </h2>
+      Factory License Fee Calculator in Uttar Pradesh      </h2>
 
       {/* Form */}
       <div className="grid grid-cols-2 md:grid-cols-2 gap-4 text-black">
