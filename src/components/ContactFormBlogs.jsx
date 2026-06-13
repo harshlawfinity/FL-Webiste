@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { getLeadFormCopy } from "@/lib/leadFormCopy";
 
-const HeroForm = () => {
+const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -17,6 +18,9 @@ const HeroForm = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const formCopy = getLeadFormCopy(pathname);
+  const heading = title || formCopy.title;
+  const subheading = description || formCopy.description;
 
   const phoneRegex = /^\d{10}$/;
 
@@ -79,9 +83,13 @@ const HeroForm = () => {
   }, [pathname]);
 
   return (
-    <div className="max-w-lg shadow-2xl mx-auto bg-white md:p-8 p-4 rounded-2xl">
-      
-
+    <div className="max-w-lg shadow-2xl mx-auto bg-white md:p-4 p-2 rounded-2xl">
+      <h2 className="text-xl font-semibold text-[#7A3EF2] mb-2">
+        Talk To Our Experts
+      </h2>
+      <p className="text-gray-600 text-sm font-normal mb-2">
+        We're Here To Help You
+      </p>
       <form className="space-y-3 " onSubmit={handleSubmit}>
         {/* Name */}
         <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">

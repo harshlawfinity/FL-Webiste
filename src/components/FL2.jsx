@@ -33,7 +33,7 @@ const FL = () => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <Image src={lg2} alt="Factory GIF" className="w-32"   loading="lazy"
+          <Image src={lg2} alt="Factory License Logo Gif" className="w-32"   loading="lazy"
  />
         </div>
       )}

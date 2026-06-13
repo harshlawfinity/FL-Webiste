@@ -4,6 +4,8 @@ import PollutionNOCUPPage from "@/components/pages/PollutionNOCUPPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Pollution NOC in Uttar Pradesh – Apply Online & Certificate",
   description:

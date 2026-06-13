@@ -4,6 +4,8 @@ import PollutionNOCHaryanaPage from "@/components/pages/PollutionNOCHaryanaPage"
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Pollution NOC in Haryana – Apply Online, Certificate & Fees",
   description:

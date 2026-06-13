@@ -2,6 +2,8 @@ import FactoryLicenceUttarPradeshPage from "@/components/pages/FactoryLicenceUtt
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Factory Licence in Uttar Pradesh – Online Renewal & Apply",
   description:

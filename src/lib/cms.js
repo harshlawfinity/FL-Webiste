@@ -9,13 +9,19 @@ async function fetchCms(path) {
   try {
     const res = await fetch(`${CMS_BASE_URL}${path}`, {
       cache: "no-store",
-      next: { revalidate: 0 },
     });
     if (!res.ok) return null;
     const data = await res.json();
     return data?.success ? data.page : null;
   } catch (error) {
-    console.error("[factory CMS] fetch failed:", path, error);
+    const message = String(error?.message || error || "");
+    const isDynamicUsage =
+      error?.digest === "DYNAMIC_SERVER_USAGE" ||
+      message.includes("Dynamic server usage");
+
+    if (!isDynamicUsage) {
+      console.error("[factory CMS] fetch failed:", path, error);
+    }
     return null;
   }
 }

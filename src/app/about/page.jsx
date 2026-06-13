@@ -2,6 +2,8 @@ import AboutPage from "@/components/pages/AboutPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsStaticPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "About US - Factorylicence",
   description:

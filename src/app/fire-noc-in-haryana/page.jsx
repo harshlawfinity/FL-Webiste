@@ -4,6 +4,8 @@ import FireNOCHaryanaPage from "@/components/pages/FireNOCHaryanaPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
   description:

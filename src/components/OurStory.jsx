@@ -27,7 +27,7 @@ export default function OurStory() {
       src={ab}
         loading="lazy"
 
-      alt="About Us"
+      alt="Factory License"
       className="rounded-2xl w-full h-full object-cover shadow-md"
     />
     {/* <div className="absolute top-3 left-3 flex flex-wrap gap-2">

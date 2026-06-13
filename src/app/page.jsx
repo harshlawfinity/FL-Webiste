@@ -71,6 +71,8 @@ export const metadata = {
   },
 };
 
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import Head from "next/head";
 

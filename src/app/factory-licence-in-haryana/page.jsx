@@ -2,6 +2,8 @@ import FactoryLicenceHaryanaPage from "@/components/pages/FactoryLicenceHaryanaP
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Factory License in Haryana – Online Apply, Fees & Registration",
   description:

@@ -23,14 +23,26 @@ import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSectionHaryanaFireNoc from "@/components/FaqSectionHaryanaFireNoc"; // Your FAQ component
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import img from "@/assets/fire/haryana.jpeg";
 import Link from "next/link";
 
 export default function FireNocLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Fire NOC Registration in Haryana" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Fire Noc Renewal Haryana",
+    "Fire Noc Online Haryana",
+    "Fire Noc in Haryana",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -76,7 +88,7 @@ export default function FireNocLicenceHaryanaPage() {
               priority={index === 0}
               key={index}
               src={img}
-              alt={`Fire Noc In Haryana`}
+              alt={heroBackgroundAlts[index]}
               width="1920"
               height="1080"
               className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -88,36 +100,7 @@ export default function FireNocLicenceHaryanaPage() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Fire NOC Registration in Haryana" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-white hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Fire NOC Registration in Haryana
             </h1>
@@ -283,7 +266,7 @@ export default function FireNocLicenceHaryanaPage() {
                 <strong>Upload and Submit Documents</strong>: The applicant must attach all essential papers to the application form after completing all mandatory fields. Once all required documents are attached, click the "Save" button to submit.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc In Haryana" className="w-full h-auto rounded-lg" />
+            <Image src={img} alt="Fire Noc Process in Haryana" className="w-full h-auto rounded-lg" />
           </Section>
 
           <Section
@@ -474,7 +457,8 @@ export default function FireNocLicenceHaryanaPage() {
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -573,6 +557,8 @@ export default function FireNocLicenceHaryanaPage() {
         </aside>
       </section>
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionHaryanaFireNoc />
 
       {/* Contact Form Popup */}

@@ -15,8 +15,126 @@ import { IoClose } from "react-icons/io5";
    Helpers
    ========================= */
 
+function decodeHtmlEntities(text = "") {
+  return String(text)
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'");
+}
+
+function normalizeDisplayText(text = "") {
+  return decodeHtmlEntities(text)
+    .replace(/\u00a0/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function escapeHtmlAttribute(text = "") {
+  return normalizeDisplayText(text)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+const BLOG_IMAGE_ALT_OVERRIDES = {
+  "renewable-energy-factories-fire-noc-mandatory-for-solar-and-ev-manufacturing-in-delhi": [
+    "Fire Noc For Solar And Ev Units",
+    "Fire Noc For Ev And Solar Factories",
+  ],
+  "fire-noc-for-industrial-building-construction": [
+    "Industrial Building Fire Regulations",
+    "Fire Noc For Industrial Construction",
+  ],
+  "factory-licence-for-cosmetic-manufacturing-units": [
+    "Cosmetic Manufacturing Licence in India",
+    "Cosmetic Factory Licence Requirements",
+  ],
+  "why-your-business-may-get-penalized-without-a-valid-factory-licence-penalty": [
+    "Factory Licence Penalty Reasons",
+    "Penalty For Operating Without Factory Licence",
+  ],
+  "how-to-get-pollution-noc-for-your-factory-or-business-step-by-step-process": [
+    "Pollution Noc For Factory Operations",
+    "Factory Pollution Noc Process",
+  ],
+  "what-is-cte-and-cto": [
+    "Factory Pollution Compliance Requirements",
+    "What Is Cte And Cto",
+  ],
+  "top-new-factory-compliance-mistakes-and-how-to-avoid-them": [
+    "Common Factory Compliance Mistakes",
+    "Factory Compliance Checklist",
+  ],
+};
+
+function getBlogImageAlt(blog, imageIndex = 0) {
+  const slug = blog?.urlSlug || blog?.slug || "";
+  const override = BLOG_IMAGE_ALT_OVERRIDES[slug]?.[imageIndex];
+  if (override) return override;
+
+  return (
+    normalizeDisplayText(blog?.title || blog?.metaTitle || slug.replace(/-/g, " ")) ||
+    "Factory Licence"
+  );
+}
+
+function applyImageAltAttribute(attrs = "", alt = "") {
+  const safeAlt = escapeHtmlAttribute(alt);
+  if (/(\s)alt\s*=\s*(['"])[\s\S]*?\2/i.test(attrs)) {
+    return attrs.replace(/(\s)alt\s*=\s*(['"])[\s\S]*?\2/i, `$1alt="${safeAlt}"`);
+  }
+  return `${attrs} alt="${safeAlt}"`;
+}
+
+function normalizeBlogHtml(html = "") {
+  return demoteConclusionBodyHeadings(String(html))
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\u00a0/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/([.!?])((?:<\/?[^>]+>)*)\s*(?=[A-Z])/g, "$1$2 ")
+    .replace(/text-align\s*:\s*justify\s*;?/gi, "")
+    .replace(/word-spacing\s*:[^;"']*;?/gi, "")
+    .replace(/letter-spacing\s*:[^;"']*;?/gi, "");
+}
+
+function demoteConclusionBodyHeadings(html = "") {
+  let afterConclusion = false;
+
+  return String(html).replace(
+    /<h([1-6])([^>]*)>([\s\S]*?)<\/h\1>/gi,
+    (match, level, attrs, content) => {
+      const text = normalizeDisplayText(content.replace(/<[^>]*>/g, ""));
+      const lower = text.toLowerCase();
+
+      if (/^(faqs?|frequently asked questions)$/.test(lower)) {
+        afterConclusion = false;
+        return match;
+      }
+
+      if (lower === "conclusion") {
+        afterConclusion = true;
+        return match;
+      }
+
+      const looksLikeBodyCopy =
+        text.length > 80 && /[.!?]/.test(text) && Number(level) <= 3;
+
+      if (afterConclusion && looksLikeBodyCopy) {
+        return `<p${attrs}>${content}</p>`;
+      }
+
+      return match;
+    }
+  );
+}
+
 // Convert Editor.js data -> HTML (supports common blocks & images)
-function editorJsToHtml(data) {
+function editorJsToHtml(data, blog) {
   if (!data || !Array.isArray(data.blocks)) return "";
 
   const esc = (s) =>
@@ -44,6 +162,7 @@ function editorJsToHtml(data) {
 
   let html = "";
   let h2Counter = 0; // Counter for H2 headings
+  let imageCounter = 1;
 
   for (const block of data.blocks) {
     const t = block?.type;
@@ -79,8 +198,9 @@ function editorJsToHtml(data) {
         break;
       case "image": {
         const src = d.file?.url || d.url || "";
-        const alt = esc(d.caption || "");
+        const alt = esc(d.alt || d.altText || d.caption || getBlogImageAlt(blog, imageCounter));
         if (src) html += `<img src="${src}" alt="${alt}" />`;
+        imageCounter++;
         break;
       }
       case "table": {
@@ -136,7 +256,7 @@ function extractH2Headings(html) {
 
   while ((match = h2Regex.exec(html)) !== null) {
     const id = match[1];
-    const text = match[2].replace(/<[^>]*>/g, ""); // Strip HTML tags
+    const text = normalizeDisplayText(match[2].replace(/<[^>]*>/g, ""));
     headings.push({ id, text });
   }
 
@@ -183,7 +303,7 @@ function extractHtml(blog) {
 function getNormalizedHtml(blog) {
   const ed = extractEditorData(blog);
   if (ed) {
-    const html = editorJsToHtml(ed);
+    const html = editorJsToHtml(ed, blog);
     return processHtmlWithIds(html);
   }
 
@@ -316,6 +436,7 @@ export default function BlogsClientUI({ blog }) {
   const [showPopup, setShowPopup] = useState(false);
   const [readTime, setReadTime] = useState(null);
   const [activeHeadingId, setActiveHeadingId] = useState("");
+  const blogTitle = normalizeDisplayText(blog.title);
 
   console.log(blog);
 
@@ -470,15 +591,23 @@ export default function BlogsClientUI({ blog }) {
 
   // 🔥 One normalized HTML for everything (shows images inline)
   const htmlToRender = getNormalizedHtml(blog);
-  const headings = extractH2Headings(htmlToRender);
+  const processedHtmlToRender = normalizeBlogHtml(htmlToRender);
+  const headings = extractH2Headings(processedHtmlToRender);
 
   function optimizeInlineImages(html) {
     if (!html) return html;
+    let imageCounter = 1;
     return html.replace(
       /<img([^>]*)src="([^"]+)"([^>]*)>/gi,
       (match, before, url, after) => {
         const optimized = optimizeCloudinary(url, 900);
-        return `<img${before}src="${optimized}"${after} loading="lazy" style="max-width:100%;height:auto;border-radius:6px" />`;
+        const remainingAttrs = `${before}${after}`.replace(/\s*\/\s*$/, "");
+        const attrsWithAlt = applyImageAltAttribute(
+          remainingAttrs,
+          getBlogImageAlt(blog, imageCounter)
+        );
+        imageCounter++;
+        return `<img${attrsWithAlt} src="${optimized}" loading="lazy" style="max-width:100%;height:auto;border-radius:6px" />`;
       }
     );
   }
@@ -530,11 +659,11 @@ export default function BlogsClientUI({ blog }) {
                         href={item.href}
                         className="text-blue-600 hover:underline"
                       >
-                        {item.label}
+                        {normalizeDisplayText(item.label)}
                       </a>
                     ) : (
                       <span className="text-gray-600 truncate max-w-[200px] md:max-w-none">
-                        {item.label}
+                        {normalizeDisplayText(item.label)}
                       </span>
                     )}
                   </div>
@@ -552,7 +681,9 @@ export default function BlogsClientUI({ blog }) {
             </p>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{blog.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight text-left mb-4">
+            {blogTitle}
+          </h1>
 
           <aside className="w-full lg:w-1/4 block lg:hidden  top-20">
             {/* Desktop Table of Contents & Contact Form: only show on lg and up */}
@@ -567,7 +698,7 @@ export default function BlogsClientUI({ blog }) {
             <div className="w-full my-6">
               <img
                 src={optimizeCloudinary(blog.image, 1200)}
-                alt={blog.title}
+                alt={getBlogImageAlt(blog, 0)}
                 loading="lazy"
                 className="w-full h-auto object-cover rounded-md"
               />
@@ -579,7 +710,7 @@ export default function BlogsClientUI({ blog }) {
             <div
               className="prose max-w-none"
               dangerouslySetInnerHTML={{
-                __html: optimizeInlineImages(htmlToRender),
+                __html: optimizeInlineImages(processedHtmlToRender),
               }}
             />
           ) : null}
@@ -815,6 +946,7 @@ export default function BlogsClientUI({ blog }) {
           line-height: 1.6;
           word-break: break-word;
           font-size: 1rem; /* slightly smaller base font */
+          text-align: left;
         }
 
         /* Headings */
@@ -838,11 +970,25 @@ export default function BlogsClientUI({ blog }) {
           margin: 0.75rem 0 0.5rem;
           font-weight: 600;
         }
+        :global(.prose h4) {
+          font-size: 1.125rem;
+          line-height: 1.625rem;
+          margin: 0.75rem 0 0.5rem;
+          font-weight: 600;
+        }
+        :global(.prose h5),
+        :global(.prose h6) {
+          font-size: 1rem;
+          line-height: 1.5rem;
+          margin: 0.75rem 0 0.5rem;
+          font-weight: 600;
+        }
 
         /* Paragraphs */
         :global(.prose p) {
           margin: 0.6rem 0;
           color: #0f172a; /* slate-900 */
+          text-align: left !important;
         }
 
         /* Links */
@@ -877,25 +1023,43 @@ export default function BlogsClientUI({ blog }) {
         /* Lists */
         :global(.prose ul) {
           list-style-type: disc !important;
-          list-style-position: inside !important;
+          list-style-position: outside !important;
           padding-left: 1.5rem;
           margin: 0.75rem 0;
         }
 
-        // :global(.prose ol) {
-        //   list-style-type: decimal !important;
-        //   list-style-position: inside !important;
-        //   padding-left: 1.5rem;
-        //   margin: 0.75rem 0;
-        //   counter-reset: list-counter;
-        // }
-
-        // :global(.prose ol li) {
-        //   display: list-item !important;
-        // }
+        :global(.prose ol) {
+          list-style-type: decimal !important;
+          list-style-position: outside !important;
+          padding-left: 1.5rem;
+          margin: 0.75rem 0;
+        }
 
         :global(.prose li) {
           margin: 0.25rem 0;
+          padding-left: 0.25rem;
+        }
+
+        :global(.prose blockquote) {
+          border-left: 4px solid #2563eb;
+          margin: 1rem 0;
+          padding: 0.75rem 1rem;
+          background: #eff6ff;
+          color: #1e293b;
+        }
+
+        :global(.prose table) {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1rem 0;
+          font-size: 0.95rem;
+        }
+
+        :global(.prose td),
+        :global(.prose th) {
+          border: 1px solid #cbd5e1;
+          padding: 0.6rem;
+          vertical-align: top;
         }
       `}</style>
     </div>

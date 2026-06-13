@@ -25,18 +25,30 @@ import {
   FaCheckDouble,
 } from "react-icons/fa";
 import FaqSectionPollutionUP from "@/components/FaqSectionPollutionUP"; // You can rename this if needed
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import img from '@/assets/fire/up.png'
 import Link from "next/link";
 
 export default function PollutionNocLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Fire NOC Registration in Uttar Pradesh" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Factory Fire Noc Apply Online Up",
+    "Nivesh Mitra Fire Noc Up",
+    "Fire Safety Certificate Renewal Online in Up",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -78,7 +90,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             <Image
               key={index}
               src={img}
-              alt={`Fire Noc In Uttar Pradesh}`}
+              alt={heroBackgroundAlts[index]}
               width="1920"
               height="1080"
               className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -90,36 +102,7 @@ export default function PollutionNocLicenceHaryanaPage() {
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Fire NOC Registration in Uttar Pradesh" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-white hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Fire NOC Registration in Uttar Pradesh
             </h1>
@@ -298,7 +281,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             <p className="mb-6 text-justify">
               Factorylicence.in makes the procedure of <span className="400 px-1">renewal fire NOC Uttar Pradesh</span> simple. Get your Fire noc renewed with our help now!
             </p>
-            <Image src={img} alt="Fire NOC Process" className="w-full h-auto rounded-lg shadow-md" />
+            <Image src={img} alt="Fire Noc Process in Uttar Pradesh" className="w-full h-auto rounded-lg shadow-md" />
           </Section>
 
           <Section
@@ -468,7 +451,8 @@ export default function PollutionNocLicenceHaryanaPage() {
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -568,6 +552,8 @@ export default function PollutionNocLicenceHaryanaPage() {
       </section>
 
       {/* FAQs */}
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionPollutionUP />
 
       {/* Contact Form Popup */}

@@ -2,6 +2,8 @@ import BlogsPage from "@/components/pages/BlogsPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsStaticPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Latest Factorry License - Factorylicence",
   description:

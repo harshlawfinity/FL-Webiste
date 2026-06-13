@@ -24,14 +24,26 @@ import bg3 from "../../assets/f3.webp";
 import img from '@/assets/fire/delhi.jpeg'
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Head from "next/head";
 import Link from "next/link";
 
 export default function FireNocLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Fire NOC Registration in Delhi" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Fire Certificate Renewal Online in Delhi",
+    "Fire Noc For Residential Buildings in Delhi",
+    "Fire Noc in Delhi",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -73,7 +85,7 @@ export default function FireNocLicenceDelhiPage() {
             <Image
               key={index}
               src={img}
-              alt={`Fire Noc In Delhi`}
+              alt={heroBackgroundAlts[index]}
               width={1920}
               height={1080}
               className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -86,36 +98,7 @@ export default function FireNocLicenceDelhiPage() {
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="md:w-1/2">
 
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Fire NOC Registration in Delhi" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text- blue-600 hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text -gray-600">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold mb-4">
               Fire NOC Registration in Delhi
             </h1>
@@ -302,7 +285,7 @@ export default function FireNocLicenceDelhiPage() {
                 <strong>Approval & Download</strong>: Receive SMS notifications; download your digital Fire NOC from the portal upon approval.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc In Delhi" className="w-full h-auto rounded-lg" />
+            <Image src={img} alt="Fire Noc Process in Delhi" className="w-full h-auto rounded-lg" />
           </Section>
 
           <Section
@@ -449,7 +432,8 @@ export default function FireNocLicenceDelhiPage() {
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -544,6 +528,8 @@ export default function FireNocLicenceDelhiPage() {
       </section>
 
       {/* FAQs */}
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionFireDelhi />
 
       {/* Popup Contact Form */}

@@ -4,6 +4,8 @@ import PollutionNOCDelhiPage from "@/components/pages/PollutionNOCDelhiPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Pollution NOC in Delhi – Waste Authorization & License Online",
   description:

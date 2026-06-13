@@ -4,6 +4,8 @@ import FactoryLicenceDelhiPage from "@/components/pages/FactoryLicenceDelhiPage"
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
   description:

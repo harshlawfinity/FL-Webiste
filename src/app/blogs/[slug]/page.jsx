@@ -1,11 +1,10 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import BlogsClientUI from '@/components/BlogsClientUI';
+import { getBlogBySlug } from '@/lib/blogs';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-const API_BASE = "https://internal.lawfinity.in"
 
 // Naya function jo saare URLs ko rewrite karega
 const rewriteImageUrls = (blog) => {
@@ -38,21 +37,8 @@ const rewriteImageUrls = (blog) => {
 
 async function getBlog(slug) {
   try {
-    console.log(`[getBlog] Fetching blog with slug: ${slug}`);
-    
-    // Use local API route instead of external API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blogs/${slug}`, {
-      cache: 'no-store'
-    });
-    
-    if (!res.ok) {
-      console.log(`[getBlog] API returned ${res.status}`);
-      return null;
-    }
-
-    const blog = await res.json();
-    console.log(`[getBlog] Fetched blog:`, blog?.title);
-    
+    const blog = await getBlogBySlug(slug);
+    if (!blog) return null;
     return rewriteImageUrls(blog);
   } catch (e) {
     console.error(`[getBlog] Error fetching blog:`, e);

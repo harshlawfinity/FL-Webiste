@@ -21,6 +21,8 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import FaqSectionPollutionDelhi from "@/components/FaqSectionPollutionDelhi";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import img from "@/assets/pollution/delhi.png";
 
 import bg1 from "../../assets/f1.webp";
@@ -28,6 +30,7 @@ import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 import Head from "next/head";
@@ -35,7 +38,16 @@ import Link from "next/link";
 
 export default function PollutionNocLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Pollution NOC Registration in Delhi" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Pollution Noc For Factory in Delhi",
+    "Factory Pollution Certificate Apply Online in Delhi",
+    "Pollution Certificate For Factory in Delhi",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -115,7 +127,7 @@ medical waste recycling authorization delhi"
               priority={index === 0}
               key={index}
               src={img}
-              alt={`Pollution Noc In Delhi`}
+              alt={heroBackgroundAlts[index]}
               width={1920}
               height={1080}
               className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -127,36 +139,7 @@ medical waste recycling authorization delhi"
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Pollution NOC Registration in Delhi" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-gray-50"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
 Pollution NOC & Waste Management Authorization Consultant in Delhi            </h1>
             <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
@@ -510,7 +493,7 @@ Contact us if you want a Scrap import consultant Delhi.
                 <strong>Receive NOC</strong>: Upon successful verification, the electronic NOC (CTE/CTO certificate) is issued, allowing legal operation.
               </li>
             </ol>
-            <Image src={img} alt="Pollution Noc In Delhi" />
+            <Image src={img} alt="Pollution Noc Process in Delhi" />
           </Section>
 
           <Section
@@ -678,7 +661,8 @@ e.g., ₹500 for CTE ( &lt;₹5 lakh investment) up to ₹1,00,000 for CTE, and 
         </div>
 
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -788,6 +772,8 @@ e.g., ₹500 for CTE ( &lt;₹5 lakh investment) up to ₹1,00,000 for CTE, and 
         </aside>
       </section>
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <div id="faqs">
         <FaqSectionPollutionDelhi />
       </div>

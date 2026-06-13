@@ -27,12 +27,15 @@ import ddddd from "../../assets/ddddd.webp";
 
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSectionDelhi from "@/components/FaqSectionDelhi";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Image from "next/image";
 import Head from "next/head";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
@@ -40,7 +43,16 @@ import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Factory License Registration & Renewal Services in Delhi" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Factories License Renewal in Delhi",
+    "Mcd Factory License in Delhi",
+    "Mcd Factory Licence Renewal Delhi",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -95,7 +107,7 @@ export default function FactoryLicenceDelhiPage() {
               priority={index === 0}
               key={index}
               src={img}
-              alt={`bg-${index}`}
+              alt={heroBackgroundAlts[index]}
               width={1920}
               height={1080}
               className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -111,35 +123,7 @@ export default function FactoryLicenceDelhiPage() {
           <div className="md:w-1/2">
 
 
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex text-white flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Factory License Registration & Renewal Services in Delhi" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-gray-50 hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Factory Licence in Delhi – Apply Online, Fees & Renewal Support
             </h1>
@@ -367,7 +351,7 @@ export default function FactoryLicenceDelhiPage() {
           <Image
             loading="lazy"
             src={ddddd}
-            alt="Factoy Licence In Delhi"
+            alt="Factory Licence Process in Delhi"
           />
 
 
@@ -552,7 +536,8 @@ export default function FactoryLicenceDelhiPage() {
 
         {/* Right Side Navigation */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -650,6 +635,8 @@ export default function FactoryLicenceDelhiPage() {
       {/* Contact Form Popup */}
       <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionDelhi />
     </div>
   );

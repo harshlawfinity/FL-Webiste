@@ -12,60 +12,10 @@ import {
     Landmark,
     HardHat,
     ChevronDown,
-    ChevronUp,
-    HelpCircle
 } from 'lucide-react';
 
 const ExtendedContent = () => {
-    const [openFaq, setOpenFaq] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleFaq = (index) => {
-        setOpenFaq(openFaq === index ? null : index);
-    };
-
-    const faqs = [
-        {
-            q: "How to pay factory license fee online",
-            a: "You can pay the factory license fee online through the respective State Labour Department or Factory Inspectorate official portal. After logging in, select the factory license service, enter the required details, and proceed to the online payment option using net banking, debit card, or other available payment methods. Once the payment is successful, you can download the payment receipt for future reference."
-        },
-        {
-            q: "How to renew factory license online",
-            a: "To renew a factory license online, visit the official factory licensing portal of your state and log in using your registered credentials. Fill in the renewal application form, upload the required documents, and pay the applicable renewal fee online. After submission, the application will be processed by the concerned authority, and the renewed license can be downloaded once approved."
-        },
-        {
-            q: "How to renew factory license online Delhi",
-            a: "For Delhi, you can renew the factory license online through the Delhi Labour Department’s official website. Log in to the portal, choose the factory license renewal option, update factory details, upload mandatory documents, and pay the renewal fee online. After verification by the department, the renewed factory license will be issued digitally."
-        },
-        {
-            q: "How to apply for factory licence",
-            a: "To apply for a factory licence, you need to register on the State Labour Department or Factory Inspectorate portal. Fill out the application form, provide factory details, upload necessary documents such as layout plans and identity proofs, and pay the prescribed government fee. After inspection and approval by the authorities, the factory licence is granted."
-        },
-        {
-            q: "How to apply for factory license in Delhi",
-            a: "To apply for a factory license in Delhi, you must submit an online application through the Delhi Labour Department portal. The process includes registering on the portal, completing the application form, uploading required documents, and paying the government fee. Once the application is reviewed and the factory inspection is completed, the factory license is issued by the concerned department."
-        },
-        {
-            q: "Is a factory licence required for small-scale manufacturing units?",
-            a: "Yes, if the unit employs 10 or more workers with power or 20 or more without power."
-        },
-        {
-            q: "What is the validity of a factory licence?",
-            a: "Typically valid for 1 year; some states offer up to 5 years with renewal options."
-        },
-        {
-            q: "Can Factory Licence.in help with inspections and renewals?",
-            a: "Yes, we offer end-to-end support, including pre-inspection readiness and timely renewal services."
-        },
-        {
-            q: "Are fire and pollution NOCs mandatory?",
-            a: "Yes, especially for medium to large factories or those involved in chemical or hazardous production."
-        },
-        {
-            q: "Who issues the Factory Licence in Delhi?",
-            a: "The Labour Department, Government of NCT of Delhi."
-        }
-    ];
 
     return (
         <section className="py-16 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100 relative">
@@ -593,46 +543,6 @@ const ExtendedContent = () => {
                         <p className="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-purple-400 to-[#7c4bdf] bg-clip-text text-transparent mb-4">
                             So don't waste more time, call us now and get your factory registered as soon as possible!
                         </p>
-                    </div>
-                </div>
-
-                {/* Section 9: FAQs */}
-                <div className="mt-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-4 mb-10">
-                        <div className="p-3 bg-purple-100 rounded-lg text-[#7c4bdf]">
-                            <HelpCircle size={28} />
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 uppercase tracking-tight">Frequently Asked Questions</h3>
-                    </div>
-
-                    <div className="space-y-4">
-                        {faqs.map((faq, idx) => (
-                            <div key={idx} className="border-b border-gray-100 last:border-0">
-                                <button
-                                    onClick={() => toggleFaq(idx)}
-                                    className="w-full flex justify-between items-center py-6 text-left group hover:text-[#7c4bdf] transition-colors"
-                                >
-                                    <span className="text-base md:text-lg font-semibold text-gray-800 group-hover:text-[#7c4bdf]">
-                                        {idx + 1}. {faq.q}
-                                    </span>
-                                    <div className={`transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`}>
-                                        <ChevronDown size={24} className={openFaq === idx ? 'text-[#7c4bdf]' : 'text-gray-400'} />
-                                    </div>
-                                </button>
-                                <div 
-                                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                                        openFaq === idx ? 'max-h-[500px] pb-6' : 'max-h-0'
-                                    }`}
-                                >
-                                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-                                        <p className="text-gray-600 leading-relaxed font-sans italic text-sm md:text-base">
-                                            <span className="font-semibold text-[#7c4bdf] not-italic mr-2">Ans.</span> 
-                                            {faq.a}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>

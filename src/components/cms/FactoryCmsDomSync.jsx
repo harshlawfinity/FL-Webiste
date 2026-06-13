@@ -15,6 +15,66 @@ const SECTION_IDS = {
 
 const SKIP_RENDER_IDS = new Set(["hero", "breadcrumbs", "connectedServices", "pricing", "faqs", "faq"]);
 
+const CMS_RICH_TEXT_CLASS =
+  "cms-rich-text text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-semibold";
+
+function hasBlockHtml(html = "") {
+  return /<(ul|ol|table|div|h[1-6]|blockquote)\b/i.test(String(html));
+}
+
+function createContentElement(html) {
+  const value = String(html || "").trim();
+  if (!value) return null;
+
+  if (hasBlockHtml(value)) {
+    const div = document.createElement("div");
+    div.className = CMS_RICH_TEXT_CLASS;
+    div.innerHTML = value;
+    return div;
+  }
+
+  const p = document.createElement("p");
+  p.className = "text-justify text-gray-800";
+  p.innerHTML = value;
+  return p;
+}
+
+function isLegacyContentNode(el) {
+  if (!el) return false;
+  if (el.closest("nav, aside, form, table, h1, h2, h3, h4")) return false;
+  if (el.closest("[data-cms-added='true'], [data-cms-synced='true']")) return false;
+  return true;
+}
+
+function hideLegacyContent(sectionEl) {
+  Array.from(sectionEl.querySelectorAll("p, li, ul, ol")).forEach((el) => {
+    if (!isLegacyContentNode(el)) return;
+    el.style.display = "none";
+  });
+}
+
+function clearSyncedContent(sectionEl) {
+  sectionEl?.querySelectorAll("[data-cms-synced='true']").forEach((node) => node.remove());
+}
+
+function renderSectionContent(sectionEl, htmlItems) {
+  if (!sectionEl || !htmlItems.length) return;
+
+  clearSyncedContent(sectionEl);
+  hideLegacyContent(sectionEl);
+
+  const container = document.createElement("div");
+  container.dataset.cmsSynced = "true";
+  container.className = "cms-sync-content space-y-3";
+
+  htmlItems.forEach((html) => {
+    const el = createContentElement(html);
+    if (el) container.appendChild(el);
+  });
+
+  sectionEl.appendChild(container);
+}
+
 function stripHtml(value = "") {
   return String(value).replace(/<[^>]*>/g, "").trim();
 }
@@ -108,40 +168,13 @@ function setHeading(sectionEl, heading) {
 }
 
 function syncTextBlocks(sectionEl, htmlItems) {
-  if (!sectionEl || !htmlItems.length) return;
-  const blocks = Array.from(sectionEl.querySelectorAll("p, li")).filter((el) => {
-    if (el.closest("nav, aside, form, table")) return false;
-    if (el.closest("[data-cms-added='true']")) return false;
-    return stripHtml(el.textContent);
-  });
-
-  blocks.forEach((block) => {
-    block.style.display = "";
-  });
-
-  htmlItems.forEach((html, index) => {
-    if (blocks[index]) {
-      blocks[index].innerHTML = html;
-      return;
-    }
-
-    const p = document.createElement("p");
-    p.className = "text-justify";
-    p.innerHTML = html;
-    sectionEl.appendChild(p);
-  });
-
-  blocks.slice(htmlItems.length).forEach((block) => {
-    block.style.display = "none";
-  });
+  renderSectionContent(sectionEl, htmlItems);
 }
 
 function renderTextItems(parent, items) {
   items.forEach((html) => {
-    const p = document.createElement("p");
-    p.className = "text-justify";
-    p.innerHTML = html;
-    parent.appendChild(p);
+    const el = createContentElement(html);
+    if (el) parent.appendChild(el);
   });
 }
 
@@ -223,7 +256,15 @@ function appendCmsSection({ key, section, targetParent, nested = false }) {
   }
 
   if (section.type === "table") {
-    renderTable(sectionEl, section);
+    const columns = Array.isArray(section.columns) ? section.columns : [];
+    const rows = Array.isArray(section.rows) ? section.rows : [];
+    const hasTableData = rows.length > 0 && columns.some((column) => stripHtml(column));
+
+    if (hasTableData) {
+      renderTable(sectionEl, section);
+    } else {
+      renderTextItems(sectionEl, bodyList(section));
+    }
   } else if (section.type === "image") {
     renderImage(sectionEl, section);
   } else {
@@ -287,7 +328,7 @@ function syncFaqs(page) {
 export default function FactoryCmsDomSync({ page }) {
   useEffect(() => {
     if (!page?.content) return;
-    document.querySelectorAll("[data-cms-added='true'], [data-cms-link]").forEach((node) => node.remove());
+    document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true']").forEach((node) => node.remove());
 
     const hero = page.content.hero || {};
     const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
@@ -323,7 +364,7 @@ export default function FactoryCmsDomSync({ page }) {
       const existingEl = document.getElementById(key);
       if (existingEl) {
         setHeading(existingEl, contentHeading(section));
-        syncTextBlocks(existingEl, bodyList(section));
+        renderSectionContent(existingEl, bodyList(section));
         appendNestedSections(existingEl, section);
         return;
       }

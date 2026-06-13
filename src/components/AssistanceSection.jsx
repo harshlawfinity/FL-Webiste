@@ -16,14 +16,14 @@ export default function AssistanceSection() {
       description:
         "We don’t stop at licences — we help you stay compliant year-round.",
       image: management, // Replace with your actual path
-      alt: "Factory Act Licence",
+      alt: "Factory Act Consultants",
     },
     {
       title: "Support 24/7",
       description:
         "We help diagnose processes in the company. We provide recommendations on process optimization.",
       image: support, // Replace with your actual path
-      alt: "Mcd Factory Licence",
+      alt: "Factory Licence Consultants",
     },
   ];
 

@@ -27,18 +27,30 @@ import hhhhh from "../../assets/hhhhh.webp";
 
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 
 import bg1 from "../../assets/f1.webp";
 import bg2 from "../../assets/f2.webp";
 import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionHaryana";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Head from "next/head";
 import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
   const [showPopup, setShowPopup] = useState(false);
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Factory Licence Registration & Renewal Services in Haryana" },
+  ];
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Factory Act in Haryana",
+    "Haryana Factory Licence Verification",
+    "Haryana Factory License",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -94,7 +106,7 @@ export default function FactoryLicenceDelhiPage() {
               priority={index === 0}
               key={index}
               src={img}
-              alt={`bg-${index}`}
+              alt={heroBackgroundAlts[index]}
               width="1920"
               height="1080"
               className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
@@ -109,36 +121,7 @@ export default function FactoryLicenceDelhiPage() {
           {/* Left Content */}
           <div className="md:w-1/2">
 
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Factory Licence Registration & Renewal Services in Haryana" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-gray-50"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
               Factory License in Haryana – Apply Online & Check Fees
             </h1>
@@ -364,7 +347,7 @@ export default function FactoryLicenceDelhiPage() {
             </ol>
           </Section>
 
-          <Image src={hhhhh} alt="Factory Licence In Haryana" />
+          <Image src={hhhhh} alt="Factory Licence in Haryana" />
 
 
 
@@ -441,7 +424,8 @@ export default function FactoryLicenceDelhiPage() {
 
         {/* Right Side Navigation */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -539,6 +523,8 @@ export default function FactoryLicenceDelhiPage() {
       {/* Contact Form Popup */}
       <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSection />
     </div>
   );

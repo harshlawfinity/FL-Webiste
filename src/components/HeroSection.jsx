@@ -11,6 +11,11 @@ import bg3 from "../assets/f3.webp";
 export default function HeroSection() {
   const [showPopup, setShowPopup] = useState(false);
   const heroBackgrounds = [bg1, bg2, bg3];
+  const heroBackgroundAlts = [
+    "Factory License Renewal",
+    "Factory License Registration",
+    "Factory Registration Certificate",
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function HeroSection() {
             priority={index === 0}
             key={index}
             src={img}
-            alt={`bg-${index}`}
+            alt={heroBackgroundAlts[index]}
             width={1920}
             height={1080}
             className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${

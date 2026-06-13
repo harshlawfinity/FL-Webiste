@@ -3,6 +3,9 @@
 import FireNOCDelhiPage from "@/components/pages/FireNOCDelhiPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsLandingPage } from "@/lib/cms";
+
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence",
   description:

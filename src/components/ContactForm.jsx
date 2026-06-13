@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { getLeadFormCopy } from "@/lib/leadFormCopy";
 
-const HeroForm = () => {
+const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -17,6 +18,9 @@ const HeroForm = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const formCopy = getLeadFormCopy(pathname);
+  const heading = title || formCopy.title;
+  const subheading = description || formCopy.description;
 
   const phoneRegex = /^\d{10}$/;
 
@@ -82,12 +86,12 @@ const HeroForm = () => {
 
   return (
     <div className="max-w-lg mx-auto bg-white md:p-8 p-4 rounded-2xl">
-      <div className="text-center mb-4">
+      <div className="text-left mb-4">
         <h2 className="md:text-2xl text-xl font-semibold text-[#7A3EF2]">
-          Let’s Connect Together
+          {heading}
         </h2>
-        <p className="text-gray-600 mt-2 text-sm">
-          Share your details & we’ll connect with you.
+        <p className="text-gray-600 mt-2 text-sm ">
+          {subheading}
         </p>
       </div>
 
