@@ -24,27 +24,27 @@ export function getLeadFormCopy(pathname) {
     return {
       title: "Get Factory Licence Guidance",
       description:
-        "Submit your information and get a customized Factory Licence registration plan designed specifically for your business needs.",
+        "Submit your information and get a customized Factory Licence Registration plan designed specifically for your business needs.",
     };
   }
 
   if (path.startsWith("/factory-licence-in-") && state) {
     return {
-      title: "Get Expert Guidance for Factory Licence",
+      title: `Get Factory License in ${state} Guidance`,
       description: `Fill in your details to receive a personalized Factory Licence in ${state} plan, including applicable government fees and expected approval timelines for your business.`,
     };
   }
 
   if (path.startsWith("/pollution-noc-in-") && state) {
     return {
-      title: "Get Expert Guidance for Pollution NOC",
+      title: `Get Pollution NOC in ${state} Guidance`,
       description: `Fill in your details to receive a personalized Pollution NOC in ${state} plan, including applicable government fees and expected approval timelines for your business.`,
     };
   }
 
   if (path.startsWith("/fire-noc-in-") && state) {
     return {
-      title: "Get Expert Guidance for Fire NOC",
+      title: `Get Fire NOC in ${state} Guidance`,
       description: `Fill in your details to receive a personalized Fire NOC in ${state} plan, including applicable government fees and expected approval timelines for your business.`,
     };
   }
