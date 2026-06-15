@@ -2,7 +2,7 @@
 
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -30,9 +30,7 @@ import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
 import FaqSectionDelhi from "@/components/FaqSectionDelhi";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
@@ -47,21 +45,11 @@ export default function FactoryLicenceDelhiPage() {
     { label: "Home", href: "/" },
     { label: "Factory License Registration & Renewal Services in Delhi" },
   ];
-  const heroBackgrounds = [bg1, bg2, bg3];
   const heroBackgroundAlts = [
     "Factories License Renewal in Delhi",
     "Mcd Factory License in Delhi",
     "Mcd Factory Licence Renewal Delhi",
   ];
-  const [currentBg, setCurrentBg] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000); // 2 seconds
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div>
@@ -100,22 +88,7 @@ export default function FactoryLicenceDelhiPage() {
       </Head>
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        {/* Rotating background images */}
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              priority={index === 0}
-              key={index}
-              src={img}
-              alt={heroBackgroundAlts[index]}
-              width={1920}
-              height={1080}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
-                }`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground alts={heroBackgroundAlts} />
 
         {/* Hero Content */}
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">

@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -18,9 +18,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import Image from "next/image";
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
 import img from '@/assets/fire/delhi.jpeg'
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
@@ -38,20 +36,11 @@ export default function FireNocLicenceDelhiPage() {
     { label: "Home", href: "/" },
     { label: "Fire NOC Registration in Delhi" },
   ];
-  const heroBackgrounds = [bg1, bg2, bg3];
   const heroBackgroundAlts = [
     "Fire Certificate Renewal Online in Delhi",
     "Fire Noc For Residential Buildings in Delhi",
     "Fire Noc in Delhi",
   ];
-  const [currentBg, setCurrentBg] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div>
@@ -80,20 +69,7 @@ export default function FireNocLicenceDelhiPage() {
       </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              key={index}
-              src={img}
-              alt={heroBackgroundAlts[index]}
-              width={1920}
-              height={1080}
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-1000 ease-in-out`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground alts={heroBackgroundAlts} />
 
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="md:w-1/2">

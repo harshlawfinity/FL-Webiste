@@ -1,48 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import ContactFormModal from "./ContactFormModal";
 import ContactForm from "./ContactForm";
-import bg1 from "../assets/f1.webp";
-import bg2 from "../assets/f2.webp";
-import bg3 from "../assets/f3.webp";
+import HeroRotatingBackground from "./HeroRotatingBackground";
 
 export default function HeroSection() {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
   const heroBackgroundAlts = [
     "Factory License Renewal",
     "Factory License Registration",
     "Factory Registration Certificate",
   ];
-  const [currentBg, setCurrentBg] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <section className="relative w-full min-h-[100vh] md:min-h-[600px] mt-20 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        {heroBackgrounds.map((img, index) => (
-          <Image
-            priority={index === 0}
-            key={index}
-            src={img}
-            alt={heroBackgroundAlts[index]}
-            width={1920}
-            height={1080}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-              currentBg === index ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-      </div>
+      <HeroRotatingBackground alts={heroBackgroundAlts} />
 
       <main className="relative z-20 w-full min-h-full flex items-center justify-center px-4 sm:px-6 py-8 md:py-12">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
