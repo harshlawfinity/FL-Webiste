@@ -1,7 +1,4 @@
-import zero from "../assets/zero.webp";
-import support from "../assets/support.webp";
-import management from "../assets/management.webp";
-import Image from "next/image";import { SEO_ASSETS } from "@/lib/heroBackgrounds";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
 
 export default function AssistanceSection() {
   const features = [

@@ -7,7 +7,6 @@ const FaIndustry = lazy(() =>
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TUP from "@/components/TUP";
-import Image from "next/image";
 
 import { HiOfficeBuilding } from "react-icons/hi";
 import {
@@ -22,14 +21,12 @@ import {
 import { FaCalculator } from "react-icons/fa";
 
 
-import uuu from "../../assets/uuu.webp";
-
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-
-import HeroRotatingBackground from "@/components/HeroRotatingBackground";
 import FaqSection from "@/components/FaqSectionUP";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
@@ -87,7 +84,10 @@ export default function FactoryLicenceUttarPradeshPage() {
       {/* Hero Section */}
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.factoryLicenceUttarPradesh.hero}
+        />
 
         {/* Hero Content */}
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
@@ -289,7 +289,14 @@ export default function FactoryLicenceUttarPradeshPage() {
               </li>
             </ol>
           </Section>
-          <Image loading="lazy" src={uuu} alt="Factory Licence Process in Uttar Pradesh" />
+          <img
+            loading="lazy"
+            src={PAGE_IMAGES.factoryLicenceUttarPradesh.process}
+            alt="Factory Licence Process in Uttar Pradesh"
+            className="w-full h-auto"
+            width={1200}
+            height={800}
+          />
 
           <section className="p max-w-7xl mx-auto">
             <h2

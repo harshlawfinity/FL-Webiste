@@ -1,5 +1,4 @@
-import Image from "next/image";
-import f1 from "../assets/f1.webp";import { SEO_ASSETS } from "@/lib/heroBackgrounds";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
 import Link from "next/link";
 
 export default function FeatureCard() {

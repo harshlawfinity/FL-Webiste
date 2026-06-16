@@ -9,7 +9,6 @@ import { FaCalculator } from "react-icons/fa";
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import FactoryLicenseCalculatorHaryana from '@/components/FactoryLicenseCalculatorHaryana'
 
 import { HiOfficeBuilding } from "react-icons/hi";
@@ -23,14 +22,12 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 
-import hhhhh from "../../assets/hhhhh.webp";
-
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-
-import HeroRotatingBackground from "@/components/HeroRotatingBackground";
 import FaqSection from "@/components/FaqSectionHaryana";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
@@ -87,7 +84,10 @@ export default function FactoryLicenceDelhiPage() {
       {/* Hero Section */}
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.factoryLicenceHaryana.hero}
+        />
 
         {/* Hero Content */}
         <div className=" max-w-7xl   mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
@@ -320,7 +320,14 @@ export default function FactoryLicenceDelhiPage() {
             </ol>
           </Section>
 
-          <Image src={hhhhh} alt="Factory Licence in Haryana" />
+          <img
+            src={PAGE_IMAGES.factoryLicenceHaryana.process}
+            alt="Factory Licence in Haryana"
+            loading="lazy"
+            className="w-full h-auto"
+            width={1200}
+            height={800}
+          />
 
 
 

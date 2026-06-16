@@ -8,7 +8,6 @@ const FaIndustry = lazy(() =>
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import { HiOfficeBuilding } from "react-icons/hi";
 import {
   FaQuestionCircle,
@@ -28,11 +27,11 @@ import FaqSectionPollutionUP from "@/components/FaqSectionPollutionUP"; // You c
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import img from '@/assets/fire/up.png'
 import Link from "next/link";
 
 export default function PollutionNocLicenceHaryanaPage() {
@@ -74,7 +73,10 @@ export default function PollutionNocLicenceHaryanaPage() {
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.fireNocUttarPradesh.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
@@ -257,7 +259,14 @@ export default function PollutionNocLicenceHaryanaPage() {
             <p className="mb-6 text-justify">
               Factorylicence.in makes the procedure of <span className="400 px-1">renewal fire NOC Uttar Pradesh</span> simple. Get your Fire noc renewed with our help now!
             </p>
-            <Image src={img} alt="Fire Noc Process in Uttar Pradesh" className="w-full h-auto rounded-lg shadow-md" />
+            <img
+              src={PAGE_IMAGES.fireNocUttarPradesh.process}
+              alt="Fire Noc Process in Uttar Pradesh"
+              className="w-full h-auto rounded-lg shadow-md"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section

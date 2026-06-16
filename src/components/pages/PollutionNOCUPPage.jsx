@@ -4,14 +4,12 @@ import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
-import img from '@/assets/pollution/up.png'
 import PollutionFeeCalculatorUttarPradesh from "@/components/PollutionFeeCalculatorUttarPradesh";
 import { FaCalculator } from "react-icons/fa";
 
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import { HiOfficeBuilding } from "react-icons/hi";
 import {
   FaQuestionCircle,
@@ -26,6 +24,7 @@ import FaqSectionPollutionUP from "@/components/FaqSectionPollutionUP"; // You c
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
@@ -115,7 +114,10 @@ medical waste recycling authorization uttar pradesh"
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.pollutionNocUttarPradesh.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">

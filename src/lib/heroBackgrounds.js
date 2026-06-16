@@ -21,6 +21,7 @@ export const SEO_ASSETS = {
   clientLatherGreenEnergy: "/assets/client-lather-green-energy.webp",
   clientSleepyOwlCoffee: "/assets/client-sleepy-owl-coffee.webp",
   clientSmcEnterprises: "/assets/client-smc-enterprises.webp",
+  factoriesImage: "/assets/factories-image.png",
 };
 
 export const HERO_BACKGROUND_IMAGES = [
@@ -28,3 +29,77 @@ export const HERO_BACKGROUND_IMAGES = [
   SEO_ASSETS.factoryLicenseRenewalHero,
   SEO_ASSETS.factoryRegistrationCertificateHero,
 ];
+
+export const PAGE_IMAGES = {
+  factoryLicenceDelhi: {
+    hero: [
+      "/assets/factories-in-delhi.webp",
+      "/assets/mcd-factory-license-in-delhi.webp",
+      "/assets/mcd-factory-license-renewal-delhi.webp",
+    ],
+    process: "/assets/factoy-licence-process-in-delhi.webp",
+  },
+  factoryLicenceHaryana: {
+    hero: [
+      "/assets/factory-act-haryana.webp",
+      "/assets/haryana-factory.webp",
+      "/assets/haryana-factory-license.webp",
+    ],
+    process: "/assets/factory-licence-in-haryana.webp",
+  },
+  factoryLicenceUttarPradesh: {
+    hero: [
+      "/assets/factories-act-license-in-up.webp",
+      "/assets/factory-license-renewal-up.webp",
+      "/assets/factory-licence-in-up.webp",
+    ],
+    process: "/assets/factory-licence-process-in-up.webp",
+  },
+  pollutionNocDelhi: {
+    hero: [
+      "/assets/pollution-noc-for-factory-in-delhi.webp",
+      "/assets/factory-pollution-certificate-in-delhi.webp",
+      "/assets/pollution-certificate-for-factory-in-delhi.webp",
+    ],
+    process: "/assets/pollution-noc-process-in-delhi.png",
+  },
+  pollutionNocHaryana: {
+    hero: [
+      "/assets/factory-pollution-certificate-in-haryana.webp",
+      "/assets/pollution-certificate-apply-online-in-haryana.webp",
+      "/assets/pollution-noc-in-haryana.webp",
+    ],
+    process: "/assets/pollution-noc-process-in-haryana.png",
+  },
+  pollutionNocUttarPradesh: {
+    hero: [
+      "/assets/pollution-control-board-license-in-up.webp",
+      "/assets/up-pollution-control-board-online-application.webp",
+      "/assets/pollution-noc-uttar-pradesh.webp",
+    ],
+  },
+  fireNocDelhi: {
+    hero: [
+      "/assets/fire-certificate-renewal-in-delhi.webp",
+      "/assets/fire-noc-for-residential-buildings-in-delhi.webp",
+      "/assets/fire-noc-delhi.webp",
+    ],
+    process: "/assets/fire-noc-process-in-delhi.jpeg",
+  },
+  fireNocHaryana: {
+    hero: [
+      "/assets/fire-noc-renewal-haryana.webp",
+      "/assets/fire-noc-online-haryana.webp",
+      "/assets/fire-noc-haryana.webp",
+    ],
+    process: "/assets/fire-noc-process-haryana.jpeg",
+  },
+  fireNocUttarPradesh: {
+    hero: [
+      "/assets/factory-fire-noc-apply-online-up.webp",
+      "/assets/nivesh-mitra-fire-noc-up.webp",
+      "/assets/fire-safety-certificate-renewal-online-up.webp",
+    ],
+    process: "/assets/fire-noc-process-in-up.png",
+  },
+};

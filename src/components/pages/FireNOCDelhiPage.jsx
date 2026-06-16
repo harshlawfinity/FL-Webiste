@@ -17,9 +17,8 @@ import {
   FaSync,
   FaBuilding,
 } from "react-icons/fa";
-import Image from "next/image";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
-import img from '@/assets/fire/delhi.jpeg'
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
@@ -69,7 +68,10 @@ export default function FireNocLicenceDelhiPage() {
       </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.fireNocDelhi.hero}
+        />
 
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="md:w-1/2">
@@ -261,7 +263,14 @@ export default function FireNocLicenceDelhiPage() {
                 <strong>Approval & Download</strong>: Receive SMS notifications; download your digital Fire NOC from the portal upon approval.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc Process in Delhi" className="w-full h-auto rounded-lg" />
+            <img
+              src={PAGE_IMAGES.fireNocDelhi.process}
+              alt="Fire Noc Process in Delhi"
+              className="w-full h-auto rounded-lg"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section

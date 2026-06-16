@@ -1,9 +1,7 @@
 "use client"
 
  import { ThumbsUp, ShieldCheck, Users, Briefcase } from "lucide-react";
-
-import ab from '../assets/ab.png'
-import Image from "next/image";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
  
 export default function OurStory() {
   return (
@@ -23,20 +21,14 @@ export default function OurStory() {
 <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-7xl mx-auto">
   {/* Left Side – Image & Tags */}
   <div className="relative h-[360px]">
-    <Image
-      src={ab}
-        loading="lazy"
-
-      alt="Factory License"
+    <img
+      src={SEO_ASSETS.factoriesImage}
+      loading="lazy"
+      alt="Factories Image"
       className="rounded-2xl w-full h-full object-cover shadow-md"
+      width={800}
+      height={360}
     />
-    {/* <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-      {['Transparent Process', 'Compliance Experts', 'Affordable Pricing'].map((tag, i) => (
-        <span key={i} className="px-2 py-1 bg-white/70 text-black text-xs rounded-full">
-          {tag}
-        </span>
-      ))}
-    </div> */}
   </div>
 
   {/* Right Side – Stacked USP Cards */}

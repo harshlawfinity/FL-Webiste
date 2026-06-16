@@ -1,7 +1,6 @@
 "use client";
 
 import { lazy, Suspense, useState } from "react";
-import Image from "next/image";
 import Head from "next/head";
 import {
   FaIndustry,
@@ -19,14 +18,14 @@ import {
   FaCheckDouble,
 } from "react-icons/fa";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import FaqSectionHaryanaFireNoc from "@/components/FaqSectionHaryanaFireNoc"; // Your FAQ component
+import FaqSectionHaryanaFireNoc from "@/components/FaqSectionHaryanaFireNoc";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
-import img from "@/assets/fire/haryana.jpeg";
 import Link from "next/link";
 
 export default function FireNocLicenceHaryanaPage() {
@@ -71,7 +70,10 @@ export default function FireNocLicenceHaryanaPage() {
       </Head>
       {/* Hero Section */}
       <section className="relative text-white py-40 md:py-20 mt- px-4 mt-0 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.fireNocHaryana.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
@@ -241,7 +243,14 @@ export default function FireNocLicenceHaryanaPage() {
                 <strong>Upload and Submit Documents</strong>: The applicant must attach all essential papers to the application form after completing all mandatory fields. Once all required documents are attached, click the "Save" button to submit.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc Process in Haryana" className="w-full h-auto rounded-lg" />
+            <img
+              src={PAGE_IMAGES.fireNocHaryana.process}
+              alt="Fire Noc Process in Haryana"
+              className="w-full h-auto rounded-lg"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section

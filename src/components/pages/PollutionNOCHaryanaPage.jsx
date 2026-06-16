@@ -7,7 +7,6 @@ const FaIndustry = lazy(() =>
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import { HiOfficeBuilding } from "react-icons/hi";
 import { FaCalculator } from "react-icons/fa";
 
@@ -24,11 +23,11 @@ import FaqSectionPollutionHaryana from "@/components/FaqSectionPollutionHaryana"
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import img from "@/assets/pollution/haryana.png";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
 import Head from "next/head";
 import Link from "next/link";
@@ -115,7 +114,10 @@ medical waste recycling authorization Haryana"
       </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <HeroRotatingBackground alts={heroBackgroundAlts} />
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.pollutionNocHaryana.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
@@ -543,7 +545,14 @@ medical waste recycling authorization Haryana"
                 <strong>Follow-up</strong>: Respond to notices and follow up with authorities to ensure a smooth process.
               </li>
             </ol>
-            <Image src={img} alt="Pollution Noc Process in Haryana" className="w-full h-auto rounded-l g s hadow-md" />
+            <img
+              src={PAGE_IMAGES.pollutionNocHaryana.process}
+              alt="Pollution Noc Process in Haryana"
+              className="w-full h-auto rounded-lg shadow-md"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section
