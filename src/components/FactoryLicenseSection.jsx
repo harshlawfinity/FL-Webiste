@@ -1,13 +1,10 @@
 "use client"
 import { useState  } from "react";
 import { FiCheckCircle } from "react-icons/fi";
-import f4 from "../assets/f4.webp";
-import haryanaste from "../assets/haryanaste.webp";
-import stepd from "../assets/stepd.webp";
-import upsteps from "../assets/upsteps.webp";
- 
-import ContactForm from "./ContactForm";  
-import Image from "next/image";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
+
+import ContactForm from "./ContactForm";
+
 const steps = {
   Delhi: {
     items: [
@@ -18,7 +15,7 @@ const steps = {
       "Inspection: Department schedules inspection.",
       "Licence Issuance: Upon successful verification.",
     ],
-    image: stepd,
+    image: SEO_ASSETS.factoryLicenseRenewal,
   },
   Haryana: {
     items: [
@@ -29,7 +26,7 @@ const steps = {
       "Inspection: Premises will be inspected.",
       "Licence Approval: If compliant, licence is issued.",
     ],
-    image: haryanaste,
+    image: SEO_ASSETS.factoryLicenceStepsHaryana,
   },
   "Uttar Pradesh": {
     items: [
@@ -39,7 +36,7 @@ const steps = {
       "Inspection: Department inspects premises.",
       "Licence Issuance: If verified, licence is issued.",
     ],
-    image: upsteps,
+    image: SEO_ASSETS.factoryLicenceStepsUttarPradesh,
   },
 };
 
@@ -57,12 +54,14 @@ const FactoryLicenseSection = () => {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12">
         {/* Left: Image */}
         <div className="w-full lg:w-1/2">
-             <Image
-              src={f4}
-              alt="Factory License Renewal"
+             <img
+              src={SEO_ASSETS.factoryLicenceExpertHelp}
+              alt="Factory Licence Expert Help"
               className="rounded-2xl w-full h-auto max-h-[480px] object-cover shadow-xl"
               loading="lazy"
               decoding="async"
+              width={800}
+              height={480}
             />
          </div>
 
@@ -94,12 +93,14 @@ const FactoryLicenseSection = () => {
           </ul>
 
           {/* Steps Image */}
-             <Image
+             <img
               src={steps[activeState].image}
-              alt={`Factory License Registration`}
+              alt="Factory License Renewal"
               className="w-full max-h-[240px] object-contain"
               loading="lazy"
               decoding="async"
+              width={640}
+              height={240}
             />
          </div>
       </div>

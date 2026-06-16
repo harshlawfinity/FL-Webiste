@@ -57,8 +57,9 @@ const FactoryLicenseCalculatorDelhi = () => {
 
   return (
     <div className=" ">
-      <h2 className="text-2xl md:text-3xl font-semibold text-[#7A3EF2]    mb-8">
-      Calculate Factory License Fees Online in Delhi      </h2>
+      <h2 className="text-2xl md:text-3xl font-semibold text-[#7A3EF2] mb-8">
+      Calculate Factory License Fees Online in Delhi
+      </h2>
 
       {/* Form */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

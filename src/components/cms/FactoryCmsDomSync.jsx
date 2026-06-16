@@ -287,9 +287,14 @@ function appendNestedSections(parentEl, section) {
   });
 }
 
+function pageContent(page) {
+  return page?.content || page?.sections || null;
+}
+
 function customSections(page) {
+  const content = pageContent(page);
   return {
-    ...(page?.content?.customSections || {}),
+    ...(content?.customSections || {}),
     ...(page?.customSections || {}),
   };
 }
@@ -311,7 +316,8 @@ function addQuickLink(id, label) {
 }
 
 function syncFaqs(page) {
-  const faqs = page?.content?.faqs?.body;
+  const content = pageContent(page);
+  const faqs = content?.faqs?.body;
   if (!Array.isArray(faqs) || !faqs.length) return;
   const faqRoot = document.getElementById("faqs") || document.getElementById("faq-section");
   if (!faqRoot) return;
@@ -327,10 +333,11 @@ function syncFaqs(page) {
 
 export default function FactoryCmsDomSync({ page }) {
   useEffect(() => {
-    if (!page?.content) return;
+    const content = pageContent(page);
+    if (!content) return;
     document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true']").forEach((node) => node.remove());
 
-    const hero = page.content.hero || {};
+    const hero = content.hero || {};
     const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
     const heroSubtitle = hero.subtext || page.seo?.description;
     const firstH1 = document.querySelector("h1");
@@ -339,7 +346,7 @@ export default function FactoryCmsDomSync({ page }) {
     if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
 
     Object.entries(SECTION_IDS).forEach(([key, ids]) => {
-      const contentSection = page.content[key];
+      const contentSection = content[key];
       if (!contentSection) return;
       const sectionEl = ids.map((id) => document.getElementById(id)).find(Boolean);
       if (!sectionEl) return;
@@ -358,7 +365,7 @@ export default function FactoryCmsDomSync({ page }) {
 
     orderedCustomKeys.forEach((key) => {
       if (SKIP_RENDER_IDS.has(key) || SECTION_IDS[key]) return;
-      const section = cmsCustomSections[key] || page.content[key];
+      const section = cmsCustomSections[key] || content[key];
       if (!section) return;
 
       const existingEl = document.getElementById(key);

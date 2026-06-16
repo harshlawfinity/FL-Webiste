@@ -1,22 +1,13 @@
 'use client'
 import { useEffect, useRef, useState } from 'react';
 import { Star } from "lucide-react";
+import { SEO_ASSETS } from '@/lib/heroBackgrounds';
 
-import innobev from '../assets/logo/innobev.webp';
-import lathar from '../assets/logo/lathar.webp';
-import servotec from '../assets/logo/servotec.webp';
-import sleepy from '../assets/logo/sleepy.webp';
-import smc from '../assets/logo/smc.webp';
-import sugar from '../assets/logo/sugar.webp';
-import syfo from '../assets/logo/syfo.webp';
-import jaypee from '../assets/logo/jaypee.png';
-import Image from 'next/image';
-// 
 const testimonials = [
   {
     name: 'Sarika Bhatia',
     role: 'Director, Servotech Power System Ltd.',
-    avatar: servotec,
+    avatar: SEO_ASSETS.clientServotech,
     alt: 'Apply For Factory License',
     quote:
       'FactoryLicence.in made the entire process of getting our factory licence smooth and stress-free. Their team was responsive, well-informed, and extremely professional.',
@@ -25,7 +16,7 @@ const testimonials = [
   {
     name: 'Amit',
     role: 'Purchase Manager, Jaypee Infratech Limited',
-    avatar: jaypee,
+    avatar: SEO_ASSETS.clientJaypee,
     alt: 'Factory Licence Apply Online',
     quote:
       'Pollution NOC ka process initially bahut confusing tha, lekin Lawfinity India ne pura kaam handle kiya—from documentation to approvals. Bohot hi efficient aur trustworthy service.',
@@ -34,7 +25,7 @@ const testimonials = [
   {
     name: 'Tanul Rustagi',
     role: 'Director, Innobev Solution Private Limited',
-    avatar: innobev,
+    avatar: SEO_ASSETS.clientInnobev,
     alt: 'Factory Licence Online',
     quote:
       'With FactoryLicence.in, we secured our factory licence without a hitch. Their end-to-end support helped us launch production on time with complete legal compliance.',
@@ -43,7 +34,7 @@ const testimonials = [
   {
     name: 'Anil Kakkar',
     role: 'Director, SPRU Products Pvt Ltd',
-    avatar: syfo,
+    avatar: SEO_ASSETS.clientSpruProducts,
     alt: 'SPRU Products Pvt Ltd (Syfo) logo - Client testimonial',
     quote:
       'We highly recommend FactoryLicence.in for factory setup compliance. Their detailed knowledge and proactive approach helped us avoid delays and penalties.',
@@ -52,7 +43,7 @@ const testimonials = [
   {
     name: 'Jhanvi Mishra',
     role: 'Product Manager, Sugar Cosmetics',
-    avatar: sugar,
+    avatar: SEO_ASSETS.factoryLicenceConsultants,
     alt: 'Factory License Online',
     quote:
       'FactoryLicence.in ensured that every form and requirement for our factory licence was handled efficiently. The service was prompt and saved us countless hours.',
@@ -61,7 +52,7 @@ const testimonials = [
   {
     name: 'Mithilesh Gautam',
     role: 'Product Manager, Lather Green Energy Pvt Ltd',
-    avatar: lathar,
+    avatar: SEO_ASSETS.clientLatherGreenEnergy,
     alt: 'Factory Licence Registrationl',
     quote:
       'Lawfinity India ke through Pollution NOC lena kaafi asaan ho gaya. Har step par proper guidance mila. Compliance ke bina kaam start karna risk hota hai – unhone woh risk hata diya.',
@@ -70,7 +61,7 @@ const testimonials = [
   {
     name: 'Prakash Raj',
     role: 'Sleepy Owl Private Coffee Pvt Ltd',
-    avatar: sleepy,
+    avatar: SEO_ASSETS.clientSleepyOwlCoffee,
     alt: 'Apply Factory License',
     quote:
       'Hamari factory ke liye sabhi licences jaise Factory Licence, Pollution NOC, Labour aur Fire Safety approvals ek hi jagah – Lawfinity India – se mile. Ek hi trusted source se saara compliance complete karna bahut hi suvidha janak aur safe tha.',
@@ -79,7 +70,7 @@ const testimonials = [
   {
     name: 'Nawam Gupta',
     role: 'SMC Enterprises',
-    avatar: smc,
+    avatar: SEO_ASSETS.clientSmcEnterprises,
     alt: 'SMC Enterprises logo - Client testimonial',
     quote:
       'We obtained all our factory-related licences—such as the Factory Licence, Pollution NOC, Labour Compliance, and Fire Safety Approvals—from a single source: Lawfinity India. Completing all compliances through one trusted partner was extremely convenient and ensured full legal safety.',
@@ -90,9 +81,8 @@ const testimonials = [
 
 export default function TestimonialSlider() {
   const [index, setIndex] = useState(0);
-  const intervalRef = useRef(null); // ✅ JavaScript-compatible
+  const intervalRef = useRef(null);
 
-  // Start auto-play
   const startAutoPlay = () => {
     if (intervalRef.current) return;
     intervalRef.current = setInterval(() => {
@@ -100,7 +90,6 @@ export default function TestimonialSlider() {
     }, 5000);
   };
 
-  // Stop auto-play
   const stopAutoPlay = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -108,7 +97,6 @@ export default function TestimonialSlider() {
     }
   };
 
-  // Effect for auto-play
   useEffect(() => {
     startAutoPlay();
     return stopAutoPlay;
@@ -126,12 +114,13 @@ export default function TestimonialSlider() {
 
       <div className='mt-5'>
         <div className="flex justify-center items-center space-x-6 mb-6 mt-5">
-          <Image
+          <img
             src={avatar}
             alt={alt}
             loading="lazy"
-
-            className="w-40 border-4 border-white   scale-110"
+            className="w-40 border-4 border-white scale-110"
+            width={160}
+            height={160}
           />
         </div>
 

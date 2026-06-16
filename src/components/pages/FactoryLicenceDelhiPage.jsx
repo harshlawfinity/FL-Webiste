@@ -617,7 +617,7 @@ export default function FactoryLicenceDelhiPage() {
 function Section({ id, title, children }) {
   return (
     <div id={id}>
-      <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+      
       {children}
     </div>
   );

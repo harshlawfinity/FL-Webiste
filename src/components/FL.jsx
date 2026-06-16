@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import lg2 from '../assets/lg2.gif';
-import Image from 'next/image';
+import { SEO_ASSETS } from '@/lib/heroBackgrounds';
 
 const FL = ({ mobile = false }) => {
   const [showImage, setShowImage] = useState(false);
@@ -28,7 +27,11 @@ const FL = ({ mobile = false }) => {
   if (mobile) {
     return (
       <div className="flex items-center h-[60px]">
-        <Image src={lg2} alt="Factory Licence" className="w-24 h-auto" priority />
+        <img
+          src={SEO_ASSETS.factoryLicenceLogo}
+          alt="Factory Licence"
+          className="w-24 h-auto"
+        />
       </div>
     );
   }
@@ -42,8 +45,12 @@ const FL = ({ mobile = false }) => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <Image src={lg2} alt="Factory License Logo Gif" className="w-32"   loading="lazy"
- />
+          <img
+            src={SEO_ASSETS.factoryLicenceLogo}
+            alt="Factory License Logo Gif"
+            className="w-32"
+            loading="lazy"
+          />
         </div>
       )}
 

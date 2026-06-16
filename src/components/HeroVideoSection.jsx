@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { FaYoutube } from "react-icons/fa";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
 
 const VIDEO_ID = "BxMLFYIWyxE";
-// Thumbnail loads; iframe (video) only after user clicks Play — no play until then
-const THUMBNAIL_URL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
 const VIDEO_EMBED_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0`;
 
 export default function HeroVideoSection() {
@@ -24,7 +23,7 @@ export default function HeroVideoSection() {
               <>
                 {/* Only thumbnail loads; video does not play until user clicks */}
                 <img
-                  src={THUMBNAIL_URL}
+                  src={SEO_ASSETS.factoryLicenceVideoPreview}
                   alt="Factory Licence Video Preview"
                   className="absolute inset-0 w-full h-full object-cover"
                   width={1280}
