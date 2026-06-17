@@ -1,12 +1,10 @@
-// app/factory-licence-in-delhi/page.jsx
-
 import FactoryLicenceDelhiPage from "@/components/pages/FactoryLicenceDelhiPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
   description:
     "Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help.",
@@ -43,6 +41,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("factory-licence-in-delhi", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-delhi");

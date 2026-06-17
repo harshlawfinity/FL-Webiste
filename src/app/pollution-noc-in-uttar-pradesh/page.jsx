@@ -2,11 +2,11 @@
 
 import PollutionNOCUPPage from "@/components/pages/PollutionNOCUPPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Pollution NOC in Uttar Pradesh – Apply Online & Certificate",
   description:
     "Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation.",
@@ -35,6 +35,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("pollution-noc-in-uttar-pradesh", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-uttar-pradesh");

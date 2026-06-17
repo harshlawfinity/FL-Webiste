@@ -1,7 +1,6 @@
 "use client";
 
 import { lazy, Suspense, useState } from "react";
-import Head from "next/head";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -48,29 +47,6 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
-      <Head>
-        <title>Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence</title>
-        <meta
-          name="description"
-          content="Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily."
-        />
-        <meta
-          name="keywords"
-          content="fire noc uttar pradesh, uttar pradesh fire service noc, fire noc apply online uttar pradesh, fire noc online uttar pradesh, fire noc renewal uttar pradesh, fire noc renewal online in uttar pradesh, online fire noc uttar pradesh, renewal fire noc uttar pradesh"
-        />
-        <meta
-          property="og:title"
-          content="Fire NOC in Uttar Pradesh, Apply & Renew Fire NOC Online in Uttar Pradesh - Factorylicence"
-        />
-        <meta
-          property="og:description"
-          content="Fire NOC in Uttar Pradesh - Apply for Fire NOC in Uttar Pradesh online through Uttar Pradesh Fire Service. Get new Fire NOC, download certificate, and complete Fire NOC renewal online easily."
-        />
-        <meta property="og:url" content="https://factorylicence.in/fire-noc-in-uttar-pradesh" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-uttar-pradesh" />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <HeroRotatingBackground

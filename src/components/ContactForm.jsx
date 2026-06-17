@@ -87,10 +87,10 @@ const HeroForm = ({ title, description }) => {
   return (
     <div className="max-w-lg mx-auto bg-white md:p-8 p-4 rounded-2xl">
       <div className="text-left mb-4">
-        <h2 className="md:text-2xl text-xl font-semibold text-[#7A3EF2]">
+        <h2 className="md:text-xl text-lg font-semibold text-[#7A3EF2]">
           {heading}
         </h2>
-        <p className="text-gray-600 mt-2 text-sm ">
+        <p className="text-gray-600 mt-2 text-xs ">
           {subheading}
         </p>
       </div>

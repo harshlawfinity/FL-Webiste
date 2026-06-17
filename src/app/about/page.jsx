@@ -1,10 +1,10 @@
 import AboutPage from "@/components/pages/AboutPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsStaticPage } from "@/lib/cms";
+import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "About US - Factorylicence",
   description:
     "Factorylicence.in is your most trusted partner for all the services spanning from factory setup to factory management.",
@@ -33,6 +33,11 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  const cmsPage = await getFactoryCmsStaticPage("about");
+  return buildCmsMetadata(cmsPage, fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsStaticPage("about");

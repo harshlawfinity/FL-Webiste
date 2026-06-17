@@ -31,7 +31,6 @@ import FaqSection from "@/components/FaqSectionUP";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function FactoryLicenceUttarPradeshPage() {
@@ -48,39 +47,6 @@ export default function FactoryLicenceUttarPradeshPage() {
 
   return (
     <div>
-      <Head>
-        <title>Factory Licence in Uttar Pradesh – Online Renewal & Apply</title>
-        <meta
-          name="description"
-          content="Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently."
-        />
-        <meta
-          name="keywords"
-          content="factory licence renewal online uttar pradesh, factory licence in uttar pradesh"
-        />
-        <meta
-          property="og:title"
-          content="Factory Licence in Uttar Pradesh – Online Renewal & Apply"
-        />
-        <meta
-          property="og:description"
-          content="Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/factory-licence-in-uttar-pradesh"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://factorylicence.in/assets/factory-license-up-og.jpg"
-        />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/factory-licence-in-uttar-pradesh"
-        />
-      </Head>
       {/* Hero Section */}
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">

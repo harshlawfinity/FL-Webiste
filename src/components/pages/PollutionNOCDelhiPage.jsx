@@ -29,7 +29,6 @@ import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function PollutionNocLicenceDelhiPage() {
@@ -46,66 +45,6 @@ export default function PollutionNocLicenceDelhiPage() {
 
   return (
     <div>
-      <Head>
-        <title>Pollution NOC in Delhi | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
-        <meta
-          name="description"
-          content="Get Pollution NOC in Delhi with expert consultants for hazardous waste authorization, scrap import license, plastic, paper, metal scrap management & biomedical waste authorization services in Delhi."
-        />
-        <meta
-          name="keywords"
-          content="pollution noc in delhi,
-aluminium scrap management delhi,
-aluminum scrape management,
-brass scrap management delhi,
-copper scrap management delhi,
-iron and steel scrap management delhi,
-metal scrap import license delhi,
-paper waste management in delhi,
-plastic waste management in delhi,
-scrap import consultant delhi,
-scrap import waste management in delhi,
-scrap recycling & waste management delhi,
-waste management scrap import delhi,
-hazardous waste authorization delhi,
-hazardous waste consultant delhi,
-hazardous waste disposal authorization delhi,
-hazardous waste handling permission delhi,
-hazardous waste license delhi,
-hazardous waste management authorisation delhi,
-hazardous waste management authorization in delhi,
-waste management authorization delhi,
-bio medical waste authorization in delhi
-bio medical waste consultant in delhi,
-bio medical waste license delhi,
-biomedical waste authorization consultant delhi,
-biomedical waste consultant delhi,
-biomedical waste management authorization delhi,
-biomedical waste permission delhi,
-bmw authorization delhi,
-clinic biomedical waste license delhi,
-medical waste disposal authorization delhi,
-medical waste recycling authorization delhi"
-        />
-        <meta
-          property="og:title"
-          content="Pollution NOC in Delhi – Waste Authorization & License Online"
-        />
-        <meta
-          property="og:description"
-          content="Get Pollution NOC in Delhi with Bio Medical Waste Authorization in Delhi, Hazardous Waste Management"
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/pollution-noc-in-delhi"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/pollution-noc-in-delhi"
-        />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <HeroRotatingBackground

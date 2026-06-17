@@ -1,10 +1,10 @@
 import FactoryLicenceUttarPradeshPage from "@/components/pages/FactoryLicenceUttarPradeshPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Factory Licence in Uttar Pradesh – Online Renewal & Apply",
   description:
     "Factory License in Uttar Pradesh - Renew your factory licence online in Uttar Pradesh with ease. Learn about the process, requirements, and how to complete your factory licence renewal in Uttar Pradesh quickly and efficiently.",
@@ -36,6 +36,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("factory-licence-in-uttar-pradesh", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-uttar-pradesh");

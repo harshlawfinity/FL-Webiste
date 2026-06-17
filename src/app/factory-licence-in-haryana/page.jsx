@@ -1,10 +1,10 @@
 import FactoryLicenceHaryanaPage from "@/components/pages/FactoryLicenceHaryanaPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Factory License in Haryana – Online Apply, Fees & Registration",
   description:
     "Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help..",
@@ -39,6 +39,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("factory-licence-in-haryana", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-haryana");

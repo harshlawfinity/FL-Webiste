@@ -29,7 +29,6 @@ import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function PollutionNocLicenceHaryanaPage() {
@@ -46,72 +45,6 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
-      <Head>
-        <title>Pollution NOC in Uttar Pradesh | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
-        <meta
-          name="description"
-          content="Get Pollution NOC in Uttar Pradesh with expert consultants for hazardous waste authorization, scrap import license, biomedical waste authorization & waste management approvals."
-        />
-        <meta
-          name="keywords"
-          content="pollution noc in uttar pardesh
-noc pollution control board in uttar pardesh
-pollution noc certificate in uttar pardesh
-noc from pollution control board in uttar pardesh
-cto pollution control board in uttar pardesh
-documents required for pollution noc
-pollution noc for factory in uttar pardesh
-aluminium scrap management uttar pradesh
-aluminum scrape management
-brass scrap management uttar pradesh
-copper scrap management uttar pradesh
-iron and steel scrap management uttar pradesh
-metal scrap import license uttar pradesh
-paper waste management in uttar pradesh
-plastic waste management in uttar pradesh
-scrap import consultant uttar pradesh
-scrap import waste management in uttar pradesh
-scrap recycling & waste management uttar pradesh
-waste management scrap import uttar pradesh
-hazardous waste authorization uttar pradesh
-hazardous waste consultant uttar pradesh
-hazardous waste disposal authorization uttar pradesh
-hazardous waste handling permission uttar pradesh
-hazardous waste license uttar pradesh
-hazardous waste management authorisation uttar pradesh
-hazardous waste management authorization in uttar pradesh
-waste management authorization uttar pradesh
-bio medical waste authorization in uttar pradesh
-bio medical waste consultant in uttar pradesh
-bio medical waste license uttar pradesh
-biomedical waste authorization consultant uttar pradesh
-biomedical waste consultant uttar pradesh
-biomedical waste management authorization uttar pradesh
-biomedical waste permission uttar pradesh
-bmw authorization uttar pradesh
-clinic biomedical waste license uttar pradesh
-medical waste disposal authorization uttar pradesh
-medical waste recycling authorization uttar pradesh"
-        />
-        <meta
-          property="og:title"
-          content="Pollution NOC in Uttar Pradesh – Apply Online & Certificate"
-        />
-        <meta
-          property="og:description"
-          content="Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
-        />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <HeroRotatingBackground

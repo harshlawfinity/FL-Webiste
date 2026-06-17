@@ -2,11 +2,11 @@
 
 import FireNOCDelhiPage from "@/components/pages/FireNOCDelhiPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence",
   description:
     "Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process.",
@@ -37,6 +37,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("fire-noc-in-delhi", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-delhi");

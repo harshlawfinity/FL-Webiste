@@ -30,7 +30,6 @@ import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSectionDelhi from "@/components/FaqSectionDelhi";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
-import Head from "next/head";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 import Link from "next/link";
 
@@ -48,39 +47,6 @@ export default function FactoryLicenceDelhiPage() {
 
   return (
     <div>
-      <Head>
-        <title>Factory Licence in Delhi – Online Application, Fees & Renewal</title>
-        <meta
-          name="description"
-          content="Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help."
-        />
-        <meta
-          name="keywords"
-          content="factory licence in delhi, factory license in delhi, delhi factory license, factory licence fees in delhi, north delhi municipal corporation factory licence renewal online, Factory Licence Renewal in Delhi, factory licence online application in delhi"
-        />
-        <meta
-          property="og:title"
-          content="Factory Licence in Delhi – Online Application, Fees & Renewal"
-        />
-        <meta
-          property="og:description"
-          content="Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/factory-licence-in-delhi"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://factorylicence.in/assets/factory-license-delhi-og.jpg"
-        />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/factory-licence-in-delhi"
-        />
-      </Head>
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <HeroRotatingBackground

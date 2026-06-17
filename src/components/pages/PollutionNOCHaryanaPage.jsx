@@ -29,7 +29,6 @@ import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function PollutionNocLicenceHaryanaPage() {
@@ -46,72 +45,6 @@ export default function PollutionNocLicenceHaryanaPage() {
 
   return (
     <div>
-      <Head>
-        <title>Pollution NOC in Haryana | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
-        <meta
-          name="description"
-          content="Get Pollution NOC in Haryana with expert consultants for hazardous waste authorization, scrap import license, biomedical waste license, plastic & paper waste management and pollution board approvals."
-        />
-        <meta
-          name="keywords"
-          content="pollution noc in haryana,
-noc pollution control board in haryana,
-pollution noc certificate in haryana
-noc from pollution control board in haryana
-cto pollution control board in haryana
-pollution noc for factory in haryana
-pollution noc Apply online in haryana
-aluminium scrap management Haryana
-aluminum scrape management
-brass scrap management Haryana
-copper scrap management Haryana
-iron and steel scrap management Haryana
-metal scrap import license Haryana
-paper waste management in Haryana
-plastic waste management in Haryana
-scrap import consultant Haryana
-scrap import waste management in Haryana
-scrap recycling & waste management Haryana
-waste management scrap import Haryana
-hazardous waste authorization Haryana
-hazardous waste consultant Haryana
-hazardous waste disposal authorization Haryana
-hazardous waste handling permission Haryana
-hazardous waste license Haryana
-hazardous waste management authorisation Haryana
-hazardous waste management authorization in Haryana
-waste management authorization Haryana
-bio medical waste authorization in Haryana
-bio medical waste consultant in Haryana
-bio medical waste license Haryana
-biomedical waste authorization consultant Haryana
-biomedical waste consultant Haryana
-biomedical waste management authorization Haryana
-biomedical waste permission Haryana
-bmw authorization Haryana
-clinic biomedical waste license Haryana
-medical waste disposal authorization Haryana
-medical waste recycling authorization Haryana"
-        />
-        <meta
-          property="og:title"
-          content="Pollution NOC in Haryana – Apply Online, Certificate & Fees"
-        />
-        <meta
-          property="og:description"
-          content="Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/pollution-noc-in-haryana"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/pollution-noc-in-haryana"
-        />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
         <HeroRotatingBackground

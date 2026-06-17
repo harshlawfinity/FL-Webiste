@@ -2,11 +2,11 @@
 
 import PollutionNOCHaryanaPage from "@/components/pages/PollutionNOCHaryanaPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Pollution NOC in Haryana – Apply Online, Certificate & Fees",
   description:
     "Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services.",
@@ -66,6 +66,10 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  return buildLandingPageMetadata("pollution-noc-in-haryana", fallbackMetadata);
+}
 
 export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-haryana");

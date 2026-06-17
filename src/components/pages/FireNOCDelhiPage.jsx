@@ -26,7 +26,6 @@ import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function FireNocLicenceDelhiPage() {
@@ -43,29 +42,6 @@ export default function FireNocLicenceDelhiPage() {
 
   return (
     <div>
-      <Head>
-        <title>Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence</title>
-        <meta
-          name="description"
-          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
-        />
-        <meta
-          name="keywords"
-          content="fire noc delhi, online application for fire noc delhi, fire noc delhi online, fire noc requirement in delhi, fire noc in delhi, apply for fire noc delhi, delhi fire noc renewal online apply, delhi fire service noc, fire noc apply online delhi"
-        />
-        <meta
-          property="og:title"
-          content="Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence"
-        />
-        <meta
-          property="og:description"
-          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
-        />
-        <meta property="og:url" content="https://factorylicence.in/fire-noc-in-delhi" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-delhi" />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
         <HeroRotatingBackground

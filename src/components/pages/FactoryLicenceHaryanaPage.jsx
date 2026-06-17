@@ -31,7 +31,6 @@ import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSection from "@/components/FaqSectionHaryana";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
-import Head from "next/head";
 import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
@@ -48,39 +47,6 @@ export default function FactoryLicenceDelhiPage() {
 
   return (
     <div>
-      <Head>
-        <title>Factory License in Haryana – Online Apply, Fees & Registration</title>
-        <meta
-          name="description"
-          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
-        />
-        <meta
-          name="keywords"
-          content="factory license haryana, factory license in haryana, factory license in haryana, factory licence fees in haryana, factory licence haryana"
-        />
-        <meta
-          property="og:title"
-          content="Factory License in Haryana – Online Apply, Fees & Registration"
-        />
-        <meta
-          property="og:description"
-          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/factory-licence-in-haryana"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://factorylicence.in/assets/factory-license-haryana-og.jpg"
-        />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/factory-licence-in-haryana"
-        />
-      </Head>
       {/* Hero Section */}
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
