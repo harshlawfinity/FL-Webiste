@@ -7,8 +7,6 @@ const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
 import { RiTimeLine } from "react-icons/ri";
-import { AiOutlineEdit } from "react-icons/ai";
-import TD from "@/components/TD";
 import FactoryLicenseCalculatorDelhi from '@/components/FactoryLicenseCalculatorDelhi'
 import { FaCalculator } from "react-icons/fa";
 
@@ -332,67 +330,11 @@ export default function FactoryLicenceDelhiPage() {
 
 
 
-          <section className="p max-w-7xl mx-auto" id="fee">
+          <section className="p max-w-7xl mx-auto space-y-4" id="fee">
             <h2 className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
               Factory Licence Fees In Delhi
             </h2>
-
-            <div className="md:w-full w-[90vw]">
-              <TD />
-            </div>
-
-            {/* Renewal Fee Section */}
-            <div className="mt-10">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-                <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal Fee
-              </h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-700 text-sm">
-                <li>
-                  <strong>Within April (grace period):</strong>
-                </li>
-                <ul className="list-disc list-inside pl-4">
-                  <li>License Fee = HP-rate × Total HP</li>
-                  <li>Permission Fee = Unit Charge (₹1000) + License Fee</li>
-                  <li>Processing Fee = 50% of License Fee</li>
-                  <li>Transaction Fee = ₹10</li>
-                  <li>Convenience Fee = 2.5937% of Total Amount</li>
-                </ul>
-
-                <li>
-                  <strong>After April (up to year end):</strong>
-                </li>
-                <ul className="list-disc list-inside pl-4">
-                  <li>
-                    <>Same as above plus:</> Late fee = ₹150 (for first 3
-                    months) + 5% of license fee per additional month
-                  </li>
-                </ul>
-
-                <li>
-                  <strong>Beyond one year:</strong>
-                </li>
-                <ul className="list-disc list-inside pl-4">
-                  <li>Above charges + Arrear = ₹2,000 flat</li>
-                </ul>
-              </ul>
-            </div>
-
-            {/* Amendment Fee Section */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-[#7c4bdf] mb-2 flex items-center gap-2">
-                <AiOutlineEdit className="text-[#7c4bdf]" />
-                Amendment Fee
-              </h3>
-              <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-                <li>Processing Fee = ₹550 + 2.5937% Convenience Fee</li>
-                <li>Registration Charges = Nil</li>
-                <li>
-                  Amendment fee proper: Assessed by MCD officials at approval
-                </li>
-              </ul>
-            </div>
           </section>
           <Section
             id="penalties"
@@ -620,7 +562,11 @@ export default function FactoryLicenceDelhiPage() {
 function Section({ id, title, children }) {
   return (
     <div id={id}>
-      
+      {title ? (
+        <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4 flex items-center gap-2">
+          {title}
+        </h2>
+      ) : null}
       {children}
     </div>
   );
