@@ -296,7 +296,7 @@ export default function FactoryLicenceDelhiPage() {
 
 
 
-          <section className="p max-w-7xl mx-auto space-y-4" id="fee">
+          <section id="fee" className="space-y-4">
             <h2 className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
               Factory Licence Fees In Delhi
@@ -352,48 +352,7 @@ export default function FactoryLicenceDelhiPage() {
                 Factory Licence Renewal in Delhi
               </>
             }
-          >
-            <p className="text-justify mb-4">
-              A Factory License in Delhi is usually valid for 1 to 5 years. Owners must apply for renewal before expiry to avoid penalties.
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-              <li><strong>Grace Period:</strong> April is often considered the renewal grace period.</li>
-              <li><strong>Late Fee:</strong> Delay attracts a late fee of 25% of the license fee and further penalties.</li>
-            </ul>
-
-            <h3 className="text-xl font-semibold text-[#7A3EF2] mb-4">Renewal Fee</h3>
-            <ul className="list-disc pl-6 space-y-4 text-gray-800 mb-6">
-              <li>
-                <strong>Within April (grace period):</strong>
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>License Fee = HP-rate × Total HP</li>
-                  <li>Permission Fee = Unit Charge (₹1000) + License Fee</li>
-                  <li>Processing Fee = 50% of License Fee</li>
-                  <li>Transaction Fee = ₹10</li>
-                  <li>Convenience Fee = 2.5937% of Total Amount</li>
-                </ul>
-              </li>
-              <li>
-                <strong>After April (up to year-end):</strong>
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>Same as above plus: Late fee = ₹150 (for first 3 months) + 5% of license fee per additional month</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Beyond one year:</strong>
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>Above charges + Arrear = ₹2,000 flat</li>
-                </ul>
-              </li>
-            </ul>
-
-            <h3 className="text-xl font-semibold text-[#7A3EF2] mb-4">Amendment Fee</h3>
-            <ul className="list-disc pl-6 space-y-2 text-gray-800">
-              <li>Processing Fee = ₹550 + 2.5937% Convenience Fee</li>
-              <li>Registration Charges = Nil</li>
-              <li>Amendment fee proper: Assessed by MCD officials at approval</li>
-            </ul>
-          </Section>
+          />
 
           <Section
             id="why-choose-us"
@@ -403,14 +362,7 @@ export default function FactoryLicenceDelhiPage() {
                 Why choose us?
               </>
             }
-          >
-            <p className="text-justify mb-4">
-              The registration process of factory licence in delhi may seem easy, but a single mistake can cause a delay in the process. which will be a waste of time to save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
-            </p>
-            <p className="font-semibold text-[#7A3EF2]">
-              So don't waste more time, call Factorylicence.in now and get your factory registered as soon as possible!
-            </p>
-          </Section>
+          />
 
 
 
@@ -527,7 +479,7 @@ export default function FactoryLicenceDelhiPage() {
 }
 function Section({ id, title, children }) {
   return (
-    <div id={id}>
+    <div id={id} className="space-y-4">
       {title ? (
         <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4 flex items-center gap-2">
           {title}

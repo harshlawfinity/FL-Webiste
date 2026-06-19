@@ -5,53 +5,54 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   {
-    question: "How to pay factory license fee online",
+    question: "How to pay factory license fee online?",
     answer:
-      "You can pay the factory license fee online through the respective State Labour Department or Factory Inspectorate official portal. After logging in, select the factory license service, enter the required details, and proceed to the online payment option using net banking, debit card, or other available payment methods. Once the payment is successful, you can download the payment receipt for future reference.",
+      "Factory licence fee can normally be remunerated at the relative State Labour Department or Factories and Boilers Department portal. On submitting the application, the applicants may opt for online payment mode, which will be possible through net banking, UPI, debit card, and credit card.",
   },
   {
-    question: "How to renew factory license online",
+    question: "How to renew factory license online?",
     answer:
-      "To renew a factory license online, visit the official factory licensing portal of your state and log in using your registered credentials. Fill in the renewal application form, upload the required documents, and pay the applicable renewal fee online. After submission, the application will be processed by the concerned authority, and the renewed license can be downloaded once approved.",
+      "To renew a factory licence online go to the concerned states authority portal, log in to the portal and upload updated documents, then pay the renewals fee and submit the renewals application ahead of the expiry date of the licence.",
   },
   {
-    question: "How to renew factory license online Delhi",
+    question: "How to apply factory licence?",
     answer:
-      "For Delhi, you can renew the factory license online through the Delhi Labour Department's official website. Log in to the portal, choose the factory license renewal option, update factory details, upload mandatory documents, and pay the renewal fee online. After verification by the department, the renewed factory license will be issued digitally.",
+      "In case you want to know, how to obtain factory license, applicants need to get building plan clearance, fill out paperwork, upload documents, pay the fee, and undergo the inspections carried out by the Competent Authority.",
   },
   {
-    question: "How to apply for factory licence",
+    question: "What is factory license in india?",
     answer:
-      "To apply for a factory licence, you need to register on the State Labour Department or Factory Inspectorate portal. Fill out the application form, provide factory details, upload necessary documents such as layout plans and identity proofs, and pay the prescribed government fee. After inspection and approval by the authorities, the factory licence is granted.",
+      "Factory license is a licence granted in the name of a factory unit, which has been granted under the Factories Act based on the statutory requirement with the condition that a factory unit should run and operate its operations under the condition as laid out in the Factories Act as labour welfare, health, safety, and environmental regulations.",
   },
   {
-    question: "How to apply for factory license in Delhi",
+    question: "How to register factory license?",
     answer:
-      "To apply for a factory license in Delhi, you must submit an online application through the Delhi Labour Department portal. The process includes registering on the portal, completing the application form, uploading required documents, and paying the government fee. Once the application is reviewed and the factory inspection is completed, the factory license is issued by the concerned department.",
+      "The process of obtaining a factory licence involves making an application to the appropriate Labour Department, giving factory information, getting approval, conducting inspections and obtaining a factory licence following an inspection.",
   },
   {
-    question: "Is a factory licence required for small-scale manufacturing units?",
+    question: "How to get factory license?",
     answer:
-      "Yes, if the unit employs 10 or more workers with power or 20 or more without power.",
+      "To get a factory licence, all legal factory license requirements must be met, the required documentation is prepared and necessary NOCs obtained, payment of the government fees, and a successful inspection will follow.",
   },
   {
     question: "What is the validity of a factory licence?",
     answer:
-      "Typically valid for 1 year; some states offer up to 5 years with renewal options.",
+      "The validity of a factory licence is dependent upon State legislation. Most States offer one-year, periodic licences with some States offering multi-year licences.",
   },
   {
-    question: "Can Factory Licence.in help with inspections and renewals?",
+    question: "Is a factory licence required for small-scale manufacturing units?",
     answer:
-      "Yes, we offer end-to-end support, including pre-inspection readiness and timely renewal services.",
+      "Yes, it would be mandatory to get factory licence for all businesses even if the manufacturing unit has fewer number of employees and does not have adequate operational requirements as per the Factories Act, 1948.",
+  },
+  {
+    question: "Can I operate my factory while the application is pending?",
+    answer:
+      "In general, only manufacturing is to be started once all necessary permissions have been issued by the competent body. Acting without authorization could result in fines and legal action.",
   },
   {
     question: "Are fire and pollution NOCs mandatory?",
     answer:
-      "Yes, especially for medium to large factories or those involved in chemical or hazardous production.",
-  },
-  {
-    question: "Who issues the Factory Licence in Delhi?",
-    answer: "The Labour Department, Government of NCT of Delhi.",
+      "Yes, if this is the case based on the size, scope, and location of the factory. Getting and maintaining factory licence compliance is often dependent on the approvals of Fire NOC and Pollution Control Board.",
   },
 ];
 
@@ -70,7 +71,7 @@ export default function FaqSection() {
     <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
-          FAQs
+          Frequently Asked Questions
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -5,37 +5,26 @@ import { SEO_ASSETS } from "@/lib/heroBackgrounds";
 
 import ContactForm from "./ContactForm";
 
+const sharedSteps = [
+  "Prepare documents: Collect all the necessary documents.",
+  "Online Application: Click on the state's labor department portal → Trade & Factory Licences.",
+  "Fill and upload the required docs.",
+  "Payment of the licence fee: make it online.",
+  "Inspection: Department schedules an inspection.",
+  "Licence Issuance: When successful verification.",
+];
+
 const steps = {
   Delhi: {
-    items: [
-      "Document Preparation: Gather all the required documents.",
-      "Online Application: Visit MCD Portal → Trade & Factory Licences.",
-      "Form Submission: Fill and upload required docs.",
-      "Fee Payment: Pay the licence fee online.",
-      "Inspection: Department schedules inspection.",
-      "Licence Issuance: Upon successful verification.",
-    ],
+    items: sharedSteps,
     image: SEO_ASSETS.factoryLicenseRenewal,
   },
   Haryana: {
-    items: [
-      "Online Registration: Register on Haryana Labour Portal.",
-      "Application Form: Fill with factory details.",
-      "Document Upload: Upload all required docs.",
-      "Fee Payment: Pay fee online.",
-      "Inspection: Premises will be inspected.",
-      "Licence Approval: If compliant, licence is issued.",
-    ],
+    items: sharedSteps,
     image: SEO_ASSETS.factoryLicenceStepsHaryana,
   },
   "Uttar Pradesh": {
-    items: [
-      "Portal Access: Register on Nivesh Mitra Portal.",
-      "Application Submission: Fill form with factory details.",
-      "Fee Payment: Pay fee online.",
-      "Inspection: Department inspects premises.",
-      "Licence Issuance: If verified, licence is issued.",
-    ],
+    items: sharedSteps,
     image: SEO_ASSETS.factoryLicenceStepsUttarPradesh,
   },
 };

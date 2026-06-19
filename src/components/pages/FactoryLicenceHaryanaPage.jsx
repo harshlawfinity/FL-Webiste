@@ -146,25 +146,7 @@ export default function FactoryLicenceHaryanaPage() {
                 Eligibility Criteria For The Factory Licence In Haryana
               </>
             }
-          >
-            <p className="text-justify mb-4">
-              The eligibility criteria for the registration of the <span className="n-300 px-1">Factory licence in Haryana</span> are:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-4">
-              <li className="text-justify">
-                Factories employing 10 or more workers with power.
-              </li>
-              <li className="text-justify">
-                Factories employing 20 or more workers without power.
-              </li>
-            </ul>
-            <p className="text-justify mb-4">
-              According to the Factories Act, 1948, and the Haryana Factories Rules, 1950, if your unit falls under any of these categories, it is mandatory to register it through the Labour Department, Government of Haryana.
-            </p>
-            <p className="text-justify">
-              Hire factorylicence.in to help you with all the legal formalities to apply Factory license Haryana.
-            </p>
-          </Section>
+          />
 
 
 

@@ -73,7 +73,7 @@ function hideLegacySectionChildren(sectionEl, preserveIds = new Set()) {
   Array.from(sectionEl.children).forEach((child) => {
     if (child.dataset.cmsSynced === "true") return;
     if (child.dataset.cmsPreserve === "true") return;
-    if (child.matches("h1,h2,h3")) return;
+    if (child.matches("h2")) return;
     if (child.id && preserveIds.has(child.id)) return;
     child.style.display = "none";
     child.dataset.cmsLegacyHidden = "true";
@@ -109,6 +109,10 @@ function renderSectionContent(sectionEl, section, sectionKey = "") {
 
 function stripHtml(value = "") {
   return String(value).replace(/<[^>]*>/g, "").trim();
+}
+
+function contentFingerprint(html = "") {
+  return stripHtml(html).replace(/\s+/g, " ").trim().toLowerCase();
 }
 
 function slugify(value = "") {
@@ -157,8 +161,14 @@ function categoryListItems(category) {
 function renderSectionBody(parent, section, sectionKey = "") {
   if (!section || !parent) return;
 
-  if (section.introParagraph && stripHtml(section.introParagraph)) {
-    const intro = createContentElement(section.introParagraph);
+  const seenContent = new Set();
+  const introHtml = section.introParagraph && stripHtml(section.introParagraph)
+    ? String(section.introParagraph).trim()
+    : "";
+
+  if (introHtml) {
+    seenContent.add(contentFingerprint(introHtml));
+    const intro = createContentElement(introHtml);
     if (intro) parent.appendChild(intro);
   }
 
@@ -181,6 +191,11 @@ function renderSectionBody(parent, section, sectionKey = "") {
   nonStepBody.forEach((item) => {
     const html = normalizeBodyItem(item);
     if (!stripHtml(html)) return;
+
+    const fingerprint = contentFingerprint(html);
+    if (seenContent.has(fingerprint)) return;
+    seenContent.add(fingerprint);
+
     if (hasBlockHtml(html)) blockHtmlItems.push(html);
     else paragraphItems.push(html);
   });

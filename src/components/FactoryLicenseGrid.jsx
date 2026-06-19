@@ -10,33 +10,33 @@ const FactoryLicenseGrid = () => {
   const services = [
     {
       title: "Factory Licence Application",
-      desc: "End-to-end support for obtaining your factory licence under the Factories Act.",
+      desc: "Full Support for obtaining the factory licence from the Factories Act.",
       icon: <FiFileText className="text-purple-600 text-2xl" />,
     },
     {
       title: "Labour Law Compliance",
-      desc: "Ensure your   industrial space adheres to labour regulations and safety mandates.",
+      desc: "Make sure that your industrial space follows labour guidelines and safety requirements.",
       icon: <FiShield className="text-purple-600 text-2xl" />,
     },
     {
       title: "Fire & Safety Approvals",
-      desc: "We help secure fire and safety NOCs needed for licence issuance and renewals.",
+      desc: "Securing fire and safety NOCs for obtaining licences and renewals.",
       icon: <FaFireExtinguisher className="text-purple-600 text-2xl" />,
     },
     {
       title: "Pollution NOC",
-      desc: "Obtain Trade, Pollution and Construction clearances for your factory setup.",
+      desc: "Get Trade, Pollution and Construction clearances on your factory set up.",
       icon: <TbBuildingFactory className="text-purple-600 text-2xl" />,
     },
     {
       title: "Liaison with Government",
-      desc: "Our team coordinates with local departments to speed up inspection and approval process.",
+      desc: "Coordinating with local departments for faster inspection, approval process.",
       icon: <FiUsers className="text-purple-600 text-2xl" />,
     },
     {
       title: "Renewals & Audit Support",
-      desc:  "Feel at ease regarding timely renewals and documentation audits for ongoing compliance.",
-       icon: <MdAutorenew className="text-purple-600 text-2xl" />,
+      desc: "Be comfortable with the annual renewals and regular audits of documentation related to continued compliance.",
+      icon: <MdAutorenew className="text-purple-600 text-2xl" />,
     },
   ];
 

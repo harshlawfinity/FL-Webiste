@@ -25,9 +25,7 @@ export default function HeroSection() {
               Factory Licence Registration & Renewal Online in India – Apply Now
             </h1>
             <p className="text-sm   mb-6 sm:mb-8">
-              Whether you're setting up a new manufacturing unit or updating an
-              existing one, we ensure your operations are fully compliant with
-              government regulations.
+            Establishing a new manufacturing operation or upgrading from an already existing operation, we ensure that your operations are 100% compliant with the government's set of regulations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
