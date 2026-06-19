@@ -33,7 +33,7 @@ import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
 
-export default function FactoryLicenceDelhiPage() {
+export default function FactoryLicenceHaryanaPage() {
   const [showPopup, setShowPopup] = useState(false);
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -88,7 +88,7 @@ export default function FactoryLicenceDelhiPage() {
         {/* Left Side Content */}
         <div className="md:col-span-3 space-y-14">
 
-          <Section>
+          <Section id="calc">
             <FactoryLicenseCalculatorHaryana />
           </Section>
           <Section
@@ -298,74 +298,36 @@ export default function FactoryLicenceDelhiPage() {
 
 
 
-          <section className="p max-w-7xl mx-auto overflow-hidden" id="fee">
+          <section id="fee" className="space-y-4">
             <h2 className="text-3xl font-semibold flex items-center gap-2 mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
-              Factory licence fees in Haryana
+              Factory Licence Fees in Haryana
             </h2>
-            <div className="md:w-full w-[90vw]">
+
+            <div data-cms-preserve="true" className="md:w-full w-[90vw]">
               <TH />
-            </div>
-
-            {/* Renewal & Amendment Section */}
-            <div className="mt-10" id="renewal">
-              <h2 className="text-3xl font-semibold text-[#7c4bdf] mb-4 flex items-center gap-2">
-                <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal & Amendment For the Factory Licence in Haryana
-              </h2>
-              <p className="text-justify mb-4">
-                A <span className="n-300 px-1 font-medium text-black">Factory License in Haryana</span> is generally issued for a duration of 1 to 5 years. The validity of the license can be chosen while applying for a factory licence Haryana. Renewal applications are due before expiration to avoid penalties.
-              </p>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Renewal Fee</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">
-                  Haryana follows an HP and manpower based renewal fee structure. The exact amount may differ depending on the type and size of the factory.
-                </li>
-                <li className="text-justify">
-                  <strong>Renewal includes:</strong>
-                  <ul className="list-disc pl-8 mt-2 space-y-1">
-                    <li>Applicable license fees based on HP and manpower.</li>
-                    <li>Processing charges and government treasury fees.</li>
-                    <li>Note: Exact renewal charges are disclosed during the application process on the Haryana Labour Department's official portal.</li>
-                  </ul>
-                </li>
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Amendment Fee</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-8">
-                <li className="text-justify">
-                  ₹100 per change (e.g., change in name, occupier, address).
-                </li>
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Penalties & Timelines</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">
-                  Non-compliance with the Factories Act, 1948, may result in fines up to ₹1,00,000 or imprisonment up to 2 years.
-                </li>
-                <li className="text-justify">
-                  A late <Link href="/" className="text-blue-600 underline">factory licence renewal</Link> fee of 25% is payable, which is charged after the renewal application is submitted. The date of submission of the application will be noted to calculate the late fee.
-                </li>
-              </ul>
-
-              <p className="text-justify mt-8">
-                <strong>Timeline</strong> - The timeline for obtaining a factory licence in the state of Haryana generally takes 15 to 18 working days, subject to document availability and government approvals.
-              </p>
             </div>
           </section>
 
           <Section
+            id="renewal"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                Renewal & Amendment For the Factory Licence in Haryana
+              </>
+            }
+          />
+
+          <Section
             id="why-choose"
-            title="Why choose us?"
-          >
-            <p className="text-justify mb-4">
-              The registration process of a factory license in Haryana may seem easy, but a single mistake can cause a delay in the process. To save time and any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
-            </p>
-            <p className="text-justify">
-              So don't waste more time, call Factorylicence.in now and get your factory registered as soon as possible!
-            </p>
-          </Section>
+            title={
+              <>
+                <FaCheckCircle className="inline mr-2" />
+                Why Choose Us?
+              </>
+            }
+          />
         </div>
 
         {/* Right Side Navigation */}
@@ -419,21 +381,14 @@ export default function FactoryLicenceDelhiPage() {
                     icon: <FaListOl className="inline mr-2" />,
                   },
                   {
-                    label: "Timelines",
-                    id: "timelines",
-                    icon: <FaClock className="inline mr-2" />,
-                  },
-                  {
-                    label: "Penalties",
-                    id: "penalties",
-                    icon: (
-                      <FaExclamationTriangle className="inline mr-2 text-red-500" />
-                    ),
+                    label: "Renewal & Amendment",
+                    id: "renewal",
+                    icon: <RiTimeLine className="inline mr-2" />,
                   },
                   {
                     label: "Why choose us?",
                     id: "why-choose",
-                    icon: <FaQuestionCircle className="inline mr-2" />,
+                    icon: <FaCheckCircle className="inline mr-2" />,
                   },
                   {
                     label: "FAQS",
@@ -477,8 +432,12 @@ export default function FactoryLicenceDelhiPage() {
 }
 function Section({ id, title, children }) {
   return (
-    <div id={id}>
-      <h2 className="md:text-3xl text-2xl  font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+    <div id={id} className="space-y-4">
+      {title ? (
+        <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] mb-4 flex items-center gap-2">
+          {title}
+        </h2>
+      ) : null}
       {children}
     </div>
   );

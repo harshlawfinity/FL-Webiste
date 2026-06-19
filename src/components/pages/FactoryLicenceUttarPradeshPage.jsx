@@ -5,7 +5,6 @@ const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
 import { RiTimeLine } from "react-icons/ri";
-import { AiOutlineEdit } from "react-icons/ai";
 import TUP from "@/components/TUP";
 
 import { HiOfficeBuilding } from "react-icons/hi";
@@ -15,8 +14,6 @@ import {
   FaUserCheck,
   FaFileAlt,
   FaListOl,
-  FaClock,
-  FaExclamationTriangle,
 } from "react-icons/fa";
 import { FaCalculator } from "react-icons/fa";
 
@@ -31,7 +28,6 @@ import FaqSection from "@/components/FaqSectionUP";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
-import Link from "next/link";
 
 export default function FactoryLicenceUttarPradeshPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -264,83 +260,36 @@ export default function FactoryLicenceUttarPradeshPage() {
             height={800}
           />
 
-          <section className="p max-w-7xl mx-auto">
-            <h2
-              className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]"
-              id="fee"
-            >
+          <section id="fee" className="space-y-4">
+            <h2 className="text-3xl font-semibold flex mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
               Factory licence fees in Uttar Pradesh
             </h2>
 
-            <div className="md:w-full w-[90vw]">
+            <div data-cms-preserve="true" className="md:w-full w-[90vw]">
               <TUP />
             </div>
-
-            {/* Consolidated Renewal, Amendment, Penalties & Timeline Section */}
-            <div className="mt-12" id="renewal">
-              <h2 className="text-3xl font-semibold text-[#7c4bdf] mb-4 flex items-center gap-2">
-                <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal & Amendment For the Factory Licence in Uttar Pradesh
-              </h2>
-              <p className="text-justify mb-4">
-                A factory licence must be renewed before it expires. If it is not renewed on time, the license may become invalid, and penalties can apply. <span className="n-300 px-1">Factory licence renewal online Uttar Pradesh</span> is an easy process if you follow these steps:
-              </p>
-
-              <ol className="list-decimal pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">Log in to the <Link href="https://niveshmitra.up.nic.in" target="_blank" className="text-blue-600 underline">Nivesh Mitra portal</Link></li>
-                <li className="text-justify">Go to the license renewal section</li>
-                <li className="text-justify">Check the pre-filled details</li>
-                <li className="text-justify">Upload any fresh documents if needed</li>
-                <li className="text-justify">Pay the renewal fee</li>
-                <li className="text-justify">Submit and track the status</li>
-              </ol>
-
-              <p className="text-justify mb-4">The Renewal fees for the factory licence in Uttar Pradesh are calculated based on:</p>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">Installed HP and the number of workers.</li>
-                <li className="text-justify">Whether the renewal is within the stipulated time or delayed.</li>
-                <li className="text-justify">System-generated charges and applicable penalties, if any.</li>
-              </ul>
-
-              <p className="text-justify mb-8">
-                <strong>Note</strong>: The state may auto-calculate the renewal fee based on the entered details. Exact amounts are viewable during the online application.
-              </p>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">Amendment Fee</h3>
-              <p className="text-justify mb-4">
-                The procedure for amendment in Uttar Pradesh has been digitalised, and it can be handled through the labour department’s web portal.
-              </p>
-              <p className="text-justify mb-8 italic">
-                <strong>Note</strong>: No fixed fee breakdown is publicly available. The renewal and amendment follow online portal processes, sometimes implementing auto charge based on HP/worker thresholds, with late fee mechanisms.
-              </p>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Penalties & Timeline</h3>
-              <ul className="list-disc pl-6 space-y-4 text-gray-800 mb-8">
-                <li className="text-justify">
-                  Running a factory without registration is a punishable offence and can lead to penalties up to ₹1,00,000 or imprisonment up to 2 years or both.
-                </li>
-                <li className="text-justify">
-                  A penalty for delayed renewal of a factory licence is a late fee of 25% of the renewal fee for the calendar year. This penalty applies when the renewal application is submitted after the deadline, which is 30 days before the licence expiry date. The system automatically calculates the total fee, including the late fee, which needs to be paid online.
-                </li>
-              </ul>
-
-              <p className="text-justify mt-8">
-                <strong>Timeline</strong> - The registration of a Factory Licence in the state of Uttar Pradesh typically takes 15 to 18 working days, depending on document verification and government approvals.
-              </p>
-            </div>
           </section>
-          <Section id="why-choose" title="Why Choose us?">
-            <p className="text-justify mb-4">
-              Even though registering a factory licence in Uttar Pradesh might appear simple, one error could cause the procedure to take longer than expected. You will require a qualified factory licence consultant who will walk you through the process to save time and avoid any potential rejection.
-            </p>
-            <p className="text-justify mb-4">
-              Our staff of knowledgeable legal counsel will offer you all-encompassing assistance to guarantee your applications are devoid of errors.
-            </p>
-            <p className="text-justify">
-              Therefore, don't waste any more time and register your factory right now by giving Factorylicence.in a call!
-            </p>
-          </Section>
+
+          <Section
+            id="renewal"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                Renewal & Amendment For the Factory Licence in Uttar Pradesh
+              </>
+            }
+          />
+
+          <Section
+            id="why-choose"
+            title={
+              <>
+                <FaCheckCircle className="inline mr-2" />
+                Why choose us?
+              </>
+            }
+          />
         </div>
 
         {/* Right Side Navigation */}
@@ -394,21 +343,14 @@ export default function FactoryLicenceUttarPradeshPage() {
                     icon: <FaListOl className="inline mr-2" />,
                   },
                   {
-                    label: "Timelines",
-                    id: "timelines",
-                    icon: <FaClock className="inline mr-2" />,
-                  },
-                  {
-                    label: "Penalties",
+                    label: "Renewal & Amendment",
                     id: "renewal",
-                    icon: (
-                      <FaExclamationTriangle className="inline mr-2 text-red-500" />
-                    ),
+                    icon: <RiTimeLine className="inline mr-2" />,
                   },
                   {
                     label: "Why choose us?",
                     id: "why-choose",
-                    icon: <FaQuestionCircle className="inline mr-2" />,
+                    icon: <FaCheckCircle className="inline mr-2" />,
                   },
                   {
                     label: "FAQS",
@@ -454,8 +396,12 @@ export default function FactoryLicenceUttarPradeshPage() {
 }
 function Section({ id, title, children }) {
   return (
-    <div id={id}>
-      <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+    <div id={id} className="space-y-4">
+      {title ? (
+        <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] mb-4 flex items-center gap-2">
+          {title}
+        </h2>
+      ) : null}
       {children}
     </div>
   );

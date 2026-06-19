@@ -58,5 +58,37 @@ body {
 }
 
 .cms-rich-text strong {
+  font-weight: 700;
+}
+
+.cms-rich-text b {
+  font-weight: 700;
+}
+
+.cms-rich-text em,
+.cms-rich-text i {
+  font-style: italic;
+}
+
+.cms-rich-text u {
+  text-decoration: underline;
+}
+
+.cms-rich-text h3 {
+  font-size: 1.25rem;
   font-weight: 600;
+  color: #1f2937;
+  margin: 1rem 0 0.5rem;
+}
+
+.cms-rich-text h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.cms-sync-content strong,
+.cms-sync-content b {
+  font-weight: 700;
 }

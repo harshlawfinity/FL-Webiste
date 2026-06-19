@@ -21,17 +21,27 @@ const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
 const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-semibold";
+  "cms-rich-text text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
+
+function hasInlineFormatting(html = "") {
+  return /<(strong|b|em|i|u|s|strike|mark)\b/i.test(String(html));
+}
 
 function hasBlockHtml(html = "") {
-  return /<(ul|ol|table|div|h[1-6]|blockquote)\b/i.test(String(html));
+  return /<(ul|ol|table|div|h[1-6]|blockquote|p)\b/i.test(String(html));
+}
+
+function shouldUseRichTextWrapper(html = "") {
+  const value = String(html || "").trim();
+  if (!value) return false;
+  return hasBlockHtml(value) || hasInlineFormatting(value);
 }
 
 function createContentElement(html) {
   const value = String(html || "").trim();
   if (!value) return null;
 
-  if (hasBlockHtml(value)) {
+  if (shouldUseRichTextWrapper(value)) {
     const div = document.createElement("div");
     div.className = CMS_RICH_TEXT_CLASS;
     div.innerHTML = value;
@@ -40,7 +50,7 @@ function createContentElement(html) {
 
   const p = document.createElement("p");
   p.className = "text-justify text-gray-800";
-  p.innerHTML = value;
+  p.textContent = stripHtml(value);
   return p;
 }
 
@@ -59,10 +69,12 @@ function hideLegacyContent(sectionEl) {
   });
 }
 
-function hideLegacySectionChildren(sectionEl) {
+function hideLegacySectionChildren(sectionEl, preserveIds = new Set()) {
   Array.from(sectionEl.children).forEach((child) => {
     if (child.dataset.cmsSynced === "true") return;
+    if (child.dataset.cmsPreserve === "true") return;
     if (child.matches("h1,h2,h3")) return;
+    if (child.id && preserveIds.has(child.id)) return;
     child.style.display = "none";
     child.dataset.cmsLegacyHidden = "true";
   });
@@ -83,15 +95,15 @@ function renderSectionContent(sectionEl, section, sectionKey = "") {
   if (!sectionEl) return;
 
   clearSyncedContent(sectionEl);
-  hideLegacyContent(sectionEl);
 
   const container = document.createElement("div");
   container.dataset.cmsSynced = "true";
-  container.className = "cms-sync-content space-y-3";
+  container.className = "cms-sync-content cms-rich-text space-y-3";
 
   renderSectionBody(container, section, sectionKey);
   if (!container.childElementCount) return;
 
+  hideLegacyContent(sectionEl);
   sectionEl.appendChild(container);
 }
 
@@ -124,7 +136,7 @@ function createBulletList(items, ordered = false) {
     const html = typeof item === "object" ? normalizeBodyItem(item) : String(item || "");
     if (!stripHtml(html)) return;
     const li = document.createElement("li");
-    li.className = "text-justify leading-relaxed";
+    li.className = "text-justify leading-relaxed cms-rich-text";
     li.innerHTML = html;
     list.appendChild(li);
   });
@@ -219,6 +231,24 @@ function contentHeading(section, fallback = "") {
   return section?.heading || section?.subsectionTitle || section?.title || fallback;
 }
 
+const GENERIC_NESTED_TITLES = new Set(["text", "paragraph", "content", "body"]);
+
+function nestedSectionHeading(nestedSection) {
+  const explicitHeading = stripHtml(
+    nestedSection?.heading || nestedSection?.title || ""
+  );
+  if (explicitHeading) return explicitHeading;
+
+  if (nestedSection?.type === "text") return "";
+
+  const subsectionTitle = stripHtml(nestedSection?.subsectionTitle || "");
+  if (!subsectionTitle || GENERIC_NESTED_TITLES.has(subsectionTitle.toLowerCase())) {
+    return "";
+  }
+
+  return subsectionTitle;
+}
+
 function sectionIdFor(key, section) {
   return slugify(key || section?.id || contentHeading(section) || `cms-section-${Date.now()}`);
 }
@@ -240,9 +270,24 @@ function headingClassName() {
   );
 }
 
+function findSectionElement(key) {
+  const el = document.getElementById(key);
+  if (!el) return null;
+  if (/^H[1-6]$/i.test(el.tagName)) {
+    return el.parentElement || el;
+  }
+  return el;
+}
+
+function findHeadingEl(sectionEl) {
+  if (!sectionEl) return null;
+  if (/^H[1-6]$/i.test(sectionEl.tagName)) return sectionEl;
+  return sectionEl.querySelector(":scope > h1, :scope > h2, :scope > h3");
+}
+
 function setHeading(sectionEl, heading) {
   if (!heading || !sectionEl) return;
-  let headingEl = sectionEl.querySelector(":scope > h1, :scope > h2, :scope > h3");
+  let headingEl = findHeadingEl(sectionEl);
   if (!headingEl) {
     headingEl = document.createElement("h2");
     headingEl.className = headingClassName();
@@ -250,8 +295,8 @@ function setHeading(sectionEl, heading) {
   }
 
   const icon = headingEl.querySelector("svg, i");
-  headingEl.textContent = "";
-  if (icon) headingEl.appendChild(icon.cloneNode(true));
+  headingEl.replaceChildren();
+  if (icon) headingEl.appendChild(icon);
   headingEl.append(document.createTextNode(` ${heading}`));
 }
 
@@ -363,9 +408,9 @@ function appendCmsSection({ key, section, targetParent, nested = false }) {
 function renderNestedInto(parent, nestedSection, index, parentSection) {
   const wrapper = document.createElement("div");
   wrapper.dataset.cmsSynced = "true";
-  wrapper.className = "cms-nested-section space-y-3";
+  wrapper.className = "cms-nested-section cms-rich-text space-y-3";
 
-  const heading = contentHeading(nestedSection, nestedSection.subsectionTitle);
+  const heading = nestedSectionHeading(nestedSection);
   if (heading) {
     const h = document.createElement("h3");
     h.className = "text-xl font-semibold text-[#7A3EF2] mb-2";
@@ -391,14 +436,13 @@ function renderNestedInto(parent, nestedSection, index, parentSection) {
   parent.appendChild(wrapper);
 }
 
-function syncExistingCustomSection(sectionEl, section) {
-  setHeading(sectionEl, contentHeading(section));
-  clearSyncedContent(sectionEl);
-  hideLegacySectionChildren(sectionEl);
+function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) {
+  sectionEl.style.display = "";
+  delete sectionEl.dataset.cmsLegacyHidden;
 
   const container = document.createElement("div");
   container.dataset.cmsSynced = "true";
-  container.className = "cms-sync-content space-y-4";
+  container.className = "cms-sync-content cms-rich-text space-y-4";
 
   const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
   const beforeBody = nested.filter((item) => item.placement === "beforeBody");
@@ -412,7 +456,18 @@ function syncExistingCustomSection(sectionEl, section) {
     renderNestedInto(container, nestedSection, index, section);
   });
 
-  sectionEl.appendChild(container);
+  if (!container.childElementCount) return;
+
+  setHeading(sectionEl, contentHeading(section));
+  clearSyncedContent(sectionEl);
+  hideLegacySectionChildren(sectionEl, preserveIds);
+
+  const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
+  if (preserveEl) {
+    sectionEl.insertBefore(container, preserveEl);
+  } else {
+    sectionEl.appendChild(container);
+  }
 }
 
 function pageContent(page) {
@@ -477,7 +532,7 @@ export default function FactoryCmsDomSync({ page }) {
     Object.entries(SECTION_IDS).forEach(([key, ids]) => {
       const contentSection = content[key];
       if (!contentSection) return;
-      const sectionEl = ids.map((id) => document.getElementById(id)).find(Boolean);
+      const sectionEl = ids.map((id) => findSectionElement(id)).find(Boolean);
       if (!sectionEl) return;
 
       setHeading(sectionEl, contentSection.heading);
@@ -488,7 +543,7 @@ export default function FactoryCmsDomSync({ page }) {
         const container = sectionEl.querySelector("[data-cms-synced='true']") || (() => {
           const el = document.createElement("div");
           el.dataset.cmsSynced = "true";
-          el.className = "cms-sync-content space-y-4";
+          el.className = "cms-sync-content cms-rich-text space-y-4";
           sectionEl.appendChild(el);
           return el;
         })();
@@ -510,9 +565,9 @@ export default function FactoryCmsDomSync({ page }) {
       const section = cmsCustomSections[key] || content[key];
       if (!section) return;
 
-      const existingEl = document.getElementById(key);
+      const existingEl = findSectionElement(key);
       if (existingEl) {
-        syncExistingCustomSection(existingEl, section);
+        syncExistingCustomSection(existingEl, section, new Set(orderedCustomKeys));
         return;
       }
 
