@@ -24,7 +24,7 @@ const ExtendedContent = () => {
                 {/* Header Section */}
                 <div className="text-center mb-8">
                     <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 mb-6">
-                        <span className="text-[#7c4bdf]">Factory License Registration</span> in India
+                        <span className="text-[#7c4bdf]">Factory Licence Registration</span> In India
                     </h2>
                     <p className="max-w-3xl mx-auto text-base text-gray-600 leading-relaxed">
                         Planning to establish a new factory in India? However, are you aware of the legal formalities you must fulfil for your factory licence registration? If not, then don’t worry, we are here to help you with the complete factory registration process. You will get all the information about the Factory licence registration, Factory licence renewal, Factory licence fees, and Factory licence renewal fees.
@@ -60,13 +60,16 @@ const ExtendedContent = () => {
                                 <div className="p-3 bg-purple-100 rounded-lg text-[#7c4bdf]">
                                     <Building2 size={24} />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-800">What is Factory License Registration?</h3>
+                                <h3 className="text-xl font-semibold text-gray-800">What Is Factory Licence Registration?</h3>
                             </div>
                             <p className="text-sm text-gray-600 leading-relaxed">
                                 To operate a manufacturing facility legally, you need to have a factory licence. It is a necessary legal document issued by the government. Holding a Factory licence means that the particular facility complies with all the labour laws, safety regulations, statutory requirements, and other environmental standards.
                                 <br />
                                 <br />
                                 Under the Factory Act licence, 1948, it is mentioned that the premises that carry out manufacturing processes employing 10 or more workers with the aid of power, or employing 20 or more workers without power, will need to register their factory and have to obtain a factory licence. Manufacturing facilities that are operating without this licence can face serious legal actions and penalties.
+                                <br />
+                                <br />
+                                Call us to get your factory license for construction site!
                             </p>
                         </div>
 
@@ -86,11 +89,11 @@ const ExtendedContent = () => {
                                     The government is pressuring Factories to obtain a legal licence because having a factory licence registration ensures that the factory is running with all the appropriate safety standards. So that the employees' health and well-being will not be compromised. Not only this, but the licence also validates the operational authenticity of the business, which makes other approvals, participation in government tenders, and licences easy to secure.
                                 </li>
                                 <li className="flex items-start gap-3 text-sm">
-                                    All these things make a MCD Factory licence registration a crucial aspect for the factory owners to set up or operate a manufacturing plant in India.
+                                    All these things make a Factory licence registration a crucial aspect for the factory owners to set up or operate a manufacturing plant in India.
                                 </li>
                             </ul>
                             <p className="mt-4 text-xs text-gray-500 italic font-sans italic">
-                                Connect with us now to get an MCD licence for factory!
+                                Connect with us now to get a licence for factory!
                             </p>
                         </div>
                     </div>
@@ -129,6 +132,11 @@ const ExtendedContent = () => {
                                     title: "Improves Reputation & Builds Trust",
                                     desc: "Your factory's credibility gets enhanced among the stakeholders and investors, such as customers, vendors, government bodies, and suppliers.",
                                     icon: ClipboardCheck
+                                },
+                                {
+                                    title: "Avoidance of Penalties",
+                                    desc: "It safeguards from falling into any kind of legal actions, fines and potential shutdowns due to non-compliance.",
+                                    icon: AlertCircle
                                 },
                             ].map((item, idx) => (
                                 <div key={idx} className="p-4 rounded-xl bg-gray-50 border border-gray-50 flex gap-4">
@@ -244,8 +252,11 @@ const ExtendedContent = () => {
                     <div className="lg:col-span-2 bg-[#7c4bdf] text-white p-8 md:p-10 rounded-3xl shadow-xl">
                         <h3 className="text-xl md:text-2xl font-semibold mb-6 flex flex-col gap-2">
                             How to Apply for Factory Licence Registration?
-                            <span className="text-xs font-normal text-purple-100 italic">Follow these steps carefully to apply factory license online:</span>
                         </h3>
+                        <p className="text-sm text-purple-100 leading-relaxed mb-2">
+                            Registration for a Factory license has become easy nowadays. You can simply apply for Factory license through the state&apos;s single Window clearance system or the Labour Department&apos;s portal.
+                        </p>
+                        <p className="text-xs font-normal text-purple-100 italic mb-6">Follow these steps carefully to apply factory license online:</p>
 
                         <div className="space-y-8 mt-8">
                             {[
@@ -262,7 +273,7 @@ const ExtendedContent = () => {
                                 {
                                     step: "Step 3",
                                     title: "Online Application for License (Form 2)",
-                                    desc: "Visit the official online portal of your state's Labour Department or Directorate of Factories and Boilers (e.g., MCD, SDMC, EDMC portal). Register, log in, and fill out the factory licence registration application form (Form 2) with accurate factory and worker details."
+                                    desc: "Visit the official online portal of your state's Labour Department or Directorate of Factories and Boilers. For instance, for an MCD factory license, you would typically visit the Municipal Corporation of Delhi's portal. Similarly, for areas falling under the SDMC factory license or the EDMC factory license, you would use their respective online platforms. Register and log in to the portal. Fill out the factory licence registration application form (usually Form 2) with accurate details about your factory, occupier, manager, workers, machinery, and manufacturing process."
                                 },
                                 {
                                     step: "Step 4",
@@ -277,7 +288,7 @@ const ExtendedContent = () => {
                                 {
                                     step: "Step 6",
                                     title: "Scrutiny and Inspection",
-                                    desc: "The submitted application and documents undergo scrutiny by the authorities. An Inspector of Factories may conduct a physical inspection of your factory premises to verify compliance."
+                                    desc: "The submitted application and documents undergo scrutiny by the authorities. An Inspector of Factories may conduct a physical inspection of your factory premises to verify compliance with safety, health, and welfare provisions."
                                 },
                                 {
                                     step: "Step 7",
@@ -338,7 +349,7 @@ const ExtendedContent = () => {
                                     { cat: "Application Fee (New License)", det: "Payable at the time of filing the initial factory license application.", amt: "Rs. 300 to Rs. 10,000 (varies by state and workforce size)" },
                                     { cat: "License Renewal Fee", det: "Paid annually or as per state norms for renewal of factory license.", amt: "Rs. 1,000 to Rs. 15,000" },
                                     { cat: "Amendment Fee", det: "When changes are made to the license, such as a change in the number of workers, machinery, etc.", amt: "Rs. 100 to Rs. 1,000" },
-                                    { cat: "Late Fee for Renewal", det: "If a renewal application is filed after the due date but before expiry.", amt: "25%-50% of the renewal fee is extra" },
+                                    { cat: "Late Fee for Renewal", det: "If a renewal application is filed after the due date but before expiry.", amt: "25%–50% of the renewal fee is extra" },
                                     { cat: "Penalty for Operating Without a License", det: "Penalty for running a factory without a valid license under Section 85 of the Factories Act.", amt: "Up to Rs. 1,00,000 or imprisonment up to 2 years" },
                                     { cat: "Penalty for Breach of Safety Rules", det: "Failure to comply with safety standards and protocols.", amt: "Rs. 1,00,000 or imprisonment or both" },
                                     { cat: "Penalty for Non-Maintenance of Records", det: "For not maintaining health, safety, and employment records as per the law.", amt: "Rs. 10,000 to Rs. 50,000" },
@@ -364,8 +375,7 @@ const ExtendedContent = () => {
                             <ul className="space-y-4">
                                 {[
                                     "Operating a factory without a valid licence can lead to fines up to ₹1,00,000 or imprisonment up to 2 years.",
-                                    "Non-compliance with safety norms can result in penalties, suspension or cancellation of the licence.",
-                                    "Delay in renewal may incur late fees and legal consequences."
+                                    "Delayed renewal attracts a late fee of 25% of the fee payable for a calendar year, which is charged when the application for renewal has been submitted in the office after expiry of the time limit; i.e., after 30 days before the due date of expiry of the Licence. The system will auto-calculate the total fee, including the late fee, which has to be deposited online.",
                                 ].map((p, i) => (
                                     <li key={i} className="flex gap-3 items-start text-red-900 group">
                                         <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 group-hover:scale-125 transition-transform" />
@@ -381,11 +391,8 @@ const ExtendedContent = () => {
                             </h4>
                             <div className="space-y-4">
                                 <p className="text-gray-700 leading-relaxed font-sans italic">
-                                    <span className="font-semibold text-gray-900 not-italic">Standard Processing Time</span> - The factory licence registration takes around 25 to 30 working days, depending on document readiness and government processing time.
+                                    <span className="font-semibold text-gray-900 not-italic">Standard Processing Time</span> - Typically, the registration of a Factory Licence may take around 15 to 18 working days, depending on document readiness, application filing and government processing time.
                                 </p>
-                                <div className="mt-6 p-4 bg-white rounded-xl border border-dashed border-purple-300 text-[#7c4bdf] font-medium text-center">
-                                    Fast-track processing available through our consultants.
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -406,7 +413,7 @@ const ExtendedContent = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                         {/* Renewal Fee Sub-section */}
                         <div className="space-y-6">
-                            <h4 className="text-xl font-semibold text-gray-800 border-b pb-2">Renewal fee</h4>
+                            <h4 className="text-xl font-semibold text-gray-800 border-b pb-2">Renewal Fee</h4>
                             <div className="space-y-4">
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
                                     <p className="font-semibold text-gray-800 mb-2">Within April (grace period):</p>
@@ -532,7 +539,7 @@ const ExtendedContent = () => {
 
                     <div className="max-w-4xl space-y-6 mb-10">
                         <p className="text-gray-300 leading-relaxed text-lg">
-                            The factory licence registration process may seem easy, but <span className="text-white font-semibold">a single mistake can cause a delay in the process</span>, which will be a waste of time. To save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process.
+                            The factory licence registration process may seem easy, but a single mistake can cause a delay in the process. To save time and avoid any possible rejection, you will need a professional factory license consultant who will guide you throughout the process.
                         </p>
                         <p className="text-gray-300 leading-relaxed">
                             We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
