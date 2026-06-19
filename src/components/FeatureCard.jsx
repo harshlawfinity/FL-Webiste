@@ -35,7 +35,7 @@ export default function FeatureCard() {
           </p>
 
           <p className="text-gray-500 mb-4 text-xs md:text-sm text-justify">
-            Obtaining a <Link className="text-blue-500 hover:underline" href="https://factorylicence.in">Factory Licence</Link> is not just a mere paperwork exercise
+            Obtaining a Factory Licence is not just a mere paperwork exercise
             but involves a comprehensive review of the layout of the factory,
             it&apos;s safety measures, waste management system and compliance with
             various rules and regulations. The licence may need to be renewed every
