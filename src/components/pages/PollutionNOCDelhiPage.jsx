@@ -696,7 +696,7 @@ e.g., ₹500 for CTE ( &lt;₹5 lakh investment) up to ₹1,00,000 for CTE, and 
 
       <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
       <StateFaqCTA onClick={() => setShowPopup(true)} />
-      <div id="faqs">
+      <div>
         <FaqSectionPollutionDelhi />
       </div>
       {/* Contact Form Popup */}

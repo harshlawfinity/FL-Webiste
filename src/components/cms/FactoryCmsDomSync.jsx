@@ -513,19 +513,122 @@ function addQuickLink(id, label) {
   nav.appendChild(button);
 }
 
+function findFaqRoot() {
+  const byId =
+    document.getElementById("faqs") ||
+    document.getElementById("faq-section");
+  if (byId) return byId;
+
+  return Array.from(document.querySelectorAll("section, div")).find((el) =>
+    /frequently asked questions|^faqs$/i.test(
+      el.querySelector(":scope > div > h2, :scope > h2")?.textContent?.trim() || ""
+    )
+  );
+}
+
+function renderFaqAnswer(html = "") {
+  const value = String(html || "").trim();
+  const answer = document.createElement("div");
+  answer.className = "cms-rich-text pb-4 text-base text-gray-600";
+
+  if (!stripHtml(value)) {
+    answer.textContent = "";
+    return answer;
+  }
+
+  if (shouldUseRichTextWrapper(value)) {
+    answer.innerHTML = value;
+  } else {
+    answer.textContent = stripHtml(value);
+  }
+
+  return answer;
+}
+
+function createFaqItem(faq, index, grid) {
+  const item = document.createElement("div");
+  item.className = "bg-white rounded-xl shadow transition-all duration-300 ease-in-out";
+  item.dataset.cmsFaqSynced = "true";
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className =
+    "w-full flex justify-between items-center text-left px-6 py-5 sm:py-3 font-medium text-gray-800 hover:text-[#7A3EF2] focus:outline-none";
+
+  const question = document.createElement("span");
+  question.className = "text-base pr-4";
+  question.textContent = faq.question || faq.title || "";
+  button.appendChild(question);
+
+  const chevron = document.createElement("span");
+  chevron.dataset.faqChevron = "true";
+  chevron.className = "text-gray-400 shrink-0";
+  chevron.textContent = "▼";
+  button.appendChild(chevron);
+
+  const answerWrap = document.createElement("div");
+  answerWrap.dataset.faqAnswer = "true";
+  answerWrap.className =
+    "overflow-hidden px-6 transition-all duration-300 max-h-0";
+  answerWrap.appendChild(renderFaqAnswer(faq.answer || faq.content || ""));
+
+  button.addEventListener("click", () => {
+    const isOpen = answerWrap.dataset.open === "true";
+
+    grid.querySelectorAll("[data-faq-answer]").forEach((el) => {
+      el.dataset.open = "false";
+      el.classList.remove("max-h-[1200px]", "pb-2", "pb-4");
+      el.classList.add("max-h-0");
+    });
+    grid.querySelectorAll("[data-faq-chevron]").forEach((el) => {
+      el.className = "text-gray-400 shrink-0";
+      el.textContent = "▼";
+    });
+
+    if (!isOpen) {
+      answerWrap.dataset.open = "true";
+      answerWrap.classList.remove("max-h-0");
+      answerWrap.classList.add("max-h-[1200px]", "pb-4");
+      chevron.className = "text-[#7A3EF2] shrink-0";
+      chevron.textContent = "▲";
+    }
+  });
+
+  item.appendChild(button);
+  item.appendChild(answerWrap);
+  return item;
+}
+
 function syncFaqs(page) {
   const content = pageContent(page);
-  const faqs = content?.faqs?.body;
+  const faqSection = content?.faqs;
+  const faqs = faqSection?.body;
   if (!Array.isArray(faqs) || !faqs.length) return;
-  const faqRoot = document.getElementById("faqs") || document.getElementById("faq-section");
+
+  const faqRoot = findFaqRoot();
   if (!faqRoot) return;
 
-  const questionEls = Array.from(faqRoot.querySelectorAll("button span, summary, h3")).filter((el) => stripHtml(el.textContent));
-  const answerEls = Array.from(faqRoot.querySelectorAll("p")).filter((el) => stripHtml(el.textContent));
+  const heading = contentHeading(faqSection, "Frequently Asked Questions");
+  const headingEl = faqRoot.querySelector("h2");
+  if (headingEl && heading) headingEl.textContent = heading;
 
-  faqs.forEach((faq, index) => {
-    if (questionEls[index]) questionEls[index].textContent = faq.question || faq.title || "";
-    if (answerEls[index]) answerEls[index].innerHTML = faq.answer || faq.content || "";
+  const grid =
+    faqRoot.querySelector("[data-cms-faq-grid]") ||
+    faqRoot.querySelector(".grid");
+  if (!grid) return;
+
+  grid.dataset.cmsFaqGrid = "true";
+  grid.replaceChildren();
+
+  const mid = Math.ceil(faqs.length / 2);
+  const columns = [faqs.slice(0, mid), faqs.slice(mid)];
+
+  columns.forEach((half) => {
+    const col = document.createElement("div");
+    col.className = "space-y-5";
+    col.dataset.cmsFaqSynced = "true";
+    half.forEach((faq, index) => col.appendChild(createFaqItem(faq, index, grid)));
+    grid.appendChild(col);
   });
 }
 

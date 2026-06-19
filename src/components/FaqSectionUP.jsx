@@ -54,7 +54,7 @@ export default function FaqSection() {
   const secondHalf = faqs.slice(mid);
 
   return (
-    <section className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
+    <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
           Frequently Asked Questions

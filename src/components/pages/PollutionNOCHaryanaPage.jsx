@@ -781,7 +781,7 @@ export default function PollutionNocLicenceHaryanaPage() {
       {/* FAQs */}
       <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
       <StateFaqCTA onClick={() => setShowPopup(true)} />
-      <div id="faqs">
+      <div>
         <FaqSectionPollutionHaryana />
       </div>
 
