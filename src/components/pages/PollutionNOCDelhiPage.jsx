@@ -133,7 +133,7 @@ Pollution NOC & Waste Management Authorization Consultant in Delhi            </
                 <strong>Smooth Operations</strong>: Helps in the uninterrupted operation of your unit without fear of closure or enforcement action.
               </li>
               <li className="text-justify">
-                <strong>Credibility and Approvals</strong>: Required for applying for other licenses like <a href="https://factorylicence.in/" className="text-blue-600 underline font-">factory license</a>, fire NOC, building plan approvals, and more.
+                <strong>Credibility and Approvals</strong>: Required for applying for other licenses like <Link href="/factory-licence-in-delhi" className="text-blue-600 underline font-">factory license</Link>, fire NOC, building plan approvals, and more.
               </li>
               <li className="text-justify">
                 <strong>Eligibility for Tenders</strong>: Mandatory for participating in many government or private tenders.

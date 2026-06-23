@@ -37,7 +37,10 @@ const faqs = [
   },
 ];
 
-export default function FaqSectionPollutionUp() {
+// Shared by Pollution NOC UP and Fire NOC UP pages — pass `heading` when reused.
+const DEFAULT_FAQ_HEADING = "Frequently Asked Questions For Pollution NOC in Uttar Pradesh";
+
+export default function FaqSectionPollutionUp({ heading = DEFAULT_FAQ_HEADING }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (i) => {
@@ -52,7 +55,7 @@ export default function FaqSectionPollutionUp() {
     <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
-          Frequently Asked Questions
+          {heading}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

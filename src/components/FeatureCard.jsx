@@ -1,5 +1,4 @@
 import { SEO_ASSETS } from "@/lib/heroBackgrounds";
-import Link from "next/link";
 
 export default function FeatureCard() {
   return (
@@ -38,22 +37,36 @@ export default function FeatureCard() {
             Obtaining a Factory Licence is not just a mere paperwork exercise
             but involves a comprehensive review of the layout of the factory,
             it&apos;s safety measures, waste management system and compliance with
-            various rules and regulations. The licence may need to be renewed every
-            year or within a stipulated time as per the requirements of the state.
-            Ignoring these requirements shall lead to legal complications including
-            penalties, fines etc. and in some case even lead to the force shutdowns.
+            various rules and regulations. It also depends on the nature of the
+            facility, you may also need to complete the online fire safety
+            certificate apply process as part of their overall regulatory
+            compliance requirements. The licence may need to be renewed every
+            year or within a stipulated time as per the requirements of the
+            state. Ignoring these requirements shall lead to legal complications
+            including penalties, fines etc. and in some case, say non-compliance
+            to safety laws by not registering for fire noc online registration
+            can even lead to the force shutdowns.
           </p>
 
           <p className="text-gray-500 mb-4 text-xs md:text-sm text-justify">
-            If you have a factory registration certificate, it is a confirmation that
-            you have a manufacturing facility that meets the various labour, safety,
-            health and environmental regulations. A manufacturing license certificate
-            and other pertinent government approvals will likely be necessary before
-            businesses start operations, depending on their work. Depending on types
-            of operations, under applicable laws an industrial licence may also be
-            required. If you&apos;re new to factory applications or need advice regarding
-            the entire factory licence application procedure, turning to experts can
-            help you save on delays and complications.
+            If you have a factory registration certificate, it is a confirmation
+            that you have a manufacturing facility that meets the various
+            labour, safety, health and environmental regulations. A
+            manufacturing license certificate and other pertinent government
+            approvals will likely be necessary before businesses start
+            operations, depending on their work. Depending on types of
+            operations, under applicable laws an industrial authorization may
+            also be required.
+          </p>
+
+          <p className="text-gray-500 mb-4 text-xs md:text-sm text-justify">
+            If you&apos;re new to factory applications or need advice regarding the
+            entire factory licence application procedure, turning to experts can
+            help you save on delays and complications. Therefore, you need to
+            understand the factory license renewal process, which is equally
+            important, and it makes sure that the compliances remain
+            uninterrupted under the Factories Act and helps in prevention of
+            legal penalties or operational shutdowns as well.
           </p>
 
           <p className="text-gray-500 mb-6 text-xs md:text-sm text-justify">

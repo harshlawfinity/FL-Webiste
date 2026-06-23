@@ -27,6 +27,7 @@ import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSection from "@/components/FaqSectionUP";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
+import Link from "next/link";
 import FactoryLicenseCalculatorUP from "../FactoryLicenseCalculatorUP.jsx";
 
 export default function FactoryLicenceUttarPradeshPage() {
@@ -118,7 +119,7 @@ export default function FactoryLicenceUttarPradeshPage() {
             }
           >
             <p className="text-justify mb-4">
-              The Factories Act of 1948 makes it illegal to operate a factory without a <a href="https://factorylicence.in/" className="n-300 underline text-blue-500 px-1">Factory license </a> ; therefore, getting a factory licence in Uttar Pradesh is necessary to comply with the law. If a factory is discovered operating without a proper Factory licence, it will face severe fines and, in certain situations, even jail. For anyone wishing to establish or run a manufacturing facility in Uttar Pradesh, this makes the licence compulsory to have.
+              The Factories Act of 1948 makes it illegal to operate a factory without a <Link href="/factory-licence-in-uttar-pradesh" className="n-300 underline text-blue-500 px-1">Factory license </Link> ; therefore, getting a factory licence in Uttar Pradesh is necessary to comply with the law. If a factory is discovered operating without a proper Factory licence, it will face severe fines and, in certain situations, even jail. For anyone wishing to establish or run a manufacturing facility in Uttar Pradesh, this makes the licence compulsory to have.
             </p>
             <p className="text-justify mb-4">
               A factory licence guarantees that the establishment satisfies the necessary safety standards, which are essential for protecting the health and welfare of workers. In addition to the legal requirements, it confirms the business's operational legitimacy, making it easy to obtain additional licenses and permissions and take part in government Schemes and tenders.

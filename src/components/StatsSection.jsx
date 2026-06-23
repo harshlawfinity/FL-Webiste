@@ -43,9 +43,12 @@ export default function StatsSection() {
   return (
     <div className="bg-gradient-to-b from-white to-violet-50 py-14 px-4 sm:px-6 lg:px-8" ref={ref}>
       <div className="max-w-7xl mx-auto border border-violet-300 rounded-3xl p-10 shadow-xl backdrop-blur-sm">
-        <h2 className="text-3xl text-center font-semibold capitalize text-[#000000] mb-10">
+        <h2 className="text-3xl text-center font-semibold capitalize text-[#000000] mb-6">
           Numbers don’t lie – we’re growing fast!
         </h2>
+        <p className="text-center text-gray-600 text-sm max-w-4xl mx-auto mb-10 text-justify">
+          Our clients fully rely on our help in all aspects of their compliance needs, including their fire safety renewal online. We have a team of legal experts who answer your queries to questions such as how to get pollution certificate for factory, pollution certificate for business so that you can set up your manufacturing unit with full knowledge regarding the things that you must know as a business person.
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-medium">
           <StatCard label="Factories Registered" value={counts.clicks} icon={<TbLicense size={28} />} />
           <StatCard label="Consultations Provided" value={counts.visitors} icon={<Users size={28} />} />

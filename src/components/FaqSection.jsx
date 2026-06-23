@@ -10,19 +10,19 @@ const faqs = [
       "Factory licence fee can normally be remunerated at the relative State Labour Department or Factories and Boilers Department portal. On submitting the application, the applicants may opt for online payment mode, which will be possible through net banking, UPI, debit card, and credit card.",
   },
   {
-    question: "How to renew factory license online?",
+    question: "How to renew fire license online?",
     answer:
-      "To renew a factory licence online go to the concerned states authority portal, log in to the portal and upload updated documents, then pay the renewals fee and submit the renewals application ahead of the expiry date of the licence.",
+      "For fire license renewal online, you need to go to the concerned states authority portal, log in to the portal and upload updated documents, then pay the renewals fee and submit the renewals application ahead of the expiry date of the licence.",
   },
   {
-    question: "How to apply factory licence?",
+    question: "How can I apply for a factory licence?",
     answer:
       "In case you want to know, how to obtain factory license, applicants need to get building plan clearance, fill out paperwork, upload documents, pay the fee, and undergo the inspections carried out by the Competent Authority.",
   },
   {
     question: "What is factory license in india?",
     answer:
-      "Factory license is a licence granted in the name of a factory unit, which has been granted under the Factories Act based on the statutory requirement with the condition that a factory unit should run and operate its operations under the condition as laid out in the Factories Act as labour welfare, health, safety, and environmental regulations.",
+      "Factory license is a licence granted in the name of a factory unit, say pollution board certificate for clinic, which has been granted under the Factories Act based on the statutory requirement with the condition that a factory unit should run and operate its operations under the condition as laid out in the Factories Act as labour welfare, health, safety, and environmental regulations.",
   },
   {
     question: "How to register factory license?",
@@ -54,6 +54,16 @@ const faqs = [
     answer:
       "Yes, if this is the case based on the size, scope, and location of the factory. Getting and maintaining factory licence compliance is often dependent on the approvals of Fire NOC and Pollution Control Board.",
   },
+  {
+    question: "What are the documents required for fire safety certificate?",
+    answer:
+      "In order to get Fire Safety Certificate (or Fire NOC), one requires building layout plans, proof of property ownership, building stability certificate, and evidence of installation of fire safety equipment. The requirements may differ according to local municipalities and building type.",
+  },
+  {
+    question: "How to get NOC from pollution control board?",
+    answer:
+      "To obtain a No Objection Certificate (NOC) and to fill the online application for pollution control board, you need to go for pollution noc apply from your State Pollution Control Board (SPCB) or Pollution Control Committee (e.g., DPCC in Delhi). You must apply for two mandatory consents online: Consent to Establish (CTE) before setting up your unit, and Consent to Operate (CTO) before starting production. The next step is to fill the form, upload the required documents, and pay the pollution noc fees that is asked in the registration portal.",
+  },
 ];
 
 export default function FaqSection() {
@@ -70,8 +80,9 @@ export default function FaqSection() {
   return (
     <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
       <div className="max-w-5xl mx-auto">
+        {/* Homepage FAQ heading */}
         <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
-          Frequently Asked Questions
+          Frequently Asked Questions For Factory Licence
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

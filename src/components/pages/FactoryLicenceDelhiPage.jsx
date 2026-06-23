@@ -208,7 +208,7 @@ export default function FactoryLicenceDelhiPage() {
             </ul>
             <br />
             <p>
-              <Link className="text-[#7c4bdf] font-semibold hover:underline" href="https://factorylicence.in" target="_blank">Factorylicence.in</Link> can give you assistance for the factory licence online application in Delhi.
+              <Link className="text-[#7c4bdf] font-semibold hover:underline" href="/">Factorylicence.in</Link> can give you assistance for the factory licence online application in Delhi.
               <br />
               Call us now!
             </p>
@@ -278,7 +278,7 @@ export default function FactoryLicenceDelhiPage() {
                 <strong>Inspection:</strong> Await inspection by the concerned authorities.
               </li>
               <li className="text-justify ">
-                <strong>Licence Issuance:</strong> Upon successful verification, the <a href="https://factorylicence.in/" className="text-blue-500 underline">factory licence</a> will be issued.
+                <strong>Licence Issuance:</strong> Upon successful verification, the <Link href="/factory-licence-in-delhi" className="text-blue-500 underline">factory licence</Link> will be issued.
               </li>
             </ol>
           </Section>

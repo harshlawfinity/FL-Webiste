@@ -123,6 +123,48 @@ function slugify(value = "") {
     .replace(/^-+|-+$/g, "");
 }
 
+const INTERNAL_SITE_HOSTS = new Set(["factorylicence.in", "www.factorylicence.in"]);
+
+function isInternalHref(href = "") {
+  const value = String(href).trim();
+  if (!value || value.startsWith("#") || value.startsWith("mailto:") || value.startsWith("tel:")) {
+    return false;
+  }
+  if (value.startsWith("/")) return true;
+  try {
+    return INTERNAL_SITE_HOSTS.has(new URL(value).hostname);
+  } catch {
+    return false;
+  }
+}
+
+function toRelativeHref(href = "") {
+  if (href.startsWith("/")) return href;
+  try {
+    const url = new URL(href);
+    return `${url.pathname}${url.search}${url.hash}` || "/";
+  } catch {
+    return href;
+  }
+}
+
+// Keep same-site links dofollow: use relative paths and remove nofollow/target.
+function normalizeInternalLinks(root = document) {
+  root.querySelectorAll("a[href]").forEach((anchor) => {
+    const href = anchor.getAttribute("href") || "";
+    if (!isInternalHref(href)) return;
+
+    anchor.setAttribute("href", toRelativeHref(href));
+    anchor.removeAttribute("target");
+
+    const rel = (anchor.getAttribute("rel") || "")
+      .split(/\s+/)
+      .filter((token) => token && token !== "nofollow");
+    if (rel.length) anchor.setAttribute("rel", rel.join(" "));
+    else anchor.removeAttribute("rel");
+  });
+}
+
 function normalizeBodyItem(item) {
   if (item == null) return "";
   if (typeof item === "string") return item;
@@ -608,8 +650,12 @@ function syncFaqs(page) {
   const faqRoot = findFaqRoot();
   if (!faqRoot) return;
 
-  const heading = contentHeading(faqSection, "Frequently Asked Questions");
   const headingEl = faqRoot.querySelector("h2");
+  // Keep each page's static FAQ heading when CMS section has no title.
+  const heading = contentHeading(
+    faqSection,
+    headingEl?.textContent?.trim() || "Frequently Asked Questions"
+  );
   if (headingEl && heading) headingEl.textContent = heading;
 
   const grid =
@@ -630,6 +676,87 @@ function syncFaqs(page) {
     half.forEach((faq, index) => col.appendChild(createFaqItem(faq, index, grid)));
     grid.appendChild(col);
   });
+}
+
+function cmsBreadcrumbs(page) {
+  const content = pageContent(page);
+  const crumbs = content?.breadcrumbs || page?.breadcrumbs;
+  if (!Array.isArray(crumbs)) return [];
+
+  return crumbs
+    .map((item) => ({
+      label: stripHtml(item?.label || item?.text || item?.name || ""),
+      href: item?.href || item?.link || item?.url || "",
+    }))
+    .filter((item) => item.label);
+}
+
+function appendBreadcrumbCrumb(parent, item, isLast) {
+  const row = document.createElement("div");
+  row.className = "flex items-center";
+
+  if (parent.childElementCount > 0) {
+    const sep = document.createElement("span");
+    sep.className = "px-2 text-gray-400";
+    sep.textContent = "›";
+    row.appendChild(sep);
+  }
+
+  if (!isLast && item.href) {
+    const link = document.createElement("a");
+    link.href = item.href;
+    link.className = "text-gray-50 hover:underline";
+    link.textContent = item.label;
+    row.appendChild(link);
+  } else {
+    const label = document.createElement("span");
+    label.className = "text-gray-50";
+    label.textContent = item.label;
+    row.appendChild(label);
+  }
+
+  parent.appendChild(row);
+}
+
+// Sync CMS breadcrumb labels/links into hero and mobile breadcrumb navs.
+function syncBreadcrumbs(page) {
+  const crumbs = cmsBreadcrumbs(page);
+  if (!crumbs.length) return;
+
+  const heroNav = document.querySelector('[data-cms-breadcrumb-nav="hero"]');
+  if (heroNav) {
+    heroNav.replaceChildren();
+    crumbs.forEach((item, index) => {
+      appendBreadcrumbCrumb(heroNav, item, index === crumbs.length - 1);
+    });
+  }
+
+  const mobileInner = document.querySelector(
+    '[data-cms-breadcrumb-nav="mobile"] [data-cms-breadcrumb-inner]'
+  );
+  if (mobileInner) {
+    const home = crumbs[0];
+    const current = crumbs[crumbs.length - 1];
+    mobileInner.replaceChildren();
+
+    const homeLink = document.createElement("a");
+    homeLink.href = home?.href || "/";
+    homeLink.className = "shrink-0 font-medium text-[#7A3EF2] hover:underline";
+    homeLink.textContent = home?.label || "Home";
+    mobileInner.appendChild(homeLink);
+
+    if (crumbs.length > 1 && current?.label) {
+      const sep = document.createElement("span");
+      sep.className = "shrink-0 text-gray-400 pt-px";
+      sep.textContent = "›";
+      mobileInner.appendChild(sep);
+
+      const currentLabel = document.createElement("span");
+      currentLabel.className = "min-w-0 text-gray-600 font-medium line-clamp-2";
+      currentLabel.textContent = current.label;
+      mobileInner.appendChild(currentLabel);
+    }
+  }
 }
 
 export default function FactoryCmsDomSync({ page }) {
@@ -694,6 +821,8 @@ export default function FactoryCmsDomSync({ page }) {
     });
 
     syncFaqs(page);
+    syncBreadcrumbs(page);
+    normalizeInternalLinks(document);
   }, [page]);
 
   return null;

@@ -37,9 +37,9 @@ const ExtendedContent = () => {
                         <span className="text-[#7c4bdf]">Factory Licence Registration</span> In India
                     </h2>
                     <p className="max-w-3xl mx-auto text-base text-gray-600 leading-relaxed">
-                        Planning to establish a new factory in India? However, are you aware of the legal formalities you must fulfil for your factory licence registration? If not, then don&apos;t worry, we are here to help you with the complete factory registration process. You will get all the information about the Factory licence registration, Factory licence renewal, Factory licence fees, and Factory licence renewal fees.
+                        Planning to establish a new factory in India? However, are you aware of the legal formalities you must fulfil for your factory licence registration? If not, then don&apos;t worry, we are here to help you with the complete factory enrollment process. You will get all the information about the Factory licence registration, Factory licence fees, and Factory licence renewal fees.
                         <br /><br />
-                        We guide all the businesses to get a factory registration license by handling the documentation, filing, inspecting the documents and coordinating with the different departments. Whether it&apos;s factory registration or registering a new manufacturing unit, our team makes sure it complies with the proper clauses of applicable state regulations and the Factory Act. Please give us a call. If you have any queries about the Factory licence registration process, feel free to call us. We are always ready to help.
+                        We guide all the businesses to get a factory registration license by handling the documentation, filing, inspecting the documents and coordinating with the different departments. When it&apos;s about registering a new manufacturing unit, our team also helps you with fire NOC online apply process, that makes sure that the documents which are provided are accurate,and are timely submitted. Please give us a call. If you have any queries about the Factory licence registration process, feel free to call us. We are always ready to help.
                     </p>
                 </div>
 
@@ -70,7 +70,7 @@ const ExtendedContent = () => {
                                 <div className="p-3 bg-purple-100 rounded-lg text-[#7c4bdf]">
                                     <Building2 size={24} />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-800">What is Factory License Registration?</h3>
+                                <h3 className="text-xl font-semibold text-gray-800">What is Factory Licence Registration?</h3>
                             </div>
                             <p className="text-sm text-gray-600 leading-relaxed">
                                 To operate a manufacturing facility legally, you need to have a factory licence. It is a necessary legal document issued by the government. Holding a Factory licence means that the particular facility complies with all the labour laws, safety regulations, statutory requirements, and other environmental standards.
@@ -78,6 +78,8 @@ const ExtendedContent = () => {
                                 A factory registration certificate is necessary for various aspects of business expansion, business applications, authorisation by government and banks, and permissions for industry work. A factory certificate of registration is also documentary evidence that the manufacturing unit has been approved to run by the authorities, and in many instances this is required.
                                 <br /><br />
                                 Under the Factory Act license, 1948, it is mentioned that the premises that carry out manufacturing processes employing 10 or more workers with the aid of power, or employing 20 or more workers without power, will need to register their factory and have to obtain a factory licence. Manufacturing facilities that are operating without this licence can face serious legal actions and penalties.
+                                <br /><br />
+                                Today, most of this states also support factory license renewal online, that allows the factory owners in managing the compliances digitally, without repeated physical visites to the government offices.
                             </p>
                         </div>
 
@@ -94,10 +96,10 @@ const ExtendedContent = () => {
                                     As mentioned in the Factories Act, 1948, anyone operating a manufacturing facility will face legal action. This simply makes the Factory licence registration a compulsory document to have. Factories running without registration can face legal issues like imposing heavy fines, penalties, and even lead to imprisonment.
                                 </li>
                                 <li className="flex items-start gap-3 text-sm">
-                                    The government is pressuring Factories to obtain a legal licence because having a factory licence registration ensures that the factory is running with all the appropriate safety standards. So that the employees&apos; health and well-being will not be compromised. Not only this, but the licence also validates the operational authenticity of the business, which makes other approvals, participation in government tenders, and licences easy to secure.
+                                    The government is pressuring Factories to obtain a legal licence because having a factory licence registration ensures that the factory is running with all the appropriate safety standards. Moreover, depending on the nature of the operations and occupancy that the premises take, your business might also need to obtain a fire licence certificate as a part of the overall regulatory compliance framework. So that the employees&apos; health and well-being will not be compromised. Not only this, but the licence also validates the operational authenticity of the business, which makes other approvals, participation in government tenders, and licences easy to secure.
                                 </li>
                                 <li className="flex items-start gap-3 text-sm">
-                                    All these things make a your Factory licence registration a crucial aspect for the factory owners to set up or operate a manufacturing plant in India. An issuance of a manufacturer licence is not just a legal requirement, it also shows that the business works to recognised operational standards. Having a manufacturing license certificate boosts credibility towards investors, customers, suppliers and government bodies, and makes business more hassle-free.
+                                    All these things make your Factory licence registration a crucial aspect for the factory owners to set up or operate a manufacturing plant in India. An issuance of a manufacturer licence is not just a legal requirement, it also shows that the business works to recognised operational standards. Having a manufacturing license certificate boosts credibility towards investors, customers, suppliers and government bodies, and makes business more hassle-free.
                                 </li>
                             </ul>
                             <p className="mt-4 text-xs text-gray-500 italic font-sans italic">
@@ -114,31 +116,34 @@ const ExtendedContent = () => {
                             </div>
                             <h3 className="text-2xl font-semibold text-gray-800">Advantages Of A Factory Licence Registration</h3>
                         </div>
+                        <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+                            Obtaining a factory license registration for services like fire clearance certificate online, and industry pollution certificate apply online can be beneficial for the following reasons:
+                        </p>
                         <div className="space-y-6">
                             {[
                                 {
                                     title: "Legal Recognition & Protection",
-                                    desc: "A legal licence for a factory is the symbol that your factory has been recognised by the law, and this symbol will give your factory protection from legal complications and shutdowns due to non-compliance.",
+                                    desc: "A legal licence for a factory is the symbol that your factory has been recognised by the law, and this symbol will give your factory protection from legal complications and shutdowns due to non-compliance.Other approvals like a fire safety clearance certificate and factory pollution certificate apply online can improve the compliance record and operational integrity of the factory.",
                                     icon: Landmark
                                 },
                                 {
                                     title: "Ensure Safety & Welfare at Workplace",
-                                    desc: "The licence minimises accidents by mandating to follow-up of all the safety standards and employee welfare regulations, which improves the satisfaction of employees.",
+                                    desc: "The licence minimises accidents by mandating to follow-up of all the safety standards and employee welfare regulations, which improves the satisfaction of employees. Moreover, regular compliance activities, that includes the renewal of fire safety certificate online, the government is pressuring Factories to obtain a legal licence because having a registration for your factory ensures that the factory is running smoothly, which can help your factories maintain safety standards and operational continuity. On the other hand, factories should also conduct routine fire safety checks and renew fire extinguisher equipment as per the prescribed maintenance schedule to ensure better safety.",
                                     icon: HardHat
                                 },
                                 {
                                     title: "Helps in Expansion & Investment",
-                                    desc: "The investors prefer factories with a legal validation, thus a license will help factories in raising funds, expand their operational hassle-free free or enter into contracts.",
+                                    desc: "The investors prefer factories with a legal validation, thus a license will help factories in raising funds, expand their operational hassle-free, or enter into contracts.",
                                     icon: TrendingUp
                                 },
                                 {
                                     title: "Access to Government Schemes",
-                                    desc: "Government schemes, subsidies, and certification will only be used by the factories that are recognised by the government authorities.",
+                                    desc: "Government schemes, subsidies, and certification will only be used by the factories that are recognised by the government authorities. However, many united from the numerous industries also need to have a fire safety license and other types of statutory approvals to meet the sector-specific compliance requirements.",
                                     icon: CheckCircle2
                                 },
                                 {
                                     title: "Improves Reputation & Builds Trust",
-                                    desc: "Your factory's credibility gets enhanced among the stakeholders and investors, such as customers, vendors, government bodies, and suppliers.",
+                                    desc: "Your factory's credibility gets enhanced among the stakeholders and investors, such as customers, vendors, government bodies, and suppliers when you have met all the compliance such as pollution certificate for factory done.",
                                     icon: ClipboardCheck
                                 },
                             ].map((item, idx) => (
@@ -180,7 +185,7 @@ const ExtendedContent = () => {
                             "Public or private sector enterprises that fall under the definition of a \"factory\" in the Factories Act, 1948.",
                             "Industrial warehouses use machinery for processing, altering, repackaging, or handling goods.",
                             "Export-Oriented Units (EOUs) are involved in any manufacturing activity.",
-                            "Entities that require pollution control or fire safety clearance due to operational risks are also subject to stricter regulatory oversight."
+                            "Entities that require pollution control or fire safety certificate clearance due to operational risks are also subject to stricter regulatory oversight. Such establishments are often required to obtain a fire safety NOC before commencing operations or applying for certain regulatory approvals."
                         ].map((point, idx) => (
                             <div key={idx} className="flex gap-4 items-start py-2 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors px-2 rounded-lg">
                                 <div className="mt-1 bg-green-100 text-green-600 rounded-full p-0.5">
@@ -193,7 +198,7 @@ const ExtendedContent = () => {
 
                     <div className="mt-12 p-6 bg-purple-50 rounded-2xl border border-purple-100 text-center">
                         <p className="text-gray-700 font-medium">
-                            We can assist you with online factory registration in India. And also provide help in getting <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-delhi">Pollution NOC in Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-haryana">Pollution NOC in Haryana</InternalLink>, and <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-uttar-pradesh">Pollution NOC in Uttar Pradesh</InternalLink>.
+                            We can assist you with online registration of your factory in India. And also provide help in getting <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-delhi">pollution noc certificate in Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-haryana">Pollution NOC in Haryana</InternalLink>, and <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-uttar-pradesh">Pollution NOC in Uttar Pradesh</InternalLink>. We also assisst in hospital pollution certificate online for your medical establishment.
                         </p>
                     </div>
                 </div>
@@ -209,7 +214,7 @@ const ExtendedContent = () => {
 
                     <div className="max-w-4xl space-y-4 mb-12">
                         <p className="text-sm text-gray-600 leading-relaxed font-sans italic">
-                            Documentation is the most crucial part of the Factory registration process. If you miss or submit any wrong documents, then your factory license application process will take more than usual because of the delay due to the wrong or missing documents.
+                            In case you have this question hovering over your mind, like &quot;what documents required for fire noc&quot;, or any other service that you want to avail for. At first, you need to know that, documentation is the most crucial part of the Factory registration process. If you miss or submit any wrong documents, then your factory license application process will take more than usual because of the delay due to the wrong or missing documents.
                         </p>
                         <p className="text-sm text-gray-600 leading-relaxed font-sans italic">
                         Having prior knowledge of what are the documents required for factory  license can enhance approvals time. A common query of business owners is, what exactly documents are needed for a factory licence application? While the requirements may differ from state to state, these are some documents that are typically needed throughout India.
@@ -242,7 +247,11 @@ const ExtendedContent = () => {
                         ))}
                     </div>
 
-                    <div className="mt-12 p-8 bg-gray-900 rounded-2xl text-white text-center">
+                    <p className="text-sm text-gray-600 leading-relaxed font-medium mt-6 mb-6">
+                        Note: Depending on the size and nature of operations, a fire NOC certificate may also be required before the application can be processed by the concerned authorities.
+                    </p>
+
+                    <div className="mt-6 p-8 bg-gray-900 rounded-2xl text-white text-center">
                         <p className="text-base md:text-lg font-medium mb-2">
                             We have a team of professional Factory license consultant who can help you with the factory licence apply online.
                         </p>
@@ -257,7 +266,7 @@ const ExtendedContent = () => {
 
                     <div className="lg:col-span-2 bg-[#7c4bdf] text-white p-8 md:p-10 rounded-3xl shadow-xl">
                         <h3 className="text-xl md:text-2xl font-semibold mb-6 flex flex-col gap-2">
-                            How to Apply for Factory Licence Registration?
+                            How to Apply Factory Licence Online?
                         </h3>
                         <p className="text-sm text-purple-100 leading-relaxed mb-2">
                             The application for a factory licence, obtaining a factory licence and registration of a factory licence will generally involve the planning stage, submission of statutory forms, submission of supporting documents, fee payment and the departmental inspection phase prior to the issuance of the licence.
@@ -279,7 +288,7 @@ const ExtendedContent = () => {
                                 {
                                     step: "Step 3",
                                     title: "Online Application for License (Form 2)",
-                                    desc: "Go the official online page of your labour department or factories and boilers directorate of your state, such as the state's labour portal, SDMC portal, EDMC portal etc. Fill out a factory licence registration application form (Form 2) with correct information on the factory and its workers, register, and log in."
+                                    desc: "Go the official online page of your labour department or factories and boilers directorate of your state, such as the state's labour portal, SDMC portal, EDMC portal etc. Fill out a factory licence registration application form (Form 2) with correct information on the factory and its workers, register, and log in. The entire factory licence online application process is now streamlined with the help of state government portals, that allows applicants to submit their forms, upload the documents, and track everything online."
                                 },
                                 {
                                     step: "Step 4",
@@ -319,7 +328,7 @@ const ExtendedContent = () => {
 
                         <div className="mt-10 pt-8 border-t border-purple-400/30">
                             <p className="text-center text-sm md:text-base font-medium">
-                                Are you also looking for the <InternalLink className="text-blue-500 underline" href="/fire-noc-in-delhi">Fire NOC Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-haryana">Fire NOC in Haryana</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</InternalLink>? If yes, then register your query now!
+                                Are you also looking for the fire noc license, such as <InternalLink className="text-blue-500 underline" href="/fire-noc-in-delhi">Fire NOC Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-haryana">Fire NOC in Haryana</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</InternalLink>? If yes, then register your query now and make your fire noc online application process easy!
                             </p>
                         </div>
                     </div>
@@ -352,7 +361,8 @@ const ExtendedContent = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 {[
-                                    { cat: "Application Fee (New License)", det: "Payable at the time of filing the initial factory license application.", amt: "Rs. 300 to Rs. 10,000 (varies by state and workforce size)" },
+                                    { cat: "Application Fee (New License)", det: "Payable at the time of filing the initial application.for factory license", amt: "INR 300 to INR 10,000 (varies by state and workforce size)" },
+                                    { cat: "DPCC Orange Category Fees", det: "Pollution control board fees for applicable industrial categories.", amt: "INR 1,000 to INR 1,00,000 (dpcc orange category fees)" },
                                     { cat: "License Renewal Fee", det: "Paid annually or as per state norms for renewal of factory license.", amt: "INR 1,000 to INR 15,000" },
                                     { cat: "Amendment Fee", det: "If there are changes to the license, for example in the number of workers, machines etc.", amt: "INR 100 to INR 1,000" },
                                     { cat: "Late Fee for Renewal", det: "When renewal application is made between due and expiration date.", amt: "25%-50% of the renewal fee is extra" },
@@ -380,7 +390,7 @@ const ExtendedContent = () => {
                             </h4>
                             <ul className="space-y-4">
                                 {[
-                                    "Failing to get a licence for running a factory can result in fines of up to ₹1,00,000 or up to 2 years imprisonment.",
+                                    "Failing to get a licence for running a factory can result in fines of up to INR 1,00,000 or up to 2 years imprisonment.",
                                     "Failure to meet the safety standards may lead to fines, loss of permit or revocation of the permit.",
                                     "Late renewal can result in penalties and possible lawsuits.",
                                 ].map((p, i) => (
@@ -390,6 +400,9 @@ const ExtendedContent = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <p className="text-sm text-red-800 mt-4 font-sans italic leading-relaxed">
+                                Note: You need to make sure that you need timely renewal of fire safety certificate online, when and wherever required. This would help you to meet with the compliance issues and delays that might come up related to regulatory approvals.
+                            </p>
                         </div>
 
                         <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 shadow-sm">
@@ -417,16 +430,19 @@ const ExtendedContent = () => {
                         <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 uppercase">Factory Licence Renewal Online</h3>
                     </div>
                     <p className="text-gray-600 mb-4 leading-relaxed font-sans italic">
-                        A factory licence registration is not a one-time process; you have to renew it after every specific duration to work freely without any legal objection.
+                        A factory licence registration is not a one-time process. These factories license renewal is required at regular intervals to ensure uninterrupted legal compliance and smooth operations.
                     </p>
                     <p className="text-gray-600 mb-8 leading-relaxed font-sans italic">
-                        Timely completion of factories and boilers licence renewal is a critical piece to complete for businesses to avoid penalties and operational disruptions. There are several state departments now providing owners with ways to renew online for their factories and boilers, streamlining the process and making it more convenient. Our staff handles the entire process of both new application and factories and boilers license renewal online applications.
+                        Timely completion of factories license renewal is a critical piece to complete for businesses to avoid penalties and operational disruptions. There are several state departments now providing owners with ways to renew online for the factories and boilers, streamlining the process and making it more convenient. Our staff handles the entire process of both new application and factories and boilers license renewal online applications.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                         {/* Renewal Fee Sub-section */}
                         <div className="space-y-6">
                             <h4 className="text-xl font-semibold text-gray-800 border-b pb-2">Renewal fee</h4>
+                            <p className="text-sm text-gray-600 font-sans italic">
+                                The renewal fees for pollution certificate process and the related certification such as the fire certificate renewal fee is calculated as per the structure provided below:
+                            </p>
                             <div className="space-y-4">
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
                                     <p className="font-semibold text-gray-800 mb-2">Within April (grace period):</p>
@@ -440,11 +456,11 @@ const ExtendedContent = () => {
                                 </div>
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
                                     <p className="font-semibold text-gray-800 mb-2">After April (up to year-end):</p>
-                                    <p className="text-sm text-gray-600 font-sans italic">• Same as above plus: Late fee = ₹150 (for first 3 months) + 5% of license fee per additional month</p>
+                                    <p className="text-sm text-gray-600 font-sans italic">• Same as above plus for fire licence renewal or any related registration: Late fee = INR 150 (for first 3 months) + 5% of license fee per additional month</p>
                                 </div>
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
                                     <p className="font-semibold text-gray-800 mb-2">Beyond one year:</p>
-                                    <p className="text-sm text-gray-600 font-sans italic">• Above charges + Arrear = ₹2,000 flat</p>
+                                    <p className="text-sm text-gray-600 font-sans italic">• Above charges + Arrear = INR 2,000 flat</p>
                                 </div>
                             </div>
                         </div>
@@ -499,7 +515,7 @@ const ExtendedContent = () => {
                     </div>
 
                     <p className="p-4 bg-[#7c4bdf]/10 text-[#7c4bdf] rounded-xl border border-[#7c4bdf]/20 text-sm md:text-base font-medium text-center">
-                        Factory licence renewal fees and documents will be the same as mentioned in the above sections. Go through the fee structure and confirm all the details.
+                        Fees for renewal of Factory licence and documents will be the same as mentioned in the above sections. Go through the fee structure and confirm all the details. The complete factory licence renewal process includes document verification, fee payment, and approval from the concerned state authority before the renewed licence is issued. Moreover, you can also ask our factory licence consultants who have years of experience in their respective fields and can help you out in every possible way.
                     </p>
                 </div>
 
@@ -536,7 +552,7 @@ const ExtendedContent = () => {
                         </div>
 
                         <p className="text-gray-700 font-medium border-l-4 border-[#7c4bdf] pl-4">
-                            It is a legal prerequisite before any production can commence.
+                            It is a legal prerequisite before any production can commence. In most of the cases, a fire NOC certificate is also a requirement for the approval process before the certificate for factory license is issued, which makes it up for a full compliance.
                         </p>
                     </div>
                 </div>
@@ -552,10 +568,13 @@ const ExtendedContent = () => {
 
                     <div className="max-w-4xl space-y-6 mb-10">
                         <p className="text-gray-300 leading-relaxed text-lg">
-                            The factory licence registration process may seem easy, but a single mistake can cause a delay in the process, which will be a waste of time. To save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process.
+                            The factory licence registration process and the pollution apply online may seem easy, but a single mistake can cause a delay in the process, which will be a waste of time. To save any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. If you are searching for factory licence consultants near me, our team provides complete end-to-end assistance for approvals, documentation, and compliance.
                         </p>
                         <p className="text-gray-300 leading-relaxed">
-                            We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
+                            Other than the factory NOCs, we also render our services to businesses and other organizations in providing them with specific NOCs related to fire safety, which include fire noc for residential buildings, fire NOC for hospitals, fire noc for commercial buildings, and fire NOC for clinics.
+                        </p>
+                        <p className="text-gray-300 leading-relaxed">
+                            We have a team of expert legal advisors who will provide you with comprehensive support for factory act licence renewal, ensuring your factory remains fully compliant with state regulations without interruptions.
                         </p>
                         <p className="text-gray-300 leading-relaxed">
                             We are a team of experienced factory act consultants and factory licence consultants, and we provide actual assistance for manufacturing units in various industries. From an industrial licence registration to factory compliance audits, to amendments and approvals of your factory license for construction site, our experts will support you throughout the entire lifecycle of the licence.
@@ -564,7 +583,7 @@ const ExtendedContent = () => {
 
                     <div className="p-8 bg-white/5 rounded-2xl border border-white/10 text-center">
                         <p className="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-purple-400 to-[#7c4bdf] bg-clip-text text-transparent mb-4">
-                            So don&apos;t waste any further time call us now and get your factory registered.
+                            So don&apos;t waste any further time call us now and get your factory registered, instead of searching for another factory license consultants near you.
                         </p>
                     </div>
                 </div>

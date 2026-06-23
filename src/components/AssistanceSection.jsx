@@ -5,21 +5,21 @@ export default function AssistanceSection() {
     {
       title: "Zero-Error Documentation",
       description:
-        "100% accuracy in paperwork to avoid delays, rejections, or penalties.",
+        "100% accuracy in paperwork to avoid delays, rejections, or penalties while you apply for fire safety certificate.",
       image: SEO_ASSETS.factoryLicenceRenewal,
       alt: "Factory Licence Renewal",
     },
     {
       title: "Ongoing Compliance Management",
       description:
-        "We don’t stop at licences — we help you stay compliant year-round.",
+        "We don't stop at licences — we help you stay compliant year-round. We have a team, that would help you assist with fire NOC renewal online, and help you in building a business that maintains the valid approvals and also help to avoid compliance-related disruptions.",
       image: SEO_ASSETS.factoryRegistrationCertificate,
       alt: "Factory Registration Certificate",
     },
     {
       title: "Support 24/7",
       description:
-        "We help diagnose processes in the company. We provide recommendations on process optimization.",
+        "We help diagnose processes in the company regarding the type of registration or license that you might need, say, a pollution certificate for industry. We provide recommendations on process optimization and help you out with solutions instantly.",
       image: SEO_ASSETS.factoryActConsultants,
       alt: "Factory Act Consultants",
     },

@@ -245,7 +245,7 @@ export default function FireNocLicenceHaryanaPage() {
               <li className="text-justify">Large factories, warehouses, malls, hospitals: Rs.15,000 – Rs.50,000+</li>
             </ul>
             <p className="text-justify mb-4">
-              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <a href="https://factorylicence.in/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Factory License</a> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Haryana approval.
+              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <Link href="/factory-licence-in-haryana" className="text-blue-600 underline">Factory License</Link> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Haryana approval.
             </p>
             <p className="text-justify italic text-gray-600">
               The Fire NOC Haryana cost may also increase if re-inspection is required due to non-compliance.

@@ -264,7 +264,7 @@ export default function PollutionNocLicenceHaryanaPage() {
               <li className="text-justify">Large factories, warehouses, malls, hospitals: ₹15,000 – ₹50,000+</li>
             </ul>
             <p className="text-justify mb-4">
-              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <a href="https://factorylicence.in/" className="400 text-blue-600  underline px-1">Factory License</a> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Uttar Pradesh approval.
+              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <Link href="/factory-licence-in-uttar-pradesh" className="400 text-blue-600  underline px-1">Factory License</Link> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Uttar Pradesh approval.
             </p>
             <p className="text-justify">
               The Fire NOC Uttar Pradesh cost may also increase if re-inspection is required due to non-compliance.
@@ -515,7 +515,7 @@ export default function PollutionNocLicenceHaryanaPage() {
       {/* FAQs */}
       <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
       <StateFaqCTA onClick={() => setShowPopup(true)} />
-      <FaqSectionPollutionUP />
+      <FaqSectionPollutionUP heading="Frequently Asked Questions For Fire NOC in Uttar Pradesh" />
 
       {/* Contact Form Popup */}
       <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />

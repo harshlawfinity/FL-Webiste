@@ -155,7 +155,7 @@ export default function PollutionNocLicenceHaryanaPage() {
             </ul>
             <p className="text-justify">
               Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance
-              can help you obtain all the <a href="https://factorylicence.in/" className="text-blue-600 underline">Factory license</a> you need to set up and operate a factory in
+              can help you obtain all the <Link href="/factory-licence-in-haryana" className="text-blue-600 underline">Factory license</Link> you need to set up and operate a factory in
               Haryana.
             </p>
           </Section>

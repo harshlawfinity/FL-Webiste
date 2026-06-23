@@ -8,8 +8,11 @@ export default function BreadcrumbNav({ items, placement = "hero" }) {
   if (!isHero) {
     return (
       <div className="md:hidden max-w-7xl mx-auto px-4 pt-6 pb-3 bg-gradient-to-b from-white to-[#f9f9ff]">
-        <nav aria-label="Breadcrumb">
-          <div className="flex items-start gap-1.5 text-xs leading-snug">
+        <nav aria-label="Breadcrumb" data-cms-breadcrumb-nav="mobile">
+          <div
+            className="flex items-start gap-1.5 text-xs leading-snug"
+            data-cms-breadcrumb-inner
+          >
             <Link
               href="/"
               className="shrink-0 font-medium text-[#7A3EF2] hover:underline"
@@ -34,6 +37,7 @@ export default function BreadcrumbNav({ items, placement = "hero" }) {
     <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6 hidden md:block">
       <nav
         aria-label="Breadcrumb"
+        data-cms-breadcrumb-nav="hero"
         className="flex flex-wrap mb-4 items-center gap-2 text-sm text-white"
       >
         {crumbs.map((item, idx) => (

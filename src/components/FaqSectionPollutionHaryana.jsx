@@ -59,8 +59,9 @@ export default function FaqSectionPollutionHaryana() {
   return (
     <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
       <div className="max-w-5xl mx-auto">
+        {/* Pollution NOC Haryana FAQ heading */}
         <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
-          Frequently Asked Questions
+          Frequently Asked Questions For Pollution NOC in Haryana
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

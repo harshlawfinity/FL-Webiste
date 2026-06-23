@@ -6,13 +6,16 @@ import { SEO_ASSETS } from "@/lib/heroBackgrounds";
 import ContactForm from "./ContactForm";
 
 const sharedSteps = [
-  "Prepare documents: Collect all the necessary documents.",
+  "Prepare documents: Collect all the necessary documents required for your factory license registration, or ask our consultants for the documents required for pollution control certificate (they are always available to answer your queries).",
   "Online Application: Click on the state's labor department portal → Trade & Factory Licences.",
   "Fill and upload the required docs.",
-  "Payment of the licence fee: make it online.",
+  "Payment of the licence fee: which is to be done online.",
   "Inspection: Department schedules an inspection.",
   "Licence Issuance: When successful verification.",
 ];
+
+const fireLicenseNote =
+  "Organizations that need more safety certifications can go for their fire license apply online through the relevant body depending on local laws and inspections needed.";
 
 const steps = {
   Delhi: {
@@ -35,10 +38,13 @@ const FactoryLicenseSection = () => {
 
   return (
     <section className="bg-zinc-100 py-10 px-4 sm:px-8 lg:px-16">
-      <h2 className="text-3xl sm:text-4xl text-center font-semibold text-gray-900 leading-tight mb-10">
+      <h2 className="text-3xl sm:text-4xl text-center font-semibold text-gray-900 leading-tight mb-4">
         Expert Help for <br />
-        <span className="text-purple-600">Your Factory Licence Setup</span>
+        <span className="text-purple-600">Your Factory Licence Setup and Pollution Licence Apply</span>
       </h2>
+      <p className="text-center text-gray-600 text-sm max-w-3xl mx-auto mb-10 text-justify">
+        Here are the steps that you usually need to follow while applying for a factory license or a pollution control board registration:
+      </p>
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12">
         {/* Left: Image */}
@@ -80,6 +86,8 @@ const FactoryLicenseSection = () => {
               </li>
             ))}
           </ul>
+
+          <p className="text-gray-700 text-sm text-justify mb-6">{fireLicenseNote}</p>
 
           {/* Steps Image */}
              <img

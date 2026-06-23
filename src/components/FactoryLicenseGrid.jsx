@@ -20,22 +20,22 @@ const FactoryLicenseGrid = () => {
     },
     {
       title: "Fire & Safety Approvals",
-      desc: "Securing fire and safety NOCs for obtaining licences and renewals.",
+      desc: "Securing fire and safety NOCs for obtaining licences and renewals with extended support from our experienced fire NOC consultant will make sure you get faster approval and compliance. Therefore, a fire safety certificate is a mandatory approval that confirms the factory premises to meet the required fire prevention and standards of safety as per the required guidelines.",
       icon: <FaFireExtinguisher className="text-purple-600 text-2xl" />,
     },
     {
       title: "Pollution NOC",
-      desc: "Get Trade, Pollution and Construction clearances on your factory set up.",
+      desc: "Get Trade, Construction, and pollution clearance certificate on your factory set up. We can also help companies acquire an online pollution certificate for factory setup to comply with environmental regulations.",
       icon: <TbBuildingFactory className="text-purple-600 text-2xl" />,
     },
     {
       title: "Liaison with Government",
-      desc: "Coordinating with local departments for faster inspection, approval process.",
+      desc: "Coordinating with local departments for faster inspection, or say, you get help in getting your pollution control certificate for clinic faster. This eases the entire process of pollution approval happen without any reason.",
       icon: <FiUsers className="text-purple-600 text-2xl" />,
     },
     {
       title: "Renewals & Audit Support",
-      desc: "Be comfortable with the annual renewals and regular audits of documentation related to continued compliance.",
+      desc: "Be comfortable with the annual renewals and regular audits of documentation related to continued compliance. Therefore, it is important that you remain comfortable, and you know about the annual renewals and the process of regular audits that are related and help with continued compliance. This includes services such as fire certificate renewal and other statutory approvals as well.",
       icon: <MdAutorenew className="text-purple-600 text-2xl" />,
     },
   ];
