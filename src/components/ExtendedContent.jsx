@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Link from "next/link";
 import {
     FileText,
     CheckCircle2,
@@ -13,6 +14,15 @@ import {
     HardHat,
     ChevronDown,
 } from 'lucide-react';
+
+// Dofollow internal links: relative paths via Next.js Link (no rel="nofollow").
+function InternalLink({ href, className, children }) {
+    return (
+        <Link href={href} className={className}>
+            {children}
+        </Link>
+    );
+}
 
 const ExtendedContent = () => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -144,7 +154,7 @@ const ExtendedContent = () => {
                             ))}
                         </div>
                         <p className="mt-8 text-sm text-gray-500 font-medium italic border-t border-gray-100 pt-6">
-                            We can help you get the factory license certificate for all states, like <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-delhi">Factory license in Delhi</a>, <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-haryana">Factory license Haryana</a>, <a className='400 text-blue-600 underline px-' href="https://factorylicence.in/factory-licence-in-uttar-pradesh">Factory licence in Uttar Pradesh</a>. Call us, we would like to help you.
+                            We can help you get the factory license certificate for all states, like <InternalLink className="text-blue-600 underline" href="/factory-licence-in-delhi">Factory license in Delhi</InternalLink>, <InternalLink className="text-blue-600 underline" href="/factory-licence-in-haryana">Factory license Haryana</InternalLink>, <InternalLink className="text-blue-600 underline" href="/factory-licence-in-uttar-pradesh">Factory licence in Uttar Pradesh</InternalLink>. Call us, we would like to help you.
                         </p>
                     </div>
                 </div>
@@ -183,7 +193,7 @@ const ExtendedContent = () => {
 
                     <div className="mt-12 p-6 bg-purple-50 rounded-2xl border border-purple-100 text-center">
                         <p className="text-gray-700 font-medium">
-                            We can assist you with online factory registration in India. And also provide help in getting <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-delhi">Pollution NOC in Delhi</a> , <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-haryana">Pollution NOC in Haryana</a>, and <a className='text-blue-500 underline' href="https://factorylicence.in/pollution-noc-in-uttar-pradesh">Pollution NOC in Uttar Pradesh</a>.
+                            We can assist you with online factory registration in India. And also provide help in getting <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-delhi">Pollution NOC in Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-haryana">Pollution NOC in Haryana</InternalLink>, and <InternalLink className="text-blue-500 underline" href="/pollution-noc-in-uttar-pradesh">Pollution NOC in Uttar Pradesh</InternalLink>.
                         </p>
                     </div>
                 </div>
@@ -309,7 +319,7 @@ const ExtendedContent = () => {
 
                         <div className="mt-10 pt-8 border-t border-purple-400/30">
                             <p className="text-center text-sm md:text-base font-medium">
-                                Are you also looking for the <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-delhi">Fire NOC Delhi</a>, <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-haryana">Fire NOC in Haryana</a>, <a className='text--500 underline' href="https://factorylicence.in/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</a>? If yes, then register your query now!
+                                Are you also looking for the <InternalLink className="text-blue-500 underline" href="/fire-noc-in-delhi">Fire NOC Delhi</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-haryana">Fire NOC in Haryana</InternalLink>, <InternalLink className="text-blue-500 underline" href="/fire-noc-in-uttar-pradesh">Fire NOC Uttar Pradesh</InternalLink>? If yes, then register your query now!
                             </p>
                         </div>
                     </div>
