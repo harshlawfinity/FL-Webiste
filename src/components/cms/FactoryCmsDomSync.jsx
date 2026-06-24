@@ -501,7 +501,11 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
   container.dataset.cmsSynced = "true";
   container.className = "cms-sync-content cms-rich-text space-y-4";
 
-  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
+  // When a static table is preserved in the page, skip duplicate CMS tables.
+  const nested = (Array.isArray(section.nestedSections) ? section.nestedSections : []).filter(
+    (item) => !(preserveEl && item?.type === "table")
+  );
   const beforeBody = nested.filter((item) => item.placement === "beforeBody");
   const afterBody = nested.filter((item) => item.placement !== "beforeBody");
 
@@ -519,7 +523,6 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
   clearSyncedContent(sectionEl);
   hideLegacySectionChildren(sectionEl, preserveIds);
 
-  const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
   if (preserveEl) {
     sectionEl.insertBefore(container, preserveEl);
   } else {
