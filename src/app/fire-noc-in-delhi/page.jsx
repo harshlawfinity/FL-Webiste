@@ -2,6 +2,7 @@
 
 import FireNOCDelhiPage from "@/components/pages/FireNOCDelhiPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,7 @@ export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-delhi");
   return (
     <>
+      <FactoryCmsJsonLd page={cmsPage} />
       <FireNOCDelhiPage />
       <FactoryCmsDomSync page={cmsPage} />
     </>

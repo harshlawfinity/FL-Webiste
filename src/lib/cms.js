@@ -71,3 +71,20 @@ export async function buildLandingPageMetadata(slug, fallback = {}) {
   const page = await getFactoryCmsLandingPage(slug);
   return buildCmsMetadata(page, fallback);
 }
+
+// Parse CMS JSON-LD schema (object or JSON string from seo.schema).
+export function getCmsSchema(page) {
+  const raw = page?.seo?.schema;
+  if (!raw) return null;
+
+  if (typeof raw === "string") {
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  if (typeof raw === "object") return raw;
+  return null;
+}

@@ -2,6 +2,7 @@
 
 import PollutionNOCHaryanaPage from "@/components/pages/PollutionNOCHaryanaPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
@@ -75,6 +76,7 @@ export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("pollution-noc-in-haryana");
   return (
     <>
+      <FactoryCmsJsonLd page={cmsPage} />
       <PollutionNOCHaryanaPage />
       <FactoryCmsDomSync page={cmsPage} />
     </>

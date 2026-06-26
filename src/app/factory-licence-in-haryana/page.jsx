@@ -1,5 +1,6 @@
 import FactoryLicenceHaryanaPage from "@/components/pages/FactoryLicenceHaryanaPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
@@ -48,6 +49,7 @@ export default async function Page() {
   const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-haryana");
   return (
     <>
+      <FactoryCmsJsonLd page={cmsPage} />
       <FactoryLicenceHaryanaPage />
       <FactoryCmsDomSync page={cmsPage} />
     </>

@@ -95,10 +95,8 @@ export default function RootLayout({ children }) {
             __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
           }}
         />
-        {/* Schema.org JSON-LD */}
-
-        {/* Schema.org JSON-LD */}
-        <Script
+        {/* Schema.org JSON-LD — native script tag (Next.js Script strips ld+json content) */}
+        <script
           id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
