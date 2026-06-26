@@ -13,17 +13,17 @@ export default function HowItWorks() {
           {/* Left Section */}
           <div>
             <span className="inline-block px-4 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-              How it Works
+              How we Work
             </span>
             <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mt-4">
               How Our Licensing Services Work
             </h2>
             <p className="mt-4 text-gray-600">
-              We simplify the licensing journey for your manufacturing unit with a guided and efficient process. Just follow these simple steps to get started.
+              We help you simplify your licensing expedition in alignment with your manufacturing unit with a simple, guided, and efficient process. However, before proceeding, you just need to follow these simple steps:
             </p>
             <button onClick={() => setShowPopup(true)}
               className="mt-8 flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#642bd5d5] to-[#642bd5] text-white font-medium rounded-full shadow-lg hover:scale-105 transition">
-              Get Started
+              Let&apos;s get started
               <ArrowRight size={20} />
             </button>
           </div>
@@ -33,15 +33,15 @@ export default function HowItWorks() {
             {[
               {
                 title: 'Identify Your Licence Type',
-                desc: 'Choose the appropriate licence type based on your industry and manufacturing needs.',
+                desc: 'You need to choose the right licence type based on your industry and manufacturing needs.',
               },
               {
                 title: 'Schedule a Consultation',
-                desc: 'Book a call with our compliance expert to understand the process and requirements.',
+                desc: 'Book a call with our legal expert to fully understand the process and requirements.',
               },
               {
                 title: 'Submit Documentation',
-                desc: 'Provide all necessary documents with our team  for further processing.',
+                desc: 'You will need to provide all the necessary documents to our team for further processing of your manufacturing license.',
               },
               {
                 title: 'Receive Your Factory Licence',
