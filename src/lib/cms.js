@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 const CMS_BASE_URL =
   process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL ||
   process.env.CRM_CMS_BASE_URL ||
@@ -5,11 +7,22 @@ const CMS_BASE_URL =
     ? "https://internal.lawfinity.in"
     : "http://localhost:3000");
 
+// Cache CMS responses across requests; revalidate periodically instead of no-store on every hit.
+const CMS_REVALIDATE_SECONDS = 300;
+const CMS_FETCH_TIMEOUT_MS = 8000;
+
 async function fetchCms(path) {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CMS_FETCH_TIMEOUT_MS);
+
     const res = await fetch(`${CMS_BASE_URL}${path}`, {
-      cache: "no-store",
+      next: { revalidate: CMS_REVALIDATE_SECONDS },
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
+
     if (!res.ok) return null;
     const data = await res.json();
     return data?.success ? data.page : null;
@@ -19,20 +32,24 @@ async function fetchCms(path) {
       error?.digest === "DYNAMIC_SERVER_USAGE" ||
       message.includes("Dynamic server usage");
 
-    if (!isDynamicUsage) {
+    if (!isDynamicUsage && error?.name !== "AbortError") {
       console.error("[factory CMS] fetch failed:", path, error);
+    }
+    if (error?.name === "AbortError") {
+      console.error("[factory CMS] fetch timeout:", path);
     }
     return null;
   }
 }
 
-export function getFactoryCmsLandingPage(slug) {
+// Dedupe CMS fetches within the same request (generateMetadata + page component share one call).
+export const getFactoryCmsLandingPage = cache(async (slug) => {
   return fetchCms(`/api/public/factorylicence/landing-pages/${slug}`);
-}
+});
 
-export function getFactoryCmsStaticPage(pageKey) {
+export const getFactoryCmsStaticPage = cache(async (pageKey) => {
   return fetchCms(`/api/public/factorylicence/static-pages/${pageKey}`);
-}
+});
 
 export function buildCmsMetadata(page, fallback = {}) {
   if (!page) return fallback;

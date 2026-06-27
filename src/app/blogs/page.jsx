@@ -2,7 +2,8 @@ import BlogsPage from "@/components/pages/BlogsPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { getFactoryCmsStaticPage } from "@/lib/cms";
 
-export const dynamic = "force-dynamic";
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 export const metadata = {
   title: "Latest Factorry License - Factorylicence",

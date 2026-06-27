@@ -71,7 +71,8 @@ export const metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 import React from "react";
 import Head from "next/head";

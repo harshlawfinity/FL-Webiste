@@ -1,4 +1,6 @@
 import Link from "next/link";
+import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
+import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
 
 const fallbackMetadata = {
@@ -28,7 +30,7 @@ export async function generateMetadata() {
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
-const RefundCancellation = () => {
+function RefundCancellationFallback() {
   return (
     <div className="mt-20">
       {/* Hero */}
@@ -101,6 +103,19 @@ const RefundCancellation = () => {
       </div>
     </div>
   );
-};
+}
 
-export default RefundCancellation;
+export default async function Page() {
+  const cmsPage = await getFactoryCmsStaticPage("refund-cancellation");
+
+  if (cmsPage) {
+    return (
+      <>
+        <FactoryCmsJsonLd page={cmsPage} />
+        <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Refund Cancellation" />
+      </>
+    );
+  }
+
+  return <RefundCancellationFallback />;
+}

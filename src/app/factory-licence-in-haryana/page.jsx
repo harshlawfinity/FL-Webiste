@@ -3,7 +3,8 @@ import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
-export const dynamic = "force-dynamic";
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 const fallbackMetadata = {
   title: "Factory License in Haryana – Online Apply, Fees & Registration",

@@ -26,6 +26,41 @@ function normalizeFields(fields) {
   }));
 }
 
+function hasHtml(value = "") {
+  return /<[a-z][\s\S]*>/i.test(String(value));
+}
+
+const CMS_RICH_TEXT_CLASS =
+  "cms-rich-text text-justify text-base leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6";
+
+function CmsRichBlock({ html, className = "" }) {
+  const value = String(html || "").trim();
+  if (!value) return null;
+
+  if (hasHtml(value)) {
+    return (
+      <div
+        className={`${CMS_RICH_TEXT_CLASS} ${className}`.trim()}
+        dangerouslySetInnerHTML={{ __html: value }}
+      />
+    );
+  }
+
+  return <p className={`text-justify text-base leading-relaxed ${className}`.trim()}>{value}</p>;
+}
+
+function normalizeBreadcrumbs(page, content) {
+  const items = content?.breadcrumbs || page?.breadcrumbs;
+  if (!Array.isArray(items) || !items.length) return null;
+
+  return items
+    .map((item) => ({
+      label: item?.text || item?.label || "",
+      href: item?.link || item?.href || item?.url || "",
+    }))
+    .filter((item) => item.label);
+}
+
 export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
   const content = pageContent(page);
   if (!content) return null;
@@ -33,10 +68,13 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
   const hero = content.hero || {};
   const introduction = content.introduction || {};
   const sections = Array.isArray(content.sections) ? content.sections : [];
-  const title = hero.title || hero.heading || page?.title || fallbackTitle;
+  const breadcrumbs = normalizeBreadcrumbs(page, content);
+  const title = hero.title || hero.heading || hero.headline || page?.title || fallbackTitle;
   const subtitle =
     hero.subtitle ||
     hero.subheading ||
+    hero.subtext ||
+    hero.subheadline ||
     introduction.content ||
     introduction.text ||
     page?.seo?.description ||
@@ -47,19 +85,44 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
       <section className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-32 py-20 md:px-0 px-4">
         <div className="max-w-7xl mx-auto">
           <nav className="mb-4 text-sm text-purple-100 font-medium">
-            <Link href="/" className="hover:text-white cursor-pointer">
-              Home
-            </Link>
-            {" >> "}
-            <span className="text-white">{title}</span>
+            {breadcrumbs?.length ? (
+              breadcrumbs.map((item, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <span key={`${item.label}-${index}`}>
+                    {index > 0 ? " >> " : null}
+                    {isLast || !item.href ? (
+                      <span className="text-white">{item.label}</span>
+                    ) : (
+                      <Link href={item.href} className="hover:text-white cursor-pointer">
+                        {item.label}
+                      </Link>
+                    )}
+                  </span>
+                );
+              })
+            ) : (
+              <>
+                <Link href="/" className="hover:text-white cursor-pointer">
+                  Home
+                </Link>
+                {" >> "}
+                <span className="text-white">{title}</span>
+              </>
+            )}
           </nav>
           <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-5">
             {title}
           </h1>
-          {subtitle ? (
+          {subtitle && !hasHtml(subtitle) ? (
             <p className="max-w-4xl text-base md:text-lg leading-relaxed text-purple-50">
               {subtitle}
             </p>
+          ) : subtitle ? (
+            <div
+              className="max-w-4xl text-base md:text-lg leading-relaxed text-purple-50 cms-rich-text [&_p]:mb-0"
+              dangerouslySetInnerHTML={{ __html: subtitle }}
+            />
           ) : null}
         </div>
       </section>
@@ -72,9 +135,7 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
         ) : null}
 
         {normalizeTextList(introduction.content || introduction.text).map((paragraph, index) => (
-          <p key={index} className="text-justify text-base leading-relaxed mb-6">
-            {paragraph}
-          </p>
+          <CmsRichBlock key={index} html={paragraph} className="mb-6" />
         ))}
 
         <div className="space-y-10 text-base leading-relaxed">
@@ -91,9 +152,7 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
                 ) : null}
 
                 {paragraphs.map((paragraph, paragraphIndex) => (
-                  <p key={paragraphIndex} className="text-justify">
-                    {paragraph}
-                  </p>
+                  <CmsRichBlock key={paragraphIndex} html={paragraph} />
                 ))}
 
                 {Array.isArray(section.items) && section.items.length ? (

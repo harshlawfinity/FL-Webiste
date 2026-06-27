@@ -31,6 +31,7 @@ import FaqSectionDelhi from "@/components/FaqSectionDelhi";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
+import TD from "@/components/TD";
 import Link from "next/link";
 
 export default function FactoryLicenceDelhiPage() {
@@ -301,6 +302,9 @@ export default function FactoryLicenceDelhiPage() {
               <HiOfficeBuilding className="text-[#7c4bdf]" />
               Factory Licence Fees In Delhi
             </h2>
+            <div data-cms-preserve="true" className="md:w-full w-[90vw]">
+              <TD />
+            </div>
           </section>
           <Section
             id="penalties"

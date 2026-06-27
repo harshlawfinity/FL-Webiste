@@ -2,7 +2,8 @@ import AboutPage from "@/components/pages/AboutPage";
 import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
 
-export const dynamic = "force-dynamic";
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 const fallbackMetadata = {
   title: "About US - Factorylicence",

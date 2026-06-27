@@ -115,6 +115,14 @@ function contentFingerprint(html = "") {
   return stripHtml(html).replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function normalizeHeadingText(value = "") {
+  return stripHtml(value)
+    .replace(/\s+/g, " ")
+    .replace(/[?!.:]+$/g, "")
+    .trim()
+    .toLowerCase();
+}
+
 function slugify(value = "") {
   return String(value)
     .trim()
@@ -342,6 +350,66 @@ function findHeadingEl(sectionEl) {
   return sectionEl.querySelector(":scope > h1, :scope > h2, :scope > h3");
 }
 
+function iconSvgPathForHeading(heading = "") {
+  const normalized = normalizeHeadingText(heading);
+  if (/benefit|why choose/.test(normalized)) {
+    return "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z";
+  }
+  if (/why|important|need|help/.test(normalized)) {
+    return "M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 17.25h.008M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z";
+  }
+  if (/document|certificate|authorisation|authorization|consent|noc/.test(normalized)) {
+    return "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5A3.375 3.375 0 0 0 10.125 2.25H6.75A2.25 2.25 0 0 0 4.5 4.5v15A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-5.25Z";
+  }
+  if (/eligible|who/.test(normalized)) {
+    return "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0";
+  }
+  if (/step|process|apply/.test(normalized)) {
+    return "M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.008v.008H3.75V6.75Zm0 5.25h.008v.008H3.75V12Zm0 5.25h.008v.008H3.75v-.008Z";
+  }
+  if (/fee|cost|price/.test(normalized)) {
+    return "M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125V6m-19.5 0v9.75m19.5-9.75v9.75m0 0v.375c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 16.125v-.375m19.5 0H2.25";
+  }
+  if (/timeline|renewal|time/.test(normalized)) {
+    return "M12 6v6h4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z";
+  }
+  if (/penalt|lost|fine|non-compliance/.test(normalized)) {
+    return "M12 9v3.75m0 3.75h.008v.008H12v-.008ZM10.29 3.86 1.82 18a2.25 2.25 0 0 0 1.93 3.375h16.5A2.25 2.25 0 0 0 22.18 18L13.71 3.86a2.25 2.25 0 0 0-3.42 0Z";
+  }
+  return "M3.75 4.5h16.5M3.75 9h16.5M3.75 13.5h16.5M3.75 18h16.5";
+}
+
+function createHeadingIcon(heading = "") {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("stroke", "currentColor");
+  svg.setAttribute("stroke-width", "2");
+  svg.setAttribute("stroke-linecap", "round");
+  svg.setAttribute("stroke-linejoin", "round");
+  svg.setAttribute("aria-hidden", "true");
+  svg.classList.add("inline", "mr-2", "h-[1em]", "w-[1em]", "align-[-0.125em]", "text-[#7A3EF2]");
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", iconSvgPathForHeading(heading));
+  svg.appendChild(path);
+  return svg;
+}
+
+function ensureHeadingIcon(headingEl, heading = "") {
+  if (!headingEl || /^H1$/i.test(headingEl.tagName)) return;
+
+  const label = getHeadingLabel(headingEl);
+  // Section wrappers without title render an empty h2; child components (e.g. fee calculators) supply their own.
+  if (!label) {
+    headingEl.style.display = "none";
+    return;
+  }
+
+  if (headingEl.querySelector("svg, i")) return;
+  headingEl.insertBefore(createHeadingIcon(heading || label), headingEl.firstChild);
+}
+
 function setHeading(sectionEl, heading) {
   if (!heading || !sectionEl) return;
   let headingEl = findHeadingEl(sectionEl);
@@ -353,7 +421,7 @@ function setHeading(sectionEl, heading) {
 
   const icon = headingEl.querySelector("svg, i");
   headingEl.replaceChildren();
-  if (icon) headingEl.appendChild(icon);
+  headingEl.appendChild(icon || createHeadingIcon(heading));
   headingEl.append(document.createTextNode(` ${heading}`));
 }
 
@@ -438,7 +506,8 @@ function appendCmsSection({ key, section, targetParent, nested = false }) {
   if (heading) {
     const h = document.createElement(nested ? "h3" : "h2");
     h.className = nested ? "text-xl font-semibold text-[#7A3EF2]" : headingClassName();
-    h.textContent = heading;
+    if (!nested) h.appendChild(createHeadingIcon(heading));
+    h.append(document.createTextNode(nested ? heading : ` ${heading}`));
     sectionEl.appendChild(h);
   }
 
@@ -502,10 +571,8 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
   container.className = "cms-sync-content cms-rich-text space-y-4";
 
   const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
-  // When a static table is preserved in the page, skip duplicate CMS tables.
-  const nested = (Array.isArray(section.nestedSections) ? section.nestedSections : []).filter(
-    (item) => !(preserveEl && item?.type === "table")
-  );
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  const hasCmsTable = nested.some((item) => item?.type === "table") || section.type === "table";
   const beforeBody = nested.filter((item) => item.placement === "beforeBody");
   const afterBody = nested.filter((item) => item.placement !== "beforeBody");
 
@@ -522,12 +589,29 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
   setHeading(sectionEl, contentHeading(section));
   clearSyncedContent(sectionEl);
   hideLegacySectionChildren(sectionEl, preserveIds);
+  // CMS fee tables should replace preserved static tables; static tables remain the fallback when CMS has no table.
+  if (preserveEl && hasCmsTable) {
+    preserveEl.style.display = "none";
+    preserveEl.dataset.cmsLegacyHidden = "true";
+  }
 
-  if (preserveEl) {
+  if (preserveEl && !hasCmsTable) {
     sectionEl.insertBefore(container, preserveEl);
   } else {
     sectionEl.appendChild(container);
   }
+}
+
+function findSectionElementByHeading(heading) {
+  const wanted = normalizeHeadingText(heading);
+  if (!wanted) return null;
+
+  return Array.from(document.querySelectorAll("h2, h3"))
+    .filter((headingEl) => !headingEl.closest("aside, nav, form"))
+    .map((headingEl) => ({ headingEl, text: normalizeHeadingText(headingEl.textContent || "") }))
+    .filter(({ text }) => text === wanted)
+    .map(({ headingEl }) => headingEl.parentElement || headingEl)
+    .find(Boolean) || null;
 }
 
 function pageContent(page) {
@@ -542,9 +626,15 @@ function customSections(page) {
   };
 }
 
+function quickLinksNav() {
+  return Array.from(document.querySelectorAll("aside nav")).find((el) =>
+    /quick links|connected services/i.test(el.closest("aside")?.textContent || "")
+  );
+}
+
 function addQuickLink(id, label) {
   if (!id || !label) return;
-  const nav = Array.from(document.querySelectorAll("aside nav")).find((el) => /quick links/i.test(el.closest("aside")?.textContent || ""));
+  const nav = quickLinksNav();
   if (!nav || nav.querySelector(`[data-cms-link="${id}"]`)) return;
 
   const button = document.createElement("button");
@@ -556,6 +646,192 @@ function addQuickLink(id, label) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   });
   nav.appendChild(button);
+}
+
+function getHeadingLabel(headingEl) {
+  return stripHtml(headingEl?.textContent || "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Resolve the scroll target id for an h2 (parent section id or slugified heading).
+function resolveSectionId(headingEl, mainColumn) {
+  let el = headingEl.parentElement;
+  while (el && el !== mainColumn) {
+    if (el.id) return el.id;
+    el = el.parentElement;
+  }
+
+  const label = getHeadingLabel(headingEl);
+  const generatedId = slugify(label);
+  const parent = headingEl.parentElement;
+  if (parent && generatedId && !parent.id) {
+    parent.id = generatedId;
+  }
+  return parent?.id || generatedId || null;
+}
+
+// Collect h2 headings for the horizontal TOC (main content + FAQ when outside main column).
+function mainColumnTocItems() {
+  const mainColumn = findMainContentColumn();
+  if (!mainColumn) return [];
+
+  const headingEls = Array.from(mainColumn.querySelectorAll("h2"));
+  const faqRoot = document.getElementById("faqs");
+  const faqHeading = faqRoot?.querySelector("h2");
+  if (faqHeading && !mainColumn.contains(faqHeading)) {
+    headingEls.push(faqHeading);
+  }
+
+  headingEls.sort((a, b) => {
+    const position = a.compareDocumentPosition(b);
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+    return 0;
+  });
+
+  const seen = new Set();
+  return headingEls
+    .filter((headingEl) => {
+      if (headingEl.closest("[data-cms-horizontal-toc='true'], aside, nav, form")) return false;
+      return Boolean(getHeadingLabel(headingEl));
+    })
+    .map((headingEl) => ({
+      id: resolveSectionId(headingEl, mainColumn),
+      label: getHeadingLabel(headingEl),
+    }))
+    .filter((item) => {
+      if (!item.id || !item.label || !document.getElementById(item.id)) return false;
+      if (seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    });
+}
+
+function syncHorizontalToc() {
+  const items = mainColumnTocItems();
+  const mainColumn = findMainContentColumn();
+  if (!items.length || !mainColumn || document.querySelector("[data-cms-horizontal-toc='true']")) return;
+
+  const wrapper = document.createElement("div");
+  wrapper.dataset.cmsHorizontalToc = "true";
+  wrapper.className = "sticky top-24 z-20 mb-14 w-full rounded-xl border border-violet-100 bg-violet-50/95 p-2 shadow-sm backdrop-blur";
+
+  const createArrowButton = (direction) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label", `Scroll table of contents ${direction}`);
+    button.className = "shrink-0 rounded-full bg-slate-200/90 p-2 text-slate-600 transition-colors hover:bg-slate-300";
+    button.innerHTML = direction === "left"
+      ? '<svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L9.06 10l3.71 3.71a.75.75 0 1 1-1.06 1.06l-4.24-4.24a.75.75 0 0 1 0-1.06l4.24-4.24a.75.75 0 0 1 1.08 0Z" clip-rule="evenodd"/></svg>'
+      : '<svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L10.94 10 7.23 6.29a.75.75 0 1 1 1.06-1.06l4.24 4.24a.75.75 0 0 1 0 1.06l-4.24 4.24a.75.75 0 0 1-1.08 0Z" clip-rule="evenodd"/></svg>';
+    return button;
+  };
+
+  const scroller = document.createElement("div");
+  scroller.className = "flex min-w-0 flex-1 gap-2 overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
+
+  const leftButton = createArrowButton("left");
+  const rightButton = createArrowButton("right");
+  const scrollToc = (direction) => {
+    scroller.scrollBy({ left: direction === "left" ? -260 : 260, behavior: "smooth" });
+  };
+  leftButton.addEventListener("click", () => scrollToc("left"));
+  rightButton.addEventListener("click", () => scrollToc("right"));
+
+  items.forEach((item) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.tocId = item.id;
+    button.className = "shrink-0 rounded-lg border border-transparent px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-700 transition-colors hover:bg-white hover:text-[#7A3EF2]";
+    button.textContent = item.label;
+    button.addEventListener("click", () => {
+      const target = document.getElementById(item.id);
+      if (!target) return;
+      const y = target.getBoundingClientRect().top + window.pageYOffset - 130;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+    scroller.appendChild(button);
+  });
+
+  const inner = document.createElement("div");
+  inner.className = "flex items-center gap-2";
+  inner.append(leftButton, scroller, rightButton);
+  wrapper.appendChild(inner);
+  mainColumn.insertBefore(wrapper, mainColumn.firstChild);
+
+  // Keep the same section-aware feel as Lawfinity's horizontal TOC without adding a new component.
+  const syncActiveItem = () => {
+    const scrollLine = window.scrollY + 150;
+    let activeId = items[0]?.id;
+    items.forEach((item) => {
+      const target = document.getElementById(item.id);
+      if (!target) return;
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      if (top <= scrollLine) activeId = item.id;
+    });
+
+    scroller.querySelectorAll("[data-toc-id]").forEach((button) => {
+      const isActive = button.dataset.tocId === activeId;
+      button.classList.toggle("bg-[#7A3EF2]", isActive);
+      button.classList.toggle("text-white", isActive);
+      button.classList.toggle("shadow-sm", isActive);
+      button.classList.toggle("text-slate-700", !isActive);
+    });
+
+    const activeButton = scroller.querySelector(`[data-toc-id="${activeId}"]`);
+    if (activeButton) {
+      const left = activeButton.offsetLeft - scroller.clientWidth / 2 + activeButton.offsetWidth / 2;
+      scroller.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+    }
+  };
+
+  const wheelToPageScroll = (event) => {
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    window.scrollBy(0, event.deltaY);
+    event.preventDefault();
+  };
+
+  syncActiveItem();
+  window.addEventListener("scroll", syncActiveItem, { passive: true });
+  window.addEventListener("resize", syncActiveItem);
+  scroller.addEventListener("wheel", wheelToPageScroll, { passive: false });
+
+  return () => {
+    window.removeEventListener("scroll", syncActiveItem);
+    window.removeEventListener("resize", syncActiveItem);
+    scroller.removeEventListener("wheel", wheelToPageScroll);
+  };
+}
+
+function syncConnectedServices(page) {
+  const services = pageContent(page)?.connectedServices || page?.connectedServices || [];
+  const nav = quickLinksNav();
+  if (!nav) return;
+
+  const card = nav.parentElement;
+  if (!Array.isArray(services) || !services.length) {
+    if (card) card.style.display = "none";
+    return;
+  }
+
+  if (card) card.style.display = "";
+  const title = card?.querySelector("h3");
+  if (title) title.textContent = "Connected Services";
+  nav.replaceChildren();
+
+  services.forEach((service, index) => {
+    const label = stripHtml(service?.name || service?.title || service?.label || "");
+    const href = service?.link || service?.url || service?.href || (service?.slug ? `/${service.slug}` : "");
+    if (!label || !href) return;
+
+    const anchor = document.createElement("a");
+    anchor.dataset.cmsLink = `connected-service-${index}`;
+    anchor.className = "block hover:text-[#7A3EF2]";
+    anchor.href = href;
+    anchor.textContent = label;
+    nav.appendChild(anchor);
+  });
 }
 
 function findFaqRoot() {
@@ -767,7 +1043,7 @@ export default function FactoryCmsDomSync({ page }) {
     const content = pageContent(page);
     if (!content) return;
     restoreLegacyContent();
-    document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true']").forEach((node) => node.remove());
+    document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true'], [data-cms-horizontal-toc='true']").forEach((node) => node.remove());
 
     const hero = content.hero || {};
     const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
@@ -803,7 +1079,9 @@ export default function FactoryCmsDomSync({ page }) {
 
     const mainColumn = findMainContentColumn();
     const cmsCustomSections = customSections(page);
+    const contentOrder = Array.isArray(content.sectionOrder) ? content.sectionOrder : [];
     const orderedCustomKeys = [
+      ...contentOrder,
       ...(Array.isArray(page.sectionOrder) ? page.sectionOrder : []),
       ...Object.keys(cmsCustomSections),
     ].filter((key, index, arr) => key && arr.indexOf(key) === index);
@@ -813,18 +1091,22 @@ export default function FactoryCmsDomSync({ page }) {
       const section = cmsCustomSections[key] || content[key];
       if (!section) return;
 
-      const existingEl = findSectionElement(key);
+      const heading = contentHeading(section, key);
+      const existingEl = findSectionElement(key) || findSectionElementByHeading(heading);
       if (existingEl) {
         syncExistingCustomSection(existingEl, section, new Set(orderedCustomKeys));
         return;
       }
 
       const added = appendCmsSection({ key, section, targetParent: mainColumn });
-      if (added) addQuickLink(added.id, contentHeading(section, key));
+      if (added) addQuickLink(added.id, heading);
     });
 
     syncFaqs(page);
     syncBreadcrumbs(page);
+    syncHorizontalToc();
+    syncConnectedServices(page);
+    mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
     normalizeInternalLinks(document);
   }, [page]);
 
