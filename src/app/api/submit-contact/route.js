@@ -6,10 +6,12 @@ export async function POST(req) {
     const params = new URLSearchParams(body);
 
     const name = params.get("name");
-    const phone = params.get("phone");
+    const phone = params.get("phone") || params.get("contact");
     const email = params.get("email");
+    const state = params.get("state");
+    const city = params.get("city");
     const description = params.get("description");
-    const pageSource = params.get("pageSource");
+    const pageSource = params.get("pageSource") || params.get("pageUrl");
     const timestamp = params.get("timestamp");
     const source = params.get("source");
 
@@ -24,6 +26,8 @@ export async function POST(req) {
     sheetData.append("name", name);
     sheetData.append("phone", phone);
     sheetData.append("email", email);
+    sheetData.append("state", state || "");
+    sheetData.append("city", city || "");
     sheetData.append("description", description);
     sheetData.append("pageSource", pageSource);
     sheetData.append("timestamp", timestamp);
@@ -55,6 +59,8 @@ export async function POST(req) {
           name,
           phone,
           email,
+          state: state || "",
+          city: city || "",
           description,
           pageSource,
           timestamp,

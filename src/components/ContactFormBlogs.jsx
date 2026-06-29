@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { FiUser, FiPhone, FiMail, FiMapPin } from "react-icons/fi";
 import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { getCitiesByState, OTHER_CITY_OPTION, STATE_OPTIONS } from "@/lib/cityStateOptions";
 
 const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
+    state: "",
+    city: "",
+    otherCity: "",
     description: "",
     pageSource: "",
   });
@@ -21,6 +25,7 @@ const HeroForm = ({ title, description }) => {
   const formCopy = getLeadFormCopy(pathname);
   const heading = title || formCopy.title;
   const subheading = description || formCopy.description;
+  const cityOptions = getCitiesByState(formData.state);
 
   const phoneRegex = /^\d{10}$/;
 
@@ -33,7 +38,15 @@ const HeroForm = ({ title, description }) => {
       e.target.setCustomValidity("");
     }
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      if (name === "state") {
+        return { ...prev, state: value, city: "", otherCity: "" };
+      }
+      if (name === "city" && value !== OTHER_CITY_OPTION) {
+        return { ...prev, city: value, otherCity: "" };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -50,6 +63,8 @@ const HeroForm = ({ title, description }) => {
       formBody.append("name", formData.name);
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
+      formBody.append("state", formData.state);
+      formBody.append("city", formData.city === OTHER_CITY_OPTION ? formData.otherCity : formData.city);
       formBody.append("description", formData.description);
       formBody.append("pageSource", formData.pageSource);
       formBody.append("timestamp", timestamp);
@@ -135,8 +150,62 @@ const HeroForm = ({ title, description }) => {
           />
         </div>
 
+        {/* State & City — side by side */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <div className="flex items-center gap-2 border border-gray-300 rounded-md p-2.5 shadow-sm min-w-0">
+            <FiMapPin className="text-gray-400 text-base shrink-0" />
+            <select
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate"
+              required
+            >
+              <option value="">State*</option>
+              {STATE_OPTIONS.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2 border border-gray-300 rounded-md p-2.5 shadow-sm min-w-0">
+            <FiMapPin className="text-gray-400 text-base shrink-0" />
+            <select
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate disabled:opacity-60"
+              disabled={!formData.state}
+              required
+            >
+              <option value="">City*</option>
+              {cityOptions.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {formData.city === OTHER_CITY_OPTION && (
+          <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
+            <FiMapPin className="text-gray-400 text-xl mr-3" />
+            <input
+              type="text"
+              name="otherCity"
+              value={formData.otherCity}
+              onChange={handleInputChange}
+              placeholder="Enter your city*"
+              className="w-full bg-transparent outline-none text-gray-700"
+              required
+            />
+          </div>
+        )}
+
         {/* Description */}
-       
 
         {/* Submit Button */}
         <button

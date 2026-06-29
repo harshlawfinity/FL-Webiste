@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { FiUser, FiPhone, FiMail, FiMapPin } from "react-icons/fi";
 import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { getCitiesByState, OTHER_CITY_OPTION, STATE_OPTIONS } from "@/lib/cityStateOptions";
 
 const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
+    state: "",
+    city: "",
+    otherCity: "",
     description: "",
     pageSource: "",
   });
@@ -21,6 +25,7 @@ const HeroForm = ({ title, description }) => {
   const formCopy = getLeadFormCopy(pathname);
   const heading = title || formCopy.title;
   const subheading = description || formCopy.description;
+  const cityOptions = getCitiesByState(formData.state);
 
   const phoneRegex = /^\d{10}$/;
 
@@ -33,7 +38,15 @@ const HeroForm = ({ title, description }) => {
       e.target.setCustomValidity("");
     }
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      if (name === "state") {
+        return { ...prev, state: value, city: "", otherCity: "" };
+      }
+      if (name === "city" && value !== OTHER_CITY_OPTION) {
+        return { ...prev, city: value, otherCity: "" };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -52,6 +65,8 @@ const HeroForm = ({ title, description }) => {
       formBody.append("name", formData.name);
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
+      formBody.append("state", formData.state);
+      formBody.append("city", formData.city === OTHER_CITY_OPTION ? formData.otherCity : formData.city);
       formBody.append("description", formData.description);
       formBody.append("pageSource", pageSourceValue);
       formBody.append("timestamp", timestamp);
@@ -85,41 +100,41 @@ const HeroForm = ({ title, description }) => {
   }, [pathname]);
 
   return (
-    <div className="max-w-lg mx-auto bg-white md:p-8 p-4 rounded-2xl">
-      <div className="text-left mb-4">
+    <div className="w-full max-w-lg mx-auto bg-white md:p-8 p-5 rounded-2xl shadow-xl">
+      <div className="text-left mb-5">
         <h2 className="md:text-xl text-lg font-semibold text-[#7A3EF2]">
           {heading}
         </h2>
-        <p className="text-gray-600 mt-2 text-xs ">
+        <p className="text-gray-600 mt-1.5 text-sm leading-relaxed">
           {subheading}
         </p>
       </div>
 
-      <form className="space-y-3" onSubmit={handleSubmit}>
+      <form className="space-y-2.5" onSubmit={handleSubmit}>
         {/* Name */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiUser className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiUser className="text-gray-400 text-lg shrink-0" />
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Your name*"
-            className="w-full bg-transparent outline-none text-gray-700"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             required
           />
         </div>
 
         {/* Phone */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiPhone className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiPhone className="text-gray-400 text-lg shrink-0" />
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleInputChange}
             placeholder="10-digit mobile number*"
-            className="w-full bg-transparent outline-none text-gray-700"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             pattern="^\d{10}$"
             title="Phone number must be exactly 10 digits"
             required
@@ -127,38 +142,93 @@ const HeroForm = ({ title, description }) => {
         </div>
 
         {/* Email */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiMail className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiMail className="text-gray-400 text-lg shrink-0" />
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="Your email address"
-            className="w-full bg-transparent outline-none text-gray-700"
+            placeholder="Your email address*"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             required
           />
         </div>
 
-        {/* Description */}
+        {/* State & City — side by side */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-2.5 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition min-w-0">
+            <FiMapPin className="text-gray-400 text-base shrink-0" />
+            <select
+              name="state"
+              value={formData.state}
+              onChange={handleInputChange}
+              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate"
+              required
+            >
+              <option value="">State*</option>
+              {STATE_OPTIONS.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-2.5 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition min-w-0">
+            <FiMapPin className="text-gray-400 text-base shrink-0" />
+            <select
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate disabled:opacity-60"
+              disabled={!formData.state}
+              required
+            >
+              <option value="">City*</option>
+              {cityOptions.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {formData.city === OTHER_CITY_OPTION && (
+          <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+            <FiMapPin className="text-gray-400 text-lg shrink-0" />
+            <input
+              type="text"
+              name="otherCity"
+              value={formData.otherCity}
+              onChange={handleInputChange}
+              placeholder="Enter your city*"
+              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
+              required
+            />
+          </div>
+        )}
+
+        {/* Message */}
         <textarea
           name="description"
           value={formData.description}
           onChange={handleInputChange}
           placeholder="What do you need help with?"
-          className="w-full border border-gray-300 rounded-md p-3 shadow-sm bg-white text-gray-700 outline-none"
-          rows="3"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 bg-gray-50/50 outline-none resize-y min-h-[88px] max-h-32 focus:border-[#7A3EF2] focus:ring-1 focus:ring-[#7A3EF2]/25 transition"
+          rows={3}
         />
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full ${
+          className={`w-full mt-1 ${
             isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-[#7A3EF2] hover:bg-[#612ce0]"
-          } text-white font-semibold py-3 rounded-md transition duration-300`}
+          } text-white font-semibold py-3 rounded-lg transition duration-300 text-sm`}
         >
           {isSubmitting ? "Submitting..." : "Let's Talk"}
         </button>
