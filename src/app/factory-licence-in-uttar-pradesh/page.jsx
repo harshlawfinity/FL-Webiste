@@ -1,7 +1,6 @@
 import FactoryLicenceUttarPradeshPage from "@/components/pages/FactoryLicenceUttarPradeshPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
-import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
+import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
+import { buildLandingPageMetadata } from "@/lib/cms";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
@@ -43,13 +42,11 @@ export async function generateMetadata() {
   return buildLandingPageMetadata("factory-licence-in-uttar-pradesh", fallbackMetadata);
 }
 
-export default async function Page() {
-  const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-uttar-pradesh");
+export default function Page() {
   return (
     <>
-      <FactoryCmsJsonLd page={cmsPage} />
       <FactoryLicenceUttarPradeshPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <CmsLandingBoundary slug="factory-licence-in-uttar-pradesh" />
     </>
   );
 }

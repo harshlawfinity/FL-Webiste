@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
 import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 const fallbackMetadata = {
   title: "Refund Cancellation - Factorylicence",
@@ -105,7 +109,15 @@ function RefundCancellationFallback() {
   );
 }
 
-export default async function Page() {
+export default function Page() {
+  return (
+    <Suspense fallback={<RefundCancellationFallback />}>
+      <RefundCmsContent />
+    </Suspense>
+  );
+}
+
+async function RefundCmsContent() {
   const cmsPage = await getFactoryCmsStaticPage("refund-cancellation");
 
   if (cmsPage) {

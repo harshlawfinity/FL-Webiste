@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 const fallbackMetadata = {
   title: "Payments - Factorylicence",
@@ -29,13 +33,7 @@ export async function generateMetadata() {
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
-const Payments = async () => {
-  const cmsPage = await getFactoryCmsStaticPage("payments");
-
-  if (cmsPage) {
-    return <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Payment Information" />;
-  }
-
+function PaymentsFallback() {
   return (
     <div>
         <section className="relative bg-[#f4f4fa] py-20 px-4 md:px-0">
@@ -81,22 +79,26 @@ const Payments = async () => {
                 </div>
               </div>
             </div>
-
-            {/* Right Column: QR Code */}
-            {/* <div className="flex justify-center md:justify-end">
-      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 w-fit">
-        <img
-          src="https://play-lh.googleusercontent.com/lomBq_jOClZ5skh0ELcMx4HMHAMW802kp9Z02_A84JevajkqD87P48--is1rEVPfzGVf"
-          alt="Scan QR"
-          className="w-56 h-56 rounded-md object-contain hover:scale-105 transition-transform duration-300"
-        />
-        <p className="text-center text-sm text-gray-500 mt-4">Scan to pay via UPI</p>
-      </div>
-    </div> */}
           </div>
         </section>
     </div>
   );
-};
+}
 
-export default Payments;
+export default function Page() {
+  return (
+    <Suspense fallback={<PaymentsFallback />}>
+      <PaymentsCmsContent />
+    </Suspense>
+  );
+}
+
+async function PaymentsCmsContent() {
+  const cmsPage = await getFactoryCmsStaticPage("payments");
+
+  if (cmsPage) {
+    return <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Payment Information" />;
+  }
+
+  return <PaymentsFallback />;
+}

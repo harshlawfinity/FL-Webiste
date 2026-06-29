@@ -1,5 +1,8 @@
 export { default } from "@/components/pages/ContactPage";
 
+// ISR: cache rendered page for 5 minutes.
+export const revalidate = 300;
+
 export const metadata = {
   title: "Contact US - Factorylicence",
   description:

@@ -8,7 +8,8 @@ import TrackingScript from "@/components/TrackingScript";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // Only load weights used across the site — avoids 9 separate font files on first paint.
+  weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
   display: "swap",
 });
@@ -95,6 +96,14 @@ export default function RootLayout({ children }) {
             __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
           }}
         />
+        {/* Preload LCP hero image for faster first paint */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/factory-license-registration.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
         {/* Schema.org JSON-LD — native script tag (Next.js Script strips ld+json content) */}
         <script
           id="schema-org"
@@ -102,8 +111,8 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
 
-        {/* Google Tag Manager */}
-        <Script id="gtm-script" strategy="afterInteractive">
+        {/* Third-party tags deferred until after load — keeps main thread free for LCP */}
+        <Script id="gtm-script" strategy="lazyOnload">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -113,8 +122,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* Meta Pixel Script */}
-        <Script id="meta-pixel" strategy="afterInteractive">
+        <Script id="meta-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -129,12 +137,11 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-WB9C1YGDMG"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -180,12 +187,11 @@ export default function RootLayout({ children }) {
           ></iframe>
         </noscript>
 
-        {/* Google tag (gtag.js) for Ads */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17199345901"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-ads" strategy="afterInteractive">
+        <Script id="google-ads" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

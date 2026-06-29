@@ -1042,72 +1042,98 @@ export default function FactoryCmsDomSync({ page }) {
   useEffect(() => {
     const content = pageContent(page);
     if (!content) return;
-    restoreLegacyContent();
-    document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true'], [data-cms-horizontal-toc='true']").forEach((node) => node.remove());
 
-    const hero = content.hero || {};
-    const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
-    const heroSubtitle = hero.subtext || page.seo?.description;
-    const firstH1 = document.querySelector("h1");
-    if (firstH1 && heroTitle) firstH1.textContent = heroTitle;
-    const heroParagraph = firstH1?.parentElement?.querySelector("p");
-    if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
+    const runSync = () => {
+      restoreLegacyContent();
+      document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true'], [data-cms-horizontal-toc='true']").forEach((node) => node.remove());
 
-    Object.entries(SECTION_IDS).forEach(([key, ids]) => {
-      const contentSection = content[key];
-      if (!contentSection) return;
-      const sectionEl = ids.map((id) => findSectionElement(id)).find(Boolean);
-      if (!sectionEl) return;
+      const hero = content.hero || {};
+      const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
+      const heroSubtitle = hero.subtext || page.seo?.description;
+      const firstH1 = document.querySelector("h1");
+      if (firstH1 && heroTitle) firstH1.textContent = heroTitle;
+      const heroParagraph = firstH1?.parentElement?.querySelector("p");
+      if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
 
-      setHeading(sectionEl, contentSection.heading);
-      syncTextBlocks(sectionEl, contentSection, key);
+      Object.entries(SECTION_IDS).forEach(([key, ids]) => {
+        const contentSection = content[key];
+        if (!contentSection) return;
+        const sectionEl = ids.map((id) => findSectionElement(id)).find(Boolean);
+        if (!sectionEl) return;
 
-      const nested = Array.isArray(contentSection.nestedSections) ? contentSection.nestedSections : [];
-      if (nested.length) {
-        const container = sectionEl.querySelector("[data-cms-synced='true']") || (() => {
-          const el = document.createElement("div");
-          el.dataset.cmsSynced = "true";
-          el.className = "cms-sync-content cms-rich-text space-y-4";
-          sectionEl.appendChild(el);
-          return el;
-        })();
-        nested.forEach((nestedSection, index) => {
-          renderNestedInto(container, nestedSection, index, contentSection);
-        });
+        setHeading(sectionEl, contentSection.heading);
+        syncTextBlocks(sectionEl, contentSection, key);
+
+        const nested = Array.isArray(contentSection.nestedSections) ? contentSection.nestedSections : [];
+        if (nested.length) {
+          const container = sectionEl.querySelector("[data-cms-synced='true']") || (() => {
+            const el = document.createElement("div");
+            el.dataset.cmsSynced = "true";
+            el.className = "cms-sync-content cms-rich-text space-y-4";
+            sectionEl.appendChild(el);
+            return el;
+          })();
+          nested.forEach((nestedSection, index) => {
+            renderNestedInto(container, nestedSection, index, contentSection);
+          });
+        }
+      });
+
+      const mainColumn = findMainContentColumn();
+      const cmsCustomSections = customSections(page);
+      const contentOrder = Array.isArray(content.sectionOrder) ? content.sectionOrder : [];
+      const orderedCustomKeys = [
+        ...contentOrder,
+        ...(Array.isArray(page.sectionOrder) ? page.sectionOrder : []),
+        ...Object.keys(cmsCustomSections),
+      ].filter((key, index, arr) => key && arr.indexOf(key) === index);
+
+      orderedCustomKeys.forEach((key) => {
+        if (SKIP_RENDER_IDS.has(key) || SECTION_IDS[key]) return;
+        const section = cmsCustomSections[key] || content[key];
+        if (!section) return;
+
+        const heading = contentHeading(section, key);
+        const existingEl = findSectionElement(key) || findSectionElementByHeading(heading);
+        if (existingEl) {
+          syncExistingCustomSection(existingEl, section, new Set(orderedCustomKeys));
+          return;
+        }
+
+        const added = appendCmsSection({ key, section, targetParent: mainColumn });
+        if (added) addQuickLink(added.id, heading);
+      });
+
+      syncFaqs(page);
+      syncBreadcrumbs(page);
+      syncHorizontalToc();
+      syncConnectedServices(page);
+      mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
+      normalizeInternalLinks(document);
+    };
+
+    // Defer DOM mutations until after first paint to protect LCP/CLS scores.
+    let cancelled = false;
+    let idleId;
+    let timeoutId;
+
+    const startSync = () => {
+      if (!cancelled) runSync();
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(startSync, { timeout: 1500 });
+    } else {
+      timeoutId = window.setTimeout(startSync, 0);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleId && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
       }
-    });
-
-    const mainColumn = findMainContentColumn();
-    const cmsCustomSections = customSections(page);
-    const contentOrder = Array.isArray(content.sectionOrder) ? content.sectionOrder : [];
-    const orderedCustomKeys = [
-      ...contentOrder,
-      ...(Array.isArray(page.sectionOrder) ? page.sectionOrder : []),
-      ...Object.keys(cmsCustomSections),
-    ].filter((key, index, arr) => key && arr.indexOf(key) === index);
-
-    orderedCustomKeys.forEach((key) => {
-      if (SKIP_RENDER_IDS.has(key) || SECTION_IDS[key]) return;
-      const section = cmsCustomSections[key] || content[key];
-      if (!section) return;
-
-      const heading = contentHeading(section, key);
-      const existingEl = findSectionElement(key) || findSectionElementByHeading(heading);
-      if (existingEl) {
-        syncExistingCustomSection(existingEl, section, new Set(orderedCustomKeys));
-        return;
-      }
-
-      const added = appendCmsSection({ key, section, targetParent: mainColumn });
-      if (added) addQuickLink(added.id, heading);
-    });
-
-    syncFaqs(page);
-    syncBreadcrumbs(page);
-    syncHorizontalToc();
-    syncConnectedServices(page);
-    mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
-    normalizeInternalLinks(document);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, [page]);
 
   return null;

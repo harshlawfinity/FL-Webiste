@@ -1,6 +1,10 @@
 import TermsConditionsPage from "@/components/pages/TermsConditionsPage";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+import { Suspense } from "react";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 const fallbackMetadata = {
   title: "Terms & Conditions – Factorylicence",
@@ -29,7 +33,15 @@ export async function generateMetadata() {
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
-export default async function Page() {
+export default function Page() {
+  return (
+    <Suspense fallback={<TermsConditionsPage />}>
+      <TermsCmsContent />
+    </Suspense>
+  );
+}
+
+async function TermsCmsContent() {
   const cmsPage = await getFactoryCmsStaticPage("terms-conditions");
 
   if (cmsPage) {

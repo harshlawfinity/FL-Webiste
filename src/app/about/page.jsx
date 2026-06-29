@@ -1,5 +1,5 @@
 import AboutPage from "@/components/pages/AboutPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
+import { CmsStaticSyncBoundary } from "@/components/cms/FactoryCmsJsonLd";
 import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
@@ -40,12 +40,11 @@ export async function generateMetadata() {
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
-export default async function Page() {
-  const cmsPage = await getFactoryCmsStaticPage("about");
+export default function Page() {
   return (
     <>
       <AboutPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <CmsStaticSyncBoundary pageKey="about" />
     </>
   );
 }

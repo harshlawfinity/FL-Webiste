@@ -1,9 +1,8 @@
 // app/factory-licence-in-delhi/page.jsx
 
 import FireNOCDelhiPage from "@/components/pages/FireNOCDelhiPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
-import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
+import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
+import { buildLandingPageMetadata } from "@/lib/cms";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
@@ -44,13 +43,11 @@ export async function generateMetadata() {
   return buildLandingPageMetadata("fire-noc-in-delhi", fallbackMetadata);
 }
 
-export default async function Page() {
-  const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-delhi");
+export default function Page() {
   return (
     <>
-      <FactoryCmsJsonLd page={cmsPage} />
       <FireNOCDelhiPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <CmsLandingBoundary slug="fire-noc-in-delhi" />
     </>
   );
 }
