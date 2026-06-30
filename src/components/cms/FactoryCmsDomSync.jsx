@@ -35,8 +35,8 @@ const SECTION_IDS = {
 
 const SKIP_RENDER_IDS = new Set(["hero", "breadcrumbs", "connectedServices", "pricing", "faqs", "faq"]);
 
-// Static/listing pages with their own layout — no sticky horizontal TOC bar.
-const HORIZONTAL_TOC_SKIP_PATHS = new Set(["/blogs", "/contact"]);
+// Horizontal TOC disabled site-wide — re-enable by uncommenting syncHorizontalToc() below.
+// const HORIZONTAL_TOC_SKIP_PATHS = new Set(["/blogs", "/contact"]);
 
 const LIST_CLASS = "list-disc pl-6 space-y-2 text-gray-800";
 const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
@@ -1469,9 +1469,10 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
 
       syncFaqs(activePage);
       syncBreadcrumbs(activePage);
-      if (!HORIZONTAL_TOC_SKIP_PATHS.has(pathname)) {
-        syncHorizontalToc();
-      }
+      // Horizontal TOC disabled on all static + dynamic CMS pages.
+      // if (!HORIZONTAL_TOC_SKIP_PATHS.has(pathname)) {
+      //   syncHorizontalToc();
+      // }
       syncConnectedServices(activePage);
       mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
       normalizeInternalLinks(document);
