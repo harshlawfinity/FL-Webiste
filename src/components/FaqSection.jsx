@@ -64,6 +64,21 @@ const faqs = [
     answer:
       "To obtain a No Objection Certificate (NOC) and to fill the online application for pollution control board, you need to go for pollution noc apply from your State Pollution Control Board (SPCB) or Pollution Control Committee (e.g., DPCC in Delhi). You must apply for two mandatory consents online: Consent to Establish (CTE) before setting up your unit, and Consent to Operate (CTO) before starting production. The next step is to fill the form, upload the required documents, and pay the pollution noc fees that is asked in the registration portal.",
   },
+  {
+    question: "Is a Fire NOC required for commercial buildings?",
+    answer:
+      "Yes, for most constructions, it is required to have a fire noc for building to meet with fire safety regulations. The Fire Department issues this fire noc for commercial buildings after a safety inspection to assess the presence of fire prevention systems, emergency exits, firefighting equipment and other fire and safety related items. Many times this certificate is needed prior to the opening of businesses or for occupancy approval.",
+  },
+  {
+    question: "Is a Fire NOC for hospital mandatory?",
+    answer:
+      "Yes, all hospitals are required to have a fire noc prior to opening in order to ensure the safety of patients, staff and visitors. You are required to specifically apply for a fire noc for hospital with the fire and emergency services department. Approval and renewal is dependent upon regular inspections and compliance with fire safety norms.",
+  },
+  {
+    question: "Do restaurants need a Fire NOC?",
+    answer:
+      "Yes, it is usually required to have a fire noc for restaurant before opening or running a eatery. This is because, restaurants are at high risk for fire and are known to use cooking equipment, LPG cylinders and electrical appliances. The NOC is issued by the Fire Department, who confirms that the restaurant has adequate fire safety measures, including fire extinguishers, emergency exits, smoke detection and more to ensure safety.",
+  },
 ];
 
 export default function FaqSection() {
