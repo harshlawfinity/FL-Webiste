@@ -8,10 +8,11 @@ import TrackingScript from "@/components/TrackingScript";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  // Only load weights used across the site — avoids 9 separate font files on first paint.
-  weight: ["400", "500", "600", "700"],
+  // 400/600/700 cover body, semibold headings, and bold — drop 500 to save a font file.
+  weight: ["400", "600", "700"],
   variable: "--font-poppins",
   display: "swap",
+  adjustFontFallback: true,
 });
 
 export const metadata = {
@@ -122,6 +123,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
+        {/* Meta pixel — GTM already loads GA/Ads; avoid duplicate gtag.js bundles */}
         <Script id="meta-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s)
@@ -134,19 +136,6 @@ export default function RootLayout({ children }) {
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '777415601527541');
             fbq('track', 'PageView');
-          `}
-        </Script>
-
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-WB9C1YGDMG"
-          strategy="lazyOnload"
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-WB9C1YGDMG');
           `}
         </Script>
       </head>
@@ -186,19 +175,6 @@ export default function RootLayout({ children }) {
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
-
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17199345901"
-          strategy="lazyOnload"
-        />
-        <Script id="google-ads" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17199345901');
-          `}
-        </Script>
 
         <noscript>
           <img

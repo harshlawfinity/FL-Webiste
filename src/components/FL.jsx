@@ -30,6 +30,8 @@ const FL = ({ mobile = false }) => {
         <img
           src={SEO_ASSETS.factoryLicenceLogo}
           alt="Factory Licence"
+          width={96}
+          height={72}
           className="w-24 h-auto"
         />
       </div>
@@ -48,8 +50,11 @@ const FL = ({ mobile = false }) => {
           <img
             src={SEO_ASSETS.factoryLicenceLogo}
             alt="Factory License Logo Gif"
-            className="w-32"
+            width={128}
+            height={96}
+            className="w-32 h-auto"
             loading="lazy"
+            decoding="async"
           />
         </div>
       )}

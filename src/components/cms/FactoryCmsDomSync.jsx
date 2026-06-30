@@ -890,18 +890,9 @@ function getTocStickyOffset(tocEl) {
   return header + tocHeight + 12;
 }
 
-// Insert after the first h2 section so the sticky bar never covers the calculator heading.
-function findTocInsertAfterNode(mainColumn) {
-  const firstH2 = Array.from(mainColumn.querySelectorAll("h2")).find(
-    (heading) => !heading.closest("[data-cms-horizontal-toc='true'], aside, nav, form")
-  );
-  if (!firstH2) return null;
-
-  let node = firstH2;
-  while (node.parentElement && node.parentElement !== mainColumn) {
-    node = node.parentElement;
-  }
-  return node.parentElement === mainColumn ? node : firstH2.parentElement;
+// Hero video is always above the content grid — TOC at the column top sits directly below it.
+function findTocInsertBeforeNode(mainColumn) {
+  return mainColumn.firstChild;
 }
 
 function applyTocScrollMargins(tocEl, items) {
@@ -921,7 +912,7 @@ function syncHorizontalToc() {
   wrapper.dataset.cmsHorizontalToc = "true";
   // Stay within column width on mobile — negative margins caused page-wide horizontal overflow.
   wrapper.className =
-    "sticky top-[4.5rem] md:top-24 z-20 mb-6 md:mb-14 w-full max-w-full rounded-none sm:rounded-xl border-y sm:border border-violet-100 bg-violet-50/95 px-1.5 py-2.5 sm:p-2 shadow-sm backdrop-blur";
+    "sticky top-[4.5rem] md:top-24 z-20 mb-12 md:mb-14 w-full max-w-full rounded-none sm:rounded-xl border-y sm:border border-violet-100 bg-violet-50/95 px-1.5 py-2.5 sm:p-2 shadow-sm backdrop-blur";
 
   const createArrowButton = (direction) => {
     const button = document.createElement("button");
@@ -987,14 +978,12 @@ function syncHorizontalToc() {
   inner.append(leftButton, scrollWrap, rightButton);
   wrapper.appendChild(inner);
 
-  // Place below the first section (e.g. fee calculator) — not above its heading.
-  const insertAfter = findTocInsertAfterNode(mainColumn);
-  if (insertAfter?.nextSibling) {
-    mainColumn.insertBefore(wrapper, insertAfter.nextSibling);
-  } else if (insertAfter) {
-    mainColumn.appendChild(wrapper);
+  // Top of main column = directly below HeroVideoSection on every landing page.
+  const insertBefore = findTocInsertBeforeNode(mainColumn);
+  if (insertBefore) {
+    mainColumn.insertBefore(wrapper, insertBefore);
   } else {
-    mainColumn.insertBefore(wrapper, mainColumn.firstChild);
+    mainColumn.appendChild(wrapper);
   }
 
   applyTocScrollMargins(wrapper, items);
