@@ -24,7 +24,7 @@ async function LandingCmsSchema({ slug }) {
 async function LandingCmsDomSync({ slug }) {
   const page = await getFactoryCmsLandingPage(slug);
   if (!page) return null;
-  return <FactoryCmsDomSync page={page} />;
+  return <FactoryCmsDomSync page={page} landingSlug={slug} />;
 }
 
 // Stream CMS sync after page shell renders — improves TTFB/LCP on landing pages.
@@ -43,7 +43,7 @@ export function CmsLandingBoundary({ slug }) {
 async function StaticCmsSync({ pageKey }) {
   const page = await getFactoryCmsStaticPage(pageKey);
   if (!page) return null;
-  return <FactoryCmsDomSync page={page} />;
+  return <FactoryCmsDomSync page={page} staticPageKey={pageKey} />;
 }
 
 // Stream CMS DOM sync for static pages (home, about, blogs).

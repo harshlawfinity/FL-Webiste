@@ -2,6 +2,18 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { getCmsSchema } from "@/lib/cms";
+
+// Client-side CRM fetch — bypasses server ISR cache so publishes appear immediately.
+const CMS_CLIENT_BASE =
+  process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL || "https://internal.lawfinity.in";
+
+async function fetchFreshCmsPage(path) {
+  const res = await fetch(`${CMS_CLIENT_BASE}${path}`, { cache: "no-store" });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data?.success ? data.page : null;
+}
 
 const SECTION_IDS = {
   introduction: ["what-is"],
@@ -696,6 +708,58 @@ function buildSectionOrder(page) {
   ].filter((key, index, arr) => key && arr.indexOf(key) === index);
 }
 
+// True when CRM sent sectionOrder — static sections not listed should be hidden.
+function hasExplicitCmsSectionOrder(page) {
+  const content = pageContent(page);
+  return (
+    (Array.isArray(page?.sectionOrder) && page.sectionOrder.length > 0) ||
+    (Array.isArray(content?.sectionOrder) && content.sectionOrder.length > 0)
+  );
+}
+
+function domIdsForSectionKey(key, page) {
+  const ids = new Set();
+  sectionIdAliases(key).forEach((alias) => ids.add(alias));
+  SECTION_IDS[key]?.forEach((id) => ids.add(id));
+
+  const section = getSectionData(page, key);
+  const resolved = resolveSectionElement(key, section);
+  if (resolved?.id) ids.add(resolved.id);
+
+  return ids;
+}
+
+function collectActiveSectionDomIds(sectionOrder, page, syncedElements) {
+  const ids = new Set();
+
+  sectionOrder.forEach((key) => {
+    if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
+    domIdsForSectionKey(key, page).forEach((id) => ids.add(id));
+  });
+
+  syncedElements.forEach((el) => {
+    if (el?.id) ids.add(el.id);
+  });
+
+  return ids;
+}
+
+// Hide hardcoded page sections that CRM removed from sectionOrder (e.g. renewal on Fire NOC Delhi).
+function hideSectionsRemovedFromCms(mainColumn, page, sectionOrder, syncedElements) {
+  if (!mainColumn || !hasExplicitCmsSectionOrder(page)) return;
+
+  const activeIds = collectActiveSectionDomIds(sectionOrder, page, syncedElements);
+
+  Array.from(mainColumn.children).forEach((child) => {
+    if (child.dataset.cmsHorizontalToc === "true") return;
+    if (!child.id) return;
+    if (activeIds.has(child.id)) return;
+
+    child.style.display = "none";
+    child.dataset.cmsLegacyHidden = "true";
+  });
+}
+
 function sectionIdAliases(key = "") {
   const aliases = [key];
   if (/authorization/i.test(key)) aliases.push(key.replace(/authorization/gi, "authorisation"));
@@ -865,6 +929,8 @@ function mainColumnTocItems() {
   return headingEls
     .filter((headingEl) => {
       if (headingEl.closest("[data-cms-horizontal-toc='true'], aside, nav, form")) return false;
+      // Skip headings inside sections CRM removed from sectionOrder.
+      if (headingEl.closest("[data-cms-legacy-hidden='true']")) return false;
       return Boolean(getHeadingLabel(headingEl));
     })
     .map((headingEl) => ({
@@ -1275,35 +1341,38 @@ function syncBreadcrumbs(page) {
   }
 }
 
-export default function FactoryCmsDomSync({ page }) {
+export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const content = pageContent(page);
-    if (!content) return;
+    let cancelled = false;
+    let idleId;
+    let timeoutId;
 
-    const runSync = () => {
+    const runSync = (activePage) => {
+      const content = pageContent(activePage);
+      if (!content) return;
+
       restoreLegacyContent();
       document.querySelectorAll("[data-cms-added='true'], [data-cms-link], [data-cms-synced='true'], [data-cms-horizontal-toc='true']").forEach((node) => node.remove());
 
       const hero = content.hero || {};
-      const heroTitle = hero.headline || hero.heading || page.mainHeading || page.title;
-      const heroSubtitle = hero.subtext || page.seo?.description;
+      const heroTitle = hero.headline || hero.heading || activePage.mainHeading || activePage.title;
+      const heroSubtitle = hero.subtext || activePage.seo?.description;
       const firstH1 = document.querySelector("h1");
       if (firstH1 && heroTitle) firstH1.textContent = heroTitle;
       const heroParagraph = firstH1?.parentElement?.querySelector("p");
       if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
 
       const mainColumn = findMainContentColumn();
-      const sectionOrder = buildSectionOrder(page);
+      const sectionOrder = buildSectionOrder(activePage);
       const syncedElements = new Map();
       const preserveIds = new Set(sectionOrder);
 
-      // Sync every CMS section in sectionOrder, then reorder DOM to match.
       sectionOrder.forEach((key) => {
         if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
 
-        const section = getSectionData(page, key);
+        const section = getSectionData(activePage, key);
         if (!section) return;
 
         if (SECTION_IDS[key]) {
@@ -1315,32 +1384,52 @@ export default function FactoryCmsDomSync({ page }) {
       });
 
       reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
+      hideSectionsRemovedFromCms(mainColumn, activePage, sectionOrder, syncedElements);
 
-      syncFaqs(page);
-      syncBreadcrumbs(page);
-      // Blogs listing page has its own layout — skip sticky horizontal TOC there.
+      syncFaqs(activePage);
+      syncBreadcrumbs(activePage);
       if (pathname !== "/blogs") {
         syncHorizontalToc();
       }
-      syncConnectedServices(page);
+      syncConnectedServices(activePage);
       mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
       normalizeInternalLinks(document);
+
+      // Keep JSON-LD in sync when CRM publishes before the next ISR cycle.
+      const schema = getCmsSchema(activePage);
+      const schemaEl = document.getElementById("cms-schema-org");
+      if (schemaEl && schema) {
+        schemaEl.textContent = JSON.stringify(schema);
+      }
     };
 
-    // Defer DOM mutations until after first paint to protect LCP/CLS scores.
-    let cancelled = false;
-    let idleId;
-    let timeoutId;
-
-    const startSync = () => {
-      if (!cancelled) runSync();
+    const scheduleSync = (activePage) => {
+      if (cancelled) return;
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(() => runSync(activePage), { timeout: 1500 });
+      } else {
+        timeoutId = window.setTimeout(() => runSync(activePage), 0);
+      }
     };
 
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(startSync, { timeout: 1500 });
-    } else {
-      timeoutId = window.setTimeout(startSync, 0);
-    }
+    // Always pull the latest CRM snapshot on the client — server props may be ISR-cached.
+    (async () => {
+      let activePage = page;
+      try {
+        if (landingSlug) {
+          activePage =
+            (await fetchFreshCmsPage(`/api/public/factorylicence/landing-pages/${landingSlug}`)) ||
+            page;
+        } else if (staticPageKey) {
+          activePage =
+            (await fetchFreshCmsPage(`/api/public/factorylicence/static-pages/${staticPageKey}`)) ||
+            page;
+        }
+      } catch {
+        // Offline or CRM down — fall back to the server-rendered snapshot.
+      }
+      scheduleSync(activePage);
+    })();
 
     return () => {
       cancelled = true;
@@ -1349,7 +1438,7 @@ export default function FactoryCmsDomSync({ page }) {
       }
       if (timeoutId) window.clearTimeout(timeoutId);
     };
-  }, [page, pathname]);
+  }, [page, landingSlug, staticPageKey, pathname]);
 
   return null;
 }

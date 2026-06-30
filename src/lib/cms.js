@@ -3,13 +3,11 @@ import { cache } from "react";
 const CMS_BASE_URL =
   process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL ||
   process.env.CRM_CMS_BASE_URL ||
-  (process.env.NODE_ENV === "production"
-    ? "https://internal.lawfinity.in"
-    : "http://localhost:3000");
+  "https://internal.lawfinity.in";
 
-// Cache CMS responses across requests; revalidate periodically instead of no-store on every hit.
-const CMS_REVALIDATE_SECONDS = 300;
-const CMS_FETCH_TIMEOUT_MS = 8000;
+// Server fetch cache (ISR/metadata). Override via CMS_REVALIDATE_SECONDS env if needed.
+const CMS_REVALIDATE_SECONDS = Number(process.env.CMS_REVALIDATE_SECONDS || 60);
+const CMS_FETCH_TIMEOUT_MS = Number(process.env.CMS_FETCH_TIMEOUT_MS || 15000);
 
 async function fetchCms(path) {
   try {
@@ -35,8 +33,9 @@ async function fetchCms(path) {
     if (!isDynamicUsage && error?.name !== "AbortError") {
       console.error("[factory CMS] fetch failed:", path, error);
     }
-    if (error?.name === "AbortError") {
-      console.error("[factory CMS] fetch timeout:", path);
+    // Timeout is non-fatal — page shell renders and client sync fetches fresh CRM data.
+    if (error?.name === "AbortError" && process.env.NODE_ENV === "development") {
+      console.warn("[factory CMS] fetch timeout (static fallback):", path);
     }
     return null;
   }
