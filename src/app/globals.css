@@ -92,3 +92,41 @@ body {
 .cms-sync-content b {
   font-weight: 700;
 }
+
+/* CMS synced content: stay within viewport on mobile (wide tables/images break grid) */
+.cms-sync-content,
+.cms-rich-text {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cms-rich-text table,
+.cms-sync-content table {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.cms-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cms-rich-text img,
+.cms-sync-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.cms-rich-text p:empty,
+.cms-sync-content p:empty {
+  display: none;
+  margin: 0;
+}
+
+/* Grid main column must shrink below intrinsic CMS table width */
+[class*="col-span-3"] {
+  min-width: 0;
+}

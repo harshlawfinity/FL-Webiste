@@ -16,22 +16,27 @@ export default function FactoryCmsJsonLd({ page }) {
   );
 }
 
-async function LandingCmsSync({ slug }) {
+async function LandingCmsSchema({ slug }) {
   const page = await getFactoryCmsLandingPage(slug);
-  return (
-    <>
-      <FactoryCmsJsonLd page={page} />
-      <FactoryCmsDomSync page={page} />
-    </>
-  );
+  return <FactoryCmsJsonLd page={page} />;
+}
+
+async function LandingCmsDomSync({ slug }) {
+  const page = await getFactoryCmsLandingPage(slug);
+  if (!page) return null;
+  return <FactoryCmsDomSync page={page} />;
 }
 
 // Stream CMS sync after page shell renders — improves TTFB/LCP on landing pages.
 export function CmsLandingBoundary({ slug }) {
   return (
-    <Suspense fallback={null}>
-      <LandingCmsSync slug={slug} />
-    </Suspense>
+    <>
+      {/* Schema outside Suspense so JSON-LD is in initial HTML for crawlers */}
+      <LandingCmsSchema slug={slug} />
+      <Suspense fallback={null}>
+        <LandingCmsDomSync slug={slug} />
+      </Suspense>
+    </>
   );
 }
 

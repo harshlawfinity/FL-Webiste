@@ -90,8 +90,63 @@ function applyImageAltAttribute(attrs = "", alt = "") {
   return `${attrs} alt="${safeAlt}"`;
 }
 
+const INTERNAL_BLOG_HOSTS = new Set(["factorylicence.in", "www.factorylicence.in"]);
+
+function isInternalBlogHref(href = "") {
+  const value = String(href).trim();
+  if (!value || value.startsWith("#") || value.startsWith("mailto:") || value.startsWith("tel:")) {
+    return false;
+  }
+  if (value.startsWith("/")) return true;
+  try {
+    return INTERNAL_BLOG_HOSTS.has(new URL(value).hostname);
+  } catch {
+    return false;
+  }
+}
+
+function toRelativeBlogHref(href = "") {
+  if (href.startsWith("/")) return href;
+  try {
+    const url = new URL(href);
+    return `${url.pathname}${url.search}${url.hash}` || "/";
+  } catch {
+    return href;
+  }
+}
+
+// Blog article links: same-site URLs become relative paths and stay dofollow.
+function applyBlogInternalLinkPolicy(html = "") {
+  return String(html).replace(/<a\b([^>]*)>/gi, (match, attrs) => {
+    const hrefMatch = attrs.match(/\bhref\s*=\s*(["'])(.*?)\1/i);
+    if (!hrefMatch) return match;
+
+    const href = hrefMatch[2].trim();
+    if (!isInternalBlogHref(href)) return match;
+
+    let cleanedAttrs = attrs
+      .replace(/\bhref\s*=\s*(["'])(.*?)\1/i, `href="${toRelativeBlogHref(href)}"`)
+      .replace(/\btarget\s*=\s*(["'])[^"']*\1/gi, "")
+      .trim();
+
+    const relMatch = cleanedAttrs.match(/\brel\s*=\s*(["'])(.*?)\1/i);
+    if (relMatch) {
+      const relTokens = relMatch[2]
+        .split(/\s+/)
+        .filter((token) => token && token !== "nofollow" && token !== "noopener" && token !== "noreferrer");
+      cleanedAttrs = cleanedAttrs.replace(/\brel\s*=\s*(["'])[^"']*\1/gi, "").trim();
+      if (relTokens.length) {
+        cleanedAttrs = `${cleanedAttrs} rel="${relTokens.join(" ")}"`.trim();
+      }
+    }
+
+    return cleanedAttrs ? `<a ${cleanedAttrs}>` : "<a>";
+  });
+}
+
 function normalizeBlogHtml(html = "") {
-  return demoteConclusionBodyHeadings(String(html))
+  return applyBlogInternalLinkPolicy(
+    demoteConclusionBodyHeadings(String(html))
     .replace(/&nbsp;/gi, " ")
     .replace(/\u00a0/g, " ")
     .replace(/\s{2,}/g, " ")
@@ -99,7 +154,8 @@ function normalizeBlogHtml(html = "") {
     .replace(/([.!?])((?:<\/?[^>]+>)*)\s*(?=[A-Z])/g, "$1$2 ")
     .replace(/text-align\s*:\s*justify\s*;?/gi, "")
     .replace(/word-spacing\s*:[^;"']*;?/gi, "")
-    .replace(/letter-spacing\s*:[^;"']*;?/gi, "");
+    .replace(/letter-spacing\s*:[^;"']*;?/gi, "")
+  );
 }
 
 function demoteConclusionBodyHeadings(html = "") {

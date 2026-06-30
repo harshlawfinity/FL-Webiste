@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const SECTION_IDS = {
   introduction: ["what-is"],
@@ -21,7 +22,7 @@ const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
 const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
+  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
 
 function hasInlineFormatting(html = "") {
   return /<(strong|b|em|i|u|s|strike|mark)\b/i.test(String(html));
@@ -37,32 +38,70 @@ function shouldUseRichTextWrapper(html = "") {
   return hasBlockHtml(value) || hasInlineFormatting(value);
 }
 
+// Remove CMS artefacts that inflate mobile layout (empty <p>, unwrapped wide tables).
+function normalizeCmsHtml(html = "") {
+  let value = String(html || "").trim();
+  if (!value) return "";
+
+  value = value.replace(/<p>(?:\s|&nbsp;|&#160;|<br\s*\/?>)*<\/p>/gi, "");
+
+  if (/<table\b/i.test(value) && !/<div[^>]*cms-table-scroll/i.test(value)) {
+    value = value.replace(
+      /(<table\b[\s\S]*?<\/table>)/gi,
+      '<div class="cms-table-scroll">$1</div>'
+    );
+  }
+
+  return value;
+}
+
 function createContentElement(html) {
-  const value = String(html || "").trim();
+  const value = normalizeCmsHtml(html);
   if (!value) return null;
 
   if (shouldUseRichTextWrapper(value)) {
     const div = document.createElement("div");
     div.className = CMS_RICH_TEXT_CLASS;
     div.innerHTML = value;
+    div.querySelectorAll("p").forEach((p) => {
+      if (!stripHtml(p.innerHTML)) p.remove();
+    });
+    if (!div.childElementCount && !div.textContent.trim()) return null;
     return div;
   }
 
+  const text = stripHtml(value);
+  if (!text) return null;
+
   const p = document.createElement("p");
   p.className = "text-justify text-gray-800";
-  p.textContent = stripHtml(value);
+  p.textContent = text;
   return p;
+}
+
+function collectHeadingFingerprints(html = "") {
+  const fingerprints = [];
+  const regex = /<h[3-6][^>]*>([\s\S]*?)<\/h[3-6]>/gi;
+  let match;
+  while ((match = regex.exec(String(html)))) {
+    const fp = contentFingerprint(match[1]);
+    if (fp) fingerprints.push(fp);
+  }
+  return fingerprints;
 }
 
 function isLegacyContentNode(el) {
   if (!el) return false;
-  if (el.closest("nav, aside, form, table, h1, h2, h3, h4")) return false;
   if (el.closest("[data-cms-added='true'], [data-cms-synced='true']")) return false;
+  if (el.closest("nav, aside, form, table")) return false;
+  if (el.matches("h1, h2")) return false;
+  // Only skip nodes inside a heading ancestor — not the heading element itself.
+  if (el.parentElement?.closest("h3, h4")) return false;
   return true;
 }
 
 function hideLegacyContent(sectionEl) {
-  Array.from(sectionEl.querySelectorAll("p, li, ul, ol, table")).forEach((el) => {
+  Array.from(sectionEl.querySelectorAll("p, li, ul, ol, table, h3, h4")).forEach((el) => {
     if (!isLegacyContentNode(el)) return;
     el.style.display = "none";
     el.dataset.cmsLegacyHidden = "true";
@@ -98,7 +137,7 @@ function renderSectionContent(sectionEl, section, sectionKey = "") {
 
   const container = document.createElement("div");
   container.dataset.cmsSynced = "true";
-  container.className = "cms-sync-content cms-rich-text space-y-3";
+  container.className = "cms-sync-content cms-rich-text space-y-3 max-w-full min-w-0";
 
   renderSectionBody(container, section, sectionKey);
   if (!container.childElementCount) return;
@@ -245,6 +284,7 @@ function renderSectionBody(parent, section, sectionKey = "") {
     const fingerprint = contentFingerprint(html);
     if (seenContent.has(fingerprint)) return;
     seenContent.add(fingerprint);
+    collectHeadingFingerprints(html).forEach((fp) => seenContent.add(fp));
 
     if (hasBlockHtml(html)) blockHtmlItems.push(html);
     else paragraphItems.push(html);
@@ -279,11 +319,15 @@ function renderSectionBody(parent, section, sectionKey = "") {
       if (!items.length) return;
 
       const label = category.applicantType || category.title || category.name;
-      if (label && stripHtml(label)) {
+      const labelFp = label ? contentFingerprint(label) : "";
+      const headingAlreadyRendered = labelFp && seenContent.has(labelFp);
+
+      if (label && stripHtml(label) && !headingAlreadyRendered) {
         const heading = document.createElement("h4");
         heading.className = "text-base font-semibold text-gray-900 mt-2 mb-2";
         heading.textContent = label;
         parent.appendChild(heading);
+        seenContent.add(labelFp);
       }
 
       const ul = createBulletList(items, false);
@@ -439,9 +483,9 @@ function renderTable(parent, section) {
   if (!columns.length && !rows.length) return;
 
   const wrapper = document.createElement("div");
-  wrapper.className = "overflow-x-auto rounded-xl border border-gray-200";
+  wrapper.className = "cms-table-scroll max-w-full w-full rounded-xl border border-gray-200";
   const table = document.createElement("table");
-  table.className = "w-full text-left text-sm";
+  table.className = "w-full min-w-0 text-left text-sm";
 
   if (columns.length) {
     const thead = document.createElement("thead");
@@ -568,7 +612,7 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
 
   const container = document.createElement("div");
   container.dataset.cmsSynced = "true";
-  container.className = "cms-sync-content cms-rich-text space-y-4";
+  container.className = "cms-sync-content cms-rich-text space-y-4 max-w-full min-w-0";
 
   const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
   const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
@@ -623,7 +667,134 @@ function customSections(page) {
   return {
     ...(content?.customSections || {}),
     ...(page?.customSections || {}),
+    ...(page?.sections || {}),
   };
+}
+
+function getSectionData(page, key) {
+  if (!key) return null;
+  return pageContent(page)?.[key] || customSections(page)[key] || null;
+}
+
+// CMS sectionOrder is the source of truth for display sequence.
+function buildSectionOrder(page) {
+  const content = pageContent(page);
+  const order = [
+    ...(Array.isArray(page?.sectionOrder) ? page.sectionOrder : []),
+    ...(Array.isArray(content?.sectionOrder) ? content.sectionOrder : []),
+  ].filter((key, index, arr) => key && arr.indexOf(key) === index);
+
+  if (order.length) return order;
+
+  return [
+    ...Object.keys(SECTION_IDS),
+    ...Object.keys(customSections(page)),
+    ...Object.keys(content || {}).filter(
+      (key) =>
+        !["sectionOrder", "customSections", "mainHeading", "hero", "breadcrumbs", "connectedServices"].includes(key)
+    ),
+  ].filter((key, index, arr) => key && arr.indexOf(key) === index);
+}
+
+function sectionIdAliases(key = "") {
+  const aliases = [key];
+  if (/authorization/i.test(key)) aliases.push(key.replace(/authorization/gi, "authorisation"));
+  if (/authorisation/i.test(key)) aliases.push(key.replace(/authorisation/gi, "authorization"));
+  return [...new Set(aliases.filter(Boolean))];
+}
+
+function resolveSectionElement(key, section) {
+  for (const alias of sectionIdAliases(key)) {
+    const el = findSectionElement(alias);
+    if (el) return el;
+  }
+
+  if (SECTION_IDS[key]) {
+    const mapped = SECTION_IDS[key].map((id) => findSectionElement(id)).find(Boolean);
+    if (mapped) return mapped;
+  }
+
+  const heading = contentHeading(section, key);
+  if (heading) return findSectionElementByHeading(heading);
+
+  return null;
+}
+
+const MAIN_COLUMN_ORDER_SKIP = new Set([
+  "hero",
+  "breadcrumbs",
+  "faqs",
+  "faq",
+  "connectedServices",
+  "pricing",
+]);
+
+function syncStandardSection(key, section, syncedElements) {
+  const sectionEl = SECTION_IDS[key]?.map((id) => findSectionElement(id)).find(Boolean);
+  if (!sectionEl) return;
+
+  setHeading(sectionEl, section.heading);
+  syncTextBlocks(sectionEl, section, key);
+
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  if (nested.length) {
+    const container =
+      sectionEl.querySelector("[data-cms-synced='true']") ||
+      (() => {
+        const el = document.createElement("div");
+        el.dataset.cmsSynced = "true";
+        el.className = "cms-sync-content cms-rich-text space-y-4 max-w-full min-w-0";
+        sectionEl.appendChild(el);
+        return el;
+      })();
+    nested.forEach((nestedSection, index) => {
+      renderNestedInto(container, nestedSection, index, section);
+    });
+  }
+
+  syncedElements.set(key, sectionEl);
+}
+
+function syncCustomSection(key, section, mainColumn, syncedElements, preserveIds) {
+  const existingEl = resolveSectionElement(key, section);
+  if (existingEl) {
+    syncExistingCustomSection(existingEl, section, preserveIds);
+    syncedElements.set(key, existingEl);
+    return;
+  }
+
+  if (!mainColumn) return;
+
+  const added = appendCmsSection({ key, section, targetParent: mainColumn });
+  if (!added) return;
+
+  syncedElements.set(key, added);
+  addQuickLink(added.id, contentHeading(section, key));
+}
+
+// Reorder main-column sections to match CMS sectionOrder.
+function reorderMainColumnSections(mainColumn, sectionOrder, syncedElements) {
+  if (!mainColumn || !sectionOrder.length) return;
+
+  const orderedNodes = [];
+  sectionOrder.forEach((key) => {
+    if (MAIN_COLUMN_ORDER_SKIP.has(key)) return;
+    const el = syncedElements.get(key);
+    if (el && mainColumn.contains(el) && !orderedNodes.includes(el)) {
+      orderedNodes.push(el);
+    }
+  });
+
+  if (!orderedNodes.length) return;
+
+  const faqAnchor = mainColumn.querySelector("#faqs");
+  orderedNodes.forEach((node) => {
+    if (faqAnchor && faqAnchor.parentElement === mainColumn) {
+      mainColumn.insertBefore(node, faqAnchor);
+    } else {
+      mainColumn.appendChild(node);
+    }
+  });
 }
 
 function quickLinksNav() {
@@ -708,6 +879,39 @@ function mainColumnTocItems() {
     });
 }
 
+// Sticky TOC sits below site header; offset used for scroll-spy and anchor jumps.
+const TOC_HEADER_OFFSET_MOBILE = 72; // matches top-[4.5rem]
+const TOC_HEADER_OFFSET_DESKTOP = 96; // matches md:top-24
+
+function getTocStickyOffset(tocEl) {
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  const header = isDesktop ? TOC_HEADER_OFFSET_DESKTOP : TOC_HEADER_OFFSET_MOBILE;
+  const tocHeight = tocEl?.offsetHeight || 0;
+  return header + tocHeight + 12;
+}
+
+// Insert after the first h2 section so the sticky bar never covers the calculator heading.
+function findTocInsertAfterNode(mainColumn) {
+  const firstH2 = Array.from(mainColumn.querySelectorAll("h2")).find(
+    (heading) => !heading.closest("[data-cms-horizontal-toc='true'], aside, nav, form")
+  );
+  if (!firstH2) return null;
+
+  let node = firstH2;
+  while (node.parentElement && node.parentElement !== mainColumn) {
+    node = node.parentElement;
+  }
+  return node.parentElement === mainColumn ? node : firstH2.parentElement;
+}
+
+function applyTocScrollMargins(tocEl, items) {
+  const margin = `${getTocStickyOffset(tocEl)}px`;
+  items.forEach((item) => {
+    const target = document.getElementById(item.id);
+    if (target) target.style.scrollMarginTop = margin;
+  });
+}
+
 function syncHorizontalToc() {
   const items = mainColumnTocItems();
   const mainColumn = findMainContentColumn();
@@ -715,13 +919,16 @@ function syncHorizontalToc() {
 
   const wrapper = document.createElement("div");
   wrapper.dataset.cmsHorizontalToc = "true";
-  wrapper.className = "sticky top-24 z-20 mb-14 w-full rounded-xl border border-violet-100 bg-violet-50/95 p-2 shadow-sm backdrop-blur";
+  // Stay within column width on mobile — negative margins caused page-wide horizontal overflow.
+  wrapper.className =
+    "sticky top-[4.5rem] md:top-24 z-20 mb-6 md:mb-14 w-full max-w-full rounded-none sm:rounded-xl border-y sm:border border-violet-100 bg-violet-50/95 px-1.5 py-2.5 sm:p-2 shadow-sm backdrop-blur";
 
   const createArrowButton = (direction) => {
     const button = document.createElement("button");
     button.type = "button";
     button.setAttribute("aria-label", `Scroll table of contents ${direction}`);
-    button.className = "shrink-0 rounded-full bg-slate-200/90 p-2 text-slate-600 transition-colors hover:bg-slate-300";
+    button.className =
+      "shrink-0 rounded-full bg-white/90 p-2.5 sm:p-2 text-slate-600 shadow-sm transition-colors hover:bg-slate-100";
     button.innerHTML = direction === "left"
       ? '<svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L9.06 10l3.71 3.71a.75.75 0 1 1-1.06 1.06l-4.24-4.24a.75.75 0 0 1 0-1.06l4.24-4.24a.75.75 0 0 1 1.08 0Z" clip-rule="evenodd"/></svg>'
       : '<svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 0 1 .02-1.06L10.94 10 7.23 6.29a.75.75 0 1 1 1.06-1.06l4.24 4.24a.75.75 0 0 1 0 1.06l-4.24 4.24a.75.75 0 0 1-1.08 0Z" clip-rule="evenodd"/></svg>';
@@ -729,12 +936,13 @@ function syncHorizontalToc() {
   };
 
   const scroller = document.createElement("div");
-  scroller.className = "flex min-w-0 flex-1 gap-2 overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
+  scroller.className =
+    "flex min-w-0 flex-1 gap-2 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-0.5";
 
   const leftButton = createArrowButton("left");
   const rightButton = createArrowButton("right");
   const scrollToc = (direction) => {
-    scroller.scrollBy({ left: direction === "left" ? -260 : 260, behavior: "smooth" });
+    scroller.scrollBy({ left: direction === "left" ? -220 : 220, behavior: "smooth" });
   };
   leftButton.addEventListener("click", () => scrollToc("left"));
   rightButton.addEventListener("click", () => scrollToc("right"));
@@ -743,26 +951,57 @@ function syncHorizontalToc() {
     const button = document.createElement("button");
     button.type = "button";
     button.dataset.tocId = item.id;
-    button.className = "shrink-0 rounded-lg border border-transparent px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-700 transition-colors hover:bg-white hover:text-[#7A3EF2]";
+    button.title = item.label;
+    button.className =
+      "shrink-0 snap-start rounded-lg border border-slate-200/70 bg-white/90 px-3 py-2.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-slate-700 transition-colors hover:bg-white hover:text-[#7A3EF2] max-w-[72vw] sm:max-w-none sm:whitespace-nowrap whitespace-normal text-left leading-snug line-clamp-2 sm:line-clamp-none min-h-[44px] sm:min-h-0 flex items-center";
     button.textContent = item.label;
     button.addEventListener("click", () => {
       const target = document.getElementById(item.id);
       if (!target) return;
-      const y = target.getBoundingClientRect().top + window.pageYOffset - 130;
+      const y = target.getBoundingClientRect().top + window.pageYOffset - getTocStickyOffset(wrapper);
       window.scrollTo({ top: y, behavior: "smooth" });
     });
     scroller.appendChild(button);
   });
 
+  // Edge fades hint that the TOC scrolls horizontally on mobile.
+  const scrollWrap = document.createElement("div");
+  scrollWrap.className = "relative min-w-0 flex-1";
+  const fadeLeft = document.createElement("div");
+  fadeLeft.className =
+    "pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-5 bg-gradient-to-r from-violet-50 to-transparent opacity-0 transition-opacity";
+  const fadeRight = document.createElement("div");
+  fadeRight.className =
+    "pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-5 bg-gradient-to-l from-violet-50 to-transparent opacity-100 transition-opacity";
+  scrollWrap.append(scroller, fadeLeft, fadeRight);
+
+  const updateScrollFades = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = scroller;
+    fadeLeft.style.opacity = scrollLeft > 4 ? "1" : "0";
+    fadeRight.style.opacity = scrollLeft + clientWidth < scrollWidth - 4 ? "1" : "0";
+  };
+  scroller.addEventListener("scroll", updateScrollFades, { passive: true });
+
   const inner = document.createElement("div");
-  inner.className = "flex items-center gap-2";
-  inner.append(leftButton, scroller, rightButton);
+  inner.className = "flex items-stretch gap-1.5 sm:gap-2";
+  inner.append(leftButton, scrollWrap, rightButton);
   wrapper.appendChild(inner);
-  mainColumn.insertBefore(wrapper, mainColumn.firstChild);
+
+  // Place below the first section (e.g. fee calculator) — not above its heading.
+  const insertAfter = findTocInsertAfterNode(mainColumn);
+  if (insertAfter?.nextSibling) {
+    mainColumn.insertBefore(wrapper, insertAfter.nextSibling);
+  } else if (insertAfter) {
+    mainColumn.appendChild(wrapper);
+  } else {
+    mainColumn.insertBefore(wrapper, mainColumn.firstChild);
+  }
+
+  applyTocScrollMargins(wrapper, items);
 
   // Keep the same section-aware feel as Lawfinity's horizontal TOC without adding a new component.
   const syncActiveItem = () => {
-    const scrollLine = window.scrollY + 150;
+    const scrollLine = window.scrollY + getTocStickyOffset(wrapper);
     let activeId = items[0]?.id;
     items.forEach((item) => {
       const target = document.getElementById(item.id);
@@ -775,8 +1014,10 @@ function syncHorizontalToc() {
       const isActive = button.dataset.tocId === activeId;
       button.classList.toggle("bg-[#7A3EF2]", isActive);
       button.classList.toggle("text-white", isActive);
+      button.classList.toggle("border-[#7A3EF2]", isActive);
       button.classList.toggle("shadow-sm", isActive);
       button.classList.toggle("text-slate-700", !isActive);
+      button.classList.toggle("bg-white/90", !isActive);
     });
 
     const activeButton = scroller.querySelector(`[data-toc-id="${activeId}"]`);
@@ -784,6 +1025,7 @@ function syncHorizontalToc() {
       const left = activeButton.offsetLeft - scroller.clientWidth / 2 + activeButton.offsetWidth / 2;
       scroller.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
     }
+    updateScrollFades();
   };
 
   const wheelToPageScroll = (event) => {
@@ -793,13 +1035,19 @@ function syncHorizontalToc() {
   };
 
   syncActiveItem();
+  updateScrollFades();
   window.addEventListener("scroll", syncActiveItem, { passive: true });
-  window.addEventListener("resize", syncActiveItem);
+  const onResize = () => {
+    applyTocScrollMargins(wrapper, items);
+    syncActiveItem();
+    updateScrollFades();
+  };
+  window.addEventListener("resize", onResize);
   scroller.addEventListener("wheel", wheelToPageScroll, { passive: false });
 
   return () => {
     window.removeEventListener("scroll", syncActiveItem);
-    window.removeEventListener("resize", syncActiveItem);
+    window.removeEventListener("resize", onResize);
     scroller.removeEventListener("wheel", wheelToPageScroll);
   };
 }
@@ -1039,6 +1287,8 @@ function syncBreadcrumbs(page) {
 }
 
 export default function FactoryCmsDomSync({ page }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     const content = pageContent(page);
     if (!content) return;
@@ -1055,58 +1305,34 @@ export default function FactoryCmsDomSync({ page }) {
       const heroParagraph = firstH1?.parentElement?.querySelector("p");
       if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
 
-      Object.entries(SECTION_IDS).forEach(([key, ids]) => {
-        const contentSection = content[key];
-        if (!contentSection) return;
-        const sectionEl = ids.map((id) => findSectionElement(id)).find(Boolean);
-        if (!sectionEl) return;
-
-        setHeading(sectionEl, contentSection.heading);
-        syncTextBlocks(sectionEl, contentSection, key);
-
-        const nested = Array.isArray(contentSection.nestedSections) ? contentSection.nestedSections : [];
-        if (nested.length) {
-          const container = sectionEl.querySelector("[data-cms-synced='true']") || (() => {
-            const el = document.createElement("div");
-            el.dataset.cmsSynced = "true";
-            el.className = "cms-sync-content cms-rich-text space-y-4";
-            sectionEl.appendChild(el);
-            return el;
-          })();
-          nested.forEach((nestedSection, index) => {
-            renderNestedInto(container, nestedSection, index, contentSection);
-          });
-        }
-      });
-
       const mainColumn = findMainContentColumn();
-      const cmsCustomSections = customSections(page);
-      const contentOrder = Array.isArray(content.sectionOrder) ? content.sectionOrder : [];
-      const orderedCustomKeys = [
-        ...contentOrder,
-        ...(Array.isArray(page.sectionOrder) ? page.sectionOrder : []),
-        ...Object.keys(cmsCustomSections),
-      ].filter((key, index, arr) => key && arr.indexOf(key) === index);
+      const sectionOrder = buildSectionOrder(page);
+      const syncedElements = new Map();
+      const preserveIds = new Set(sectionOrder);
 
-      orderedCustomKeys.forEach((key) => {
-        if (SKIP_RENDER_IDS.has(key) || SECTION_IDS[key]) return;
-        const section = cmsCustomSections[key] || content[key];
+      // Sync every CMS section in sectionOrder, then reorder DOM to match.
+      sectionOrder.forEach((key) => {
+        if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
+
+        const section = getSectionData(page, key);
         if (!section) return;
 
-        const heading = contentHeading(section, key);
-        const existingEl = findSectionElement(key) || findSectionElementByHeading(heading);
-        if (existingEl) {
-          syncExistingCustomSection(existingEl, section, new Set(orderedCustomKeys));
+        if (SECTION_IDS[key]) {
+          syncStandardSection(key, section, syncedElements);
           return;
         }
 
-        const added = appendCmsSection({ key, section, targetParent: mainColumn });
-        if (added) addQuickLink(added.id, heading);
+        syncCustomSection(key, section, mainColumn, syncedElements, preserveIds);
       });
+
+      reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
 
       syncFaqs(page);
       syncBreadcrumbs(page);
-      syncHorizontalToc();
+      // Blogs listing page has its own layout — skip sticky horizontal TOC there.
+      if (pathname !== "/blogs") {
+        syncHorizontalToc();
+      }
       syncConnectedServices(page);
       mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
       normalizeInternalLinks(document);
@@ -1134,7 +1360,7 @@ export default function FactoryCmsDomSync({ page }) {
       }
       if (timeoutId) window.clearTimeout(timeoutId);
     };
-  }, [page]);
+  }, [page, pathname]);
 
   return null;
 }

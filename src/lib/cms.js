@@ -94,14 +94,25 @@ export function getCmsSchema(page) {
   const raw = page?.seo?.schema;
   if (!raw) return null;
 
-  if (typeof raw === "string") {
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return null;
-    }
-  }
-
   if (typeof raw === "object") return raw;
-  return null;
+
+  if (typeof raw !== "string") return null;
+
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  try {
+    return JSON.parse(trimmed);
+  } catch (error) {
+    // CMS sometimes appends duplicate trailing fragments after valid JSON-LD.
+    const posMatch = String(error?.message || "").match(/position (\d+)/);
+    if (posMatch) {
+      try {
+        return JSON.parse(trimmed.slice(0, Number(posMatch[1])).trim());
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
 }
