@@ -23,7 +23,6 @@ async function LandingCmsSchema({ slug }) {
 
 async function LandingCmsDomSync({ slug }) {
   const page = await getFactoryCmsLandingPage(slug);
-  if (!page) return null;
   return <FactoryCmsDomSync page={page} landingSlug={slug} />;
 }
 
@@ -42,7 +41,7 @@ export function CmsLandingBoundary({ slug }) {
 
 async function StaticCmsSync({ pageKey }) {
   const page = await getFactoryCmsStaticPage(pageKey);
-  if (!page) return null;
+  // Always mount sync — client fetches fresh CRM data even when server snapshot is null/stale.
   return <FactoryCmsDomSync page={page} staticPageKey={pageKey} />;
 }
 

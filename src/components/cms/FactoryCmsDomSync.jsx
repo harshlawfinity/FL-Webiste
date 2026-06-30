@@ -5,11 +5,18 @@ import { usePathname } from "next/navigation";
 import { getCmsSchema } from "@/lib/cms";
 
 // Client-side CRM fetch — bypasses server ISR cache so publishes appear immediately.
-const CMS_CLIENT_BASE =
-  process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL || "https://internal.lawfinity.in";
+function resolveCmsClientBase() {
+  if (process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL) {
+    return process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL;
+  }
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    return "http://localhost:3000";
+  }
+  return "https://internal.lawfinity.in";
+}
 
 async function fetchFreshCmsPage(path) {
-  const res = await fetch(`${CMS_CLIENT_BASE}${path}`, { cache: "no-store" });
+  const res = await fetch(`${resolveCmsClientBase()}${path}`, { cache: "no-store" });
   if (!res.ok) return null;
   const data = await res.json();
   return data?.success ? data.page : null;
@@ -27,6 +34,9 @@ const SECTION_IDS = {
 };
 
 const SKIP_RENDER_IDS = new Set(["hero", "breadcrumbs", "connectedServices", "pricing", "faqs", "faq"]);
+
+// Static/listing pages with their own layout — no sticky horizontal TOC bar.
+const HORIZONTAL_TOC_SKIP_PATHS = new Set(["/blogs", "/contact"]);
 
 const LIST_CLASS = "list-disc pl-6 space-y-2 text-gray-800";
 const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
@@ -222,6 +232,47 @@ function normalizeInternalLinks(root = document) {
     if (rel.length) anchor.setAttribute("rel", rel.join(" "));
     else anchor.removeAttribute("rel");
   });
+}
+
+function upsertMeta(attr, key, value) {
+  if (!value) return;
+  const selector = attr === "name" ? `meta[name="${key}"]` : `meta[property="${key}"]`;
+  let el = document.querySelector(selector);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", value);
+}
+
+// Push fresh CRM seo fields to <head> when server metadata is still ISR-cached.
+function syncDocumentSeo(page) {
+  if (!page) return;
+  const seo = page.seo || {};
+  const title = seo.title || page.title;
+  if (title) document.title = title;
+
+  upsertMeta("name", "description", seo.description);
+
+  const keywords = Array.isArray(seo.keywords)
+    ? seo.keywords.filter(Boolean).join(", ")
+    : seo.keywords;
+  if (keywords) upsertMeta("name", "keywords", keywords);
+
+  upsertMeta("property", "og:title", seo.ogTitle || seo.title || page.title);
+  upsertMeta("property", "og:description", seo.ogDescription || seo.description);
+  if (seo.canonicalUrl) upsertMeta("property", "og:url", seo.canonicalUrl);
+
+  if (seo.canonicalUrl) {
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+    link.href = seo.canonicalUrl;
+  }
 }
 
 function normalizeBodyItem(item) {
@@ -861,6 +912,33 @@ function reorderMainColumnSections(mainColumn, sectionOrder, syncedElements) {
   });
 }
 
+// Process diagrams are static <img> siblings after #steps — section re-order leaves them stuck below the TOC.
+function restoreProcessDiagramPlacement(mainColumn) {
+  if (!mainColumn) return;
+
+  // Top-level diagram only (not nested inside a section); src/alt may omit the word "process" (e.g. Haryana).
+  const processImg = Array.from(mainColumn.children).find((node) => node.tagName === "IMG");
+  if (!processImg) return;
+
+  const stepsSection =
+    mainColumn.querySelector("#steps") || mainColumn.querySelector("#process");
+  if (!stepsSection) return;
+
+  const feeSection = mainColumn.querySelector("#fee, #fees");
+  if (
+    feeSection &&
+    feeSection.parentElement === mainColumn &&
+    stepsSection.compareDocumentPosition(feeSection) & Node.DOCUMENT_POSITION_FOLLOWING
+  ) {
+    mainColumn.insertBefore(processImg, feeSection);
+    return;
+  }
+
+  if (processImg.previousElementSibling !== stepsSection) {
+    mainColumn.insertBefore(processImg, stepsSection.nextSibling);
+  }
+}
+
 function quickLinksNav() {
   return Array.from(document.querySelectorAll("aside nav")).find((el) =>
     /quick links|connected services/i.test(el.closest("aside")?.textContent || "")
@@ -978,7 +1056,7 @@ function syncHorizontalToc() {
   wrapper.dataset.cmsHorizontalToc = "true";
   // Stay within column width on mobile — negative margins caused page-wide horizontal overflow.
   wrapper.className =
-    "sticky top-[4.5rem] md:top-24 z-20 mb-12 md:mb-14 w-full max-w-full rounded-none sm:rounded-xl border-y sm:border border-violet-100 bg-violet-50/95 px-1.5 py-2.5 sm:p-2 shadow-sm backdrop-blur";
+    "sticky top-[4.5rem] md:top-20 z-20 mb-12 md:mb-14 w-full max-w-full rounded-none sm:rounded-xl border-y sm:border border-violet-100 bg-violet-50/95 px-1.5 py-2.5 sm:p-2 shadow-sm backdrop-blur";
 
   const createArrowButton = (direction) => {
     const button = document.createElement("button");
@@ -1350,6 +1428,8 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
     let timeoutId;
 
     const runSync = (activePage) => {
+      syncDocumentSeo(activePage);
+
       const content = pageContent(activePage);
       if (!content) return;
 
@@ -1385,10 +1465,11 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
 
       reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
       hideSectionsRemovedFromCms(mainColumn, activePage, sectionOrder, syncedElements);
+      restoreProcessDiagramPlacement(mainColumn);
 
       syncFaqs(activePage);
       syncBreadcrumbs(activePage);
-      if (pathname !== "/blogs") {
+      if (!HORIZONTAL_TOC_SKIP_PATHS.has(pathname)) {
         syncHorizontalToc();
       }
       syncConnectedServices(activePage);

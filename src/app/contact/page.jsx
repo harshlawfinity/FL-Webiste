@@ -1,9 +1,11 @@
-export { default } from "@/components/pages/ContactPage";
+import ContactPage from "@/components/pages/ContactPage";
+import { CmsStaticSyncBoundary } from "@/components/cms/FactoryCmsJsonLd";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
 
-// ISR: cache rendered page for 5 minutes.
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
 
-export const metadata = {
+const fallbackMetadata = {
   title: "Contact US - Factorylicence",
   description:
     "Get in touch with us via email, phone, or by filling out the form to discover how factorylicence.in can solve your licencing challenges.",
@@ -32,3 +34,18 @@ export const metadata = {
     follow: true,
   },
 };
+
+export async function generateMetadata() {
+  // Fresh CRM read — static page SEO must not wait on ISR cache.
+  const cmsPage = await getFactoryCmsStaticPageFresh("contact");
+  return buildCmsMetadata(cmsPage, fallbackMetadata);
+}
+
+export default function Page() {
+  return (
+    <>
+      <ContactPage />
+      <CmsStaticSyncBoundary pageKey="contact" />
+    </>
+  );
+}

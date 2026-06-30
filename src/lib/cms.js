@@ -3,19 +3,23 @@ import { cache } from "react";
 const CMS_BASE_URL =
   process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL ||
   process.env.CRM_CMS_BASE_URL ||
-  "https://internal.lawfinity.in";
+  (process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://internal.lawfinity.in");
 
 // Server fetch cache (ISR/metadata). Override via CMS_REVALIDATE_SECONDS env if needed.
 const CMS_REVALIDATE_SECONDS = Number(process.env.CMS_REVALIDATE_SECONDS || 60);
 const CMS_FETCH_TIMEOUT_MS = Number(process.env.CMS_FETCH_TIMEOUT_MS || 15000);
 
-async function fetchCms(path) {
+async function fetchCms(path, { fresh = false } = {}) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CMS_FETCH_TIMEOUT_MS);
 
     const res = await fetch(`${CMS_BASE_URL}${path}`, {
-      next: { revalidate: CMS_REVALIDATE_SECONDS },
+      ...(fresh
+        ? { cache: "no-store" }
+        : { next: { revalidate: CMS_REVALIDATE_SECONDS } }),
       signal: controller.signal,
     });
 
@@ -50,15 +54,29 @@ export const getFactoryCmsStaticPage = cache(async (pageKey) => {
   return fetchCms(`/api/public/factorylicence/static-pages/${pageKey}`);
 });
 
+// Uncached fetch for metadata — avoids stale SEO when CRM publishes.
+export async function getFactoryCmsStaticPageFresh(pageKey) {
+  return fetchCms(`/api/public/factorylicence/static-pages/${pageKey}`, { fresh: true });
+}
+
+function normalizeCmsKeywords(keywords) {
+  if (Array.isArray(keywords)) return keywords.filter(Boolean);
+  if (typeof keywords === "string" && keywords.trim()) {
+    return keywords.split(",").map((item) => item.trim()).filter(Boolean);
+  }
+  return keywords;
+}
+
 export function buildCmsMetadata(page, fallback = {}) {
   if (!page) return fallback;
   const seo = page.seo || {};
   const canonical = seo.canonicalUrl || fallback.alternates?.canonical;
+  const keywords = normalizeCmsKeywords(seo.keywords) || fallback.keywords;
   return {
     ...fallback,
     title: seo.title || page.title || fallback.title,
     description: seo.description || fallback.description,
-    keywords: seo.keywords || fallback.keywords,
+    keywords,
     openGraph: {
       ...(fallback.openGraph || {}),
       title: seo.ogTitle || seo.title || page.title || fallback.openGraph?.title,

@@ -1,5 +1,6 @@
 // app/factory-licence-in-delhi/page.jsx
 
+import { preload } from "react-dom";
 import FireNOCDelhiPage from "@/components/pages/FireNOCDelhiPage";
 import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata } from "@/lib/cms";
@@ -44,6 +45,11 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
+  preload("/assets/fire-certificate-renewal-in-delhi.webp", {
+    as: "image",
+    fetchPriority: "high",
+  });
+
   return (
     <>
       <FireNOCDelhiPage />

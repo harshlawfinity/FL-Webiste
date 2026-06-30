@@ -112,30 +112,45 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
 
-        {/* Third-party tags deferred until after load — keeps main thread free for LCP */}
+        {/* Third-party tags are delayed so they do not compete with the LCP hero image. */}
         <Script id="gtm-script" strategy="lazyOnload">
           {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-TR58JL6Q');
+            (function(w,d){
+              function loadGtm(){
+                if (d.getElementById('gtm-runtime')) return;
+                w.dataLayer=w.dataLayer||[];
+                w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName('script')[0];
+                var j=d.createElement('script');
+                j.id='gtm-runtime';
+                j.async=true;
+                j.src='https://www.googletagmanager.com/gtm.js?id=GTM-TR58JL6Q';
+                f.parentNode.insertBefore(j,f);
+              }
+              w.setTimeout(loadGtm,4500);
+            })(window,document);
           `}
         </Script>
 
         {/* Meta pixel — GTM already loads GA/Ads; avoid duplicate gtag.js bundles */}
         <Script id="meta-pixel" strategy="lazyOnload">
           {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '777415601527541');
-            fbq('track', 'PageView');
+            (function(w,d){
+              function loadMeta(){
+                if(w.fbq)return;
+                var n=w.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!w._fbq)w._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+                var t=d.createElement('script');
+                t.async=!0;
+                t.src='https://connect.facebook.net/en_US/fbevents.js';
+                var s=d.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(t,s);
+                n('init','777415601527541');
+                n('track','PageView');
+              }
+              w.setTimeout(loadMeta,5000);
+            })(window,document);
           `}
         </Script>
       </head>

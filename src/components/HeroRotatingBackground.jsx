@@ -17,19 +17,19 @@ export default function HeroRotatingBackground({
   const [loadAllSlides, setLoadAllSlides] = useState(false);
 
   useEffect(() => {
+    if (images.length <= 1 || !loadAllSlides) return;
+
     const interval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % images.length);
     }, intervalMs);
     return () => clearInterval(interval);
-  }, [images.length, intervalMs]);
+  }, [images.length, intervalMs, loadAllSlides]);
 
   useEffect(() => {
-    if (lcpOptimized) {
-      const timer = window.setTimeout(() => setLoadAllSlides(true), 2500);
-      return () => window.clearTimeout(timer);
-    }
-    setLoadAllSlides(true);
-  }, [lcpOptimized]);
+    // Defer non-LCP carousel slides so the first hero image gets network priority.
+    const timer = window.setTimeout(() => setLoadAllSlides(true), 2500);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const gradient = (
     <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
@@ -57,7 +57,7 @@ export default function HeroRotatingBackground({
       <>
         {images.slice(1).map((src, index) => {
           const slideIndex = index + 1;
-          if (slideIndex > 1 && !loadAllSlides) return null;
+          if (!loadAllSlides) return null;
           return renderImage(src, slideIndex);
         })}
         {gradient}
