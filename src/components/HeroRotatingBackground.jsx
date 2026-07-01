@@ -38,7 +38,7 @@ export default function HeroRotatingBackground({
 
   const renderImage = (src, index, { eager = false } = {}) => (
     <Image
-      key={src}
+      key={`${src}-${index}`}
       src={src}
       alt={alts[index] || `Hero background ${index + 1}`}
       fill

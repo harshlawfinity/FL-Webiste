@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import HeroRotatingBackground from "@/components/HeroRotatingBackground";
-import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
+import { getCmsServiceLeadFormCopy, getCmsServiceHeroSlides } from "@/lib/leadFormCopy";
 
 // Empty section shells for FactoryCmsDomSync — IDs must match SECTION_IDS in FactoryCmsDomSync.jsx.
 const STANDARD_SECTIONS = [
@@ -38,6 +38,12 @@ export default function CmsDynamicLandingPage({ page }) {
   const hero = content.hero || {};
   const title = hero.headline || page?.mainHeading || page?.title || "Service";
   const subtitle = hero.subtext || page?.seo?.description || "";
+  // Lead form uses CMS Page Title — shorter label than hero headline when they differ.
+  const formCopy = getCmsServiceLeadFormCopy(
+    page?.title || page?.mainHeading || page?.content?.mainHeading
+  );
+  // Hero slide alts + SEO URLs: Page Title → H1 headline → contact form title.
+  const heroSlides = getCmsServiceHeroSlides(page);
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: title },
@@ -47,8 +53,8 @@ export default function CmsDynamicLandingPage({ page }) {
     <div>
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
         <HeroRotatingBackground
-          alts={[title]}
-          images={HERO_BACKGROUND_IMAGES}
+          alts={heroSlides.map((slide) => slide.alt)}
+          images={heroSlides.map((slide) => slide.src)}
         />
 
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
@@ -68,7 +74,7 @@ export default function CmsDynamicLandingPage({ page }) {
           </div>
 
           <div className="md:w-1/2 w-full">
-            <ContactForm />
+            <ContactForm title={formCopy.title} description={formCopy.description} />
           </div>
         </div>
       </section>
@@ -84,7 +90,7 @@ export default function CmsDynamicLandingPage({ page }) {
 
         <aside className="hidden md:block">
           <div className="sticky top-24 space-y-4">
-            <ContactFormBlogs />
+            <ContactFormBlogs title={formCopy.title} description={formCopy.description} />
             <div className="bg-white rounded-xl shadow-md p-6 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">Quick Links</h3>
               <nav className="space-y-3 text-sm text-gray-700" />
@@ -105,7 +111,12 @@ export default function CmsDynamicLandingPage({ page }) {
         </div>
       </section>
 
-      <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
+      <ContactFormModal
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        title={formCopy.title}
+        description={formCopy.description}
+      />
     </div>
   );
 }

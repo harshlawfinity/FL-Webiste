@@ -54,3 +54,45 @@ export function getLeadFormCopy(pathname) {
     description: "Share your details & we’ll connect with you.",
   };
 }
+
+// CMS-only service pages — use admin Page Title (same field as marquee pills).
+export function getCmsServiceLeadFormCopy(pageTitle) {
+  const label = String(pageTitle || "Service").trim() || "Service";
+
+  return {
+    title: `Get ${label} Guidance`,
+    description: `Fill in your details to receive a personalized ${label} plan, including applicable government fees and expected approval timelines for your business.`,
+  };
+}
+
+function slugifyForAsset(value = "") {
+  return (
+    String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "service"
+  );
+}
+
+// Hero carousel alts for CMS service pages — matches HERO_BACKGROUND_IMAGES (3 slides).
+export function getCmsServiceHeroBackgroundAlts(page) {
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const pageTitle = page?.title || page?.mainHeading || content?.mainHeading || "Service";
+  const h1Title =
+    hero.headline || hero.heading || page?.mainHeading || page?.title || pageTitle;
+  const formTitle = getCmsServiceLeadFormCopy(pageTitle).title;
+
+  return [pageTitle, h1Title, formTitle];
+}
+
+// SEO-friendly /assets/{slug}.webp URLs — slide index maps to default hero backing files.
+export function getCmsServiceHeroSlides(page) {
+  const alts = getCmsServiceHeroBackgroundAlts(page);
+
+  return alts.map((alt, slide) => ({
+    alt,
+    src: `/assets/${slugifyForAsset(alt)}.webp?slide=${slide}`,
+  }));
+}
