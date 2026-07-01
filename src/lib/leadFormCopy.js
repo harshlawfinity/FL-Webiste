@@ -1,3 +1,5 @@
+import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
+
 const STATE_LABELS = {
   delhi: "Delhi",
   haryana: "Haryana",
@@ -65,16 +67,6 @@ export function getCmsServiceLeadFormCopy(pageTitle) {
   };
 }
 
-function slugifyForAsset(value = "") {
-  return (
-    String(value || "")
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") || "service"
-  );
-}
-
 // Hero carousel alts for CMS service pages — matches HERO_BACKGROUND_IMAGES (3 slides).
 export function getCmsServiceHeroBackgroundAlts(page) {
   const content = page?.content || {};
@@ -87,12 +79,13 @@ export function getCmsServiceHeroBackgroundAlts(page) {
   return [pageTitle, h1Title, formTitle];
 }
 
-// SEO-friendly /assets/{slug}.webp URLs — slide index maps to default hero backing files.
+// Hero slides for CMS pages — default carousel images + CMS-dynamic alts.
 export function getCmsServiceHeroSlides(page) {
   const alts = getCmsServiceHeroBackgroundAlts(page);
 
   return alts.map((alt, slide) => ({
     alt,
-    src: `/assets/${slugifyForAsset(alt)}.webp`,
+    // Use real /public/assets files so all 3 slides rotate reliably on every host.
+    src: HERO_BACKGROUND_IMAGES[slide] ?? HERO_BACKGROUND_IMAGES[0],
   }));
 }
