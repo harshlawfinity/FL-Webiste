@@ -19,7 +19,7 @@ export default async function ServicePagesMarquee() {
     >
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-semibold text-[#7A3EF2] mb-5 md:mb-6 text-center">
-          Our more services
+          Our More Services
         </h2>
 
         <div className="service-marquee-viewport relative overflow-hidden">

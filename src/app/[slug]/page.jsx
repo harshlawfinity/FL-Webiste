@@ -1,21 +1,10 @@
 import { notFound } from "next/navigation";
 import CmsDynamicLandingPage from "@/components/pages/CmsDynamicLandingPage";
 import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
-import { buildCmsMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
+import { buildCmsMetadata, getFactoryCmsLandingPageLive, isPublishedCmsLandingPage } from "@/lib/cms";
 
-export const revalidate = 300;
-
-// CMS-published landing pages that are not covered by a dedicated /app/<slug>/ route.
-function isPublishedCmsLandingPage(page) {
-  if (!page?.slug) return false;
-
-  const status = String(page.status || "published").toLowerCase();
-  if (!["published", "publish", "active"].includes(status)) return false;
-
-  if (page.website && page.website !== "factorylicence.in") return false;
-
-  return true;
-}
+// Always resolve CMS slug from CRM on request — avoids stale 404 after SEO publishes.
+export const dynamic = "force-dynamic";
 
 function landingFallbackMetadata(slug) {
   return {
@@ -36,7 +25,7 @@ function landingFallbackMetadata(slug) {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const page = await getFactoryCmsLandingPage(slug);
+  const page = await getFactoryCmsLandingPageLive(slug);
 
   if (!isPublishedCmsLandingPage(page)) {
     return { title: "Page Not Found", robots: { index: false, follow: false } };
@@ -47,7 +36,7 @@ export async function generateMetadata({ params }) {
 
 export default async function CmsLandingSlugPage({ params }) {
   const { slug } = await params;
-  const page = await getFactoryCmsLandingPage(slug);
+  const page = await getFactoryCmsLandingPageLive(slug);
 
   if (!isPublishedCmsLandingPage(page)) {
     notFound();

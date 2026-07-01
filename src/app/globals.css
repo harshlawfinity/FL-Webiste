@@ -52,9 +52,27 @@ body {
   line-height: 1.6;
 }
 
-.cms-rich-text p {
+.cms-rich-text p,
+.cms-sync-content p {
   margin-bottom: 0.75rem;
-  text-align: justify;
+}
+
+.cms-rich-text p,
+.cms-sync-content p,
+.cms-rich-text li,
+.cms-sync-content li {
+  /* !important beats CMS/Tailwind `text-justify` on narrow screens (avoids huge word gaps). */
+  text-align: left !important;
+}
+
+/* CMS body copy: left on mobile, justified from md breakpoint up. */
+@media (min-width: 768px) {
+  .cms-rich-text p,
+  .cms-sync-content p,
+  .cms-rich-text li,
+  .cms-sync-content li {
+    text-align: justify !important;
+  }
 }
 
 .cms-rich-text strong {
@@ -102,16 +120,69 @@ body {
   word-break: break-word;
 }
 
-.cms-rich-text table,
-.cms-sync-content table {
+.cms-rich-text > table,
+.cms-sync-content > table {
   width: 100% !important;
   max-width: 100%;
 }
 
+/* Wide fee/data tables — horizontal scroll on mobile instead of crushed columns. */
 .cms-table-scroll {
   max-width: 100%;
-  overflow-x: auto;
+  min-width: 0;
+  /* scroll (not auto) keeps the bar visible so users know more columns are on the right */
+  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 62, 242, 0.55) rgba(122, 62, 242, 0.12);
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* WebKit — always show a slim purple scrollbar on wide tables */
+.cms-table-scroll::-webkit-scrollbar {
+  height: 8px;
+  -webkit-appearance: none;
+}
+
+.cms-table-scroll::-webkit-scrollbar-track {
+  background: rgba(122, 62, 242, 0.12);
+  border-radius: 4px;
+}
+
+.cms-table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(122, 62, 242, 0.55);
+  border-radius: 4px;
+}
+
+/* Undo cms-sync-content break-word inside scrollable tables. */
+.cms-sync-content .cms-table-scroll,
+.cms-sync-content .cms-table-scroll *,
+.cms-rich-text .cms-table-scroll,
+.cms-rich-text .cms-table-scroll * {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.cms-rich-text .cms-table-scroll table,
+.cms-sync-content .cms-table-scroll table,
+.cms-table-scroll table {
+  width: max-content !important;
+  min-width: 640px !important;
+  max-width: none !important;
+  border-collapse: collapse;
+  table-layout: auto;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+.cms-table-scroll th,
+.cms-table-scroll td {
+  min-width: 5.5rem;
+  white-space: nowrap;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  vertical-align: top;
 }
 
 .cms-rich-text img,
@@ -124,6 +195,25 @@ body {
 .cms-sync-content p:empty {
   display: none;
   margin: 0;
+}
+
+/* CMS h2 icons — medium on mobile (20px), slightly larger on desktop; caps flex blow-up. */
+svg[data-cms-heading-icon="true"] {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
+}
+
+@media (min-width: 768px) {
+  svg[data-cms-heading-icon="true"] {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
+  }
 }
 
 @keyframes service-marquee-scroll {
@@ -156,4 +246,15 @@ body {
 /* Grid main column must shrink below intrinsic CMS table width */
 [class*="col-span-3"] {
   min-width: 0;
+}
+
+/* State landing pages ship `text-justify` on p/li — left align on mobile to avoid word gaps. */
+@media (max-width: 767px) {
+  [class*="col-span-3"] :is(p, li) {
+    text-align: left !important;
+  }
+
+  [class*="col-span-3"] .text-justify {
+    text-align: left !important;
+  }
 }

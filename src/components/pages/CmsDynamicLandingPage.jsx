@@ -26,7 +26,7 @@ function SectionShell({ id, title }) {
   return (
     <div id={id} className="space-y-4">
       <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4">{title}</h2>
-      <p className="text-justify text-gray-800" />
+      <p className="text-left md:text-justify text-gray-800" />
     </div>
   );
 }

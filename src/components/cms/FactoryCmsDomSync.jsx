@@ -44,7 +44,7 @@ const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
 const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify [&_p]:mb-3 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
+  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify md:[&_p]:text-text [&_p]:mb-3 [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
 
 function hasInlineFormatting(html = "") {
   return /<(strong|b|em|i|u|s|strike|mark)\b/i.test(String(html));
@@ -77,6 +77,67 @@ function normalizeCmsHtml(html = "") {
   return value;
 }
 
+// CRM HTML often ships `text-justify` on <p> — strip it so mobile stays left-aligned.
+function applyResponsiveCmsTextAlign(root) {
+  root?.querySelectorAll("p, li, .text-justify").forEach((node) => {
+    if (node.matches("ol, ul")) return;
+    node.classList.remove("text-justify");
+    node.classList.add("text-left", "md:text-justify");
+    if (node.style.textAlign === "justify") node.style.removeProperty("text-align");
+  });
+}
+
+// Static landing shells keep `text-justify` on p/li until CRM replaces them — normalize after sync.
+function normalizeMainColumnTextAlign(mainColumn) {
+  if (!mainColumn) return;
+
+  mainColumn.querySelectorAll("p, li").forEach((node) => {
+    if (node.closest("aside, nav, form, table, .cms-table-scroll")) return;
+    node.classList.remove("text-justify");
+    node.classList.add("text-left", "md:text-justify");
+    if (node.style.textAlign === "justify") node.style.removeProperty("text-align");
+  });
+}
+
+function applyCmsTableLayoutToTable(table) {
+  if (!table || table.closest("nav, aside, form")) return;
+
+  if (!table.closest(".cms-table-scroll")) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "cms-table-scroll max-w-full w-full rounded-xl border border-gray-200";
+    table.parentNode?.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  }
+
+  const colCount = Math.max(
+    table.querySelectorAll("thead th").length,
+    table.querySelectorAll("tbody tr:first-child td").length,
+    table.querySelectorAll("tr:first-child th, tr:first-child td").length,
+    1
+  );
+  const minWidthPx = Math.max(640, colCount * 96);
+
+  table.classList.add("border-collapse", "text-left", "text-sm", "min-w-[640px]");
+  table.style.width = "max-content";
+  table.style.minWidth = `${minWidthPx}px`;
+  table.style.wordBreak = "normal";
+  table.style.overflowWrap = "normal";
+
+  table.querySelectorAll("th, td").forEach((cell) => {
+    cell.classList.add("p-3", "align-top", "whitespace-nowrap", "min-w-[5.5rem]");
+    cell.style.wordBreak = "normal";
+    cell.style.overflowWrap = "normal";
+  });
+}
+
+function applyCmsTableLayout(root) {
+  root?.querySelectorAll("table").forEach((table) => applyCmsTableLayoutToTable(table));
+}
+
+function normalizeAllCmsTables(root) {
+  applyCmsTableLayout(root);
+}
+
 function createContentElement(html) {
   const value = normalizeCmsHtml(html);
   if (!value) return null;
@@ -88,6 +149,8 @@ function createContentElement(html) {
     div.querySelectorAll("p").forEach((p) => {
       if (!stripHtml(p.innerHTML)) p.remove();
     });
+    applyResponsiveCmsTextAlign(div);
+    applyCmsTableLayout(div);
     if (!div.childElementCount && !div.textContent.trim()) return null;
     return div;
   }
@@ -96,7 +159,7 @@ function createContentElement(html) {
   if (!text) return null;
 
   const p = document.createElement("p");
-  p.className = "text-justify text-gray-800";
+  p.className = "text-left md:text-justify text-gray-800";
   p.textContent = text;
   return p;
 }
@@ -334,7 +397,7 @@ function createBulletList(items, ordered = false) {
     const html = typeof item === "object" ? normalizeBodyItem(item) : String(item || "");
     if (!stripHtml(html)) return;
     const li = document.createElement("li");
-    li.className = "text-justify leading-relaxed cms-rich-text";
+    li.className = "text-left md:text-justify leading-relaxed cms-rich-text";
     li.innerHTML = html;
     list.appendChild(li);
   });
@@ -594,7 +657,7 @@ function headingClassName() {
   return (
     document.querySelector(".md\\:col-span-3 h2")?.className ||
     document.querySelector('[class*="md:col-span-3"] h2')?.className ||
-    "md:text-3xl text-xl font-semibold text-[#7A3EF2] mb-4"
+    "md:text-3xl text-xl font-semibold text-[#7A3EF2]"
   );
 }
 
@@ -688,12 +751,45 @@ function createHeadingIcon(heading = "") {
   svg.setAttribute("stroke-linecap", "round");
   svg.setAttribute("stroke-linejoin", "round");
   svg.setAttribute("aria-hidden", "true");
-  svg.classList.add("inline", "mr-2", "h-[1em]", "w-[1em]", "align-[-0.125em]", "text-[#7A3EF2]");
+  svg.dataset.cmsHeadingIcon = "true";
+  // width/height attrs stop flex h2 layouts from blowing the SVG up to ~300px on mobile.
+  svg.setAttribute("width", "32");
+  svg.setAttribute("height", "32");
+  svg.classList.add(
+    "inline-block",
+    "shrink-0",
+    "mr-2",
+    "mt-0.5",
+    "h-8",
+    "w-8",
+    "md:h-10",
+    "md:w-10",
+    "text-[#7A3EF2]"
+  );
 
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("d", iconSvgPathForHeading(heading));
   svg.appendChild(path);
   return svg;
+}
+
+function applyHeadingIconSizing(svg) {
+  if (!svg) return;
+  svg.dataset.cmsHeadingIcon = "true";
+  svg.setAttribute("width", "32");
+  svg.setAttribute("height", "32");
+  svg.classList.remove("inline", "h-[1em]", "w-[1em]", "align-[-0.125em]");
+  svg.classList.add(
+    "inline-block",
+    "shrink-0",
+    "mr-2",
+    "mt-0.5",
+    "h-8",
+    "w-8",
+    "md:h-10",
+    "md:w-10",
+    "text-[#7A3EF2]"
+  );
 }
 
 function ensureHeadingIcon(headingEl, heading = "") {
@@ -708,17 +804,21 @@ function ensureHeadingIcon(headingEl, heading = "") {
 
   const iconHeading = heading || label;
   const nextPath = iconSvgPathForHeading(iconHeading);
-  const existingSvg = headingEl.querySelector("svg");
+  let existingSvg = headingEl.querySelector("svg[data-cms-heading-icon='true']");
 
-  if (existingSvg) {
-    const path = existingSvg.querySelector("path");
-    if (path && path.getAttribute("d") !== nextPath) {
-      path.setAttribute("d", nextPath);
-    }
+  if (!existingSvg) {
+    // React-icons use fill paths — replacing only `d` leaves invisible icons on published pages.
+    headingEl.querySelectorAll(":scope > svg, :scope > i").forEach((node) => node.remove());
+    existingSvg = createHeadingIcon(iconHeading);
+    headingEl.insertBefore(existingSvg, headingEl.firstChild);
     return;
   }
 
-  headingEl.insertBefore(createHeadingIcon(iconHeading), headingEl.firstChild);
+  const path = existingSvg.querySelector("path");
+  if (path && path.getAttribute("d") !== nextPath) {
+    path.setAttribute("d", nextPath);
+  }
+  applyHeadingIconSizing(existingSvg);
 }
 
 function setHeading(sectionEl, heading) {
@@ -730,9 +830,10 @@ function setHeading(sectionEl, heading) {
     sectionEl.insertBefore(headingEl, sectionEl.firstChild);
   }
 
-  const icon = headingEl.querySelector("svg, i");
+  const icon =
+    headingEl.querySelector("svg[data-cms-heading-icon='true']") || createHeadingIcon(heading);
   headingEl.replaceChildren();
-  headingEl.appendChild(icon || createHeadingIcon(heading));
+  headingEl.appendChild(icon);
   headingEl.append(document.createTextNode(` ${heading}`));
 }
 
@@ -777,7 +878,7 @@ function renderTable(parent, section) {
   const wrapper = document.createElement("div");
   wrapper.className = "cms-table-scroll max-w-full w-full rounded-xl border border-gray-200";
   const table = document.createElement("table");
-  table.className = "w-full min-w-0 text-left text-sm";
+  table.className = "border-collapse text-left text-sm";
 
   if (columns.length) {
     const thead = document.createElement("thead");
@@ -785,7 +886,7 @@ function renderTable(parent, section) {
     const tr = document.createElement("tr");
     columns.forEach((column) => {
       const th = document.createElement("th");
-      th.className = "p-3 font-semibold";
+      th.className = "p-3 font-semibold align-top whitespace-nowrap min-w-[5.5rem]";
       th.textContent = column;
       tr.appendChild(th);
     });
@@ -799,7 +900,7 @@ function renderTable(parent, section) {
     const tr = document.createElement("tr");
     (Array.isArray(row) ? row : [row]).forEach((cell) => {
       const td = document.createElement("td");
-      td.className = "p-3 align-top";
+      td.className = "p-3 align-top whitespace-nowrap min-w-[5.5rem]";
       td.innerHTML = cell || "";
       tr.appendChild(td);
     });
@@ -808,6 +909,7 @@ function renderTable(parent, section) {
   table.appendChild(tbody);
   wrapper.appendChild(table);
   parent.appendChild(wrapper);
+  applyCmsTableLayoutToTable(table);
 }
 
 function renderImage(parent, section) {
@@ -877,7 +979,7 @@ function renderNestedInto(parent, nestedSection, index, parentSection) {
   const heading = nestedSectionHeading(nestedSection);
   if (heading) {
     const h = document.createElement("h3");
-    h.className = "text-xl font-semibold text-[#7A3EF2] mb-2";
+    h.className = "text-xl font-semibold text-[#7A3EF2]";
     h.textContent = heading;
     wrapper.appendChild(h);
   }
@@ -1756,6 +1858,8 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
       mainColumn?.querySelectorAll("h2").forEach((headingEl) => {
         ensureHeadingIcon(headingEl, getHeadingLabel(headingEl));
       });
+      normalizeMainColumnTextAlign(mainColumn);
+      normalizeAllCmsTables(mainColumn);
       normalizeInternalLinks(document);
 
       // Keep JSON-LD in sync when CRM publishes before the next ISR cycle.

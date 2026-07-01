@@ -399,7 +399,7 @@ function Section({ id, title, children }) {
   return (
     <div id={id} className="space-y-4">
       {title ? (
-        <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] mb-4 flex items-center gap-2">
+        <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] flex items-center gap-2">
           {title}
         </h2>
       ) : null}

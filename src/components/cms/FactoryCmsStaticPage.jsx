@@ -31,7 +31,7 @@ function hasHtml(value = "") {
 }
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text text-justify text-base leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6";
+  "cms-rich-text text-left md:text-justify text-base leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6";
 
 function CmsRichBlock({ html, className = "" }) {
   const value = String(html || "").trim();
@@ -46,7 +46,7 @@ function CmsRichBlock({ html, className = "" }) {
     );
   }
 
-  return <p className={`text-justify text-base leading-relaxed ${className}`.trim()}>{value}</p>;
+  return <p className={`text-left md:text-justify text-base leading-relaxed ${className}`.trim()}>{value}</p>;
 }
 
 function normalizeBreadcrumbs(page, content) {

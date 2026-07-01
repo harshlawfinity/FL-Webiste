@@ -3,15 +3,14 @@ import { cache } from "react";
 const CMS_BASE_URL =
   process.env.NEXT_PUBLIC_CRM_CMS_BASE_URL ||
   process.env.CRM_CMS_BASE_URL ||
-  (process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://internal.lawfinity.in");
+  "https://internal.lawfinity.in";
 
 // Server fetch cache (ISR/metadata). Override via CMS_REVALIDATE_SECONDS env if needed.
 const CMS_REVALIDATE_SECONDS = Number(process.env.CMS_REVALIDATE_SECONDS || 60);
+const MARQUEE_REVALIDATE_SECONDS = Number(process.env.CMS_MARQUEE_REVALIDATE_SECONDS || 30);
 const CMS_FETCH_TIMEOUT_MS = Number(process.env.CMS_FETCH_TIMEOUT_MS || 15000);
 
-async function fetchCms(path, { fresh = false } = {}) {
+async function fetchCms(path, { fresh = false, revalidate = CMS_REVALIDATE_SECONDS } = {}) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CMS_FETCH_TIMEOUT_MS);
@@ -19,7 +18,7 @@ async function fetchCms(path, { fresh = false } = {}) {
     const res = await fetch(`${CMS_BASE_URL}${path}`, {
       ...(fresh
         ? { cache: "no-store" }
-        : { next: { revalidate: CMS_REVALIDATE_SECONDS } }),
+        : { next: { revalidate } }),
       signal: controller.signal,
     });
 
@@ -48,6 +47,11 @@ async function fetchCms(path, { fresh = false } = {}) {
 // Dedupe CMS fetches within the same request (generateMetadata + page component share one call).
 export const getFactoryCmsLandingPage = cache(async (slug) => {
   return fetchCms(`/api/public/factorylicence/landing-pages/${slug}`);
+});
+
+// Uncached for /[slug] — SEO publish should be visible immediately, not after ISR window.
+export const getFactoryCmsLandingPageLive = cache(async (slug) => {
+  return fetchCms(`/api/public/factorylicence/landing-pages/${slug}`, { fresh: true });
 });
 
 export const getFactoryCmsStaticPage = cache(async (pageKey) => {
@@ -147,13 +151,38 @@ export const STATIC_LANDING_SLUGS = new Set([
   "pollution-noc-in-uttar-pradesh",
 ]);
 
-async function fetchCmsPayload(path) {
+// Static CMS pages that can seed marquee discovery (home marqueeServiceSlugs, connectedServices, etc.).
+const MARQUEE_STATIC_PAGE_KEYS = ["home", "about", "contact", "blogs"];
+
+// Default BFS seeds when CRM list API is unavailable — entry points for each service cluster.
+// New CMS pages appear in marquee when linked via connectedServices from any discovered page.
+const DEFAULT_MARQUEE_DISCOVERY_SEEDS = [
+  "hazardous-waste-registration",
+  "biomedical-waste-management-registration",
+  "hospital-registration",
+  "clinical-establishment-registration",
+];
+
+// Routes that are never CMS-only service landing pages in the footer marquee.
+const RESERVED_MARQUEE_SLUGS = new Set([
+  ...STATIC_LANDING_SLUGS,
+  "about",
+  "contact",
+  "blogs",
+  "privacy-policy",
+  "terms-conditions",
+  "refund-cancellation",
+  "payments",
+  "api",
+]);
+
+async function fetchCmsPayload(path, { revalidate = CMS_REVALIDATE_SECONDS } = {}) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CMS_FETCH_TIMEOUT_MS);
 
     const res = await fetch(`${CMS_BASE_URL}${path}`, {
-      next: { revalidate: CMS_REVALIDATE_SECONDS },
+      next: { revalidate },
       signal: controller.signal,
     });
 
@@ -185,14 +214,20 @@ function extractSlugFromHref(href = "") {
   return value.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean)[0] || "";
 }
 
-function isPublishedCmsLandingPage(page) {
+// CRM marks SEO-live pages as needs_review with publishedAt — not always status=published.
+export function isPublishedCmsLandingPage(page) {
   if (!page?.slug) return false;
 
-  const status = String(page.status || "published").toLowerCase();
-  if (!["published", "publish", "active"].includes(status)) return false;
-  if (page.website && page.website !== "factorylicence.in") return false;
+  const website = String(page.website || "factorylicence.in").toLowerCase();
+  if (!website.includes("factorylicence.in")) return false;
 
-  return true;
+  const status = String(page.status || "published").toLowerCase();
+  if (["draft", "archived", "deleted", "inactive"].includes(status)) return false;
+
+  const explicitlyPublished = ["published", "publish", "active", "visible"].includes(status);
+  const liveOnCrm = status === "needs_review" && Boolean(page.publishedAt);
+
+  return explicitlyPublished || liveOnCrm;
 }
 
 // CMS page title for marquee pills (admin "Page Title" field — not hero/mainHeading).
@@ -226,29 +261,130 @@ function extractMarqueeItemsFromConfig(items = []) {
       const slug =
         item?.slug ||
         extractSlugFromHref(item?.url || item?.link || item?.href || "");
+      // connectedServices uses `name`; CMS list items may use title/label.
       const title = item?.title || item?.name || item?.label || item?.mainHeading;
       return toMarqueeItem(slug, title);
     })
     .filter(Boolean);
 }
 
+function isMarqueeCandidateSlug(slug) {
+  const clean = String(slug || "").replace(/^\/+|\/+$/g, "");
+  if (!clean || RESERVED_MARQUEE_SLUGS.has(clean)) return false;
+  if (clean.startsWith("blogs")) return false;
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(clean);
+}
+
+function enqueueMarqueeSlug(queue, slug) {
+  const clean = String(slug || "").replace(/^\/+|\/+$/g, "");
+  if (isMarqueeCandidateSlug(clean)) queue.push(clean);
+}
+
+// Scan CMS JSON for internal service links (connectedServices, body HTML hrefs, slug fields).
+function collectInternalSlugsFromValue(value, slugs) {
+  if (value == null) return;
+
+  if (typeof value === "string") {
+    const patterns = [
+      /factorylicence\.in\/([a-z0-9]+(?:-[a-z0-9]+)*)/gi,
+      /href=["']\/([a-z0-9]+(?:-[a-z0-9]+)*)/gi,
+    ];
+    for (const pattern of patterns) {
+      let match = pattern.exec(value);
+      while (match) {
+        if (isMarqueeCandidateSlug(match[1])) slugs.add(match[1]);
+        match = pattern.exec(value);
+      }
+    }
+    return;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectInternalSlugsFromValue(item, slugs));
+    return;
+  }
+
+  if (typeof value === "object") {
+    if (isMarqueeCandidateSlug(value.slug)) slugs.add(value.slug);
+    const fromHref = extractSlugFromHref(value.url || value.link || value.href || "");
+    if (isMarqueeCandidateSlug(fromHref)) slugs.add(fromHref);
+    Object.values(value).forEach((item) => collectInternalSlugsFromValue(item, slugs));
+  }
+}
+
+function extractLinkedSlugsFromCmsPage(page) {
+  const slugs = new Set();
+  // connectedServices is how SEO links new CMS service pages — seed marquee discovery.
+  collectInternalSlugsFromValue(page?.content?.connectedServices || page?.connectedServices, slugs);
+  collectInternalSlugsFromValue(page?.content, slugs);
+  collectInternalSlugsFromValue(page?.customSections, slugs);
+  collectInternalSlugsFromValue(page?.content?.customSections, slugs);
+  return Array.from(slugs);
+}
+
+function extractMarqueeSeedsFromStaticContent(content = {}) {
+  const seeds = [];
+
+  extractMarqueeItemsFromConfig(content.connectedServices).forEach((item) => {
+    seeds.push(item.slug);
+  });
+
+  extractMarqueeItemsFromConfig(
+    content.marqueeServices ||
+      content.serviceMarquee ||
+      content.newServices ||
+      content.services ||
+      (Array.isArray(content.marqueeServiceSlugs)
+        ? content.marqueeServiceSlugs.map((slug) => ({ slug }))
+        : [])
+  ).forEach((item) => {
+    seeds.push(item.slug);
+  });
+
+  const slugSet = new Set();
+  collectInternalSlugsFromValue(content, slugSet);
+  slugSet.forEach((slug) => seeds.push(slug));
+
+  return seeds;
+}
+
+function pagesFromListPayload(data) {
+  if (!data?.success) return null;
+
+  const pages =
+    data.pages ||
+    data.landingPages ||
+    data.data?.pages ||
+    (Array.isArray(data.data) ? data.data : null);
+
+  return Array.isArray(pages) && pages.length ? pages : null;
+}
+
 // CRM list endpoint (preferred) — returns all published factorylicence.in landing pages.
 async function fetchCmsLandingPagesList() {
   const paths = [
+    `/api/public/factorylicence/published-landing-pages?website=factorylicence.in`,
     `/api/public/factorylicence/landing-pages/list?website=factorylicence.in`,
     `/api/public/factorylicence/landing-pages?website=factorylicence.in&status=published`,
   ];
 
   for (const path of paths) {
-    const data = await fetchCmsPayload(path);
-    const pages = data?.pages || data?.landingPages;
-    if (data?.success && Array.isArray(pages) && pages.length) return pages;
+    const data = await fetchCmsPayload(path, { revalidate: MARQUEE_REVALIDATE_SECONDS });
+    const pages = pagesFromListPayload(data);
+    if (pages) return pages;
   }
 
   return null;
 }
 
-// Optional CMS static page `services-marquee` — SEO can curate new service links until list API ships.
+// Optional CMS static pages — SEO can curate service links until CRM list API ships.
+const MARQUEE_LIST_STATIC_KEYS = [
+  "services-marquee",
+  "service-pages",
+  "marquee-services",
+  "all-services",
+];
+
 async function fetchMarqueeServicesFromStaticPage(pageKey) {
   const page = await getFactoryCmsStaticPage(pageKey);
   if (!page) return [];
@@ -264,41 +400,50 @@ async function fetchMarqueeServicesFromStaticPage(pageKey) {
   return collections.flatMap(extractMarqueeItemsFromConfig);
 }
 
-// Walk connectedServices links from known landing pages to discover CMS-only service pages.
+async function fetchMarqueeServicesFromStaticPages() {
+  const items = [];
+  for (const pageKey of MARQUEE_LIST_STATIC_KEYS) {
+    items.push(...(await fetchMarqueeServicesFromStaticPage(pageKey)));
+  }
+  return items;
+}
+
+// Walk CMS links from static + landing pages to discover CMS-only service pages.
 async function discoverMarqueeServicesViaGraph() {
   const found = new Map();
   const visited = new Set();
   const queue = [...STATIC_LANDING_SLUGS];
 
-  const home = await getFactoryCmsStaticPage("home");
-  const homeContent = home?.content || home?.sections || {};
-
-  extractMarqueeItemsFromConfig(homeContent.connectedServices).forEach((item) => {
-    queue.push(item.slug);
-  });
-
-  extractMarqueeItemsFromConfig(
-    homeContent.marqueeServices ||
-      homeContent.serviceMarquee ||
-      (Array.isArray(homeContent.marqueeServiceSlugs)
-        ? homeContent.marqueeServiceSlugs.map((slug) => ({ slug }))
-        : [])
-  ).forEach((item) => {
-    queue.push(item.slug);
-  });
+  // Home/about/contact/blogs may declare marqueeServiceSlugs or linked services in CMS.
+  for (const pageKey of MARQUEE_STATIC_PAGE_KEYS) {
+    const page = await getFactoryCmsStaticPage(pageKey);
+    const content = page?.content || page?.sections || {};
+    for (const slug of extractMarqueeSeedsFromStaticContent(content)) {
+      enqueueMarqueeSlug(queue, slug);
+    }
+  }
 
   const envSeeds = String(process.env.CMS_MARQUEE_SEED_SLUGS || "")
     .split(",")
     .map((slug) => slug.trim())
     .filter(Boolean);
 
-  // Bootstrap BFS when CRM list API is unavailable — discovers linked service pages (e.g. hazardous-waste cluster).
   const discoverySeeds =
-    envSeeds.length > 0 ? envSeeds : ["hazardous-waste-registration"];
-  queue.push(...discoverySeeds);
+    envSeeds.length > 0 ? envSeeds : DEFAULT_MARQUEE_DISCOVERY_SEEDS;
+  discoverySeeds.forEach((slug) => enqueueMarqueeSlug(queue, slug));
 
-  for (const item of await fetchMarqueeServicesFromStaticPage("services-marquee")) {
-    queue.push(item.slug);
+  // Pre-enqueue connectedServices from seed pages — new CMS pages SEO links there appear in marquee.
+  for (const seed of discoverySeeds) {
+    const seedPage = await fetchCms(`/api/public/factorylicence/landing-pages/${seed}`, {
+      revalidate: MARQUEE_REVALIDATE_SECONDS,
+    });
+    for (const slug of extractLinkedSlugsFromCmsPage(seedPage || {})) {
+      enqueueMarqueeSlug(queue, slug);
+    }
+  }
+
+  for (const item of await fetchMarqueeServicesFromStaticPages()) {
+    enqueueMarqueeSlug(queue, item.slug);
   }
 
   while (queue.length) {
@@ -306,18 +451,18 @@ async function discoverMarqueeServicesViaGraph() {
     if (!slug || visited.has(slug)) continue;
     visited.add(slug);
 
-    const page = await getFactoryCmsLandingPage(slug);
+    const page = await fetchCms(`/api/public/factorylicence/landing-pages/${slug}`, {
+      revalidate: MARQUEE_REVALIDATE_SECONDS,
+    });
     if (!isPublishedCmsLandingPage(page)) continue;
 
     if (!STATIC_LANDING_SLUGS.has(slug)) {
       found.set(slug, toMarqueeItem(slug, marqueeTitleFromPage(page)));
     }
 
-    const linked = page.content?.connectedServices || page.connectedServices || [];
-    for (const item of linked) {
-      const nextSlug =
-        item?.slug || extractSlugFromHref(item?.url || item?.link || item?.href || "");
-      if (nextSlug && !visited.has(nextSlug)) queue.push(nextSlug);
+    // Follow connectedServices plus any internal links embedded in CMS section HTML.
+    for (const nextSlug of extractLinkedSlugsFromCmsPage(page)) {
+      enqueueMarqueeSlug(queue, nextSlug);
     }
   }
 
@@ -337,7 +482,7 @@ export const getCmsMarqueeServices = cache(async () => {
     }
   }
 
-  for (const item of await fetchMarqueeServicesFromStaticPage("services-marquee")) {
+  for (const item of await fetchMarqueeServicesFromStaticPages()) {
     if (!STATIC_LANDING_SLUGS.has(item.slug)) items.set(item.slug, item);
   }
 
