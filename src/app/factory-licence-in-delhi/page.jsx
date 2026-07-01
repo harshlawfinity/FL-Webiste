@@ -1,3 +1,4 @@
+import { preload } from "react-dom";
 import FactoryLicenceDelhiPage from "@/components/pages/FactoryLicenceDelhiPage";
 import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
 import { buildLandingPageMetadata } from "@/lib/cms";
@@ -48,6 +49,11 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
+  preload("/assets/factories-in-delhi.webp", {
+    as: "image",
+    fetchPriority: "high",
+  });
+
   return (
     <>
       <FactoryLicenceDelhiPage />

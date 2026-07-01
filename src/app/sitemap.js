@@ -1,4 +1,5 @@
 import nextConfig from "../../next.config.mjs";
+import { getCmsMarqueeServices } from "@/lib/cms";
 
 const API_BASE = "https://internal.lawfinity.in";
 const BASE_URL = "https://factorylicence.in";
@@ -238,6 +239,20 @@ export default async function sitemap() {
     })
   );
 
+  // CMS-only landing pages (e.g. hazardous-waste-registration) — index/follow checked below.
+  let dynamicLandingRoutes = [];
+  try {
+    const dynamicPages = await getCmsMarqueeServices();
+    dynamicLandingRoutes = dynamicPages.map((page) =>
+      toSitemapEntry(page.href, {
+        priority: 0.9,
+        cms: { type: "landing", key: page.slug },
+      })
+    );
+  } catch (error) {
+    console.error("Error fetching dynamic CMS landing routes for sitemap:", error);
+  }
+
   let blogRoutes = [];
   try {
     const blogs = await fetchAllBlogs();
@@ -259,5 +274,8 @@ export default async function sitemap() {
     console.error("Error fetching blog routes for sitemap:", error);
   }
 
-  return filterIndexableRoutes([...staticRoutes, ...serviceRoutes, ...blogRoutes], redirectSourcePaths);
+  return filterIndexableRoutes(
+    [...staticRoutes, ...serviceRoutes, ...dynamicLandingRoutes, ...blogRoutes],
+    redirectSourcePaths
+  );
 }

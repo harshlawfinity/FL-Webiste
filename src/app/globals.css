@@ -126,6 +126,33 @@ body {
   margin: 0;
 }
 
+@keyframes service-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly one half-width — matches the duplicated track in ServicePagesMarquee. */
+    transform: translateX(-50%);
+  }
+}
+
+.service-marquee-track {
+  animation: service-marquee-scroll 22s linear infinite;
+  will-change: transform;
+}
+
+.service-marquee-viewport:hover .service-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
 /* Grid main column must shrink below intrinsic CMS table width */
 [class*="col-span-3"] {
   min-width: 0;

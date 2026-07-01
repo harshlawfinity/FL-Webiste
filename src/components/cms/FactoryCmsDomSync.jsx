@@ -284,6 +284,48 @@ function normalizeBodyItem(item) {
   return item.description || item.content || item.text || item.answer || item.title || item.step || "";
 }
 
+// True when CRM section has body, table, image, or nested blocks — heading alone is not enough.
+function sectionHasRenderableContent(section) {
+  if (!section) return false;
+
+  if (section.type === "image" && section.url) return true;
+
+  if (section.type === "table") {
+    const columns = Array.isArray(section.columns) ? section.columns : [];
+    const rows = Array.isArray(section.rows) ? section.rows : [];
+    return rows.length > 0 && columns.some((column) => stripHtml(column));
+  }
+
+  if (stripHtml(section.introParagraph || "")) return true;
+
+  const body = Array.isArray(section.body) ? section.body : section.body ? [section.body] : [];
+  if (
+    body.some((item) => {
+      if (item && typeof item === "object" && item.step && item.description) {
+        return stripHtml(item.description);
+      }
+      return stripHtml(normalizeBodyItem(item));
+    })
+  ) {
+    return true;
+  }
+
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  if (nested.some((item) => sectionHasRenderableContent(item))) return true;
+
+  if (Array.isArray(section.categories)) {
+    return section.categories.some((category) => categoryListItems(category).length > 0);
+  }
+
+  return false;
+}
+
+function hideEmptyCmsSection(sectionEl) {
+  if (!sectionEl) return;
+  sectionEl.style.display = "none";
+  sectionEl.dataset.cmsLegacyHidden = "true";
+}
+
 function createBulletList(items, ordered = false) {
   const list = document.createElement(ordered ? "ol" : "ul");
   list.className = ordered ? ORDERED_LIST_CLASS : LIST_CLASS;
@@ -399,13 +441,127 @@ function renderSectionBody(parent, section, sectionKey = "") {
   }
 }
 
+// CMS nestedSections use placement (beforeBody) or afterBodyIndex (insert after body[i]).
+function partitionNestedSections(nested = []) {
+  const beforeBody = [];
+  const afterBodyEnd = [];
+  const byBodyIndex = new Map();
+
+  nested.forEach((item) => {
+    if (!item) return;
+    if (item.placement === "beforeBody") {
+      beforeBody.push(item);
+      return;
+    }
+    if (typeof item.afterBodyIndex === "number" && item.afterBodyIndex >= 0) {
+      const idx = item.afterBodyIndex;
+      if (!byBodyIndex.has(idx)) byBodyIndex.set(idx, []);
+      byBodyIndex.get(idx).push(item);
+      return;
+    }
+    afterBodyEnd.push(item);
+  });
+
+  return { beforeBody, byBodyIndex, afterBodyEnd };
+}
+
+function renderSectionBodyWithNestedPlacement(parent, section, sectionKey = "") {
+  if (!section || !parent) return;
+
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  const { beforeBody, byBodyIndex, afterBodyEnd } = partitionNestedSections(nested);
+
+  beforeBody.forEach((nestedSection, index) => {
+    renderNestedInto(parent, nestedSection, index, section);
+  });
+
+  const seenContent = new Set();
+  const introHtml = section.introParagraph && stripHtml(section.introParagraph)
+    ? String(section.introParagraph).trim()
+    : "";
+
+  if (introHtml) {
+    seenContent.add(contentFingerprint(introHtml));
+    const intro = createContentElement(introHtml);
+    if (intro) parent.appendChild(intro);
+  }
+
+  const body = Array.isArray(section.body)
+    ? section.body
+    : section.body
+      ? [section.body]
+      : [];
+
+  const stepItems = body.filter(
+    (item) => item && typeof item === "object" && item.step && item.description
+  );
+
+  // Render each body block in CMS order; inject nested tables/images after the matching index.
+  body.forEach((item, bodyIndex) => {
+    if (item && typeof item === "object" && item.step && item.description) return;
+
+    const html = normalizeBodyItem(item);
+    if (!stripHtml(html)) return;
+
+    const fingerprint = contentFingerprint(html);
+    if (seenContent.has(fingerprint)) return;
+    seenContent.add(fingerprint);
+    collectHeadingFingerprints(html).forEach((fp) => seenContent.add(fp));
+
+    const el = createContentElement(html);
+    if (el) parent.appendChild(el);
+
+    const interleaved = byBodyIndex.get(bodyIndex) || [];
+    interleaved.forEach((nestedSection, index) => {
+      renderNestedInto(parent, nestedSection, index, section);
+    });
+  });
+
+  if (stepItems.length) {
+    const ol = createBulletList(
+      stepItems.map((item) => `<strong>${item.step}:</strong> ${item.description}`),
+      true
+    );
+    if (ol) parent.appendChild(ol);
+  }
+
+  if (Array.isArray(section.categories)) {
+    section.categories.forEach((category) => {
+      const items = categoryListItems(category);
+      if (!items.length) return;
+
+      const label = category.applicantType || category.title || category.name;
+      const labelFp = label ? contentFingerprint(label) : "";
+      const headingAlreadyRendered = labelFp && seenContent.has(labelFp);
+
+      if (label && stripHtml(label) && !headingAlreadyRendered) {
+        const heading = document.createElement("h4");
+        heading.className = "text-base font-semibold text-gray-900 mt-2 mb-2";
+        heading.textContent = label;
+        parent.appendChild(heading);
+        seenContent.add(labelFp);
+      }
+
+      const ul = createBulletList(items, false);
+      if (ul) parent.appendChild(ul);
+    });
+  }
+
+  afterBodyEnd.forEach((nestedSection, index) => {
+    renderNestedInto(parent, nestedSection, index, section);
+  });
+}
+
 function contentHeading(section, fallback = "") {
   return section?.heading || section?.subsectionTitle || section?.title || fallback;
 }
 
-const GENERIC_NESTED_TITLES = new Set(["text", "paragraph", "content", "body"]);
+const GENERIC_NESTED_TITLES = new Set(["text", "paragraph", "content", "body", "table"]);
 
 function nestedSectionHeading(nestedSection) {
+  // Embedded data tables should not render CMS placeholder titles like "Table".
+  if (nestedSection?.type === "table") return "";
+
   const explicitHeading = stripHtml(
     nestedSection?.heading || nestedSection?.title || ""
   );
@@ -457,6 +613,27 @@ function findHeadingEl(sectionEl) {
   return sectionEl.querySelector(":scope > h1, :scope > h2, :scope > h3");
 }
 
+function iconIndexFromHeading(heading = "") {
+  const text = normalizeHeadingText(heading);
+  let hash = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+  }
+  return hash % HEADING_ICON_POOL.length;
+}
+
+// Distinct fallback icons for CMS custom headings that do not match a keyword rule.
+const HEADING_ICON_POOL = [
+  "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+  "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5A3.375 3.375 0 0 0 10.125 2.25H6.75A2.25 2.25 0 0 0 4.5 4.5v15A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-5.25Z",
+  "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0",
+  "M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.008v.008H3.75V6.75Zm0 5.25h.008v.008H3.75V12Zm0 5.25h.008v.008H3.75v-.008Z",
+  "M12 6v6h4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+  "M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125V6m-19.5 0v9.75m19.5-9.75v9.75m0 0v.375c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 16.125v-.375m19.5 0H2.25",
+  "M12 9v3.75m0 3.75h.008v.008H12v-.008ZM10.29 3.86 1.82 18a2.25 2.25 0 0 0 1.93 3.375h16.5A2.25 2.25 0 0 0 22.18 18L13.71 3.86a2.25 2.25 0 0 0-3.42 0Z",
+  "M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21",
+];
+
 function iconSvgPathForHeading(heading = "") {
   const normalized = normalizeHeadingText(heading);
   if (/benefit|why choose/.test(normalized)) {
@@ -474,16 +651,32 @@ function iconSvgPathForHeading(heading = "") {
   if (/step|process|apply/.test(normalized)) {
     return "M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.008v.008H3.75V6.75Zm0 5.25h.008v.008H3.75V12Zm0 5.25h.008v.008H3.75v-.008Z";
   }
-  if (/fee|cost|price/.test(normalized)) {
+  if (/fee|cost|price|charge/.test(normalized)) {
     return "M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125h17.25c.621 0 1.125.504 1.125 1.125V6m-19.5 0v9.75m19.5-9.75v9.75m0 0v.375c0 .621-.504 1.125-1.125 1.125H3.375A1.125 1.125 0 0 1 2.25 16.125v-.375m19.5 0H2.25";
   }
-  if (/timeline|renewal|time/.test(normalized)) {
+  if (/timeline|renewal|valid|expir/.test(normalized)) {
     return "M12 6v6h4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z";
   }
-  if (/penalt|lost|fine|non-compliance/.test(normalized)) {
+  if (/penalt|lost|fine|non-compliance|reject|objection|reason/.test(normalized)) {
     return "M12 9v3.75m0 3.75h.008v.008H12v-.008ZM10.29 3.86 1.82 18a2.25 2.25 0 0 0 1.93 3.375h16.5A2.25 2.25 0 0 0 22.18 18L13.71 3.86a2.25 2.25 0 0 0-3.42 0Z";
   }
-  return "M3.75 4.5h16.5M3.75 9h16.5M3.75 13.5h16.5M3.75 18h16.5";
+  if (/licens|authority|regulat|government|official/.test(normalized)) {
+    return "M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21";
+  }
+  if (/industry|sector|service|hospital|clinic|nursing|medical|health/.test(normalized)) {
+    return "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0";
+  }
+  if (/compliance|safety|fire|waste|pollution|biomedical/.test(normalized)) {
+    return "M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z";
+  }
+  if (/introduc|what is|overview/.test(normalized)) {
+    return "M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z";
+  }
+  if (/choose|factorylicence|factory licence/.test(normalized)) {
+    return "M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z";
+  }
+
+  return HEADING_ICON_POOL[iconIndexFromHeading(heading)];
 }
 
 function createHeadingIcon(heading = "") {
@@ -513,8 +706,19 @@ function ensureHeadingIcon(headingEl, heading = "") {
     return;
   }
 
-  if (headingEl.querySelector("svg, i")) return;
-  headingEl.insertBefore(createHeadingIcon(heading || label), headingEl.firstChild);
+  const iconHeading = heading || label;
+  const nextPath = iconSvgPathForHeading(iconHeading);
+  const existingSvg = headingEl.querySelector("svg");
+
+  if (existingSvg) {
+    const path = existingSvg.querySelector("path");
+    if (path && path.getAttribute("d") !== nextPath) {
+      path.setAttribute("d", nextPath);
+    }
+    return;
+  }
+
+  headingEl.insertBefore(createHeadingIcon(iconHeading), headingEl.firstChild);
 }
 
 function setHeading(sectionEl, heading) {
@@ -538,6 +742,31 @@ function syncTextBlocks(sectionEl, section, sectionKey = "") {
 
 function renderSectionInto(parent, section, sectionKey = "") {
   renderSectionBody(parent, section, sectionKey);
+}
+
+// Render body plus nested tables/images (CMS embeds tables inside text sections via nestedSections).
+function renderSectionWithNestedSections(parent, section, sectionKey = "") {
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  if (!nested.length) {
+    renderSectionInto(parent, section, sectionKey);
+    return;
+  }
+
+  const { beforeBody, byBodyIndex, afterBodyEnd } = partitionNestedSections(nested);
+
+  // CMS afterBodyIndex — e.g. fee paragraph → table → note paragraph.
+  if (byBodyIndex.size > 0) {
+    renderSectionBodyWithNestedPlacement(parent, section, sectionKey);
+    return;
+  }
+
+  beforeBody.forEach((nestedSection, index) => {
+    renderNestedInto(parent, nestedSection, index, section);
+  });
+  renderSectionInto(parent, section, sectionKey);
+  afterBodyEnd.forEach((nestedSection, index) => {
+    renderNestedInto(parent, nestedSection, index, section);
+  });
 }
 
 function renderTable(parent, section) {
@@ -601,6 +830,8 @@ function renderImage(parent, section) {
 
 function appendCmsSection({ key, section, targetParent, nested = false }) {
   if (!section || !targetParent) return null;
+  if (!sectionHasRenderableContent(section)) return null;
+
   const id = sectionIdFor(key, section);
   const sectionEl = document.createElement("div");
   sectionEl.id = id;
@@ -631,7 +862,7 @@ function appendCmsSection({ key, section, targetParent, nested = false }) {
   } else if (section.type === "image") {
     renderImage(sectionEl, section);
   } else {
-    renderSectionInto(sectionEl, section);
+    renderSectionWithNestedSections(sectionEl, section, key);
   }
 
   targetParent.appendChild(sectionEl);
@@ -670,6 +901,11 @@ function renderNestedInto(parent, nestedSection, index, parentSection) {
 }
 
 function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) {
+  if (!sectionHasRenderableContent(section)) {
+    hideEmptyCmsSection(sectionEl);
+    return;
+  }
+
   sectionEl.style.display = "";
   delete sectionEl.dataset.cmsLegacyHidden;
 
@@ -680,16 +916,8 @@ function syncExistingCustomSection(sectionEl, section, preserveIds = new Set()) 
   const preserveEl = sectionEl.querySelector("[data-cms-preserve='true']");
   const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
   const hasCmsTable = nested.some((item) => item?.type === "table") || section.type === "table";
-  const beforeBody = nested.filter((item) => item.placement === "beforeBody");
-  const afterBody = nested.filter((item) => item.placement !== "beforeBody");
 
-  beforeBody.forEach((nestedSection, index) => {
-    renderNestedInto(container, nestedSection, index, section);
-  });
-  renderSectionInto(container, section);
-  afterBody.forEach((nestedSection, index) => {
-    renderNestedInto(container, nestedSection, index, section);
-  });
+  renderSectionWithNestedSections(container, section);
 
   if (!container.childElementCount) return;
 
@@ -848,23 +1076,55 @@ function syncStandardSection(key, section, syncedElements) {
   const sectionEl = SECTION_IDS[key]?.map((id) => findSectionElement(id)).find(Boolean);
   if (!sectionEl) return;
 
-  setHeading(sectionEl, section.heading);
-  syncTextBlocks(sectionEl, section, key);
+  if (!sectionHasRenderableContent(section)) {
+    hideEmptyCmsSection(sectionEl);
+    syncedElements.set(key, sectionEl);
+    return;
+  }
+
+  sectionEl.style.display = "";
+  delete sectionEl.dataset.cmsLegacyHidden;
+
+  const heading = contentHeading(section);
+  if (heading) {
+    setHeading(sectionEl, heading);
+    const headingEl = findHeadingEl(sectionEl);
+    if (headingEl) headingEl.style.display = "";
+  } else {
+    const headingEl = findHeadingEl(sectionEl);
+    if (headingEl) headingEl.style.display = "none";
+  }
 
   const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
-  if (nested.length) {
-    const container =
-      sectionEl.querySelector("[data-cms-synced='true']") ||
-      (() => {
-        const el = document.createElement("div");
-        el.dataset.cmsSynced = "true";
-        el.className = "cms-sync-content cms-rich-text space-y-4 max-w-full min-w-0";
-        sectionEl.appendChild(el);
-        return el;
-      })();
-    nested.forEach((nestedSection, index) => {
-      renderNestedInto(container, nestedSection, index, section);
-    });
+  const hasInterleavedNested = nested.some(
+    (item) => typeof item?.afterBodyIndex === "number" && item.afterBodyIndex >= 0
+  );
+
+  if (hasInterleavedNested) {
+    clearSyncedContent(sectionEl);
+    hideLegacyContent(sectionEl);
+    const container = document.createElement("div");
+    container.dataset.cmsSynced = "true";
+    container.className = "cms-sync-content cms-rich-text space-y-4 max-w-full min-w-0";
+    renderSectionWithNestedSections(container, section, key);
+    if (container.childElementCount) sectionEl.appendChild(container);
+  } else {
+    syncTextBlocks(sectionEl, section, key);
+
+    if (nested.length) {
+      const container =
+        sectionEl.querySelector("[data-cms-synced='true']") ||
+        (() => {
+          const el = document.createElement("div");
+          el.dataset.cmsSynced = "true";
+          el.className = "cms-sync-content cms-rich-text space-y-4 max-w-full min-w-0";
+          sectionEl.appendChild(el);
+          return el;
+        })();
+      nested.forEach((nestedSection, index) => {
+        renderNestedInto(container, nestedSection, index, section);
+      });
+    }
   }
 
   syncedElements.set(key, sectionEl);
@@ -873,12 +1133,16 @@ function syncStandardSection(key, section, syncedElements) {
 function syncCustomSection(key, section, mainColumn, syncedElements, preserveIds) {
   const existingEl = resolveSectionElement(key, section);
   if (existingEl) {
+    if (!sectionHasRenderableContent(section)) {
+      hideEmptyCmsSection(existingEl);
+      return;
+    }
     syncExistingCustomSection(existingEl, section, preserveIds);
     syncedElements.set(key, existingEl);
     return;
   }
 
-  if (!mainColumn) return;
+  if (!mainColumn || !sectionHasRenderableContent(section)) return;
 
   const added = appendCmsSection({ key, section, targetParent: mainColumn });
   if (!added) return;
@@ -1419,6 +1683,16 @@ function syncBreadcrumbs(page) {
   }
 }
 
+function hasUrlHashAnchor() {
+  return typeof window !== "undefined" && Boolean(window.location.hash);
+}
+
+// CRM DOM reorder shifts scroll to the footer on refresh — keep hero in view unless #anchor present.
+function scrollToHeroUnlessAnchored() {
+  if (hasUrlHashAnchor()) return;
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
 export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) {
   const pathname = usePathname();
 
@@ -1426,6 +1700,11 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
     let cancelled = false;
     let idleId;
     let timeoutId;
+
+    if (typeof window !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    scrollToHeroUnlessAnchored();
 
     const runSync = (activePage) => {
       syncDocumentSeo(activePage);
@@ -1474,7 +1753,9 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
       //   syncHorizontalToc();
       // }
       syncConnectedServices(activePage);
-      mainColumn?.querySelectorAll("h2").forEach((headingEl) => ensureHeadingIcon(headingEl));
+      mainColumn?.querySelectorAll("h2").forEach((headingEl) => {
+        ensureHeadingIcon(headingEl, getHeadingLabel(headingEl));
+      });
       normalizeInternalLinks(document);
 
       // Keep JSON-LD in sync when CRM publishes before the next ISR cycle.
@@ -1483,6 +1764,12 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
       if (schemaEl && schema) {
         schemaEl.textContent = JSON.stringify(schema);
       }
+
+      // Section reorder runs after paint — pin scroll to hero on full refresh.
+      scrollToHeroUnlessAnchored();
+      requestAnimationFrame(() => {
+        if (!cancelled) scrollToHeroUnlessAnchored();
+      });
     };
 
     const scheduleSync = (activePage) => {
@@ -1519,6 +1806,9 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
         window.cancelIdleCallback(idleId);
       }
       if (timeoutId) window.clearTimeout(timeoutId);
+      if (typeof window !== "undefined" && "scrollRestoration" in history) {
+        history.scrollRestoration = "auto";
+      }
     };
   }, [page, landingSlug, staticPageKey, pathname]);
 

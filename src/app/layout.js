@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ServicePagesMarquee from "@/components/ServicePagesMarquee";
 import "./globals.css";
 import Script from "next/script";
 import FloatingGetStartedButton from "@/components/FloatingGetStartedButton";
@@ -96,14 +97,6 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
           }}
-        />
-        {/* Preload LCP hero image for faster first paint */}
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/factory-license-registration.webp"
-          type="image/webp"
-          fetchPriority="high"
         />
         {/* Schema.org JSON-LD — native script tag (Next.js Script strips ld+json content) */}
         <script
@@ -203,6 +196,7 @@ export default function RootLayout({ children }) {
 
         <Header />
         {children}
+        <ServicePagesMarquee />
         <Footer />
       </body>
     </html>

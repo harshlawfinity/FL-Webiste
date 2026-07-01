@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
 
@@ -36,16 +37,17 @@ export default function HeroRotatingBackground({
   );
 
   const renderImage = (src, index, { eager = false } = {}) => (
-    <img
+    <Image
       key={src}
       src={src}
       alt={alts[index] || `Hero background ${index + 1}`}
-      width={1920}
-      height={1080}
+      fill
+      sizes="100vw"
+      priority={eager}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       fetchPriority={eager ? "high" : "auto"}
-      className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+      className={`absolute top-0 left-0 object-cover transition-opacity duration-1000 ease-in-out ${
         currentBg === index ? "opacity-100" : "opacity-0"
       }`}
     />

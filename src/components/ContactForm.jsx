@@ -163,6 +163,7 @@ const HeroForm = ({ title, description }) => {
               name="state"
               value={formData.state}
               onChange={handleInputChange}
+              aria-label="State"
               className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate"
               required
             >
@@ -181,6 +182,7 @@ const HeroForm = ({ title, description }) => {
               name="city"
               value={formData.city}
               onChange={handleInputChange}
+              aria-label="City"
               className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate disabled:opacity-60"
               disabled={!formData.state}
               required
