@@ -93,6 +93,6 @@ export function getCmsServiceHeroSlides(page) {
 
   return alts.map((alt, slide) => ({
     alt,
-    src: `/assets/${slugifyForAsset(alt)}.webp?slide=${slide}`,
+    src: `/assets/${slugifyForAsset(alt)}.webp`,
   }));
 }
