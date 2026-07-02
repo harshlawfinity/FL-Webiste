@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
+import { HERO_BACKGROUND_IMAGES, getMobileHeroImage } from "@/lib/heroBackgrounds";
 
 /**
  * Rotating hero backgrounds with purple gradient overlay.
@@ -36,22 +35,29 @@ export default function HeroRotatingBackground({
     <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
   );
 
-  const renderImage = (src, index, { eager = false } = {}) => (
-    <Image
-      key={`${src}-${index}`}
-      src={src}
-      alt={alts[index] || `Hero background ${index + 1}`}
-      fill
-      sizes="100vw"
-      priority={eager}
-      loading={eager ? "eager" : "lazy"}
-      decoding="async"
-      fetchPriority={eager ? "high" : "auto"}
-      className={`absolute top-0 left-0 object-cover transition-opacity duration-1000 ease-in-out ${
-        currentBg === index ? "opacity-100" : "opacity-0"
-      }`}
-    />
-  );
+  const renderImage = (src, index, { eager = false } = {}) => {
+    const mobileSrc = eager ? getMobileHeroImage(src) : null;
+
+    return (
+      <picture key={`${src}-${index}`}>
+        {mobileSrc ? (
+          <source media="(max-width: 767px)" srcSet={mobileSrc} />
+        ) : null}
+        <img
+          src={src}
+          alt={alts[index] || `Hero background ${index + 1}`}
+          width={1920}
+          height={1080}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={eager ? "high" : "auto"}
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+            currentBg === index ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      </picture>
+    );
+  };
 
   // Homepage: base slide is server-rendered; only overlay slides + gradient here.
   if (lcpOptimized) {

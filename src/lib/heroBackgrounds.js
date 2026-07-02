@@ -31,6 +31,29 @@ export const HERO_BACKGROUND_IMAGES = [
   SEO_ASSETS.factoryRegistrationCertificateHero,
 ];
 
+const MOBILE_HERO_IMAGES = {
+  "/assets/factory-license-registration.webp":
+    "/assets/factory-license-registration-mobile.jpg",
+  "/assets/factories-in-delhi.webp": "/assets/factories-in-delhi-mobile.jpg",
+  "/assets/factory-act-haryana.webp": "/assets/factory-act-haryana-mobile.jpg",
+  "/assets/factories-act-license-in-up.webp":
+    "/assets/factories-act-license-in-up-mobile.jpg",
+  "/assets/pollution-noc-for-factory-in-delhi.webp":
+    "/assets/pollution-noc-for-factory-in-delhi-mobile.jpg",
+  "/assets/factory-pollution-certificate-in-haryana.webp":
+    "/assets/factory-pollution-certificate-in-haryana-mobile.jpg",
+  "/assets/pollution-control-board-license-in-up.webp":
+    "/assets/pollution-control-board-license-in-up-mobile.jpg",
+  "/assets/fire-certificate-renewal-in-delhi.webp":
+    "/assets/fire-certificate-renewal-in-delhi-mobile.jpg",
+  "/assets/fire-noc-renewal-haryana.webp":
+    "/assets/fire-noc-renewal-haryana-mobile.jpg",
+  "/assets/factory-fire-noc-apply-online-up.webp":
+    "/assets/factory-fire-noc-apply-online-up-mobile.jpg",
+};
+
+export const getMobileHeroImage = (src) => MOBILE_HERO_IMAGES[src] || null;
+
 export const PAGE_IMAGES = {
   factoryLicenceDelhi: {
     hero: [

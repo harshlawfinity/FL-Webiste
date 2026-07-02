@@ -1,8 +1,7 @@
-import Image from "next/image";
 import ContactForm from "./ContactForm";
 import HeroClientActions from "./HeroClientActions";
 import HeroRotatingBackground from "./HeroRotatingBackground";
-import { SEO_ASSETS } from "@/lib/heroBackgrounds";
+import { SEO_ASSETS, getMobileHeroImage } from "@/lib/heroBackgrounds";
 
 export default function HeroSection() {
   const heroBackgroundAlts = [
@@ -10,21 +9,27 @@ export default function HeroSection() {
     "Factory License Registration",
     "Factory Registration Certificate",
   ];
+  const mobileHero = getMobileHeroImage(SEO_ASSETS.factoryLicenseRegistration);
 
   return (
     <section className="relative w-full min-h-[100vh] md:min-h-[600px] mt-20 overflow-hidden">
       <div className="absolute inset-0 z-0">
         {/* LCP image in server HTML — paints before client JS hydrates */}
-        <Image
-          src={SEO_ASSETS.factoryLicenseRegistration}
-          alt={heroBackgroundAlts[0]}
-          fill
-          sizes="100vw"
-          priority
-          decoding="async"
-          fetchPriority="high"
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
+        <picture>
+          {mobileHero ? (
+            <source media="(max-width: 767px)" srcSet={mobileHero} />
+          ) : null}
+          <img
+            src={SEO_ASSETS.factoryLicenseRegistration}
+            alt={heroBackgroundAlts[0]}
+            width={1920}
+            height={1623}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        </picture>
         <HeroRotatingBackground alts={heroBackgroundAlts} lcpOptimized />
       </div>
 

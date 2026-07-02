@@ -81,7 +81,6 @@ export const metadata = {
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
 
-import { preload } from "react-dom";
 import React from "react";
 
 import HeroSection from "@/components/HeroSection";
@@ -99,11 +98,6 @@ import ExtendedContent from "@/components/ExtendedContent";
 import { CmsStaticSyncBoundary } from "@/components/cms/FactoryCmsJsonLd";
 
 const Page = () => {
-  preload("/assets/factory-license-registration.webp", {
-    as: "image",
-    fetchPriority: "high",
-  });
-
   return (
     <>
       <HeroSection />
