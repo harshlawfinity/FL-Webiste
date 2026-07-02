@@ -100,7 +100,10 @@ const HeroForm = ({ title, description }) => {
   }, [pathname]);
 
   return (
-    <div className="w-full max-w-lg mx-auto bg-white md:p-8 p-5 rounded-2xl shadow-xl">
+    <div
+      className="w-full max-w-lg mx-auto bg-white md:p-8 p-5 rounded-2xl shadow-xl"
+      data-cms-skip-heading-icon="true"
+    >
       <div className="text-left mb-5">
         <h2 className="md:text-xl text-lg font-semibold text-[#7A3EF2]">
           {heading}

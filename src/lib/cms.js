@@ -7,7 +7,9 @@ const CMS_BASE_URL =
 
 // Server fetch cache (ISR/metadata). Override via CMS_REVALIDATE_SECONDS env if needed.
 const CMS_REVALIDATE_SECONDS = Number(process.env.CMS_REVALIDATE_SECONDS || 60);
-const MARQUEE_REVALIDATE_SECONDS = Number(process.env.CMS_MARQUEE_REVALIDATE_SECONDS || 30);
+// Marquee discovery is expensive — cache longer than per-page CMS (matches ISR default).
+const MARQUEE_REVALIDATE_SECONDS = Number(process.env.CMS_MARQUEE_REVALIDATE_SECONDS || 300);
+const MARQUEE_BFS_BATCH_SIZE = 6;
 const CMS_FETCH_TIMEOUT_MS = Number(process.env.CMS_FETCH_TIMEOUT_MS || 15000);
 
 async function fetchCms(path, { fresh = false, revalidate = CMS_REVALIDATE_SECONDS } = {}) {
@@ -360,7 +362,7 @@ function pagesFromListPayload(data) {
   return Array.isArray(pages) && pages.length ? pages : null;
 }
 
-// CRM list endpoint (preferred) — returns all published factorylicence.in landing pages.
+// CRM list endpoint (preferred) — probe all candidate paths in parallel (list API often 404).
 async function fetchCmsLandingPagesList() {
   const paths = [
     `/api/public/factorylicence/published-landing-pages?website=factorylicence.in`,
@@ -368,8 +370,11 @@ async function fetchCmsLandingPagesList() {
     `/api/public/factorylicence/landing-pages?website=factorylicence.in&status=published`,
   ];
 
-  for (const path of paths) {
-    const data = await fetchCmsPayload(path, { revalidate: MARQUEE_REVALIDATE_SECONDS });
+  const results = await Promise.all(
+    paths.map((path) => fetchCmsPayload(path, { revalidate: MARQUEE_REVALIDATE_SECONDS }))
+  );
+
+  for (const data of results) {
     const pages = pagesFromListPayload(data);
     if (pages) return pages;
   }
@@ -401,27 +406,25 @@ async function fetchMarqueeServicesFromStaticPage(pageKey) {
 }
 
 async function fetchMarqueeServicesFromStaticPages() {
-  const items = [];
-  for (const pageKey of MARQUEE_LIST_STATIC_KEYS) {
-    items.push(...(await fetchMarqueeServicesFromStaticPage(pageKey)));
-  }
-  return items;
+  const batches = await Promise.all(
+    MARQUEE_LIST_STATIC_KEYS.map((pageKey) => fetchMarqueeServicesFromStaticPage(pageKey))
+  );
+  return batches.flat();
+}
+
+// Pull connectedServices / internal links from a landing page without blocking BFS on one slug.
+async function harvestMarqueeLinksFromLanding(slug) {
+  const page = await fetchCms(`/api/public/factorylicence/landing-pages/${slug}`, {
+    revalidate: MARQUEE_REVALIDATE_SECONDS,
+  });
+  return extractLinkedSlugsFromCmsPage(page || {});
 }
 
 // Walk CMS links from static + landing pages to discover CMS-only service pages.
-async function discoverMarqueeServicesViaGraph() {
+async function discoverMarqueeServicesViaGraph(staticMarqueeItems = []) {
   const found = new Map();
   const visited = new Set();
-  const queue = [...STATIC_LANDING_SLUGS];
-
-  // Home/about/contact/blogs may declare marqueeServiceSlugs or linked services in CMS.
-  for (const pageKey of MARQUEE_STATIC_PAGE_KEYS) {
-    const page = await getFactoryCmsStaticPage(pageKey);
-    const content = page?.content || page?.sections || {};
-    for (const slug of extractMarqueeSeedsFromStaticContent(content)) {
-      enqueueMarqueeSlug(queue, slug);
-    }
-  }
+  const queue = [];
 
   const envSeeds = String(process.env.CMS_MARQUEE_SEED_SLUGS || "")
     .split(",")
@@ -430,39 +433,56 @@ async function discoverMarqueeServicesViaGraph() {
 
   const discoverySeeds =
     envSeeds.length > 0 ? envSeeds : DEFAULT_MARQUEE_DISCOVERY_SEEDS;
+
+  // Phase 1 — harvest seed slugs in parallel (was 15+ sequential CRM round-trips).
+  const seedHarvests = await Promise.all([
+    ...MARQUEE_STATIC_PAGE_KEYS.map(async (pageKey) => {
+      const page = await getFactoryCmsStaticPage(pageKey);
+      const content = page?.content || page?.sections || {};
+      return extractMarqueeSeedsFromStaticContent(content);
+    }),
+    // Static state landings are excluded from marquee output — only harvest their outbound links.
+    ...[...STATIC_LANDING_SLUGS].map((slug) => harvestMarqueeLinksFromLanding(slug)),
+  ]);
+
+  for (const slugs of seedHarvests) {
+    for (const slug of slugs) enqueueMarqueeSlug(queue, slug);
+  }
+
   discoverySeeds.forEach((slug) => enqueueMarqueeSlug(queue, slug));
+  for (const item of staticMarqueeItems) enqueueMarqueeSlug(queue, item.slug);
 
-  // Pre-enqueue connectedServices from seed pages — new CMS pages SEO links there appear in marquee.
-  for (const seed of discoverySeeds) {
-    const seedPage = await fetchCms(`/api/public/factorylicence/landing-pages/${seed}`, {
-      revalidate: MARQUEE_REVALIDATE_SECONDS,
-    });
-    for (const slug of extractLinkedSlugsFromCmsPage(seedPage || {})) {
-      enqueueMarqueeSlug(queue, slug);
-    }
-  }
-
-  for (const item of await fetchMarqueeServicesFromStaticPages()) {
-    enqueueMarqueeSlug(queue, item.slug);
-  }
-
+  // Phase 2 — BFS in parallel batches instead of one slug per round-trip.
   while (queue.length) {
-    const slug = queue.shift();
-    if (!slug || visited.has(slug)) continue;
-    visited.add(slug);
-
-    const page = await fetchCms(`/api/public/factorylicence/landing-pages/${slug}`, {
-      revalidate: MARQUEE_REVALIDATE_SECONDS,
-    });
-    if (!isPublishedCmsLandingPage(page)) continue;
-
-    if (!STATIC_LANDING_SLUGS.has(slug)) {
-      found.set(slug, toMarqueeItem(slug, marqueeTitleFromPage(page)));
+    const batch = [];
+    while (batch.length < MARQUEE_BFS_BATCH_SIZE && queue.length) {
+      const slug = queue.shift();
+      if (!slug || visited.has(slug)) continue;
+      visited.add(slug);
+      batch.push(slug);
     }
+    if (!batch.length) break;
 
-    // Follow connectedServices plus any internal links embedded in CMS section HTML.
-    for (const nextSlug of extractLinkedSlugsFromCmsPage(page)) {
-      enqueueMarqueeSlug(queue, nextSlug);
+    const pages = await Promise.all(
+      batch.map((slug) =>
+        fetchCms(`/api/public/factorylicence/landing-pages/${slug}`, {
+          revalidate: MARQUEE_REVALIDATE_SECONDS,
+        })
+      )
+    );
+
+    for (let i = 0; i < batch.length; i++) {
+      const slug = batch[i];
+      const page = pages[i];
+      if (!isPublishedCmsLandingPage(page)) continue;
+
+      if (!STATIC_LANDING_SLUGS.has(slug)) {
+        found.set(slug, toMarqueeItem(slug, marqueeTitleFromPage(page)));
+      }
+
+      for (const nextSlug of extractLinkedSlugsFromCmsPage(page)) {
+        enqueueMarqueeSlug(queue, nextSlug);
+      }
     }
   }
 
@@ -473,7 +493,11 @@ async function discoverMarqueeServicesViaGraph() {
 export const getCmsMarqueeServices = cache(async () => {
   const items = new Map();
 
-  const list = await fetchCmsLandingPagesList();
+  const [list, staticItems] = await Promise.all([
+    fetchCmsLandingPagesList(),
+    fetchMarqueeServicesFromStaticPages(),
+  ]);
+
   if (list) {
     for (const page of list) {
       if (!page?.slug || STATIC_LANDING_SLUGS.has(page.slug)) continue;
@@ -482,11 +506,11 @@ export const getCmsMarqueeServices = cache(async () => {
     }
   }
 
-  for (const item of await fetchMarqueeServicesFromStaticPages()) {
+  for (const item of staticItems) {
     if (!STATIC_LANDING_SLUGS.has(item.slug)) items.set(item.slug, item);
   }
 
-  for (const item of await discoverMarqueeServicesViaGraph()) {
+  for (const item of await discoverMarqueeServicesViaGraph(staticItems)) {
     if (!STATIC_LANDING_SLUGS.has(item.slug)) items.set(item.slug, item);
   }
 

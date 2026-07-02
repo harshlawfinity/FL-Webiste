@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServicePagesMarquee from "@/components/ServicePagesMarquee";
@@ -196,7 +197,10 @@ export default function RootLayout({ children }) {
 
         <Header />
         {children}
-        <ServicePagesMarquee />
+        {/* Stream footer marquee after page shell — avoids 20+ CRM fetches blocking TTFB */}
+        <Suspense fallback={null}>
+          <ServicePagesMarquee />
+        </Suspense>
         <Footer />
       </body>
     </html>

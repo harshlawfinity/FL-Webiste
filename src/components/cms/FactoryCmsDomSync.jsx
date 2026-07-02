@@ -795,6 +795,12 @@ function applyHeadingIconSizing(svg) {
 function ensureHeadingIcon(headingEl, heading = "") {
   if (!headingEl || /^H1$/i.test(headingEl.tagName)) return;
 
+  // Lead/contact forms — never inject section icons (home hero uses <main> as main column).
+  if (headingEl.closest("[data-cms-skip-heading-icon='true']")) {
+    headingEl.querySelectorAll("svg[data-cms-heading-icon='true']").forEach((node) => node.remove());
+    return;
+  }
+
   const label = getHeadingLabel(headingEl);
   // Section wrappers without title render an empty h2; child components (e.g. fee calculators) supply their own.
   if (!label) {

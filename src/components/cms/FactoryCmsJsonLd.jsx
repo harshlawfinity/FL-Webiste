@@ -16,26 +16,23 @@ export default function FactoryCmsJsonLd({ page }) {
   );
 }
 
-async function LandingCmsSchema({ slug }) {
+async function LandingCmsBundle({ slug }) {
+  // Single CMS fetch for JSON-LD + DOM sync (deduped with generateMetadata via cache()).
   const page = await getFactoryCmsLandingPage(slug);
-  return <FactoryCmsJsonLd page={page} />;
-}
-
-async function LandingCmsDomSync({ slug }) {
-  const page = await getFactoryCmsLandingPage(slug);
-  return <FactoryCmsDomSync page={page} landingSlug={slug} />;
-}
-
-// Stream CMS sync after page shell renders — improves TTFB/LCP on landing pages.
-export function CmsLandingBoundary({ slug }) {
   return (
     <>
-      {/* Schema outside Suspense so JSON-LD is in initial HTML for crawlers */}
-      <LandingCmsSchema slug={slug} />
-      <Suspense fallback={null}>
-        <LandingCmsDomSync slug={slug} />
-      </Suspense>
+      <FactoryCmsJsonLd page={page} />
+      <FactoryCmsDomSync page={page} landingSlug={slug} />
     </>
+  );
+}
+
+// Stream CMS schema + sync after landing page shell — avoids blocking hero/LCP on CRM fetch.
+export function CmsLandingBoundary({ slug }) {
+  return (
+    <Suspense fallback={null}>
+      <LandingCmsBundle slug={slug} />
+    </Suspense>
   );
 }
 

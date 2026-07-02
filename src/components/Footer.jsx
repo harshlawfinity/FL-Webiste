@@ -38,8 +38,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#8653F4] text-gray-200 px-6 py-16 border-t border-slate-700">
-      <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 text-sm">
+    <footer className="bg-[#8653F4] text-gray-200 px-6 py-6 border-t border-slate-700">
+      <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
         {/* Column 1 */}
         <div className="w-full flex items-center justify-center flex-col">
           <FL />
@@ -177,7 +177,7 @@ export default function Footer() {
       </div>
 
       {/* Footer Bottom */}
-      <div className="text-center text-xs text-gray-100 border-t border-gray-200 pt-6 space-y-2">
+      <div className="text-center text-xs text-gray-100 border-t border-gray-200 pt-4 pb-20 md:pb-0">
         <p>
           All Rights Reserved 2025.{" "}
           <Link
@@ -188,26 +188,6 @@ export default function Footer() {
           </Link>{" "}
           <span className="italic">Powered by <Link className="text-white hover:text-blue-600" href="https://www.lawfinity.in/" target="_blank">Lawfinity India PVT LTD</Link></span>
         </p>
-        <div className="space-x-4">
-          <Link
-            href="/privacy-policy"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            href="/refund-cancellation"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Refund & Cancellation
-          </Link>
-          <Link
-            href="/terms-conditions"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Terms & Conditions
-          </Link>
-        </div>
       </div>
     </footer>
   );
