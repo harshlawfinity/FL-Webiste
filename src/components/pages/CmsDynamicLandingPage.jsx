@@ -8,7 +8,7 @@ import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
-import { getCmsServiceLeadFormCopy, getCmsServiceHeroSlides } from "@/lib/leadFormCopy";
+import { getCmsServiceLeadFormCopy, getCmsServiceFaqHeading, getCmsServiceHeroSlides } from "@/lib/leadFormCopy";
 
 // Empty section shells for FactoryCmsDomSync — IDs must match SECTION_IDS in FactoryCmsDomSync.jsx.
 const STANDARD_SECTIONS = [
@@ -38,10 +38,10 @@ export default function CmsDynamicLandingPage({ page }) {
   const hero = content.hero || {};
   const title = hero.headline || page?.mainHeading || page?.title || "Service";
   const subtitle = hero.subtext || page?.seo?.description || "";
-  // Lead form uses CMS Page Title — shorter label than hero headline when they differ.
-  const formCopy = getCmsServiceLeadFormCopy(
-    page?.title || page?.mainHeading || page?.content?.mainHeading
-  );
+  // CMS Page Title — shared by lead form, FAQ heading, and hero alts.
+  const pageTitle = page?.title || page?.mainHeading || page?.content?.mainHeading || "Service";
+  const formCopy = getCmsServiceLeadFormCopy(pageTitle);
+  const faqHeading = getCmsServiceFaqHeading(pageTitle);
   // Hero slide alts + SEO URLs: Page Title → H1 headline → contact form title.
   const heroSlides = getCmsServiceHeroSlides(page);
   const breadcrumbItems = [
@@ -105,7 +105,7 @@ export default function CmsDynamicLandingPage({ page }) {
       <section id="faqs" className="bg-gradient-to-b from-[#f9f9ff] to-white py-16 px-6">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-semibold text-center text-[#000000] mb-12">
-            Frequently Asked Questions
+            {faqHeading}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6" />
         </div>

@@ -7,7 +7,7 @@ export default async function ServicePagesMarquee() {
   if (!services.length) return null;
 
   // Repeat each half enough times so wide viewports never show a gap during the scroll.
-  const repeatsPerHalf = Math.max(2, Math.ceil(6 / services.length));
+  const repeatsPerHalf = Math.max(1, Math.ceil(6 / services.length));
   const oneHalf = Array.from({ length: repeatsPerHalf }, () => services).flat();
   // Two identical halves — CSS animates -50% for a seamless circular loop.
   const marqueeItems = [...oneHalf, ...oneHalf];

@@ -760,10 +760,10 @@ function createHeadingIcon(heading = "") {
     "shrink-0",
     "mr-2",
     "mt-0.5",
-    "h-8",
-    "w-8",
-    "md:h-10",
-    "md:w-10",
+    "h-10",
+    "w-10",
+    "md:h-12",
+    "md:w-12",
     "text-[#7A3EF2]"
   );
 
@@ -784,10 +784,10 @@ function applyHeadingIconSizing(svg) {
     "shrink-0",
     "mr-2",
     "mt-0.5",
-    "h-8",
-    "w-8",
-    "md:h-10",
-    "md:w-10",
+    "h-10",
+    "w-10",
+    "md:h-12",
+    "md:w-12",
     "text-[#7A3EF2]"
   );
 }

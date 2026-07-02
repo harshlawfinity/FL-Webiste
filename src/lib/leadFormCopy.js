@@ -67,6 +67,12 @@ export function getCmsServiceLeadFormCopy(pageTitle) {
   };
 }
 
+// FAQ section heading for CMS-only service pages.
+export function getCmsServiceFaqHeading(pageTitle) {
+  const label = String(pageTitle || "Service").trim() || "Service";
+  return `Frequently Asked Questions For ${label}`;
+}
+
 // Hero carousel alts for CMS service pages — matches HERO_BACKGROUND_IMAGES (3 slides).
 export function getCmsServiceHeroBackgroundAlts(page) {
   const content = page?.content || {};
