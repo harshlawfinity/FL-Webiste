@@ -79,25 +79,31 @@ export default function FeatureCard() {
             What You Need to Know About <br /> Factory Licence
           </h2>
 
-          {PARAGRAPHS.slice(0, VISIBLE_PARAGRAPHS).map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-gray-500 mb-4 text-xs md:text-sm text-justify"
-            >
-              {paragraph}
-            </p>
-          ))}
+          {PARAGRAPHS.slice(0, VISIBLE_PARAGRAPHS).map((paragraph, index) => {
+            const isLastVisible = index === VISIBLE_PARAGRAPHS - 1;
 
-          {/* Collapse long copy — reveal remaining paragraphs on demand. */}
-          {!expanded && hasMore ? (
-            <button
-              type="button"
-              onClick={() => setExpanded(true)}
-              className="text-[#7A3EF2] font-semibold text-base mb-4 hover:underline"
-            >
-              Read More
-            </button>
-          ) : null}
+            return (
+              <p
+                key={index}
+                className="text-gray-500 mb-4 text-xs md:text-sm text-justify"
+              >
+                {paragraph}
+                {/* Inline toggle at end of 3rd paragraph — not a separate line. */}
+                {isLastVisible && !expanded && hasMore ? (
+                  <>
+                    {" "}
+                    <button
+                      type="button"
+                      onClick={() => setExpanded(true)}
+                      className="inline text-[#7A3EF2] font-semibold hover:underline"
+                    >
+                      Read More...
+                    </button>
+                  </>
+                ) : null}
+              </p>
+            );
+          })}
 
           {expanded
             ? PARAGRAPHS.slice(VISIBLE_PARAGRAPHS).map((paragraph, index) => (

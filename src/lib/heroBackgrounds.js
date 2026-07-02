@@ -1,6 +1,7 @@
 /** SEO-friendly public asset URLs (served from /public/assets/) */
 export const SEO_ASSETS = {
   factoryLicenceLogo: "/assets/factory-licence-logo.gif",
+  factoryLicenceLogoStatic: "/assets/factory-licence-logo.png",
   factoryLicenceVideoPreview: "/assets/factory-licence-video-preview.jpg",
   factoryLicenceExpertHelp: "/assets/factory-licence-expert-help.webp",
   factoryLicenseRenewal: "/assets/factory-license-renewal.webp",

@@ -164,9 +164,10 @@ body {
   word-break: normal !important;
 }
 
-.cms-rich-text .cms-table-scroll table,
-.cms-sync-content .cms-table-scroll table,
-.cms-table-scroll table {
+/* Wide data tables only — fee tables use .cms-table-compact (full width). */
+.cms-rich-text .cms-table-scroll table:not(.cms-table-compact),
+.cms-sync-content .cms-table-scroll table:not(.cms-table-compact),
+.cms-table-scroll table:not(.cms-table-compact) {
   width: max-content !important;
   min-width: 640px !important;
   max-width: none !important;
@@ -183,6 +184,36 @@ body {
   word-break: normal !important;
   overflow-wrap: normal !important;
   vertical-align: top;
+}
+
+/* 3–4 column fee/pricing tables — stretch to wrapper, proportional columns. */
+.cms-rich-text .cms-table-scroll table.cms-table-compact,
+.cms-sync-content .cms-table-scroll table.cms-table-compact,
+.cms-table-scroll table.cms-table-compact {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.cms-rich-text .cms-table-scroll table.cms-table-compact th,
+.cms-rich-text .cms-table-scroll table.cms-table-compact td,
+.cms-sync-content .cms-table-scroll table.cms-table-compact th,
+.cms-sync-content .cms-table-scroll table.cms-table-compact td,
+.cms-table-scroll table.cms-table-compact th,
+.cms-table-scroll table.cms-table-compact td {
+  white-space: normal !important;
+  min-width: 0 !important;
+}
+
+/* Fee tables fit content — no forced scrollbar when columns fill the row. */
+.cms-table-scroll-compact {
+  overflow-x: auto;
+}
+
+.cms-table-placeholder {
+  color: #6b7280;
+  font-style: italic;
 }
 
 .cms-rich-text img,

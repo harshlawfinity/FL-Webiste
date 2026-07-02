@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { SEO_ASSETS } from '@/lib/heroBackgrounds';
  
@@ -32,10 +33,12 @@ const FL = () => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <img
-            src={SEO_ASSETS.factoryLicenceLogo}
-            alt="Factory License Logo Gif"
-            className="w-32"
+          <Image
+            src={SEO_ASSETS.factoryLicenceLogoStatic}
+            alt="Factory License Logo"
+            width={128}
+            height={96}
+            className="w-32 h-auto"
             loading="lazy"
           />
         </div>

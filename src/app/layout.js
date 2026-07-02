@@ -93,6 +93,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://internal.lawfinity.in" />
         {/* Must run first: suppress "Unable to store cookie" from third-party scripts when cookies are blocked */}
         <script
           dangerouslySetInnerHTML={{

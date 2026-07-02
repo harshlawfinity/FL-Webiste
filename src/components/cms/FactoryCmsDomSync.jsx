@@ -99,10 +99,33 @@ function normalizeMainColumnTextAlign(mainColumn) {
   });
 }
 
+function applyCompactTableColumnWidths(table, colCount) {
+  if (!table || table.querySelector("colgroup")) return;
+
+  const widths =
+    colCount === 3
+      ? ["30%", "25%", "45%"]
+      : colCount === 2
+        ? ["40%", "60%"]
+        : colCount === 4
+          ? ["25%", "25%", "25%", "25%"]
+          : null;
+  if (!widths) return;
+
+  const colgroup = document.createElement("colgroup");
+  widths.forEach((width) => {
+    const col = document.createElement("col");
+    col.style.width = width;
+    colgroup.appendChild(col);
+  });
+  table.insertBefore(colgroup, table.firstChild);
+}
+
 function applyCmsTableLayoutToTable(table) {
   if (!table || table.closest("nav, aside, form")) return;
 
-  if (!table.closest(".cms-table-scroll")) {
+  const scrollWrapper = table.closest(".cms-table-scroll");
+  if (!scrollWrapper) {
     const wrapper = document.createElement("div");
     wrapper.className = "cms-table-scroll max-w-full w-full rounded-xl border border-gray-200";
     table.parentNode?.insertBefore(wrapper, table);
@@ -115,19 +138,59 @@ function applyCmsTableLayoutToTable(table) {
     table.querySelectorAll("tr:first-child th, tr:first-child td").length,
     1
   );
-  const minWidthPx = Math.max(640, colCount * 96);
+  // Fee/pricing tables (≤4 cols) fill the column — wide data tables keep horizontal scroll.
+  const isCompactTable = colCount <= 4;
+  const minWidthPx = isCompactTable ? 0 : Math.max(640, colCount * 96);
 
-  table.classList.add("border-collapse", "text-left", "text-sm", "min-w-[640px]");
-  table.style.width = "max-content";
-  table.style.minWidth = `${minWidthPx}px`;
+  table.classList.add("border-collapse", "text-left", "text-sm");
+  if (isCompactTable) {
+    table.classList.add("w-full", "cms-table-compact");
+    // Inline !important beats stylesheet max-content rules inside .cms-rich-text.
+    table.style.setProperty("width", "100%", "important");
+    table.style.setProperty("min-width", "0", "important");
+    table.style.setProperty("max-width", "100%", "important");
+    table.style.setProperty("table-layout", "fixed", "important");
+    applyCompactTableColumnWidths(table, colCount);
+    table.closest(".cms-table-scroll")?.classList.add("cms-table-scroll-compact");
+  } else {
+    table.classList.add("min-w-[640px]");
+    table.style.width = "max-content";
+    table.style.minWidth = `${minWidthPx}px`;
+  }
   table.style.wordBreak = "normal";
   table.style.overflowWrap = "normal";
 
   table.querySelectorAll("th, td").forEach((cell) => {
-    cell.classList.add("p-3", "align-top", "whitespace-nowrap", "min-w-[5.5rem]");
+    const isHeader = cell.tagName === "TH";
+    cell.classList.add("p-3", "align-top", "border");
+    if (isHeader) {
+      cell.classList.add("font-semibold", "text-left", "border-white/20");
+      if (!cell.closest("thead")?.classList.contains("bg-[#7A3EF2]")) {
+        cell.closest("thead")?.classList.add("bg-[#7A3EF2]", "text-white");
+      }
+    } else {
+      cell.classList.add("border-gray-200", isCompactTable ? "whitespace-normal" : "whitespace-nowrap", "min-w-[5.5rem]");
+      // CRM often ships blank fee cells — show a readable placeholder instead of an empty box.
+      if (!String(cell.textContent || "").trim()) {
+        cell.innerHTML = '<span class="cms-table-placeholder">As Applicable</span>';
+      }
+    }
     cell.style.wordBreak = "normal";
     cell.style.overflowWrap = "normal";
   });
+
+  table.querySelectorAll("tbody tr:nth-child(even)").forEach((row) => {
+    row.classList.add("bg-gray-50");
+  });
+}
+
+// Blank CRM table cells render as italic placeholder text (fee tables often omit optional charges).
+function cmsTableCellContent(cell) {
+  const raw = String(cell ?? "").trim();
+  if (!raw || raw === "&nbsp;" || raw === "&#160;") {
+    return '<span class="cms-table-placeholder">As Applicable</span>';
+  }
+  return raw;
 }
 
 function applyCmsTableLayout(root) {
@@ -881,10 +944,17 @@ function renderTable(parent, section) {
   const rows = Array.isArray(section.rows) ? section.rows : [];
   if (!columns.length && !rows.length) return;
 
+  const colCount =
+    columns.length ||
+    (rows.length
+      ? Math.max(...rows.map((row) => (Array.isArray(row) ? row.length : 1)))
+      : 1);
+
   const wrapper = document.createElement("div");
-  wrapper.className = "cms-table-scroll max-w-full w-full rounded-xl border border-gray-200";
+  wrapper.className =
+    "cms-table-scroll cms-table-scroll-compact max-w-full w-full rounded-xl border border-gray-200 shadow-sm overflow-hidden";
   const table = document.createElement("table");
-  table.className = "border-collapse text-left text-sm";
+  table.className = "border-collapse text-left text-sm w-full cms-table-compact";
 
   if (columns.length) {
     const thead = document.createElement("thead");
@@ -892,7 +962,7 @@ function renderTable(parent, section) {
     const tr = document.createElement("tr");
     columns.forEach((column) => {
       const th = document.createElement("th");
-      th.className = "p-3 font-semibold align-top whitespace-nowrap min-w-[5.5rem]";
+      th.className = "p-3 font-semibold align-top text-left border border-white/20 whitespace-normal";
       th.textContent = column;
       tr.appendChild(th);
     });
@@ -901,13 +971,20 @@ function renderTable(parent, section) {
   }
 
   const tbody = document.createElement("tbody");
-  tbody.className = "divide-y divide-gray-200";
-  rows.forEach((row) => {
+  tbody.className = "divide-y divide-gray-200 bg-white";
+  rows.forEach((row, rowIndex) => {
     const tr = document.createElement("tr");
-    (Array.isArray(row) ? row : [row]).forEach((cell) => {
+    if (rowIndex % 2 === 1) tr.className = "bg-gray-50";
+
+    const cells = (Array.isArray(row) ? row : [row]).slice();
+    while (cells.length < colCount) cells.push("");
+
+    cells.forEach((cell, cellIndex) => {
       const td = document.createElement("td");
-      td.className = "p-3 align-top whitespace-nowrap min-w-[5.5rem]";
-      td.innerHTML = cell || "";
+      td.className = `p-3 align-top border border-gray-200 whitespace-normal ${
+        cellIndex === 0 ? "font-medium text-gray-800" : "text-gray-700"
+      }`;
+      td.innerHTML = cmsTableCellContent(cell);
       tr.appendChild(td);
     });
     tbody.appendChild(tr);

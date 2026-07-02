@@ -28,7 +28,7 @@ export default function HeroRotatingBackground({
 
   useEffect(() => {
     // Defer non-LCP carousel slides so the first hero image gets network priority.
-    const timer = window.setTimeout(() => setLoadAllSlides(true), 2500);
+    const timer = window.setTimeout(() => setLoadAllSlides(true), 8000);
     return () => window.clearTimeout(timer);
   }, []);
 

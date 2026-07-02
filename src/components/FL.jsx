@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { SEO_ASSETS } from '@/lib/heroBackgrounds';
 
@@ -27,12 +28,13 @@ const FL = ({ mobile = false }) => {
   if (mobile) {
     return (
       <div className="flex items-center h-[60px]">
-        <img
-          src={SEO_ASSETS.factoryLicenceLogo}
+        <Image
+          src={SEO_ASSETS.factoryLicenceLogoStatic}
           alt="Factory Licence"
           width={96}
           height={72}
           className="w-24 h-auto"
+          priority
         />
       </div>
     );
@@ -47,7 +49,7 @@ const FL = ({ mobile = false }) => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <img
+          <Image
             src={SEO_ASSETS.factoryLicenceLogo}
             alt="Factory License Logo Gif"
             width={128}

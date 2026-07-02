@@ -1,7 +1,4 @@
-"use client";
-
-import { useState } from "react";
-import ContactFormModal from "./ContactFormModal";
+import Image from "next/image";
 import ContactForm from "./ContactForm";
 import HeroClientActions from "./HeroClientActions";
 import HeroRotatingBackground from "./HeroRotatingBackground";
@@ -18,12 +15,12 @@ export default function HeroSection() {
     <section className="relative w-full min-h-[100vh] md:min-h-[600px] mt-20 overflow-hidden">
       <div className="absolute inset-0 z-0">
         {/* LCP image in server HTML — paints before client JS hydrates */}
-        <img
+        <Image
           src={SEO_ASSETS.factoryLicenseRegistration}
           alt={heroBackgroundAlts[0]}
-          width={1920}
-          height={1080}
-          loading="eager"
+          fill
+          sizes="100vw"
+          priority
           decoding="async"
           fetchPriority="high"
           className="absolute top-0 left-0 w-full h-full object-cover"

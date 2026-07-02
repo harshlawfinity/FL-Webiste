@@ -184,9 +184,9 @@ export default function Footer() {
             href="/"
             className="text-purple-100 hover:text-purple-800 transition-colors font-semibold"
           >
-            factorylicence.in |
+            factorylicence.in 
           </Link>{" "}
-          <span className="italic">Powered by <Link className="text-white hover:text-blue-600" href="https://www.lawfinity.in/" target="_blank">Lawfinity India PVT LTD</Link></span>
+          | <span className="italic">Powered by <Link className="text-white hover:text-blue-600" href="https://www.lawfinity.in/" target="_blank">Lawfinity India PVT LTD</Link></span>
         </p>
       </div>
     </footer>
