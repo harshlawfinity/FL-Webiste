@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FiUser, FiPhone, FiMail, FiMapPin } from "react-icons/fi";
+import { FiUser, FiPhone, FiMail } from "react-icons/fi";
 import { getLeadFormCopy } from "@/lib/leadFormCopy";
-import { getCitiesByState, OTHER_CITY_OPTION, STATE_OPTIONS } from "@/lib/cityStateOptions";
+import StateSelect from "@/components/StateSelect";
 
 const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
@@ -12,8 +12,6 @@ const HeroForm = ({ title, description }) => {
     phone: "",
     email: "",
     state: "",
-    city: "",
-    otherCity: "",
     description: "",
     pageSource: "",
   });
@@ -25,7 +23,6 @@ const HeroForm = ({ title, description }) => {
   const formCopy = getLeadFormCopy(pathname);
   const heading = title || formCopy.title;
   const subheading = description || formCopy.description;
-  const cityOptions = getCitiesByState(formData.state);
 
   const phoneRegex = /^\d{10}$/;
 
@@ -38,15 +35,7 @@ const HeroForm = ({ title, description }) => {
       e.target.setCustomValidity("");
     }
 
-    setFormData((prev) => {
-      if (name === "state") {
-        return { ...prev, state: value, city: "", otherCity: "" };
-      }
-      if (name === "city" && value !== OTHER_CITY_OPTION) {
-        return { ...prev, city: value, otherCity: "" };
-      }
-      return { ...prev, [name]: value };
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -66,7 +55,6 @@ const HeroForm = ({ title, description }) => {
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
       formBody.append("state", formData.state);
-      formBody.append("city", formData.city === OTHER_CITY_OPTION ? formData.otherCity : formData.city);
       formBody.append("description", formData.description);
       formBody.append("pageSource", pageSourceValue);
       formBody.append("timestamp", timestamp);
@@ -158,62 +146,10 @@ const HeroForm = ({ title, description }) => {
           />
         </div>
 
-        {/* State & City — side by side */}
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-2.5 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition min-w-0">
-            <FiMapPin className="text-gray-400 text-base shrink-0" />
-            <select
-              name="state"
-              value={formData.state}
-              onChange={handleInputChange}
-              aria-label="State"
-              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate"
-              required
-            >
-              <option value="">State*</option>
-              {STATE_OPTIONS.map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-2.5 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition min-w-0">
-            <FiMapPin className="text-gray-400 text-base shrink-0" />
-            <select
-              name="city"
-              value={formData.city}
-              onChange={handleInputChange}
-              aria-label="City"
-              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm truncate disabled:opacity-60"
-              disabled={!formData.state}
-              required
-            >
-              <option value="">City*</option>
-              {cityOptions.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {formData.city === OTHER_CITY_OPTION && (
-          <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
-            <FiMapPin className="text-gray-400 text-lg shrink-0" />
-            <input
-              type="text"
-              name="otherCity"
-              value={formData.otherCity}
-              onChange={handleInputChange}
-              placeholder="Enter your city*"
-              className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
-              required
-            />
-          </div>
-        )}
+        <StateSelect
+          value={formData.state}
+          onChange={(state) => setFormData((prev) => ({ ...prev, state }))}
+        />
 
         {/* Message */}
         <textarea
