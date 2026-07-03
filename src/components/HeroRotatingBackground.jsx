@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HERO_BACKGROUND_IMAGES, getMobileHeroImage } from "@/lib/heroBackgrounds";
+import { HERO_BACKGROUND_IMAGES, getMobileHeroImage, resolveHeroBackingSrc } from "@/lib/heroBackgrounds";
 
 /**
  * Rotating hero backgrounds with purple gradient overlay.
@@ -36,7 +36,8 @@ export default function HeroRotatingBackground({
   );
 
   const renderImage = (src, index, { eager = false } = {}) => {
-    const mobileSrc = eager ? getMobileHeroImage(src) : null;
+    const backingSrc = resolveHeroBackingSrc(src);
+    const mobileSrc = eager ? getMobileHeroImage(backingSrc) : null;
 
     return (
       <picture key={`${src}-${index}`}>

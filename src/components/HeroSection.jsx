@@ -1,19 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import ContactFormModal from "./ContactFormModal";
 import ContactForm from "./ContactForm";
 import HeroClientActions from "./HeroClientActions";
 import HeroRotatingBackground from "./HeroRotatingBackground";
-import { SEO_ASSETS, getMobileHeroImage } from "@/lib/heroBackgrounds";
+import { getHeroImageUrlFromAlt, getMobileHeroImageForSrc } from "@/lib/heroBackgrounds";
 
 export default function HeroSection() {
   const heroBackgroundAlts = [
-    "Factory License Renewal",
     "Factory License Registration",
+    "Factory License Renewal",
     "Factory Registration Certificate",
   ];
-  const mobileHero = getMobileHeroImage(SEO_ASSETS.factoryLicenseRegistration);
+  const heroImages = heroBackgroundAlts.map((alt, slide) =>
+    getHeroImageUrlFromAlt(alt, slide)
+  );
+  const mobileHero = getMobileHeroImageForSrc(heroImages[0]);
 
   return (
     <section className="relative w-full min-h-[100vh] md:min-h-[600px] mt-20 overflow-hidden">
@@ -24,7 +25,7 @@ export default function HeroSection() {
             <source media="(max-width: 767px)" srcSet={mobileHero} />
           ) : null}
           <img
-            src={SEO_ASSETS.factoryLicenseRegistration}
+            src={heroImages[0]}
             alt={heroBackgroundAlts[0]}
             width={1920}
             height={1623}
@@ -34,7 +35,7 @@ export default function HeroSection() {
             className="absolute top-0 left-0 w-full h-full object-cover"
           />
         </picture>
-        <HeroRotatingBackground alts={heroBackgroundAlts} lcpOptimized />
+        <HeroRotatingBackground alts={heroBackgroundAlts} images={heroImages} lcpOptimized />
       </div>
 
       <main className="relative z-20 w-full min-h-full flex items-center justify-center px-4 sm:px-6 py-8 md:py-12">

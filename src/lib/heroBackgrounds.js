@@ -54,6 +54,46 @@ const MOBILE_HERO_IMAGES = {
 
 export const getMobileHeroImage = (src) => MOBILE_HERO_IMAGES[src] || null;
 
+// Alt text → SEO filename slug (e.g. "Hazardous Waste Licence" → hazardous-waste-licence).
+export function slugifyHeroAlt(value = "") {
+  return (
+    String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "service"
+  );
+}
+
+// Resolve carousel backing file — SEO alias URLs carry ?slide=N to pick the real image.
+export function resolveHeroBackingSrc(src) {
+  if (!src) return HERO_BACKGROUND_IMAGES[0];
+
+  try {
+    const url = new URL(String(src), "http://_");
+    const slide = url.searchParams.get("slide");
+    if (slide !== null) {
+      const idx = Number(slide) || 0;
+      return HERO_BACKGROUND_IMAGES[idx] ?? HERO_BACKGROUND_IMAGES[0];
+    }
+  } catch {
+    // Plain /assets/... path without query string.
+  }
+
+  return String(src).split("?")[0];
+}
+
+// SEO-friendly public URL from alt; ?slide= maps to HERO_BACKGROUND_IMAGES[slide].
+export function getHeroImageUrlFromAlt(alt, slideIndex = 0) {
+  const slug = slugifyHeroAlt(alt);
+  const slide = Number(slideIndex) || 0;
+  return `/assets/${slug}.webp?slide=${slide}`;
+}
+
+export function getMobileHeroImageForSrc(src) {
+  return getMobileHeroImage(resolveHeroBackingSrc(src));
+}
+
 export const PAGE_IMAGES = {
   factoryLicenceDelhi: {
     hero: [

@@ -98,7 +98,7 @@ export default async function BlogDetails({ params }) {
 
   return (
     <div>
-      {/* CRM schemaMarkup — Article/BlogPosting JSON-LD for crawlers */}
+      {/* CRM schemaMarkup only — sitewide schema-org is skipped in root layout */}
       {schema ? (
         <script
           id="blog-schema-org"

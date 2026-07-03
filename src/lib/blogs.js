@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 const API_BASE = "https://internal.lawfinity.in";
 
 function tryParseJsonLd(value = "") {
@@ -49,7 +51,7 @@ export function getBlogSchema(blog) {
   return null;
 }
 
-export async function fetchPublishedBlogs() {
+export const fetchPublishedBlogs = cache(async () => {
   const res = await fetch(`${API_BASE}/api/public/published-fl?limit=1000`, {
     cache: "no-store",
   });
@@ -58,10 +60,11 @@ export async function fetchPublishedBlogs() {
 
   const data = await res.json();
   return Array.isArray(data?.blogs) ? data.blogs : [];
-}
+});
 
-export async function getBlogBySlug(slug) {
+// Deduped within one request (layout + page + generateMetadata share one list fetch).
+export const getBlogBySlug = cache(async (slug) => {
   const blogs = await fetchPublishedBlogs();
   if (!blogs) return null;
   return blogs.find((blog) => blog?.urlSlug === slug) || null;
-}
+});

@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 
+function nextWithPathname(request) {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname || "");
+  return NextResponse.next({ request: { headers: requestHeaders } });
+}
+
 export function proxy(request) {
   const url = request.nextUrl.clone();
   const host = request.headers.get("host");
@@ -11,7 +17,7 @@ export function proxy(request) {
      host.includes("127.0.0.1") || 
      host.includes(":3000"))
   ) {
-    return NextResponse.next();
+    return nextWithPathname(request);
   }
 
   // 1. WWW to Non-WWW Redirect
@@ -30,7 +36,7 @@ export function proxy(request) {
     return NextResponse.redirect(url, 301);
   }
 
-  return NextResponse.next();
+  return nextWithPathname(request);
 }
 
 // Ensure middleware only runs on relevant routes, excluding assets, static files, and API

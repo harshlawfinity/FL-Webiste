@@ -1,4 +1,4 @@
-import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
+import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";import { getHeroImageUrlFromAlt } from "@/lib/heroBackgrounds";
 
 const STATE_LABELS = {
   delhi: "Delhi",
@@ -85,13 +85,12 @@ export function getCmsServiceHeroBackgroundAlts(page) {
   return [pageTitle, h1Title, formTitle];
 }
 
-// Hero slides for CMS pages — default carousel images + CMS-dynamic alts.
+// Hero slides — SEO URL from each alt + ?slide=N for the correct carousel image.
 export function getCmsServiceHeroSlides(page) {
   const alts = getCmsServiceHeroBackgroundAlts(page);
 
   return alts.map((alt, slide) => ({
     alt,
-    // Use real /public/assets files so all 3 slides rotate reliably on every host.
-    src: HERO_BACKGROUND_IMAGES[slide] ?? HERO_BACKGROUND_IMAGES[0],
+    src: getHeroImageUrlFromAlt(alt, slide),
   }));
 }

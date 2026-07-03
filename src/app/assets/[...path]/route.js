@@ -21,7 +21,7 @@ function contentTypeFor(filename) {
   return MIME_BY_EXT[ext] || "application/octet-stream";
 }
 
-// Serves /public/assets/* when present; otherwise CMS SEO hero aliases → default carousel files.
+// Serves /public/assets/* when present; SEO hero aliases (?slide=N) → carousel backing files.
 export async function GET(request, { params }) {
   const { path: pathParts } = await params;
   const filename = Array.isArray(pathParts) ? pathParts.join("/") : String(pathParts || "");
@@ -29,19 +29,11 @@ export async function GET(request, { params }) {
     return new Response("Not found", { status: 404 });
   }
 
-  const publicFile = path.join(process.cwd(), "public", "assets", filename);
+  const slideParam = new URL(request.url).searchParams.get("slide");
 
-  try {
-    await access(publicFile);
-    const buffer = await readFile(publicFile);
-    return new Response(buffer, {
-      headers: {
-        "Content-Type": contentTypeFor(filename),
-        "Cache-Control": "public, max-age=31536000, immutable",
-      },
-    });
-  } catch {
-    const slide = Number(new URL(request.url).searchParams.get("slide") || 0);
+  // Alt-slug URLs always use ?slide=N — serve carousel backing even if a same-name file exists.
+  if (slideParam !== null && slideParam !== "") {
+    const slide = Number(slideParam) || 0;
     const backing = HERO_BACKING_FILES[slide] || HERO_BACKING_FILES[0];
     const backingPath = path.join(process.cwd(), "public", "assets", backing);
 
@@ -56,5 +48,20 @@ export async function GET(request, { params }) {
     } catch {
       return new Response("Not found", { status: 404 });
     }
+  }
+
+  const publicFile = path.join(process.cwd(), "public", "assets", filename);
+
+  try {
+    await access(publicFile);
+    const buffer = await readFile(publicFile);
+    return new Response(buffer, {
+      headers: {
+        "Content-Type": contentTypeFor(filename),
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    });
+  } catch {
+    return new Response("Not found", { status: 404 });
   }
 }
