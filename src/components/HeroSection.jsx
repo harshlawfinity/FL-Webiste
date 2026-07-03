@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import ContactFormModal from "./ContactFormModal";
 import ContactForm from "./ContactForm";
 import HeroClientActions from "./HeroClientActions";
 import HeroRotatingBackground from "./HeroRotatingBackground";
