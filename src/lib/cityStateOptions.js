@@ -3,12 +3,6 @@ export const OTHER_CITY_OPTION = "Others";
 // Static city/state list used by contact forms; generated from the provided dataset.
 export const CITY_STATE_OPTIONS = [
   {
-    "state": "Agra",
-    "cities": [
-      "Shamsabad"
-    ]
-  },
-  {
     "state": "Andhra Pradesh",
     "cities": [
       "Adilabad",
@@ -308,12 +302,6 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Bulandshahr",
-    "cities": [
-      "Shikarpur"
-    ]
-  },
-  {
     "state": "Chhattisgarh",
     "cities": [
       "Ahiwara",
@@ -355,35 +343,10 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Dadra & Nagar Haveli",
-    "cities": [
-      "Amli",
-      "Silvassa"
-    ]
-  },
-  {
-    "state": "Daman & Diu",
-    "cities": [
-      "Daman and Diu"
-    ]
-  },
-  {
     "state": "Delhi",
     "cities": [
       "Asola",
       "Delhi"
-    ]
-  },
-  {
-    "state": "Farrukhabad",
-    "cities": [
-      "Shamsabad"
-    ]
-  },
-  {
-    "state": "Ghazipur",
-    "cities": [
-      "Saidpur"
     ]
   },
   {
@@ -486,34 +449,6 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Gujrat",
-    "cities": [
-      "Adalaj",
-      "Adityana",
-      "Alang",
-      "Ambaji",
-      "Ambaliyasan",
-      "Andada",
-      "Anjar",
-      "Anklav",
-      "Antaliya",
-      "Arambhada",
-      "Atul"
-    ]
-  },
-  {
-    "state": "Hardoi",
-    "cities": [
-      "Shahabad"
-    ]
-  },
-  {
-    "state": "Hariyana",
-    "cities": [
-      "Ballabhgarh"
-    ]
-  },
-  {
     "state": "Haryana",
     "cities": [
       "Ambala",
@@ -584,12 +519,6 @@ export const CITY_STATE_OPTIONS = [
       "Shimla",
       "Solan",
       "Sundarnagar"
-    ]
-  },
-  {
-    "state": "India",
-    "cities": [
-      "Dharampur"
     ]
   },
   {
@@ -816,12 +745,6 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Lakshadweep",
-    "cities": [
-      "Kavaratti"
-    ]
-  },
-  {
     "state": "Madhya Pradesh",
     "cities": [
       "Ashok Nagar",
@@ -1036,21 +959,6 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Maharastra",
-    "cities": [
-      "Umarga",
-      "Umarkhed",
-      "Umred",
-      "Vadgaon Kasba",
-      "Vaijapur",
-      "Vasai",
-      "Virar",
-      "Vita",
-      "Yavatmal",
-      "Yawal"
-    ]
-  },
-  {
     "state": "Manipur",
     "cities": [
       "Imphal",
@@ -1151,15 +1059,6 @@ export const CITY_STATE_OPTIONS = [
     ]
   },
   {
-    "state": "Pondicherry",
-    "cities": [
-      "Karaikal",
-      "Mahe",
-      "Pondicherry",
-      "Yanam"
-    ]
-  },
-  {
     "state": "Punjab",
     "cities": [
       "Ahmedgarh",
@@ -1230,18 +1129,6 @@ export const CITY_STATE_OPTIONS = [
       "Urmar Tanda",
       "Zira",
       "Zirakpur"
-    ]
-  },
-  {
-    "state": "Purulia",
-    "cities": [
-      "Adra"
-    ]
-  },
-  {
-    "state": "Rajastan",
-    "cities": [
-      "Banswara"
     ]
   },
   {
@@ -1331,12 +1218,6 @@ export const CITY_STATE_OPTIONS = [
       "Udaipur",
       "Udaipurwati",
       "Vijainagar"
-    ]
-  },
-  {
-    "state": "Rampur",
-    "cities": [
-      "Shahabad"
     ]
   },
   {
