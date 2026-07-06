@@ -179,7 +179,7 @@ export default function Footer() {
       {/* Footer Bottom */}
       <div className="text-center text-xs text-gray-100 border-t border-gray-200 pt-4 pb-20 md:pb-0">
         <p>
-          All Rights Reserved 2025.{" "}
+          All Rights Reserved {new Date().getFullYear()}.{" "}
           <Link
             href="/"
             className="text-purple-100 hover:text-purple-800 transition-colors font-semibold"
