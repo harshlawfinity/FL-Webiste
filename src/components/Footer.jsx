@@ -176,9 +176,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="text-center text-xs text-gray-100 border-t border-gray-200 pt-4 pb-20 md:pb-0">
-        <p>
+      {/* Footer Bottom — !text-center keeps copyright centered when CMS sync adds text-left to body <p> (e.g. /blogs) */}
+      <div className="max-w-7xl mx-auto w-full text-center text-xs text-gray-100 border-t border-gray-200 pt-4 pb-20 md:pb-0">
+        <p className="!text-center">
           All Rights Reserved {new Date().getFullYear()}.{" "}
           <Link
             href="/"

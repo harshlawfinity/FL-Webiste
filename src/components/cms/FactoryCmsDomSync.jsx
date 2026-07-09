@@ -92,7 +92,7 @@ function normalizeMainColumnTextAlign(mainColumn) {
   if (!mainColumn) return;
 
   mainColumn.querySelectorAll("p, li").forEach((node) => {
-    if (node.closest("aside, nav, form, table, .cms-table-scroll")) return;
+    if (node.closest("aside, nav, form, table, .cms-table-scroll, footer")) return;
     node.classList.remove("text-justify");
     node.classList.add("text-left", "md:text-justify");
     if (node.style.textAlign === "justify") node.style.removeProperty("text-align");

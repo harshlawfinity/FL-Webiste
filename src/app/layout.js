@@ -39,11 +39,16 @@ export default async function RootLayout({ children }) {
   const pathname = headersList.get("x-pathname") || "";
   const blogSlugMatch = pathname.match(/^\/blogs\/([^/]+)\/?$/);
 
-  // Blog articles with CRM schemaMarkup — skip sitewide JSON-LD to avoid duplicate schema blocks.
+  // Blog articles with CRM schemaMarkup — render in <head> (body scripts get corrupted by RSC).
   let showSiteSchema = true;
+  let blogSchemaJson = null;
   if (blogSlugMatch) {
     const blog = await getBlogBySlug(blogSlugMatch[1]);
-    if (getBlogSchema(blog)) showSiteSchema = false;
+    const schema = getBlogSchema(blog);
+    if (schema) {
+      showSiteSchema = false;
+      blogSchemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
+    }
   }
 
   const schemaData = {
@@ -113,6 +118,14 @@ export default async function RootLayout({ children }) {
             __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
           }}
         />
+        {/* CRM blog schemaMarkup in head — must not live in page body (Next.js RSC truncates it). */}
+        {blogSchemaJson ? (
+          <script
+            id="blog-schema-org"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: blogSchemaJson }}
+          />
+        ) : null}
         {/* Sitewide schema — omitted on blog articles that ship CRM schemaMarkup */}
         {showSiteSchema ? (
           <script

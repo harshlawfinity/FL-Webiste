@@ -3,40 +3,22 @@
 import ContactForm from "./ContactForm";
 import HeroClientActions from "./HeroClientActions";
 import HeroRotatingBackground from "./HeroRotatingBackground";
-import { getHeroImageUrlFromAlt, getMobileHeroImageForSrc } from "@/lib/heroBackgrounds";
+import { HERO_BACKGROUND_IMAGES } from "@/lib/heroBackgrounds";
 
 export default function HeroSection() {
+  // Same 3 hero slides + rotation pattern as state landing pages (direct /assets URLs).
   const heroBackgroundAlts = [
     "Factory License Registration",
     "Factory License Renewal",
     "Factory Registration Certificate",
   ];
-  const heroImages = heroBackgroundAlts.map((alt, slide) =>
-    getHeroImageUrlFromAlt(alt, slide)
-  );
-  const mobileHero = getMobileHeroImageForSrc(heroImages[0]);
 
   return (
     <section className="relative w-full min-h-[100vh] md:min-h-[600px] mt-20 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        {/* LCP image in server HTML — paints before client JS hydrates */}
-        <picture>
-          {mobileHero ? (
-            <source media="(max-width: 767px)" srcSet={mobileHero} />
-          ) : null}
-          <img
-            src={heroImages[0]}
-            alt={heroBackgroundAlts[0]}
-            width={1920}
-            height={1623}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
-        </picture>
-        <HeroRotatingBackground alts={heroBackgroundAlts} images={heroImages} lcpOptimized />
-      </div>
+      <HeroRotatingBackground
+        alts={heroBackgroundAlts}
+        images={HERO_BACKGROUND_IMAGES}
+      />
 
       <main className="relative z-20 w-full min-h-full flex items-center justify-center px-4 sm:px-6 py-8 md:py-12">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">

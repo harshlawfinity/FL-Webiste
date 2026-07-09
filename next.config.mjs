@@ -440,6 +440,16 @@ const nextConfig = {
         destination: "/fire-noc-in-delhi",
         statusCode: 301,
       },
+      {
+        source: "/blogs/building-plan-approval-for-industrial-projects",
+        destination: "/building-plan-approval",
+        statusCode: 301,
+      },
+      {
+        source: "/blogs/do-you-need-a-factory-licence-for-small-scale-manufacturing",
+        destination: "/building-plan-approval",
+        statusCode: 301,
+      },
       ...additionalBlogRedirects,
     ];
   },
