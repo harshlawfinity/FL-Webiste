@@ -497,8 +497,9 @@ export default function BlogsClientUI({ blog }) {
   console.log(blog);
 
   const BLOG_WEBSITE_URL =
+    process.env.NEXT_PUBLIC_BLOG_API_URL ||
     process.env.BLOG_WEBSITE_URL ||
-    "https://internal.lawfinity.in";
+    "/api/crm";
 
   useEffect(() => {
     setMounted(true);
@@ -508,12 +509,11 @@ export default function BlogsClientUI({ blog }) {
     }
 
     if (!hasTrackedRef.current) {
-      fetch(
-        `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/views`,
-        {
-          method: "POST",
-        }
-      );
+      fetch(`${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/views`, {
+        method: "POST",
+      }).catch(() => {
+        // Non-blocking — view count may fail offline or when CRM is unreachable.
+      });
       hasTrackedRef.current = true;
     }
 
@@ -525,16 +525,21 @@ export default function BlogsClientUI({ blog }) {
 
   useEffect(() => {
     const fetchComments = async () => {
-      const res = await fetch(
-        `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/comments?approved=1`
-      );
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setComments(data);
+      try {
+        const res = await fetch(
+          `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/comments?approved=1`
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setComments(data);
+        }
+      } catch {
+        // Comments are optional — page content still renders without them.
       }
     };
     fetchComments();
-  }, [blog.urlSlug]);
+  }, [blog.urlSlug, BLOG_WEBSITE_URL]);
 
   // Read time that works for both Editor.js & HTML
   useEffect(() => {

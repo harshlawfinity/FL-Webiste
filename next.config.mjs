@@ -156,6 +156,15 @@ const nextConfig = {
       },
     ];
   },
+  // Same-origin proxy for CRM blog APIs — avoids browser CORS on views/comments/likes.
+  async rewrites() {
+    return [
+      {
+        source: "/api/crm/:path*",
+        destination: "https://internal.lawfinity.in/api/:path*",
+      },
+    ];
+  },
   async redirects() {
     return [
       {

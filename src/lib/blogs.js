@@ -62,8 +62,23 @@ export const fetchPublishedBlogs = cache(async () => {
   return Array.isArray(data?.blogs) ? data.blogs : [];
 });
 
-// Deduped within one request (layout + page + generateMetadata share one list fetch).
+// Full article payload (blocks + HTML content + schemaMarkup) — list API omits body content.
 export const getBlogBySlug = cache(async (slug) => {
+  if (!slug) return null;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/public/blog/${encodeURIComponent(slug)}`, {
+      cache: "no-store",
+    });
+
+    if (res.ok) {
+      const blog = await res.json();
+      if (blog && !blog.error) return blog;
+    }
+  } catch {
+    // Fall back to list snapshot below.
+  }
+
   const blogs = await fetchPublishedBlogs();
   if (!blogs) return null;
   return blogs.find((blog) => blog?.urlSlug === slug) || null;
