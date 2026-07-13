@@ -35,6 +35,16 @@ const SECTION_IDS = {
 
 const SKIP_RENDER_IDS = new Set(["hero", "breadcrumbs", "connectedServices", "pricing", "faqs", "faq"]);
 
+// Interactive fee calculators on state pages — CRM sectionOrder does not include these ids.
+const LEGACY_FEE_CALCULATOR_IDS = new Set(["calc", "calculator"]);
+
+// CRM pricing/fees keys → static page shells (pricing render is skipped in SKIP_RENDER_IDS).
+const CMS_SECTION_DOM_ALIASES = {
+  pricing: ["fees", "fee"],
+  fees: ["fees", "fee"],
+  fee: ["fee", "fees"],
+};
+
 // Horizontal TOC disabled site-wide — re-enable by uncommenting syncHorizontalToc() below.
 // const HORIZONTAL_TOC_SKIP_PATHS = new Set(["/blogs", "/contact"]);
 
@@ -1197,6 +1207,9 @@ function collectActiveSectionDomIds(sectionOrder, page, syncedElements) {
   const ids = new Set();
 
   sectionOrder.forEach((key) => {
+    // Keep fee shells visible when CRM lists pricing/fees even though pricing CMS render is skipped.
+    (CMS_SECTION_DOM_ALIASES[key] || []).forEach((id) => ids.add(id));
+
     if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
     domIdsForSectionKey(key, page).forEach((id) => ids.add(id));
   });
@@ -1208,6 +1221,18 @@ function collectActiveSectionDomIds(sectionOrder, page, syncedElements) {
   return ids;
 }
 
+// Unhide built-in fee calculators after CRM sync (sectionOrder omits #calc / #calculator).
+function restoreLegacyFeeCalculators(mainColumn) {
+  if (!mainColumn) return;
+
+  LEGACY_FEE_CALCULATOR_IDS.forEach((id) => {
+    const el = mainColumn.querySelector(`#${id}`);
+    if (!el) return;
+    el.style.display = "";
+    delete el.dataset.cmsLegacyHidden;
+  });
+}
+
 // Hide hardcoded page sections that CRM removed from sectionOrder (e.g. renewal on Fire NOC Delhi).
 function hideSectionsRemovedFromCms(mainColumn, page, sectionOrder, syncedElements) {
   if (!mainColumn || !hasExplicitCmsSectionOrder(page)) return;
@@ -1217,6 +1242,7 @@ function hideSectionsRemovedFromCms(mainColumn, page, sectionOrder, syncedElemen
   Array.from(mainColumn.children).forEach((child) => {
     if (child.dataset.cmsHorizontalToc === "true") return;
     if (!child.id) return;
+    if (LEGACY_FEE_CALCULATOR_IDS.has(child.id)) return;
     if (activeIds.has(child.id)) return;
 
     child.style.display = "none";
@@ -1929,6 +1955,7 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
 
       reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
       hideSectionsRemovedFromCms(mainColumn, activePage, sectionOrder, syncedElements);
+      restoreLegacyFeeCalculators(mainColumn);
       restoreProcessDiagramPlacement(mainColumn);
 
       syncFaqs(activePage);
