@@ -186,6 +186,17 @@ body {
   vertical-align: top;
 }
 
+/* Theme header for every CMS content table (structured + HTML tables). */
+.cms-table-scroll thead,
+.cms-table-scroll thead th,
+.cms-rich-text table thead,
+.cms-rich-text table thead th,
+.cms-sync-content table thead,
+.cms-sync-content table thead th {
+  background-color: #7a3ef2 !important;
+  color: #ffffff !important;
+}
+
 /* 3–4 column fee/pricing tables — stretch to wrapper, proportional columns. */
 .cms-rich-text .cms-table-scroll table.cms-table-compact,
 .cms-sync-content .cms-table-scroll table.cms-table-compact,
@@ -257,17 +268,28 @@ svg[data-cms-heading-icon="true"] {
   }
 }
 
-.service-marquee-track {
-  animation: service-marquee-scroll 22s linear infinite;
+/* JS-driven marquee (ServiceMarqueeClient) — hide native scrollbar; arrows handle move. */
+.service-marquee-viewport {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.service-marquee-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* Legacy CSS loop kept only as fallback if a track still uses the animation class alone. */
+.service-marquee-track.is-css-marquee {
+  animation: service-marquee-scroll 40s linear infinite;
   will-change: transform;
 }
 
-.service-marquee-viewport:hover .service-marquee-track {
+.service-marquee-viewport:hover .service-marquee-track.is-css-marquee {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-marquee-track {
+  .service-marquee-track.is-css-marquee {
     animation: none;
     flex-wrap: wrap;
     width: 100%;

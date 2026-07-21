@@ -142,6 +142,9 @@ function applyCmsTableLayoutToTable(table) {
     wrapper.appendChild(table);
   }
 
+  // CRM HTML tables often ship header cells as the first <tbody> row — promote to <thead>.
+  ensureCmsTableHeaderRow(table);
+
   const colCount = Math.max(
     table.querySelectorAll("thead th").length,
     table.querySelectorAll("tbody tr:first-child td").length,
@@ -170,14 +173,18 @@ function applyCmsTableLayoutToTable(table) {
   table.style.wordBreak = "normal";
   table.style.overflowWrap = "normal";
 
+  const thead = table.querySelector("thead");
+  if (thead) {
+    thead.classList.add("bg-[#7A3EF2]", "text-white");
+  }
+
   table.querySelectorAll("th, td").forEach((cell) => {
-    const isHeader = cell.tagName === "TH";
+    const isHeader = cell.tagName === "TH" || Boolean(cell.closest("thead"));
     cell.classList.add("p-3", "align-top", "border");
     if (isHeader) {
-      cell.classList.add("font-semibold", "text-left", "border-white/20");
-      if (!cell.closest("thead")?.classList.contains("bg-[#7A3EF2]")) {
-        cell.closest("thead")?.classList.add("bg-[#7A3EF2]", "text-white");
-      }
+      cell.classList.add("font-semibold", "text-left", "border-white/20", "text-white");
+      cell.style.backgroundColor = "#7A3EF2";
+      cell.style.color = "#ffffff";
     } else {
       cell.classList.add("border-gray-200", isCompactTable ? "whitespace-normal" : "whitespace-nowrap", "min-w-[5.5rem]");
       // CRM often ships blank fee cells — show a readable placeholder instead of an empty box.
@@ -192,6 +199,40 @@ function applyCmsTableLayoutToTable(table) {
   table.querySelectorAll("tbody tr:nth-child(even)").forEach((row) => {
     row.classList.add("bg-gray-50");
   });
+}
+
+// Promote first body row to <thead> when CRM HTML tables omit a real header section.
+function ensureCmsTableHeaderRow(table) {
+  if (!table || table.querySelector("thead")) return;
+
+  const firstRow =
+    table.querySelector("tbody tr") || table.querySelector("tr");
+  if (!firstRow) return;
+
+  const cells = Array.from(firstRow.children).filter((el) =>
+    /^(TH|TD)$/i.test(el.tagName)
+  );
+  if (!cells.length) return;
+
+  const thead = document.createElement("thead");
+  thead.className = "bg-[#7A3EF2] text-white";
+  const headerRow = document.createElement("tr");
+
+  cells.forEach((cell) => {
+    const th = document.createElement("th");
+    th.className = "p-3 font-semibold align-top text-left border border-white/20 whitespace-normal text-white";
+    th.style.backgroundColor = "#7A3EF2";
+    th.style.color = "#ffffff";
+    th.innerHTML = cell.innerHTML;
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+  firstRow.remove();
+
+  const tbody = table.querySelector("tbody");
+  if (tbody) table.insertBefore(thead, tbody);
+  else table.insertBefore(thead, table.firstChild);
 }
 
 // Blank CRM table cells render as italic placeholder text (fee tables often omit optional charges).
@@ -310,6 +351,39 @@ function stripHtml(value = "") {
 
 function contentFingerprint(html = "") {
   return stripHtml(html).replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+// CRM often duplicates the same copy in introParagraph + body (and embeds <table> HTML
+// alongside nestedSections type=table). Prefer the structured nested table.
+function stripHtmlTables(html = "") {
+  return String(html || "")
+    .replace(/<table\b[\s\S]*?<\/table>/gi, "")
+    .replace(/<p>(?:\s|&nbsp;|&#160;|<br\s*\/?>)*<\/p>/gi, "")
+    .trim();
+}
+
+function sectionHasNestedTable(section) {
+  const nested = Array.isArray(section?.nestedSections) ? section.nestedSections : [];
+  return nested.some((item) => item?.type === "table") || section?.type === "table";
+}
+
+function prepareSectionHtml(html = "", { stripTables = false } = {}) {
+  const value = stripTables ? stripHtmlTables(html) : String(html || "").trim();
+  return value;
+}
+
+// Skip body/intro blocks that repeat text already rendered (substring-safe for long copy).
+function alreadySeenContent(fingerprint, seenContent) {
+  if (!fingerprint) return true;
+  if (seenContent.has(fingerprint)) return true;
+
+  if (fingerprint.length < 40) return false;
+
+  for (const seen of seenContent) {
+    if (!seen || seen.length < 40) continue;
+    if (seen.includes(fingerprint) || fingerprint.includes(seen)) return true;
+  }
+  return false;
 }
 
 function normalizeHeadingText(value = "") {
@@ -492,11 +566,12 @@ function renderSectionBody(parent, section, sectionKey = "") {
   if (!section || !parent) return;
 
   const seenContent = new Set();
+  const stripTables = sectionHasNestedTable(section);
   const introHtml = section.introParagraph && stripHtml(section.introParagraph)
-    ? String(section.introParagraph).trim()
+    ? prepareSectionHtml(section.introParagraph, { stripTables })
     : "";
 
-  if (introHtml) {
+  if (introHtml && stripHtml(introHtml)) {
     seenContent.add(contentFingerprint(introHtml));
     const intro = createContentElement(introHtml);
     if (intro) parent.appendChild(intro);
@@ -519,11 +594,11 @@ function renderSectionBody(parent, section, sectionKey = "") {
   const paragraphItems = [];
 
   nonStepBody.forEach((item) => {
-    const html = normalizeBodyItem(item);
+    const html = prepareSectionHtml(normalizeBodyItem(item), { stripTables });
     if (!stripHtml(html)) return;
 
     const fingerprint = contentFingerprint(html);
-    if (seenContent.has(fingerprint)) return;
+    if (alreadySeenContent(fingerprint, seenContent)) return;
     seenContent.add(fingerprint);
     collectHeadingFingerprints(html).forEach((fp) => seenContent.add(fp));
 
@@ -606,6 +681,7 @@ function renderSectionBodyWithNestedPlacement(parent, section, sectionKey = "") 
 
   const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
   const { beforeBody, byBodyIndex, afterBodyEnd } = partitionNestedSections(nested);
+  const stripTables = sectionHasNestedTable(section);
 
   beforeBody.forEach((nestedSection, index) => {
     renderNestedInto(parent, nestedSection, index, section);
@@ -613,10 +689,10 @@ function renderSectionBodyWithNestedPlacement(parent, section, sectionKey = "") 
 
   const seenContent = new Set();
   const introHtml = section.introParagraph && stripHtml(section.introParagraph)
-    ? String(section.introParagraph).trim()
+    ? prepareSectionHtml(section.introParagraph, { stripTables })
     : "";
 
-  if (introHtml) {
+  if (introHtml && stripHtml(introHtml)) {
     seenContent.add(contentFingerprint(introHtml));
     const intro = createContentElement(introHtml);
     if (intro) parent.appendChild(intro);
@@ -636,16 +712,18 @@ function renderSectionBodyWithNestedPlacement(parent, section, sectionKey = "") 
   body.forEach((item, bodyIndex) => {
     if (item && typeof item === "object" && item.step && item.description) return;
 
-    const html = normalizeBodyItem(item);
-    if (!stripHtml(html)) return;
+    const html = prepareSectionHtml(normalizeBodyItem(item), { stripTables });
+    const fingerprint = stripHtml(html) ? contentFingerprint(html) : "";
+    const isDuplicate = fingerprint && alreadySeenContent(fingerprint, seenContent);
 
-    const fingerprint = contentFingerprint(html);
-    if (seenContent.has(fingerprint)) return;
-    seenContent.add(fingerprint);
-    collectHeadingFingerprints(html).forEach((fp) => seenContent.add(fp));
+    // Still inject nested tables even when body copy was already rendered via introParagraph.
+    if (html && stripHtml(html) && !isDuplicate) {
+      seenContent.add(fingerprint);
+      collectHeadingFingerprints(html).forEach((fp) => seenContent.add(fp));
 
-    const el = createContentElement(html);
-    if (el) parent.appendChild(el);
+      const el = createContentElement(html);
+      if (el) parent.appendChild(el);
+    }
 
     const interleaved = byBodyIndex.get(bodyIndex) || [];
     interleaved.forEach((nestedSection, index) => {
