@@ -62,6 +62,228 @@ export const fetchPublishedBlogs = cache(async () => {
   return Array.isArray(data?.blogs) ? data.blogs : [];
 });
 
+const RELATED_BLOG_LIMIT = 3;
+const BLOG_HIDDEN_STATUSES = new Set(["draft", "hidden", "archived", "deleted", "inactive", "pending"]);
+const STOP_WORDS = new Set([
+  "and",
+  "the",
+  "for",
+  "with",
+  "from",
+  "your",
+  "you",
+  "our",
+  "are",
+  "this",
+  "that",
+  "into",
+  "about",
+  "page",
+  "service",
+  "services",
+  "online",
+  "apply",
+  "process",
+  "guide",
+  "complete",
+  "latest",
+  "new",
+  "in",
+]);
+const SERVICE_GROUPS = [
+  {
+    key: "factory",
+    terms: ["factory licence", "factory license", "factory registration", "mcd factory", "manufacturing"],
+  },
+  {
+    key: "fire",
+    terms: ["fire noc", "fire safety", "fire certificate", "dfs", "fire"],
+  },
+  {
+    key: "pollution",
+    terms: ["pollution noc", "pollution certificate", "pollution control", "cte", "cto", "pcb"],
+  },
+];
+const LOCATION_TERMS = [
+  "delhi",
+  "haryana",
+  "uttar pradesh",
+  "up",
+  "noida",
+  "ghaziabad",
+  "meerut",
+  "rewari",
+  "sonipat",
+];
+
+function plainText(value) {
+  if (Array.isArray(value)) return value.map(plainText).join(" ");
+  if (value && typeof value === "object") return Object.values(value).map(plainText).join(" ");
+
+  return String(value || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function firstPresent(...values) {
+  return values.map(plainText).find(Boolean) || "";
+}
+
+function truncateText(value, maxLength = 150) {
+  const text = plainText(value);
+  if (text.length <= maxLength) return text;
+
+  const trimmed = text.slice(0, maxLength).trim();
+  const lastSpace = trimmed.lastIndexOf(" ");
+  return `${trimmed.slice(0, lastSpace > 80 ? lastSpace : trimmed.length)}...`;
+}
+
+function normalizeBlogSlug(blog) {
+  return String(blog?.urlSlug || blog?.slug || "")
+    .replace(/^\/?blogs\//, "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+}
+
+function slugToTitle(slug) {
+  return String(slug || "")
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function tokenize(value) {
+  return plainText(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((word) => word.length > 2 && !STOP_WORDS.has(word));
+}
+
+function findMatchingGroups(value) {
+  const text = plainText(value).toLowerCase();
+  return SERVICE_GROUPS.filter((group) => group.terms.some((term) => text.includes(term))).map(
+    (group) => group.key
+  );
+}
+
+function findLocations(value) {
+  const text = plainText(value).toLowerCase();
+  return LOCATION_TERMS.filter((term) => text.includes(term));
+}
+
+function getBlogSearchText(blog) {
+  return plainText([
+    normalizeBlogSlug(blog),
+    blog?.title,
+    blog?.metaTitle,
+    blog?.category,
+    blog?.excerpt,
+    blog?.metaDescription,
+    blog?.description,
+    blog?.tags,
+    blog?.keywords,
+  ]);
+}
+
+function getPageSearchText(page, slug) {
+  return plainText([
+    slug,
+    page?.title,
+    page?.mainHeading,
+    page?.heading,
+    page?.metaTitle,
+    page?.metaDescription,
+    page?.description,
+    page?.serviceCategory,
+    page?.category,
+    page?.keywords,
+    page?.tags,
+    page?.seo?.title,
+    page?.seo?.description,
+    page?.content?.title,
+    page?.content?.heading,
+    page?.content?.description,
+    page?.content?.hero?.headline,
+    page?.content?.hero?.subtext,
+    page?.sections?.hero?.title,
+    page?.sections?.hero?.description,
+  ]);
+}
+
+function isSearchablePublishedBlog(blog) {
+  const slug = normalizeBlogSlug(blog);
+  if (!slug) return false;
+
+  const status = String(blog?.status || "").toLowerCase();
+  if (BLOG_HIDDEN_STATUSES.has(status)) return false;
+  if (blog?.noIndex || blog?.noFollow) return false;
+
+  const robots = String(blog?.robots || "").toLowerCase();
+  return !robots.includes("noindex") && !robots.includes("nofollow");
+}
+
+function buildRelatedBlogContext(page, slug) {
+  const text = getPageSearchText(page, slug);
+  return {
+    tokens: [...new Set(tokenize(text))],
+    groups: findMatchingGroups(text),
+    locations: findLocations(text),
+  };
+}
+
+function scoreRelatedBlog(blog, context) {
+  const searchText = getBlogSearchText(blog).toLowerCase();
+  const titleText = plainText([normalizeBlogSlug(blog), blog?.title, blog?.metaTitle]).toLowerCase();
+  let score = 0;
+
+  context.groups.forEach((group) => {
+    const terms = SERVICE_GROUPS.find((item) => item.key === group)?.terms || [];
+    if (terms.some((term) => searchText.includes(term))) score += 20;
+  });
+  context.locations.forEach((location) => {
+    if (searchText.includes(location)) score += 10;
+  });
+  context.tokens.forEach((token) => {
+    if (titleText.includes(token)) score += 2;
+    else if (searchText.includes(token)) score += 1;
+  });
+
+  return score;
+}
+
+function getBlogDateValue(blog) {
+  return Date.parse(blog?.publishedAt || blog?.updatedAt || blog?.createdAt || "") || 0;
+}
+
+function toRelatedBlogCard(blog) {
+  const slug = normalizeBlogSlug(blog);
+  return {
+    slug,
+    title: firstPresent(blog?.title, blog?.metaTitle, slugToTitle(slug)),
+    excerpt: truncateText(firstPresent(blog?.excerpt, blog?.metaDescription, blog?.description, blog?.content)),
+    category: firstPresent(blog?.category),
+    publishedAt: blog?.publishedAt || blog?.updatedAt || blog?.createdAt || null,
+  };
+}
+
+// Match service-page intent against list-card metadata without fetching every blog body.
+export const getRelatedBlogsForServicePage = cache(async (page, slug, limit = RELATED_BLOG_LIMIT) => {
+  const blogs = await fetchPublishedBlogs();
+  if (!Array.isArray(blogs)) return [];
+
+  const context = buildRelatedBlogContext(page, slug);
+  return blogs
+    .filter(isSearchablePublishedBlog)
+    .map((blog) => ({ blog, score: scoreRelatedBlog(blog, context) }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score || getBlogDateValue(b.blog) - getBlogDateValue(a.blog))
+    .slice(0, limit)
+    .map(({ blog }) => toRelatedBlogCard(blog));
+});
+
 // Full article payload (blocks + HTML content + schemaMarkup) — list API omits body content.
 export const getBlogBySlug = cache(async (slug) => {
   if (!slug) return null;

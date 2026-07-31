@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
 import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
 import StateSelect from "@/components/StateSelect";
+import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
 const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ const HeroForm = ({ title, description }) => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDuplicateThankYou, setShowDuplicateThankYou] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -40,6 +43,14 @@ const HeroForm = ({ title, description }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Duplicacy check (organic leads only): same phone + same pageUrl + same date
+    // already submitted → thank-you popup, do not create another lead.
+    if (hasSubmittedLead(formData.phone, formData.pageSource)) {
+      setShowDuplicateThankYou(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -64,6 +75,7 @@ const HeroForm = ({ title, description }) => {
       });
 
       if (response.ok) {
+         markLeadSubmitted(formData.phone, formData.pageSource);
          router.push("/thankyou");
       } else {
         const err = await response.json();
@@ -87,6 +99,10 @@ const HeroForm = ({ title, description }) => {
 
   return (
     <div className="max-w-lg shadow-2xl mx-auto bg-white md:p-4 p-2 rounded-2xl">
+      <DuplicateLeadThankYouModal
+        isOpen={showDuplicateThankYou}
+        onClose={() => setShowDuplicateThankYou(false)}
+      />
       <h2 className="text-xl font-semibold text-[#7A3EF2] mb-2">
         Talk To Our Experts
       </h2>

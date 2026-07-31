@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
 import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
 import StateSelect from "@/components/StateSelect";
+import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
 const HeroForm = ({ title, description }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ const HeroForm = ({ title, description }) => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDuplicateThankYou, setShowDuplicateThankYou] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -40,6 +43,16 @@ const HeroForm = ({ title, description }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const pageSourceValue = typeof window !== "undefined" ? window.location.href : formData.pageSource;
+
+    // Duplicacy check (organic leads only): same phone + same pageUrl + same date
+    // already submitted → thank-you popup, do not create another lead.
+    if (hasSubmittedLead(formData.phone, pageSourceValue)) {
+      setShowDuplicateThankYou(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -47,8 +60,6 @@ const HeroForm = ({ title, description }) => {
       const istOffset = 5.5 * 60 * 60 * 1000;
       const istTime = new Date(now.getTime() + istOffset);
       const timestamp = istTime.toISOString().replace("T", " ").split(".")[0];
-
-      const pageSourceValue = typeof window !== "undefined" ? window.location.href : formData.pageSource;
 
       const formBody = new URLSearchParams();
       formBody.append("name", formData.name);
@@ -66,6 +77,7 @@ const HeroForm = ({ title, description }) => {
       });
 
       if (response.ok) {
+        markLeadSubmitted(formData.phone, pageSourceValue);
         router.push("/thankyou");
       } else {
         const err = await response.json();
@@ -92,6 +104,10 @@ const HeroForm = ({ title, description }) => {
       className="w-full max-w-lg mx-auto bg-white md:p-8 p-5 rounded-2xl shadow-xl"
       data-cms-skip-heading-icon="true"
     >
+      <DuplicateLeadThankYouModal
+        isOpen={showDuplicateThankYou}
+        onClose={() => setShowDuplicateThankYou(false)}
+      />
       <div className="text-left mb-5">
         <h2 className="md:text-xl text-lg font-semibold text-[#7A3EF2]">
           {heading}
