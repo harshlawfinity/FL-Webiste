@@ -9,7 +9,6 @@ import BlogSidebarContactForm from "./BlogSidebarContactForm";
 import { AiOutlineLike, AiTwotoneLike } from "react-icons/ai";
 import { FaRegCopy, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { FaRegShareFromSquare } from "react-icons/fa6";
-import { IoClose } from "react-icons/io5";
 
 /* =========================
    Helpers
@@ -485,11 +484,7 @@ export default function BlogsClientUI({ blog }) {
   const [mounted, setMounted] = useState(false);
   const [likes, setLikes] = useState(blog.likes || 0);
   const [hasLiked, setHasLiked] = useState(false);
-  const [isCommenting, setIsCommenting] = useState(false);
-  const [comments, setComments] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
   const [readTime, setReadTime] = useState(null);
   const [activeHeadingId, setActiveHeadingId] = useState("");
   const blogTitle = normalizeDisplayText(blog.title);
@@ -522,24 +517,6 @@ export default function BlogsClientUI({ blog }) {
       setHasLiked(true);
     }
   }, [blog.urlSlug]);
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const res = await fetch(
-          `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/comments?approved=1`
-        );
-        if (!res.ok) return;
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setComments(data);
-        }
-      } catch {
-        // Comments are optional — page content still renders without them.
-      }
-    };
-    fetchComments();
-  }, [blog.urlSlug, BLOG_WEBSITE_URL]);
 
   // Read time that works for both Editor.js & HTML
   useEffect(() => {
@@ -614,32 +591,6 @@ export default function BlogsClientUI({ blog }) {
     } catch (err) {
       console.error(err);
       alert("Failed to like the blog.");
-    }
-  };
-
-  const handleCommentSubmit = async (e) => {
-    setIsSubmitting(true);
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const name = formData.get("user");
-    const email = "";
-    const content = formData.get("content");
-
-    const res = await fetch(
-      `${BLOG_WEBSITE_URL}/api/public/blog/by-slug/${blog.urlSlug}/comments`,
-      {
-        method: "POST",
-        body: JSON.stringify({ name, email, content }),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    if (res.ok) {
-      setShowPopup(true);
-      e.target.reset();
-      setIsSubmitting(false);
-    } else {
-      alert("Failed to submit comment.");
-      setIsSubmitting(false);
     }
   };
 
@@ -933,73 +884,6 @@ export default function BlogsClientUI({ blog }) {
           </a>
         </div>
       </div>
-
-      {/* Comments */}
-      <section className="max-w-7xl mx-auto py-10 px-4">
-        <h2 className="text-2xl font-medium mb-4">Comments</h2>
-
-        <div className="space-y-4 mb-8">
-          {comments.length > 0 ? (
-            comments.map((comment) => (
-              <div
-                key={comment._id}
-                className="border rounded p-4 bg-gray-50 shadow-sm"
-              >
-                <p className="font-semibold text-gray-800">{comment.name}</p>
-                <p className="text-gray-700 mt-1 whitespace-pre-line">
-                  {comment.content}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No comments yet.</p>
-          )}
-        </div>
-
-        <form onSubmit={handleCommentSubmit} className="space-y-4">
-          <input
-            name="user"
-            placeholder="Your Name"
-            required
-            className="w-full px-3 py-2 border rounded"
-          />
-          <textarea
-            name="content"
-            placeholder="Your Comment"
-            required
-            className="w-full px-3 py-2 border rounded"
-          />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`px-4 py-2 rounded text-white ${isSubmitting
-                ? "bg-blue-300 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-              }`}
-          >
-            {isSubmitting ? "Submitting..." : "Submit Comment"}
-          </button>
-        </form>
-      </section>
-
-      {showPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="relative">
-            <p
-              onClick={() => setShowPopup(false)}
-              className="absolute text-red-500 top-0 right-0 p-4 text-2xl cursor-pointer"
-            >
-              <IoClose />
-            </p>
-            <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center animate-fadeIn">
-              <h3 className="text-lg font-semibold mb-2">Thank you!</h3>
-              <p className="text-gray-700">
-                Your comment has been submitted and will appear shortly.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       <style jsx>{`
         :global(.prose) {
