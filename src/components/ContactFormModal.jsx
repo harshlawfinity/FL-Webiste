@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import ContactForm from "./ContactForm";
 
-export default function ContactFormModal({ isOpen, onClose, title, description }) {
+export default function ContactFormModal({ isOpen, onClose, title, description, serviceName }) {
     if (!isOpen) return null;
 
     return (
@@ -29,7 +29,7 @@ export default function ContactFormModal({ isOpen, onClose, title, description }
                         <div className="py-10 text-center">Loading form...</div>
                     }
                 >
-                    <ContactForm title={title} description={description} />
+                    <ContactForm title={title} description={description} serviceName={serviceName} />
                 </Suspense>
             </div>
         </div>

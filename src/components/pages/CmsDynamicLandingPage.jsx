@@ -74,7 +74,11 @@ export default function CmsDynamicLandingPage({ page }) {
           </div>
 
           <div className="md:w-1/2 w-full">
-            <ContactForm title={formCopy.title} description={formCopy.description} />
+            <ContactForm
+              title={formCopy.title}
+              description={formCopy.description}
+              serviceName={pageTitle}
+            />
           </div>
         </div>
       </section>
@@ -90,7 +94,11 @@ export default function CmsDynamicLandingPage({ page }) {
 
         <aside className="hidden md:block">
           <div className="sticky top-24 space-y-4">
-            <ContactFormBlogs title={formCopy.title} description={formCopy.description} />
+            <ContactFormBlogs
+              title={formCopy.title}
+              description={formCopy.description}
+              serviceName={pageTitle}
+            />
             <div className="bg-white rounded-xl shadow-md p-6 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">Quick Links</h3>
               <nav className="space-y-3 text-sm text-gray-700" />
@@ -116,6 +124,7 @@ export default function CmsDynamicLandingPage({ page }) {
         onClose={() => setShowPopup(false)}
         title={formCopy.title}
         description={formCopy.description}
+        serviceName={pageTitle}
       />
     </div>
   );

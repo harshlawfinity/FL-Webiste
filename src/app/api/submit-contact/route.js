@@ -13,6 +13,9 @@ export async function POST(req) {
     const pageSource = params.get("pageSource") || params.get("pageUrl");
     const timestamp = params.get("timestamp");
     const source = params.get("source");
+    // CMS service pages send pageTitle here; static routes may omit (CRM maps from URL).
+    const serviceName =
+      (params.get("serviceName") || params.get("service") || "").trim();
 
     if (!name || !phone || !email) {
       return NextResponse.json(
@@ -30,6 +33,10 @@ export async function POST(req) {
     sheetData.append("pageSource", pageSource);
     sheetData.append("timestamp", timestamp);
     sheetData.append("source", source);
+    if (serviceName) {
+      sheetData.append("serviceName", serviceName);
+      sheetData.append("service", serviceName);
+    }
 
     const googleScriptURL =
       "https://script.google.com/macros/s/AKfycbzHo9imgK0mxejZhOfSxypBNrBcEf3FA2BavP2g27BTRdXcu2BKR9mWjRWAbTRR2w9_/exec";
@@ -48,21 +55,27 @@ export async function POST(req) {
     }
 
     try {
+      const webhookPayload = {
+        name,
+        phone,
+        email,
+        state: state || "",
+        description,
+        pageSource,
+        timestamp,
+        source,
+      };
+      if (serviceName) {
+        webhookPayload.serviceName = serviceName;
+        webhookPayload.service = serviceName;
+      }
+
       await fetch("https://internal.lawfinity.in/api/sales/organic-factory-webhook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          state: state || "",
-          description,
-          pageSource,
-          timestamp,
-          source,
-        }),
+        body: JSON.stringify(webhookPayload),
       });
     } catch (error) {
       console.error("Webhook error:", error);

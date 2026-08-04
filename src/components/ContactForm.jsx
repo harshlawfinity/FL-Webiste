@@ -8,7 +8,7 @@ import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
 import StateSelect from "@/components/StateSelect";
 import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
-const HeroForm = ({ title, description }) => {
+const HeroForm = ({ title, description, serviceName }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -26,6 +26,8 @@ const HeroForm = ({ title, description }) => {
   const formCopy = getLeadFormCopy(pathname);
   const heading = title || formCopy.title;
   const subheading = description || formCopy.description;
+  // CMS service pages pass pageTitle so CRM stores the correct service (not default Factory License).
+  const resolvedServiceName = String(serviceName || "").trim();
 
   const phoneRegex = /^\d{10}$/;
 
@@ -70,6 +72,10 @@ const HeroForm = ({ title, description }) => {
       formBody.append("pageSource", pageSourceValue);
       formBody.append("timestamp", timestamp);
       formBody.append("source", "organic");
+      if (resolvedServiceName) {
+        formBody.append("serviceName", resolvedServiceName);
+        formBody.append("service", resolvedServiceName);
+      }
 
       const response = await fetch("/api/submit-contact", {
         method: "POST",
