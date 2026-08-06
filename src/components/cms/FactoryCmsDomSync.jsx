@@ -53,7 +53,10 @@ const ORDERED_LIST_CLASS = "list-decimal pl-6 space-y-3 text-gray-800";
 
 const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 
-const CMS_RICH_TEXT_CLASS =
+// Exported so CmsDynamicLandingPage can apply identical CMS rich-text styling
+// when server-rendering a unified `contentBody` (single ordered section, see
+// runSync's isUnifiedBody branch below) instead of the legacy per-section shells.
+export const CMS_RICH_TEXT_CLASS =
   "cms-rich-text max-w-full min-w-0 break-words text-gray-800 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_p]:text-justify md:[&_p]:text-text [&_p]:mb-3 [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline";
 
 function hasInlineFormatting(html = "") {
@@ -2013,28 +2016,42 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
       if (heroParagraph && heroSubtitle) heroParagraph.innerHTML = heroSubtitle;
 
       const mainColumn = findMainContentColumn();
-      const sectionOrder = buildSectionOrder(activePage);
-      const syncedElements = new Map();
-      const preserveIds = new Set(sectionOrder);
 
-      sectionOrder.forEach((key) => {
-        if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
+      // Unified single-body pages (contentBody present — see the factorylicence
+      // landing-pages API route) are already rendered server-side, in one block,
+      // in the exact SEO-authored order. Running the legacy per-section
+      // reorder/injection pass below on top of that was exactly what caused
+      // sentences to be repositioned relative to their original CMS order:
+      // that pass re-distributes content into fixed section shells by key,
+      // which doesn't preserve the author's original in-between ordering once
+      // a page has more than one paragraph per shell. Only pages still using
+      // the legacy separate-field format (no contentBody yet) go through it.
+      const isUnifiedBody = Boolean(stripHtml(content.contentBody || "").trim());
 
-        const section = getSectionData(activePage, key);
-        if (!section) return;
+      if (!isUnifiedBody) {
+        const sectionOrder = buildSectionOrder(activePage);
+        const syncedElements = new Map();
+        const preserveIds = new Set(sectionOrder);
 
-        if (SECTION_IDS[key]) {
-          syncStandardSection(key, section, syncedElements);
-          return;
-        }
+        sectionOrder.forEach((key) => {
+          if (MAIN_COLUMN_ORDER_SKIP.has(key) || SKIP_RENDER_IDS.has(key)) return;
 
-        syncCustomSection(key, section, mainColumn, syncedElements, preserveIds);
-      });
+          const section = getSectionData(activePage, key);
+          if (!section) return;
 
-      reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
-      hideSectionsRemovedFromCms(mainColumn, activePage, sectionOrder, syncedElements);
-      restoreLegacyFeeCalculators(mainColumn);
-      restoreProcessDiagramPlacement(mainColumn);
+          if (SECTION_IDS[key]) {
+            syncStandardSection(key, section, syncedElements);
+            return;
+          }
+
+          syncCustomSection(key, section, mainColumn, syncedElements, preserveIds);
+        });
+
+        reorderMainColumnSections(mainColumn, sectionOrder, syncedElements);
+        hideSectionsRemovedFromCms(mainColumn, activePage, sectionOrder, syncedElements);
+        restoreLegacyFeeCalculators(mainColumn);
+        restoreProcessDiagramPlacement(mainColumn);
+      }
 
       syncFaqs(activePage);
       syncBreadcrumbs(activePage);

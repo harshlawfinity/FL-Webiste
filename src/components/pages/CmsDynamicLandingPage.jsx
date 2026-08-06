@@ -8,6 +8,7 @@ import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
 import { getCmsServiceLeadFormCopy, getCmsServiceFaqHeading, getCmsServiceHeroSlides } from "@/lib/leadFormCopy";
 
 // Empty section shells for FactoryCmsDomSync — IDs must match SECTION_IDS in FactoryCmsDomSync.jsx.
@@ -87,9 +88,22 @@ export default function CmsDynamicLandingPage({ page }) {
 
       <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
         <div className="md:col-span-3 space-y-14">
-          {STANDARD_SECTIONS.map((section) => (
-            <SectionShell key={section.id} id={section.id} title={section.title} />
-          ))}
+          {content.contentBody ? (
+            // Single merged "body para" — same section order the SEO person
+            // authored in the CMS, rendered server-side as one block instead
+            // of split into fixed per-section shells (see FactoryCmsDomSync's
+            // isUnifiedBody branch, which skips its DOM reorder pass for
+            // pages that already ship this field).
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: content.contentBody }}
+            />
+          ) : (
+            STANDARD_SECTIONS.map((section) => (
+              <SectionShell key={section.id} id={section.id} title={section.title} />
+            ))
+          )}
         </div>
 
         <aside className="hidden md:block">
