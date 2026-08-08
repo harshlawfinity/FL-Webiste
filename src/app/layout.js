@@ -111,7 +111,9 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://internal.lawfinity.in" />
+        {/* Note: the CRM preconnect hint to https://internal.lawfinity.in was
+            removed — it leaked the internal CRM domain into public page
+            source (view-source) on every page, including the homepage. */}
         {/* Must run first: suppress "Unable to store cookie" from third-party scripts when cookies are blocked */}
         <script
           dangerouslySetInnerHTML={{
