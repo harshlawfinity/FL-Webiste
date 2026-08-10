@@ -36,9 +36,21 @@ function stripCmsHtml(value = "") {
   return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function stripCmsHighlightArtifacts(html = "") {
+  return String(html || "")
+    .replace(/<\/?mark\b[^>]*>/gi, "")
+    .replace(/\sstyle=(["'])((?:(?!\1).)*background-color\s*:[^"']*)((?:(?!\1).)*)\1/gi, (_match, quote, before, after) => {
+      const nextStyle = `${before}${after}`
+        .replace(/background-color\s*:\s*[^;]+;?/gi, "")
+        .replace(/;;+/g, ";")
+        .trim();
+      return nextStyle ? ` style=${quote}${nextStyle}${quote}` : "";
+    });
+}
+
 function normalizeCmsBodyHtml(html = "") {
   let lastParagraphFingerprint = "";
-  return promoteCmsTableHeaderCells(html).replace(
+  return promoteCmsTableHeaderCells(stripCmsHighlightArtifacts(html)).replace(
     /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
     (node) => {
       if (/^<h[1-6]\b/i.test(node)) {

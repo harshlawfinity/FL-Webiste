@@ -57,7 +57,7 @@ const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 // when server-rendering a unified `contentBody` (single ordered section, see
 // runSync's isUnifiedBody branch below) instead of the legacy per-section shells.
 export const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 text-sm md:text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:text-left md:[&_p]:text-justify [&_p]:mb-4 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
+  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 text-sm md:text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:text-left md:[&_p]:text-justify [&_p]:mb-4 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th_*]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
 
 function hasInlineFormatting(html = "") {
   return /<(strong|b|em|i|u|s|strike|mark)\b/i.test(String(html));
@@ -73,9 +73,21 @@ function shouldUseRichTextWrapper(html = "") {
   return hasBlockHtml(value) || hasInlineFormatting(value);
 }
 
+function stripCmsHighlightArtifacts(html = "") {
+  return String(html || "")
+    .replace(/<\/?mark\b[^>]*>/gi, "")
+    .replace(/\sstyle=(["'])((?:(?!\1).)*background-color\s*:[^"']*)((?:(?!\1).)*)\1/gi, (_match, quote, before, after) => {
+      const nextStyle = `${before}${after}`
+        .replace(/background-color\s*:\s*[^;]+;?/gi, "")
+        .replace(/;;+/g, ";")
+        .trim();
+      return nextStyle ? ` style=${quote}${nextStyle}${quote}` : "";
+    });
+}
+
 // Remove CMS artefacts that inflate mobile layout (empty <p>, unwrapped wide tables).
 function normalizeCmsHtml(html = "") {
-  let value = String(html || "").trim();
+  let value = stripCmsHighlightArtifacts(html).trim();
   if (!value) return "";
 
   value = value.replace(/<p>(?:\s|&nbsp;|&#160;|<br\s*\/?>)*<\/p>/gi, "");
@@ -288,7 +300,7 @@ function createContentElement(html) {
   return p;
 }
 
-function isLegacyCalculatorSection(el) {
+function isLegacyInteractiveSection(el) {
   if (!el || !(el instanceof HTMLElement)) return false;
   if (el.id && LEGACY_FEE_CALCULATOR_IDS.has(el.id)) return true;
 
@@ -316,8 +328,23 @@ function syncUnifiedBodyContent(mainColumn, contentBody) {
   bodyElement.id = "cms-unified-body";
   bodyElement.dataset.cmsSynced = "true";
 
-  const preservedCalculators = Array.from(mainColumn.children).filter(isLegacyCalculatorSection);
-  mainColumn.replaceChildren(...preservedCalculators, bodyElement);
+  const nextChildren = [];
+  let insertedBody = false;
+
+  Array.from(mainColumn.children).forEach((child) => {
+    if (isLegacyInteractiveSection(child)) {
+      nextChildren.push(child);
+      return;
+    }
+
+    if (!insertedBody) {
+      nextChildren.push(bodyElement);
+      insertedBody = true;
+    }
+  });
+
+  if (!insertedBody) nextChildren.push(bodyElement);
+  mainColumn.replaceChildren(...nextChildren);
   restoreLegacyFeeCalculators(mainColumn);
 }
 

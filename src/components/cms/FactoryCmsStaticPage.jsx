@@ -31,7 +31,7 @@ function hasHtml(value = "") {
 }
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text text-left md:text-justify text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
+  "cms-rich-text text-left md:text-justify text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th_*]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
 
 function promoteCmsTableHeaderCells(html = "") {
   return String(html || "").replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
@@ -46,9 +46,21 @@ function stripCmsHtml(value = "") {
   return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function stripCmsHighlightArtifacts(html = "") {
+  return String(html || "")
+    .replace(/<\/?mark\b[^>]*>/gi, "")
+    .replace(/\sstyle=(["'])((?:(?!\1).)*background-color\s*:[^"']*)((?:(?!\1).)*)\1/gi, (_match, quote, before, after) => {
+      const nextStyle = `${before}${after}`
+        .replace(/background-color\s*:\s*[^;]+;?/gi, "")
+        .replace(/;;+/g, ";")
+        .trim();
+      return nextStyle ? ` style=${quote}${nextStyle}${quote}` : "";
+    });
+}
+
 function normalizeCmsBodyHtml(html = "") {
   let lastParagraphFingerprint = "";
-  return promoteCmsTableHeaderCells(html).replace(
+  return promoteCmsTableHeaderCells(stripCmsHighlightArtifacts(html)).replace(
     /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
     (node) => {
       if (/^<h[1-6]\b/i.test(node)) {
