@@ -31,7 +31,38 @@ function hasHtml(value = "") {
 }
 
 const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text text-left md:text-justify text-base leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6";
+  "cms-rich-text text-left md:text-justify text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
+
+function promoteCmsTableHeaderCells(html = "") {
+  return String(html || "").replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
+    if (/<th\b/i.test(table)) return table;
+    return table.replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/i, (firstRow) =>
+      firstRow.replace(/<\/?td\b/gi, (tag) => tag.replace(/td/i, "th"))
+    );
+  });
+}
+
+function stripCmsHtml(value = "") {
+  return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function normalizeCmsBodyHtml(html = "") {
+  let lastParagraphFingerprint = "";
+  return promoteCmsTableHeaderCells(html).replace(
+    /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
+    (node) => {
+      if (/^<h[1-6]\b/i.test(node)) {
+        lastParagraphFingerprint = "";
+        return node;
+      }
+
+      const fingerprint = stripCmsHtml(node);
+      if (fingerprint && fingerprint === lastParagraphFingerprint) return "";
+      lastParagraphFingerprint = fingerprint;
+      return node;
+    }
+  );
+}
 
 function CmsRichBlock({ html, className = "" }) {
   const value = String(html || "").trim();
@@ -41,7 +72,7 @@ function CmsRichBlock({ html, className = "" }) {
     return (
       <div
         className={`${CMS_RICH_TEXT_CLASS} ${className}`.trim()}
-        dangerouslySetInnerHTML={{ __html: value }}
+        dangerouslySetInnerHTML={{ __html: normalizeCmsBodyHtml(value) }}
       />
     );
   }
@@ -68,6 +99,7 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
   const hero = content.hero || {};
   const introduction = content.introduction || {};
   const sections = Array.isArray(content.sections) ? content.sections : [];
+  const contentBody = typeof content.contentBody === "string" ? content.contentBody.trim() : "";
   const breadcrumbs = normalizeBreadcrumbs(page, content);
   const title = hero.title || hero.heading || hero.headline || page?.title || fallbackTitle;
   const subtitle =
@@ -128,6 +160,14 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
       </section>
 
       <section className="max-w-7xl mx-auto text-gray-800 py-10 md:px-0 px-4">
+        {contentBody ? (
+          <div
+            id="cms-unified-body"
+            className={CMS_RICH_TEXT_CLASS}
+            dangerouslySetInnerHTML={{ __html: normalizeCmsBodyHtml(contentBody) }}
+          />
+        ) : (
+          <>
         {introduction.heading ? (
           <h2 className="text-2xl capitalize font-semibold text-[#7A3EF2] mb-6">
             {introduction.heading}
@@ -180,6 +220,8 @@ export default function FactoryCmsStaticPage({ page, fallbackTitle }) {
             );
           })}
         </div>
+          </>
+        )}
       </section>
     </main>
   );

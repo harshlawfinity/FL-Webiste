@@ -1,6 +1,6 @@
 import TermsConditionsPage from "@/components/pages/TermsConditionsPage";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
-import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
 import { Suspense } from "react";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
@@ -29,7 +29,7 @@ const fallbackMetadata = {
 };
 
 export async function generateMetadata() {
-  const cmsPage = await getFactoryCmsStaticPage("terms-conditions");
+  const cmsPage = await getFactoryCmsStaticPageFresh("terms-conditions");
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
@@ -42,7 +42,7 @@ export default function Page() {
 }
 
 async function TermsCmsContent() {
-  const cmsPage = await getFactoryCmsStaticPage("terms-conditions");
+  const cmsPage = await getFactoryCmsStaticPageFresh("terms-conditions");
 
   if (cmsPage) {
     return <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Terms & Conditions" />;

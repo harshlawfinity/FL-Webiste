@@ -23,6 +23,37 @@ const STANDARD_SECTIONS = [
   { id: "penalties", title: "Penalties" },
 ];
 
+function promoteCmsTableHeaderCells(html = "") {
+  return String(html || "").replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
+    if (/<th\b/i.test(table)) return table;
+    return table.replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/i, (firstRow) =>
+      firstRow.replace(/<\/?td\b/gi, (tag) => tag.replace(/td/i, "th"))
+    );
+  });
+}
+
+function stripCmsHtml(value = "") {
+  return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function normalizeCmsBodyHtml(html = "") {
+  let lastParagraphFingerprint = "";
+  return promoteCmsTableHeaderCells(html).replace(
+    /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
+    (node) => {
+      if (/^<h[1-6]\b/i.test(node)) {
+        lastParagraphFingerprint = "";
+        return node;
+      }
+
+      const fingerprint = stripCmsHtml(node);
+      if (fingerprint && fingerprint === lastParagraphFingerprint) return "";
+      lastParagraphFingerprint = fingerprint;
+      return node;
+    }
+  );
+}
+
 function SectionShell({ id, title }) {
   return (
     <div id={id} className="space-y-4">
@@ -97,7 +128,9 @@ export default function CmsDynamicLandingPage({ page }) {
             <div
               id="cms-unified-body"
               className={CMS_RICH_TEXT_CLASS}
-              dangerouslySetInnerHTML={{ __html: content.contentBody }}
+              dangerouslySetInnerHTML={{
+                __html: normalizeCmsBodyHtml(content.contentBody),
+              }}
             />
           ) : (
             STANDARD_SECTIONS.map((section) => (

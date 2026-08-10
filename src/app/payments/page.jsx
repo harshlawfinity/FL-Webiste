@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
-import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
@@ -29,7 +29,7 @@ const fallbackMetadata = {
 };
 
 export async function generateMetadata() {
-  const cmsPage = await getFactoryCmsStaticPage("payments");
+  const cmsPage = await getFactoryCmsStaticPageFresh("payments");
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
@@ -94,7 +94,7 @@ export default function Page() {
 }
 
 async function PaymentsCmsContent() {
-  const cmsPage = await getFactoryCmsStaticPage("payments");
+  const cmsPage = await getFactoryCmsStaticPageFresh("payments");
 
   if (cmsPage) {
     return <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Payment Information" />;

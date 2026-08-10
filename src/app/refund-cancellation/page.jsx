@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
 import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
-import { buildCmsMetadata, getFactoryCmsStaticPage } from "@/lib/cms";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
@@ -30,7 +30,7 @@ const fallbackMetadata = {
 };
 
 export async function generateMetadata() {
-  const cmsPage = await getFactoryCmsStaticPage("refund-cancellation");
+  const cmsPage = await getFactoryCmsStaticPageFresh("refund-cancellation");
   return buildCmsMetadata(cmsPage, fallbackMetadata);
 }
 
@@ -118,7 +118,7 @@ export default function Page() {
 }
 
 async function RefundCmsContent() {
-  const cmsPage = await getFactoryCmsStaticPage("refund-cancellation");
+  const cmsPage = await getFactoryCmsStaticPageFresh("refund-cancellation");
 
   if (cmsPage) {
     return (
