@@ -21,9 +21,11 @@ export default function Footer() {
     { href: "/fire-noc-in-delhi", label: "Fire NOC in Delhi" },
     { href: "/fire-noc-in-haryana", label: "Fire NOC in Haryana" },
     { href: "/fire-noc-in-uttar-pradesh", label: "Fire NOC in Uttar Pradesh" },
+    { href: "/fire-noc-certificate", label: "Fire NOC Certificate"},
     { href: "/pollution-noc-in-delhi", label: "Pollution NOC in Delhi" },
     { href: "/pollution-noc-in-haryana", label: "Pollution NOC in Haryana" },
     { href: "/pollution-noc-in-uttar-pradesh", label: "Pollution NOC in Uttar Pradesh" },
+    { href: "/pollution-noc-certificate" , label: "Pollution NOC Certificate"},
   ];
 
   const quickLinks = [

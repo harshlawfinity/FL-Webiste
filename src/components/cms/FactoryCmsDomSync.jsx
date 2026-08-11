@@ -2001,7 +2001,13 @@ function createFaqItem(faq, index, grid) {
 function syncFaqs(page) {
   const content = pageContent(page);
   const faqSection = content?.faqs;
-  const faqs = faqSection?.body;
+  const faqs = Array.isArray(faqSection)
+    ? faqSection
+    : Array.isArray(faqSection?.body)
+      ? faqSection.body
+      : Array.isArray(page?.faqs)
+        ? page.faqs
+        : [];
   if (!Array.isArray(faqs) || !faqs.length) return;
 
   const faqRoot = findFaqRoot();
@@ -2009,8 +2015,8 @@ function syncFaqs(page) {
 
   const headingEl = faqRoot.querySelector("h2");
   // Keep each page's static FAQ heading when CMS section has no title.
-  const heading = contentHeading(
-    faqSection,
+  const heading = content?.faqHeading || contentHeading(
+    Array.isArray(faqSection) ? null : faqSection,
     headingEl?.textContent?.trim() || "Frequently Asked Questions"
   );
   if (headingEl && heading) headingEl.textContent = heading;
