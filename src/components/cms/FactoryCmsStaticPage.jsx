@@ -59,18 +59,18 @@ function stripCmsHighlightArtifacts(html = "") {
 }
 
 function normalizeCmsBodyHtml(html = "") {
-  let lastParagraphFingerprint = "";
+  let paragraphFingerprints = new Set();
   return promoteCmsTableHeaderCells(stripCmsHighlightArtifacts(html)).replace(
     /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
     (node) => {
       if (/^<h[1-6]\b/i.test(node)) {
-        lastParagraphFingerprint = "";
+        paragraphFingerprints = new Set();
         return node;
       }
 
       const fingerprint = stripCmsHtml(node);
-      if (fingerprint && fingerprint === lastParagraphFingerprint) return "";
-      lastParagraphFingerprint = fingerprint;
+      if (fingerprint && paragraphFingerprints.has(fingerprint)) return "";
+      if (fingerprint) paragraphFingerprints.add(fingerprint);
       return node;
     }
   );
