@@ -259,7 +259,11 @@ function ensureCmsTableHeaderRow(table) {
 
 // Blank CRM table cells render as italic placeholder text (fee tables often omit optional charges).
 function cmsTableCellContent(cell) {
-  const raw = String(cell ?? "").trim();
+  const value =
+    cell && typeof cell === "object"
+      ? cell.value ?? cell.text ?? cell.content ?? cell.label ?? ""
+      : cell;
+  const raw = String(value ?? "").trim();
   if (!raw || raw === "&nbsp;" || raw === "&#160;") {
     return '<span class="cms-table-placeholder">As Applicable</span>';
   }
@@ -307,7 +311,7 @@ function isLegacyInteractiveSection(el) {
   return Array.from(LEGACY_FEE_CALCULATOR_IDS).some((id) => el.querySelector(`#${id}`));
 }
 
-function syncUnifiedBodyContent(mainColumn, contentBody) {
+function syncUnifiedBodyContent(mainColumn, contentBody, page) {
   const bodyHtml = normalizeCmsHtml(contentBody);
   if (!stripHtml(bodyHtml).trim()) return;
 
@@ -315,6 +319,7 @@ function syncUnifiedBodyContent(mainColumn, contentBody) {
   if (existingBody) {
     if (existingBody.innerHTML !== bodyHtml) existingBody.innerHTML = bodyHtml;
     existingBody.className = CMS_RICH_TEXT_CLASS;
+    syncUnifiedStructuredTables(existingBody, page);
     applyResponsiveCmsTextAlign(existingBody);
     applyCmsTableLayout(existingBody);
     return;
@@ -327,6 +332,7 @@ function syncUnifiedBodyContent(mainColumn, contentBody) {
 
   bodyElement.id = "cms-unified-body";
   bodyElement.dataset.cmsSynced = "true";
+  syncUnifiedStructuredTables(bodyElement, page);
 
   const nextChildren = [];
   let insertedBody = false;
@@ -1396,6 +1402,59 @@ function restoreLegacyFeeCalculators(mainColumn) {
   });
 }
 
+function cmsStructuredTablesForSection(section) {
+  if (!section) return [];
+  const tables = [];
+
+  if (section.type === "table") tables.push(section);
+
+  const nested = Array.isArray(section.nestedSections) ? section.nestedSections : [];
+  nested.forEach((item) => {
+    if (item?.type === "table") tables.push(item);
+  });
+
+  return tables.filter((table) => {
+    const columns = Array.isArray(table.columns) ? table.columns : [];
+    const rows = Array.isArray(table.rows) ? table.rows : [];
+    return rows.length > 0 && columns.some((column) => stripHtml(column));
+  });
+}
+
+function syncUnifiedStructuredTables(bodyElement, page) {
+  if (!bodyElement || !page) return;
+  if (bodyElement.querySelector("table")) return;
+
+  bodyElement.querySelectorAll("[data-cms-structured-table='true']").forEach((node) => node.remove());
+
+  buildSectionOrder(page).forEach((key) => {
+    const section = getSectionData(page, key);
+    const sectionHeading = contentFingerprint(contentHeading(section, key));
+    const headingEl = Array.from(bodyElement.querySelectorAll("h2, h3, h4")).find(
+      (heading) => sectionHeading && contentFingerprint(heading.textContent) === sectionHeading
+    );
+
+    cmsStructuredTablesForSection(section).forEach((tableSection) => {
+      const wrapper = document.createElement("div");
+      wrapper.dataset.cmsSynced = "true";
+      wrapper.dataset.cmsStructuredTable = "true";
+      wrapper.className = "cms-structured-table space-y-3";
+      renderTable(wrapper, tableSection);
+      if (!wrapper.childElementCount) return;
+
+      if (!headingEl) {
+        bodyElement.appendChild(wrapper);
+        return;
+      }
+
+      let insertionPoint = headingEl.nextElementSibling;
+      while (insertionPoint && !/^H[2-4]$/i.test(insertionPoint.tagName)) {
+        insertionPoint = insertionPoint.nextElementSibling;
+      }
+      bodyElement.insertBefore(wrapper, insertionPoint);
+    });
+  });
+}
+
 // Hide hardcoded page sections that CRM removed from sectionOrder (e.g. renewal on Fire NOC Delhi).
 function hideSectionsRemovedFromCms(mainColumn, page, sectionOrder, syncedElements) {
   if (!mainColumn || !hasExplicitCmsSectionOrder(page)) return;
@@ -2111,7 +2170,7 @@ export default function FactoryCmsDomSync({ page, landingSlug, staticPageKey }) 
       const isUnifiedBody = Boolean(stripHtml(content.contentBody || "").trim());
 
       if (isUnifiedBody) {
-        syncUnifiedBodyContent(mainColumn, content.contentBody);
+        syncUnifiedBodyContent(mainColumn, content.contentBody, activePage);
       } else {
         const sectionOrder = buildSectionOrder(activePage);
         const syncedElements = new Map();
