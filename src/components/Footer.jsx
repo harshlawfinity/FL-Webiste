@@ -188,7 +188,7 @@ export default function Footer() {
           >
             factorylicence.in 
           </Link>{" "}
-          | </p>
+          </p>
       </div>
     </footer>
   );
