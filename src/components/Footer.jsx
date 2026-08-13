@@ -188,8 +188,7 @@ export default function Footer() {
           >
             factorylicence.in 
           </Link>{" "}
-          | <span className="italic">Powered by <Link className="text-white hover:text-blue-600" href="https://www.lawfinity.in/" target="_blank">Lawfinity India PVT LTD</Link></span>
-        </p>
+          | </p>
       </div>
     </footer>
   );
