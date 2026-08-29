@@ -62,6 +62,15 @@ export const fetchPublishedBlogs = cache(async () => {
   return Array.isArray(data?.blogs) ? data.blogs : [];
 });
 
+// CRM stores blogs for multiple websites in one shared database. The single-blog-by-slug
+// endpoint below is not site-scoped (unlike published-fl), so we must verify ownership
+// ourselves before rendering a blog on this site.
+const SITE_WEBSITE_NAME = "Factory Licence";
+
+function belongsToThisSite(blog) {
+  return String(blog?.websiteName || "").toLowerCase() === SITE_WEBSITE_NAME.toLowerCase();
+}
+
 const RELATED_BLOG_LIMIT = 3;
 const BLOG_HIDDEN_STATUSES = new Set(["draft", "hidden", "archived", "deleted", "inactive", "pending"]);
 const STOP_WORDS = new Set([
@@ -295,7 +304,9 @@ export const getBlogBySlug = cache(async (slug) => {
 
     if (res.ok) {
       const blog = await res.json();
-      if (blog && !blog.error) return blog;
+      // Reject blogs that belong to another website (e.g. Lawfinity) even though the
+      // slug matched in the shared CRM database.
+      if (blog && !blog.error && belongsToThisSite(blog)) return blog;
     }
   } catch {
     // Fall back to list snapshot below.

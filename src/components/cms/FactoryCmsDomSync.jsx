@@ -1420,26 +1420,91 @@ function cmsStructuredTablesForSection(section) {
   });
 }
 
+function takeUnifiedSectionTableInsertionPoint(headingEl) {
+  if (!headingEl) return null;
+
+  let node = headingEl.nextElementSibling;
+  while (node && !/^H[2-4]$/i.test(node.tagName)) {
+    const nextNode = node.nextElementSibling;
+    if (node.matches("table, .cms-table-scroll") || node.querySelector("table")) {
+      const parent = node.parentElement;
+      const nextSibling = node.nextSibling;
+      node.remove();
+      return { parent, nextSibling };
+    }
+    node = nextNode;
+  }
+
+  return null;
+}
+
+function previousUnifiedHeading(node, bodyElement) {
+  let current = node;
+  while (current && current !== bodyElement) {
+    let sibling = current.previousElementSibling;
+    while (sibling) {
+      if (/^H[2-4]$/i.test(sibling.tagName)) return sibling;
+      const nestedHeadings = Array.from(sibling.querySelectorAll?.("h2, h3, h4") || []);
+      if (nestedHeadings.length) return nestedHeadings[nestedHeadings.length - 1];
+      sibling = sibling.previousElementSibling;
+    }
+    current = current.parentElement;
+  }
+  return null;
+}
+
+function findUnifiedInlineTableHeading(bodyElement) {
+  const tableNode = bodyElement.querySelector(".cms-table-scroll, table");
+  return tableNode ? previousUnifiedHeading(tableNode, bodyElement) : null;
+}
+
+function findUnifiedStructuredTableHeading(bodyElement, key, section) {
+  const headings = Array.from(bodyElement.querySelectorAll("h2, h3, h4"));
+  const sectionHeading = contentFingerprint(contentHeading(section, key));
+  const exactHeading = headings.find(
+    (heading) => sectionHeading && contentFingerprint(heading.textContent) === sectionHeading
+  );
+  if (exactHeading) return exactHeading;
+
+  if (!/fee|fees|pricing|price|cost|charge/i.test(`${key} ${contentHeading(section, "")}`)) {
+    return null;
+  }
+
+  const inlineTableHeading = findUnifiedInlineTableHeading(bodyElement);
+  if (inlineTableHeading && /fee|fees|pricing|price|cost|charge/i.test(inlineTableHeading.textContent || "")) {
+    return inlineTableHeading;
+  }
+
+  return headings.find((heading) =>
+    /fee|fees|pricing|price|cost|charge/i.test(heading.textContent || "")
+  ) || null;
+}
+
 function syncUnifiedStructuredTables(bodyElement, page) {
   if (!bodyElement || !page) return;
-  if (bodyElement.querySelector("table")) return;
 
   bodyElement.querySelectorAll("[data-cms-structured-table='true']").forEach((node) => node.remove());
 
   buildSectionOrder(page).forEach((key) => {
     const section = getSectionData(page, key);
-    const sectionHeading = contentFingerprint(contentHeading(section, key));
-    const headingEl = Array.from(bodyElement.querySelectorAll("h2, h3, h4")).find(
-      (heading) => sectionHeading && contentFingerprint(heading.textContent) === sectionHeading
-    );
+    const headingEl = findUnifiedStructuredTableHeading(bodyElement, key, section);
 
-    cmsStructuredTablesForSection(section).forEach((tableSection) => {
+    const structuredTables = cmsStructuredTablesForSection(section);
+    const tableInsertionPoint =
+      structuredTables.length && headingEl ? takeUnifiedSectionTableInsertionPoint(headingEl) : null;
+
+    structuredTables.forEach((tableSection) => {
       const wrapper = document.createElement("div");
       wrapper.dataset.cmsSynced = "true";
       wrapper.dataset.cmsStructuredTable = "true";
       wrapper.className = "cms-structured-table space-y-3";
       renderTable(wrapper, tableSection);
       if (!wrapper.childElementCount) return;
+
+      if (tableInsertionPoint?.parent) {
+        tableInsertionPoint.parent.insertBefore(wrapper, tableInsertionPoint.nextSibling);
+        return;
+      }
 
       if (!headingEl) {
         bodyElement.appendChild(wrapper);
