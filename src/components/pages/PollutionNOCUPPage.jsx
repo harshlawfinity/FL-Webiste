@@ -1,17 +1,15 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
-import img from '@/assets/pollution/up.png'
 import PollutionFeeCalculatorUttarPradesh from "@/components/PollutionFeeCalculatorUttarPradesh";
 import { FaCalculator } from "react-icons/fa";
 
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import { HiOfficeBuilding } from "react-icons/hi";
 import {
   FaQuestionCircle,
@@ -23,152 +21,67 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import FaqSectionPollutionUP from "@/components/FaqSectionPollutionUP"; // You can rename this if needed
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import Head from "next/head";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function PollutionNocLicenceHaryanaPage() {
+export default function PollutionNocLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
-  const [currentBg, setCurrentBg] = useState(0);
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Pollution NOC Registration in uttar pradesh" },
+      ];
+  const heroBackgroundAlts = [
+    "Pollution Control Board License in Up",
+    "Up Pollution Control Board Online Application",
+    "Pollution Noc in Uttar Pradesh",
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Pollution NOC & Waste Management Authorization Consultant in Uttar Pradesh";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure safety compliance and secure Pollution Department clearance for your building or business in Uttar Pradesh with expert Pollution NOC assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
-      <Head>
-        <title>Pollution NOC in Uttar Pradesh | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
-        <meta
-          name="description"
-          content="Get Pollution NOC in Uttar Pradesh with expert consultants for hazardous waste authorization, scrap import license, biomedical waste authorization & waste management approvals."
-        />
-        <meta
-          name="keywords"
-          content="pollution noc in uttar pardesh
-noc pollution control board in uttar pardesh
-pollution noc certificate in uttar pardesh
-noc from pollution control board in uttar pardesh
-cto pollution control board in uttar pardesh
-documents required for pollution noc
-pollution noc for factory in uttar pardesh
-aluminium scrap management uttar pradesh
-aluminum scrape management
-brass scrap management uttar pradesh
-copper scrap management uttar pradesh
-iron and steel scrap management uttar pradesh
-metal scrap import license uttar pradesh
-paper waste management in uttar pradesh
-plastic waste management in uttar pradesh
-scrap import consultant uttar pradesh
-scrap import waste management in uttar pradesh
-scrap recycling & waste management uttar pradesh
-waste management scrap import uttar pradesh
-hazardous waste authorization uttar pradesh
-hazardous waste consultant uttar pradesh
-hazardous waste disposal authorization uttar pradesh
-hazardous waste handling permission uttar pradesh
-hazardous waste license uttar pradesh
-hazardous waste management authorisation uttar pradesh
-hazardous waste management authorization in uttar pradesh
-waste management authorization uttar pradesh
-bio medical waste authorization in uttar pradesh
-bio medical waste consultant in uttar pradesh
-bio medical waste license uttar pradesh
-biomedical waste authorization consultant uttar pradesh
-biomedical waste consultant uttar pradesh
-biomedical waste management authorization uttar pradesh
-biomedical waste permission uttar pradesh
-bmw authorization uttar pradesh
-clinic biomedical waste license uttar pradesh
-medical waste disposal authorization uttar pradesh
-medical waste recycling authorization uttar pradesh"
-        />
-        <meta
-          property="og:title"
-          content="Pollution NOC in Uttar Pradesh – Apply Online & Certificate"
-        />
-        <meta
-          property="og:description"
-          content="Get pollution noc in uttar pardesh with noc from pollution control board in uttar pardesh, CTO, certificate, documents required & factory waste authorisation."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/pollution-noc-in-uttar-pradesh"
-        />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              key={index}
-              src={img}
-              alt={`Pollution Noc In Uttar Pradesh`}
-              width="1920"
-              height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-1000 ease-in-out`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.pollutionNocUttarPradesh.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px -4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Pollution NOC Registration in uttar pradesh" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-white hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC & Waste Management Authorization Consultant in Uttar Pradesh
+              {heroTitle}
             </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure safety compliance and secure Pollution Department clearance
-              for your building or business in Uttar Pradesh with expert
-              Pollution NOC assistance.
-            </p>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -191,6 +104,14 @@ medical waste recycling authorization uttar pradesh"
             <PollutionFeeCalculatorUttarPradesh />
 
           </Section>
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -253,7 +174,7 @@ medical waste recycling authorization uttar pradesh"
               </li>
               <li>
                 Access to Further Approvals: A Pollution NOC is often a
-                prerequisite for securing other licenses such as <a href="https://factorylicence.in/" className="text-blue-600 underline">Factory License</a>, Fire NOC and Building Plan Approval.
+                prerequisite for securing other licenses such as <Link href="/factory-licence-in-uttar-pradesh" className="text-blue-600 underline">Factory License</Link>, Fire NOC and Building Plan Approval.
               </li>
               <li>
                 Sustainability Goals: Encourages adoption of environmentally
@@ -816,13 +737,16 @@ medical waste recycling authorization uttar pradesh"
               Factorylicence.in is a trusted law consulting firm that helps businesses and industries obtain the Pollution Noc certificate in Uttar Pradesh, Delhi and Haryana. With expert guidance and end-to-end application support, our team ensures the process is smooth, compliant, and hassle-free so your operations can run without interruptions.
             </p>
           </Section>
+          </>
+          )}
 
 
         </div>
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -968,7 +892,9 @@ medical waste recycling authorization uttar pradesh"
       </section >
 
       {/* FAQs */}
-      < FaqSectionPollutionUP />
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
+      <FaqSectionPollutionUP />
 
       {/* Contact Form Popup */}
       < ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)

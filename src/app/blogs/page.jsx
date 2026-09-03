@@ -1,6 +1,8 @@
 import BlogsPage from "@/components/pages/BlogsPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsStaticPage } from "@/lib/cms";
+import { CmsStaticSyncBoundary } from "@/components/cms/FactoryCmsJsonLd";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
 
 export const metadata = {
   title: "Latest Factorry License - Factorylicence",
@@ -24,12 +26,11 @@ export const metadata = {
   },
 };
 
-export default async function Page() {
-  const cmsPage = await getFactoryCmsStaticPage("blogs");
+export default function Page() {
   return (
     <>
       <BlogsPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <CmsStaticSyncBoundary pageKey="blogs" />
     </>
   );
 }

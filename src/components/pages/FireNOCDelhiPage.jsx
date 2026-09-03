@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -17,113 +17,69 @@ import {
   FaSync,
   FaBuilding,
 } from "react-icons/fa";
-import Image from "next/image";
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
-import img from '@/assets/fire/delhi.jpeg'
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
-import Head from "next/head";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function FireNocLicenceDelhiPage() {
+export default function FireNocLicenceDelhiPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
-  const [currentBg, setCurrentBg] = useState(0);
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Fire NOC Registration in Delhi" },
+      ];
+  const heroBackgroundAlts = [
+    "Fire Certificate Renewal Online in Delhi",
+    "Fire Noc For Residential Buildings in Delhi",
+    "Fire Noc in Delhi",
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Fire NOC Registration in Delhi";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure compliance and protect your building or business in Delhi with expert Fire NOC assistance. We help simplify approvals, inspections, and documentation.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
-      <Head>
-        <title>Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence</title>
-        <meta
-          name="description"
-          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
-        />
-        <meta
-          name="keywords"
-          content="fire noc delhi, online application for fire noc delhi, fire noc delhi online, fire noc requirement in delhi, fire noc in delhi, apply for fire noc delhi, delhi fire noc renewal online apply, delhi fire service noc, fire noc apply online delhi"
-        />
-        <meta
-          property="og:title"
-          content="Fire NOC in Delhi, Apply & Renew Fire NOC Online in Delhi - Factorylicence"
-        />
-        <meta
-          property="og:description"
-          content="Fire NOC in Delhi - Apply for Fire NOC in Delhi online with Delhi Fire Service. Check fire NOC requirements, apply for new or renewal Fire NOC in Delhi through a simple online process."
-        />
-        <meta property="og:url" content="https://factorylicence.in/fire-noc-in-delhi" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-delhi" />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white py-32 md:py-20 px-4 mt-10 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              key={index}
-              src={img}
-              alt={`Fire Noc In Delhi`}
-              width={1920}
-              height={1080}
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-1000 ease-in-out`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.fireNocDelhi.hero}
+        />
 
         <div className="max-w-7xl mx-auto relative z-20 flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="md:w-1/2">
 
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px- 4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Fire NOC Registration in Delhi" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text- blue-600 hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text -gray-600">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold mb-4">
-              Fire NOC Registration in Delhi
+              {heroTitle}
             </h1>
-            <p className="text-lg mb-6 text-gray-50 text-justify">
-              Ensure compliance and protect your building or business in Delhi
-              with expert Fire NOC assistance. We help simplify approvals,
-              inspections, and documentation.
-            </p>
+            <p
+              className="text-lg mb-6 text-gray-50 text-justify"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -139,8 +95,16 @@ export default function FireNocLicenceDelhiPage() {
       </section>
       <HeroVideoSection />
       {/* Main Content */}
-      <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
+      <section className="max-w-7xl mx-auto py-6 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
         <div className="md:col-span-3 space-y-14">
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -302,7 +266,14 @@ export default function FireNocLicenceDelhiPage() {
                 <strong>Approval & Download</strong>: Receive SMS notifications; download your digital Fire NOC from the portal upon approval.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc In Delhi" className="w-full h-auto rounded-lg" />
+            <img
+              src={PAGE_IMAGES.fireNocDelhi.process}
+              alt="Fire Noc Process in Delhi"
+              className="w-full h-auto rounded-lg"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section
@@ -324,7 +295,7 @@ export default function FireNocLicenceDelhiPage() {
               <li className="text-justify">Large factories, warehouses, malls, hospitals: Rs.15,000 – Rs.50,000+</li>
             </ul>
             <p className="text-justify mb-4">
-              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <a href="https://factorylicence.in/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Factory License</a> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Delhi approval.
+              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <Link href="/factory-licence-in-delhi" className="text-blue-600 underline">Factory License</Link> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Delhi approval.
             </p>
             <p className="text-justify italic text-gray-600">
               The Fire NOC Delhi cost may also increase if re-inspection is required due to non-compliance.
@@ -444,12 +415,15 @@ export default function FireNocLicenceDelhiPage() {
               Failure to obtain a Fire NOC or non-compliance with fire safety standards may lead to monetary fines, closure notices or disconnection of electricity/water supply by the civic authority. In case of fire incidents, the lack of a Fire NOC may attract criminal liabilities for negligence.
             </p>
           </Section>
+          </>
+          )}
 
         </div>
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -544,6 +518,8 @@ export default function FireNocLicenceDelhiPage() {
       </section>
 
       {/* FAQs */}
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionFireDelhi />
 
       {/* Popup Contact Form */}

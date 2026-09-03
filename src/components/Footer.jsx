@@ -14,9 +14,34 @@ import {
 import FL from "./FL2.jsx";
 
 export default function Footer() {
+  const services = [
+    { href: "/factory-licence-in-delhi", label: "Factory Licence in Delhi" },
+    { href: "/factory-licence-in-haryana", label: "Factory Licence in Haryana" },
+    { href: "/factory-licence-in-uttar-pradesh", label: "Factory Licence in Uttar Pradesh" },
+    { href: "/fire-noc-in-delhi", label: "Fire NOC in Delhi" },
+    { href: "/fire-noc-in-haryana", label: "Fire NOC in Haryana" },
+    { href: "/fire-noc-in-uttar-pradesh", label: "Fire NOC in Uttar Pradesh" },
+    { href: "/fire-noc-certificate", label: "Fire NOC Certificate"},
+    { href: "/pollution-noc-in-delhi", label: "Pollution NOC in Delhi" },
+    { href: "/pollution-noc-in-haryana", label: "Pollution NOC in Haryana" },
+    { href: "/pollution-noc-in-uttar-pradesh", label: "Pollution NOC in Uttar Pradesh" },
+    { href: "/pollution-noc-certificate" , label: "Pollution NOC Certificate"},
+  ];
+
+  const quickLinks = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About Us" },
+    { href: "/blogs", label: "Latest Blog" },
+    { href: "/contact", label: "Contact Us" },
+    { href: "/payments", label: "Payment" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/refund-cancellation", label: "Refund Cancellation" },
+    { href: "/terms-conditions", label: "Terms Conditions" },
+  ];
+
   return (
-    <footer className="bg-[#8653F4] text-gray-200 px-6 py-16 border-t border-slate-700">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 mb-12 text-sm">
+    <footer className="bg-[#8653F4] text-gray-200 px-6 py-6 border-t border-slate-700">
+      <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
         {/* Column 1 */}
         <div className="w-full flex items-center justify-center flex-col">
           <FL />
@@ -101,9 +126,47 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Column 3 */}
+        {/* Column 3 - Services */}
         <div>
-          <div>
+          <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
+            Services
+          </h4>
+          <ul className="space-y-2">
+            {services.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-purple-100 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Column 4 - Quick Links */}
+        <div>
+          <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
+            Quick Links
+          </h4>
+          <ul className="space-y-2 ">
+            {quickLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-purple-100 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Column 5 */}
+        <div>
+          {/* <div>
             <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
               Our Support
             </h4>
@@ -111,52 +174,21 @@ export default function Footer() {
               <PhoneCall size={24} />
               +91 99107 74687
             </p>
-          </div>
-
-          <div className="mt-8">
-            <h4 className="text-2xl font-semibold mb-6 tracking-wide text-purple-100">
-              Important Links
-            </h4>
-           <div className="flex gap-4">
-             <Link href='/contact' >Contact Us</Link >
-            <Link href="/payments" >Payments</Link>
-           </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="text-center text-xs text-gray-100 border-t border-gray-200 pt-6 space-y-2">
-        <p>
-          All Rights Reserved 2025.{" "}
+      {/* Footer Bottom — !text-center keeps copyright centered when CMS sync adds text-left to body <p> (e.g. /blogs) */}
+      <div className="max-w-7xl mx-auto w-full text-center text-xs text-gray-100 border-t border-gray-200 pt-4 pb-20 md:pb-0">
+        <p className="!text-center">
+          All Rights Reserved {new Date().getFullYear()}.{" "}
           <Link
             href="/"
             className="text-purple-100 hover:text-purple-800 transition-colors font-semibold"
           >
-            factorylicence.in |
+            factorylicence.in 
           </Link>{" "}
-          <span className="italic">Powered by <Link className="text-white hover:text-blue-600" href="https://lawfinity.in" target="_blank">Lawfinity India PVT LTD</Link></span>
-        </p>
-        <div className="space-x-4">
-          <Link
-            href="/privacy-policy"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            href="/refund-cancellation"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Refund & Cancellation
-          </Link>
-          <Link
-            href="/terms-conditions"
-            className="hover:text-purple-800 transition-colors underline"
-          >
-            Terms & Conditions
-          </Link>
-        </div>
+          </p>
       </div>
     </footer>
   );

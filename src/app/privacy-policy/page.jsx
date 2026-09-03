@@ -1,6 +1,12 @@
 import PrivacyPolicyPage from "@/components/pages/PrivacyPolicyPage";
+import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
+import { Suspense } from "react";
 
-export const metadata = {
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
+
+const fallbackMetadata = {
   title: "Privacy Policy – Factorylicence",
   description:
     "Learn about our privacy policy at Factorylicence.in. We are committed to protecting your personal information and ensuring your privacy while using our services.",
@@ -22,6 +28,25 @@ export const metadata = {
   },
 };
 
+export async function generateMetadata() {
+  const cmsPage = await getFactoryCmsStaticPageFresh("privacy-policy");
+  return buildCmsMetadata(cmsPage, fallbackMetadata);
+}
+
 export default function Page() {
+  return (
+    <Suspense fallback={<PrivacyPolicyPage />}>
+      <PrivacyCmsContent />
+    </Suspense>
+  );
+}
+
+async function PrivacyCmsContent() {
+  const cmsPage = await getFactoryCmsStaticPageFresh("privacy-policy");
+
+  if (cmsPage) {
+    return <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Privacy Policy" />;
+  }
+
   return <PrivacyPolicyPage />;
 }

@@ -1,45 +1,34 @@
 "use client"
 import { useState  } from "react";
 import { FiCheckCircle } from "react-icons/fi";
-import f4 from "../assets/f4.webp";
-import haryanaste from "../assets/haryanaste.webp";
-import stepd from "../assets/stepd.webp";
-import upsteps from "../assets/upsteps.webp";
- 
-import ContactForm from "./ContactForm";  
-import Image from "next/image";
+import { SEO_ASSETS } from "@/lib/heroBackgrounds";
+
+import ContactForm from "./ContactForm";
+
+const sharedSteps = [
+  "Prepare documents: Collect all the necessary documents required for your factory license registration, or ask our consultants for the documents required for pollution control certificate (they are always available to answer your queries).",
+  "Online Application: Click on the state's labor department portal → Trade & Factory Licences.",
+  "Fill and upload the required docs.",
+  "Payment of the licence fee: which is to be done online.",
+  "Inspection: Department schedules an inspection.",
+  "Licence Issuance: When successful verification.",
+];
+
+const fireLicenseNote =
+  "Organizations that need more safety certifications can go for their fire license apply online through the relevant body depending on local laws and inspections needed.";
+
 const steps = {
   Delhi: {
-    items: [
-      "Document Preparation: Gather all the required documents.",
-      "Online Application: Visit MCD Portal → Trade & Factory Licences.",
-      "Form Submission: Fill and upload required docs.",
-      "Fee Payment: Pay the licence fee online.",
-      "Inspection: Department schedules inspection.",
-      "Licence Issuance: Upon successful verification.",
-    ],
-    image: stepd,
+    items: sharedSteps,
+    image: SEO_ASSETS.factoryLicenseRenewal,
   },
   Haryana: {
-    items: [
-      "Online Registration: Register on Haryana Labour Portal.",
-      "Application Form: Fill with factory details.",
-      "Document Upload: Upload all required docs.",
-      "Fee Payment: Pay fee online.",
-      "Inspection: Premises will be inspected.",
-      "Licence Approval: If compliant, licence is issued.",
-    ],
-    image: haryanaste,
+    items: sharedSteps,
+    image: SEO_ASSETS.factoryLicenceStepsHaryana,
   },
   "Uttar Pradesh": {
-    items: [
-      "Portal Access: Register on Nivesh Mitra Portal.",
-      "Application Submission: Fill form with factory details.",
-      "Fee Payment: Pay fee online.",
-      "Inspection: Department inspects premises.",
-      "Licence Issuance: If verified, licence is issued.",
-    ],
-    image: upsteps,
+    items: sharedSteps,
+    image: SEO_ASSETS.factoryLicenceStepsUttarPradesh,
   },
 };
 
@@ -49,20 +38,25 @@ const FactoryLicenseSection = () => {
 
   return (
     <section className="bg-zinc-100 py-10 px-4 sm:px-8 lg:px-16">
-      <h2 className="text-3xl sm:text-4xl text-center font-semibold text-gray-900 leading-tight mb-10">
+      <h2 className="text-3xl sm:text-4xl text-center font-semibold text-gray-900 leading-tight mb-4">
         Expert Help for <br />
-        <span className="text-purple-600">Your Factory Licence Setup</span>
+        <span className="text-purple-600">Your Factory Licence Setup and Pollution Licence Apply</span>
       </h2>
+      <p className="text-center text-gray-600 text-sm max-w-3xl mx-auto mb-10 text-justify">
+        Here are the steps that you usually need to follow while applying for a factory license or a pollution control board registration:
+      </p>
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12">
         {/* Left: Image */}
         <div className="w-full lg:w-1/2">
-             <Image
-              src={f4}
-              alt="Factory License Renewal"
+             <img
+              src={SEO_ASSETS.factoryLicenceExpertHelp}
+              alt="Factory Licence Expert Help"
               className="rounded-2xl w-full h-auto max-h-[480px] object-cover shadow-xl"
               loading="lazy"
               decoding="async"
+              width={800}
+              height={480}
             />
          </div>
 
@@ -93,13 +87,17 @@ const FactoryLicenseSection = () => {
             ))}
           </ul>
 
+          <p className="text-gray-700 text-sm text-justify mb-6">{fireLicenseNote}</p>
+
           {/* Steps Image */}
-             <Image
+             <img
               src={steps[activeState].image}
-              alt={`Factory License Registration`}
+              alt="Factory License Renewal"
               className="w-full max-h-[240px] object-contain"
               loading="lazy"
               decoding="async"
+              width={640}
+              height={240}
             />
          </div>
       </div>

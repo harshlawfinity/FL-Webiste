@@ -1,10 +1,13 @@
-// app/factory-licence-in-delhi/page.jsx
-
 import FactoryLicenceDelhiPage from "@/components/pages/FactoryLicenceDelhiPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
-export const metadata = {
+const LANDING_SLUG = "factory-licence-in-delhi";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
+
+const fallbackMetadata = {
   title: "Factory Licence in Delhi – Online Application, Fees & Renewal",
   description:
     "Get factory licence in Delhi with online application support. Check factory licence fees in Delhi, Delhi factory license renewal online & NDMC renewal process help.",
@@ -42,12 +45,19 @@ export const metadata = {
   },
 };
 
+export async function generateMetadata() {
+  return buildLandingPageMetadata(LANDING_SLUG, fallbackMetadata);
+}
+
 export default async function Page() {
-  const cmsPage = await getFactoryCmsLandingPage("factory-licence-in-delhi");
+  // Server-rendered so the CMS body ships in the initial HTML — avoids the
+  // hardcoded-then-CMS-content flash that the old client-only DOM sync caused.
+  const page = await getFactoryCmsLandingPage(LANDING_SLUG);
+
   return (
     <>
-      <FactoryLicenceDelhiPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <FactoryLicenceDelhiPage page={page} />
+      <CmsLandingBoundary slug={LANDING_SLUG} />
     </>
   );
 }

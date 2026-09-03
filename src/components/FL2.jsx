@@ -1,7 +1,7 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from 'react';
-import lg2 from '../assets/lg2.gif';
-import Image from 'next/image';
+import { SEO_ASSETS } from '@/lib/heroBackgrounds';
  
 const FL = () => {
   const [showImage, setShowImage] = useState(false);       // Controls the text/GIF switch
@@ -33,8 +33,14 @@ const FL = () => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <Image src={lg2} alt="Factory GIF" className="w-32"   loading="lazy"
- />
+          <Image
+            src={SEO_ASSETS.factoryLicenceLogoStatic}
+            alt="Factory License Logo"
+            width={128}
+            height={96}
+            className="w-32 h-auto"
+            loading="lazy"
+          />
         </div>
       )}
 

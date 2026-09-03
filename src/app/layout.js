@@ -1,19 +1,28 @@
+import { Suspense } from "react";
+import { headers } from "next/headers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ServicePagesMarquee from "@/components/ServicePagesMarquee";
 import "./globals.css";
 import Script from "next/script";
 import FloatingGetStartedButton from "@/components/FloatingGetStartedButton";
 import { Poppins } from "next/font/google";
 import TrackingScript from "@/components/TrackingScript";
+import { getBlogBySlug, getBlogSchema } from "@/lib/blogs";
+
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://factorylicence.in").replace(/\/+$/, "");
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // 400/600/700 cover body, semibold headings, and bold — drop 500 to save a font file.
+  weight: ["400", "600", "700"],
   variable: "--font-poppins",
   display: "swap",
+  adjustFontFallback: true,
 });
 
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Factory Licence Registration & Renewal Online in India | Apply Now",
   description:
     "Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help.",
@@ -28,7 +37,23 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const blogSlugMatch = pathname.match(/^\/blogs\/([^/]+)\/?$/);
+
+  // Blog articles with CRM schemaMarkup — render in <head> (body scripts get corrupted by RSC).
+  let showSiteSchema = true;
+  let blogSchemaJson = null;
+  if (blogSlugMatch) {
+    const blog = await getBlogBySlug(blogSlugMatch[1]);
+    const schema = getBlogSchema(blog);
+    if (schema) {
+      showSiteSchema = false;
+      blogSchemaJson = JSON.stringify(schema).replace(/</g, "\\u003c");
+    }
+  }
+
   const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -89,59 +114,71 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Note: the CRM preconnect hint to https://internal.lawfinity.in was
+            removed — it leaked the internal CRM domain into public page
+            source (view-source) on every page, including the homepage. */}
         {/* Must run first: suppress "Unable to store cookie" from third-party scripts when cookies are blocked */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){var e=console.error;var msg="Unable to store cookie";console.error=function(){var a=arguments[0];var s=typeof a==="string"?a:(a&&a.message||"");if(s&&s.indexOf(msg)!==-1)return;return e.apply(console,arguments);};})();`,
           }}
         />
-        {/* Schema.org JSON-LD */}
+        {/* CRM blog schemaMarkup in head — must not live in page body (Next.js RSC truncates it). */}
+        {blogSchemaJson ? (
+          <script
+            id="blog-schema-org"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: blogSchemaJson }}
+          />
+        ) : null}
+        {/* Sitewide schema — omitted on blog articles that ship CRM schemaMarkup */}
+        {showSiteSchema ? (
+          <script
+            id="schema-org"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+          />
+        ) : null}
 
-        {/* Schema.org JSON-LD */}
-        <Script
-          id="schema-org"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
-
-        {/* Google Tag Manager */}
-        <Script id="gtm-script" strategy="afterInteractive">
+        {/* Third-party tags are delayed so they do not compete with the LCP hero image. */}
+        <Script id="gtm-script" strategy="lazyOnload">
           {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-TR58JL6Q');
+            (function(w,d){
+              function loadGtm(){
+                if (d.getElementById('gtm-runtime')) return;
+                w.dataLayer=w.dataLayer||[];
+                w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                var f=d.getElementsByTagName('script')[0];
+                var j=d.createElement('script');
+                j.id='gtm-runtime';
+                j.async=true;
+                j.src='https://www.googletagmanager.com/gtm.js?id=GTM-TR58JL6Q';
+                f.parentNode.insertBefore(j,f);
+              }
+              w.setTimeout(loadGtm,4500);
+            })(window,document);
           `}
         </Script>
 
-        {/* Meta Pixel Script */}
-        <Script id="meta-pixel" strategy="afterInteractive">
+        {/* Meta pixel — GTM already loads GA/Ads; avoid duplicate gtag.js bundles */}
+        <Script id="meta-pixel" strategy="lazyOnload">
           {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '777415601527541');
-            fbq('track', 'PageView');
-          `}
-        </Script>
-
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-WB9C1YGDMG"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-WB9C1YGDMG');
+            (function(w,d){
+              function loadMeta(){
+                if(w.fbq)return;
+                var n=w.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!w._fbq)w._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+                var t=d.createElement('script');
+                t.async=!0;
+                t.src='https://connect.facebook.net/en_US/fbevents.js';
+                var s=d.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(t,s);
+                n('init','777415601527541');
+                n('track','PageView');
+              }
+              w.setTimeout(loadMeta,5000);
+            })(window,document);
           `}
         </Script>
       </head>
@@ -182,20 +219,6 @@ export default function RootLayout({ children }) {
           ></iframe>
         </noscript>
 
-        {/* Google tag (gtag.js) for Ads */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17199345901"
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17199345901');
-          `}
-        </Script>
-
         <noscript>
           <img
             height="1"
@@ -208,6 +231,10 @@ export default function RootLayout({ children }) {
 
         <Header />
         {children}
+        {/* Stream footer marquee after page shell — avoids 20+ CRM fetches blocking TTFB */}
+        <Suspense fallback={null}>
+          <ServicePagesMarquee />
+        </Suspense>
         <Footer />
       </body>
     </html>

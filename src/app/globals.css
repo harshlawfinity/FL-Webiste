@@ -34,3 +34,280 @@ body {
 .animate-bounce-gentle {
   animation: bounce-gentle 1s ease-in-out infinite;
 }
+
+.cms-rich-text ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.cms-rich-text ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.cms-rich-text li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.cms-rich-text p,
+.cms-sync-content p {
+  margin-bottom: 0.75rem;
+}
+
+.cms-rich-text p,
+.cms-sync-content p,
+.cms-rich-text li,
+.cms-sync-content li {
+  /* !important beats CMS/Tailwind `text-justify` on narrow screens (avoids huge word gaps). */
+  text-align: left !important;
+}
+
+/* CMS body copy: left on mobile, justified from md breakpoint up. */
+@media (min-width: 768px) {
+  .cms-rich-text p,
+  .cms-sync-content p,
+  .cms-rich-text li,
+  .cms-sync-content li {
+    text-align: justify !important;
+  }
+}
+
+.cms-rich-text strong {
+  font-weight: 700;
+}
+
+.cms-rich-text b {
+  font-weight: 700;
+}
+
+.cms-rich-text em,
+.cms-rich-text i {
+  font-style: italic;
+}
+
+.cms-rich-text u {
+  text-decoration: underline;
+}
+
+.cms-rich-text h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 1rem 0 0.5rem;
+}
+
+.cms-rich-text h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.cms-sync-content strong,
+.cms-sync-content b {
+  font-weight: 700;
+}
+
+/* CMS synced content: stay within viewport on mobile (wide tables/images break grid) */
+.cms-sync-content,
+.cms-rich-text {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cms-rich-text > table,
+.cms-sync-content > table {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* Wide fee/data tables — horizontal scroll on mobile instead of crushed columns. */
+.cms-table-scroll {
+  max-width: 100%;
+  min-width: 0;
+  /* scroll (not auto) keeps the bar visible so users know more columns are on the right */
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 62, 242, 0.55) rgba(122, 62, 242, 0.12);
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* WebKit — always show a slim purple scrollbar on wide tables */
+.cms-table-scroll::-webkit-scrollbar {
+  height: 8px;
+  -webkit-appearance: none;
+}
+
+.cms-table-scroll::-webkit-scrollbar-track {
+  background: rgba(122, 62, 242, 0.12);
+  border-radius: 4px;
+}
+
+.cms-table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(122, 62, 242, 0.55);
+  border-radius: 4px;
+}
+
+/* Undo cms-sync-content break-word inside scrollable tables. */
+.cms-sync-content .cms-table-scroll,
+.cms-sync-content .cms-table-scroll *,
+.cms-rich-text .cms-table-scroll,
+.cms-rich-text .cms-table-scroll * {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* Wide data tables only — fee tables use .cms-table-compact (full width). */
+.cms-rich-text .cms-table-scroll table:not(.cms-table-compact),
+.cms-sync-content .cms-table-scroll table:not(.cms-table-compact),
+.cms-table-scroll table:not(.cms-table-compact) {
+  width: max-content !important;
+  min-width: 640px !important;
+  max-width: none !important;
+  border-collapse: collapse;
+  table-layout: auto;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+.cms-table-scroll th,
+.cms-table-scroll td {
+  min-width: 5.5rem;
+  white-space: nowrap;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  vertical-align: top;
+}
+
+/* Theme header for every CMS content table (structured + HTML tables). */
+.cms-table-scroll thead,
+.cms-table-scroll thead th,
+.cms-rich-text table thead,
+.cms-rich-text table thead th,
+.cms-sync-content table thead,
+.cms-sync-content table thead th {
+  background-color: #7a3ef2 !important;
+  color: #ffffff !important;
+}
+
+/* 3–4 column fee/pricing tables — stretch to wrapper, proportional columns. */
+.cms-rich-text .cms-table-scroll table.cms-table-compact,
+.cms-sync-content .cms-table-scroll table.cms-table-compact,
+.cms-table-scroll table.cms-table-compact {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.cms-rich-text .cms-table-scroll table.cms-table-compact th,
+.cms-rich-text .cms-table-scroll table.cms-table-compact td,
+.cms-sync-content .cms-table-scroll table.cms-table-compact th,
+.cms-sync-content .cms-table-scroll table.cms-table-compact td,
+.cms-table-scroll table.cms-table-compact th,
+.cms-table-scroll table.cms-table-compact td {
+  white-space: normal !important;
+  min-width: 0 !important;
+}
+
+/* Fee tables fit content — no forced scrollbar when columns fill the row. */
+.cms-table-scroll-compact {
+  overflow-x: auto;
+}
+
+.cms-table-placeholder {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.cms-rich-text img,
+.cms-sync-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.cms-rich-text p:empty,
+.cms-sync-content p:empty {
+  display: none;
+  margin: 0;
+}
+
+/* CMS h2 icons — medium on mobile (20px), slightly larger on desktop; caps flex blow-up. */
+svg[data-cms-heading-icon="true"] {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  max-width: 1.25rem !important;
+  max-height: 1.25rem !important;
+}
+
+@media (min-width: 768px) {
+  svg[data-cms-heading-icon="true"] {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
+  }
+}
+
+@keyframes service-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly one half-width — matches the duplicated track in ServicePagesMarquee. */
+    transform: translateX(-50%);
+  }
+}
+
+/* JS-driven marquee (ServiceMarqueeClient) — hide native scrollbar; arrows handle move. */
+.service-marquee-viewport {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.service-marquee-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* Legacy CSS loop kept only as fallback if a track still uses the animation class alone. */
+.service-marquee-track.is-css-marquee {
+  animation: service-marquee-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.service-marquee-viewport:hover .service-marquee-track.is-css-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-marquee-track.is-css-marquee {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
+/* Grid main column must shrink below intrinsic CMS table width */
+[class*="col-span-3"] {
+  min-width: 0;
+}
+
+/* State landing pages ship `text-justify` on p/li — left align on mobile to avoid word gaps. */
+@media (max-width: 767px) {
+  [class*="col-span-3"] :is(p, li) {
+    text-align: left !important;
+  }
+
+  [class*="col-span-3"] .text-justify {
+    text-align: left !important;
+  }
+}

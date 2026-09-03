@@ -1,7 +1,180 @@
+const additionalBlogRedirects = [
+  {
+    source: "/blogs/documents-you-must-have-before-applying-for-factory-licence",
+    destination: "/",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/factory-licence-delhi-new-green-compliance-and-pollution-noc-requirements",
+    destination: "/pollution-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/factory-license-in-delhi-for-msmes-and-startups-step-by-step-guidance",
+    destination: "/factory-licence-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-application-and-approval-everything-you-need-to-know",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-checklist-in-uttar-pradesh",
+    destination: "/fire-noc-in-uttar-pradesh",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-fees-and-validity-in-uttar-pradesh",
+    destination: "/fire-noc-in-uttar-pradesh",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-online-process-via-delhi-fire-services",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/factory-license-fees-in-haryana",
+    destination: "/factory-licence-in-haryana",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-safety-certificate-and-factory-license-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/factory-licence-delhi-2025-latest-rules-digital-approvals-and-compliance-ch",
+    destination: "/factory-licence-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-for-factories-in-uttar-pradesh",
+    destination: "/fire-noc-in-uttar-pradesh",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/how-factory-licence-helps-you-get-fire-noc-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-approval-timeline-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/fire-noc-checklist-2025-for-industrial-and-manufacturing-units-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/online-factory-license-for-manufacturing-units-in-delhi-sector-wise",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-for-small-manufacturing-units-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-for-warehouses-and-godowns-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-noc-rules-and-penalties-in-uttar-pradesh",
+    destination: "/fire-noc-in-uttar-pradesh",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/smart-fire-safety-compliance-digital-fire-noc-in-delhi-for-factories",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/green-fire-safety-delhis-latest-rules-for-sustainable-factories",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-safety-audit-in-uttar-pradesh",
+    destination: "/fire-noc-in-uttar-pradesh",
+    statusCode: 301,
+  },
+  {
+    source: "/blogs/fire-safety-rules-for-factories-in-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/fire-safety-audit-before-factory-license-complete-guide-for-fire-noc-delhi",
+    destination: "/fire-noc-in-delhi",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/noc-from-pollution-control-board-cte-and-cto-made-simple-with-factorylicence",
+    destination: "/blogs/what-is-cte-and-cto",
+    statusCode: 301,
+  },
+  {
+    source:
+      "/blogs/why-hiring-a-factorylicencein-consultant-can-save-your-time-and-trouble",
+    destination: "/",
+    statusCode: 301,
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   //      output: "export",
   //   trailingSlash: true,
+  // Non-JS crawlers (SEO audit tools) need blocking metadata so <title>/canonical/
+  // robots land in <head> on the raw HTML instead of Next's streamed-then-relocated
+  // tags. Next already blocks streaming by default for Googlebot, Bingbot, social
+  // preview bots and Lighthouse (see next/dist/shared/lib/router/utils/html-bots) —
+  // this only *adds* generic SEO crawlers (e.g. Screaming Frog) that aren't in that
+  // default list. Matching everything here (e.g. `/.*/`) would also block streaming
+  // for real mobile visitors, forcing every request to wait on the CMS fetch before
+  // any HTML is sent — directly hurting TTFB/LCP, so keep this scoped to bots only.
+  htmlLimitedBots:
+    /[\w-]+-Google|Google-[\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight|Screaming Frog|AhrefsBot|SemrushBot|MJ12bot|DotBot/i,
+  images: {
+    unoptimized: true,
+  },
+  async headers() {
+    return [
+      {
+        // Long cache for static images — fixes PageSpeed "efficient cache lifetimes"
+        source: "/assets/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
+  // Same-origin proxy for CRM blog APIs — avoids browser CORS on views/comments/likes.
+  async rewrites() {
+    return [
+      {
+        source: "/api/crm/:path*",
+        destination: "https://internal.lawfinity.in/api/:path*",
+      },
+    ];
+  },
   async redirects() {
     return [
       {
@@ -281,11 +454,22 @@ const nextConfig = {
         destination: "/factory-licence-in-delhi",
         statusCode: 301,
       },
-       {
+      {
         source: "/blogs/fire-noc-for-restaurants-and-food-factories-in-delhi",
         destination: "/fire-noc-in-delhi",
         statusCode: 301,
       },
+      {
+        source: "/blogs/building-plan-approval-for-industrial-projects",
+        destination: "/building-plan-approval",
+        statusCode: 301,
+      },
+      {
+        source: "/blogs/do-you-need-a-factory-licence-for-small-scale-manufacturing",
+        destination: "/building-plan-approval",
+        statusCode: 301,
+      },
+      ...additionalBlogRedirects,
     ];
   },
 };

@@ -1,17 +1,17 @@
 "use client"
 
+import Image from "next/image";
 import { useEffect, useState } from 'react';
-import lg2 from '../assets/lg2.gif'; // Adjust the path as necessary
-import Image from 'next/image';
+import { SEO_ASSETS } from '@/lib/heroBackgrounds';
 
-const FL = () => {
-  const [showImage, setShowImage] = useState(false);       // Controls the text/GIF switch
-  const [startAnimation, setStartAnimation] = useState(false); // Delays animation start
+const FL = ({ mobile = false }) => {
+  const [showImage, setShowImage] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setStartAnimation(true);
-    }, 3000); // Wait 3 seconds before starting animation
+    }, 3000);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -25,6 +25,21 @@ const FL = () => {
     }
   }, [startAnimation]);
 
+  if (mobile) {
+    return (
+      <div className="flex items-center h-[60px]">
+        <Image
+          src={SEO_ASSETS.factoryLicenceLogoStatic}
+          alt="Factory Licence"
+          width={96}
+          height={72}
+          className="w-24 h-auto"
+          priority
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-[220px] h-[60px] overflow-hidden flex items-center justify-start">
       {/* Sliding GIF (appears after 3s) */}
@@ -34,8 +49,15 @@ const FL = () => {
             showImage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
           }`}
         >
-          <Image src={lg2} alt="Factory GIF" className="w-32"   loading="lazy"
- />
+          <Image
+            src={SEO_ASSETS.factoryLicenceLogo}
+            alt="Factory License Logo Gif"
+            width={128}
+            height={96}
+            className="w-32 h-auto"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       )}
 

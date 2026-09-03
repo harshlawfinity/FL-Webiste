@@ -1,8 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
-import Image from "next/image";
-import Head from "next/head";
+import { lazy, Suspense, useState } from "react";
 import {
   FaIndustry,
   FaQuestionCircle,
@@ -18,114 +16,68 @@ import {
   FaBuilding,
   FaCheckDouble,
 } from "react-icons/fa";
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import FaqSectionHaryanaFireNoc from "@/components/FaqSectionHaryanaFireNoc"; // Your FAQ component
-import img from "@/assets/fire/haryana.jpeg";
+import FaqSectionHaryanaFireNoc from "@/components/FaqSectionHaryanaFireNoc";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function FireNocLicenceHaryanaPage() {
+export default function FireNocLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
-  const [currentBg, setCurrentBg] = useState(0);
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Fire NOC Registration in Haryana" },
+      ];
+  const heroBackgroundAlts = [
+    "Fire Noc Renewal Haryana",
+    "Fire Noc Online Haryana",
+    "Fire Noc in Haryana",
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Fire NOC Registration in Haryana";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure fire safety compliance and secure Fire Department clearance for your building or business in Haryana with expert support from Factorylicence.in.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
-      <Head>
-        <title>Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence</title>
-        <meta
-          name="description"
-          content="Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process."
-        />
-        <meta
-          name="keywords"
-          content="fire noc in haryana, download fire noc certificate haryana, fire noc apply online haryana, fire noc online haryana, fire noc renewal haryana, fire noc renewal haryana online, online fire noc haryana, renewal fire noc haryana"
-        />
-        <meta
-          property="og:title"
-          content="Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence"
-        />
-        <meta
-          property="og:description"
-          content="Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/fire-noc-in-haryana"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link rel="canonical" href="https://factorylicence.in/fire-noc-in-haryana" />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white py-40 md:py-20 mt- px-4 mt-0 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              priority={index === 0}
-              key={index}
-              src={img}
-              alt={`Fire Noc In Haryana`}
-              width="1920"
-              height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-1000 ease-in-out`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.fireNocHaryana.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Fire NOC Registration in Haryana" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-white hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Fire NOC Registration in Haryana
+              {heroTitle}
             </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure fire safety compliance and secure Fire Department clearance
-              for your building or business in Haryana with expert support from
-              Factorylicence.in.
-            </p>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -142,6 +94,14 @@ export default function FireNocLicenceHaryanaPage() {
       {/* Main Content */}
       <section className="max-w-7xl mx-auto py-16 md:px-0 px-4 grid md:grid-cols-4 gap-10 text-gray-800 relative">
         <div className="md:col-span-3 space-y-14">
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -283,7 +243,14 @@ export default function FireNocLicenceHaryanaPage() {
                 <strong>Upload and Submit Documents</strong>: The applicant must attach all essential papers to the application form after completing all mandatory fields. Once all required documents are attached, click the "Save" button to submit.
               </li>
             </ol>
-            <Image src={img} alt="Fire Noc In Haryana" className="w-full h-auto rounded-lg" />
+            <img
+              src={PAGE_IMAGES.fireNocHaryana.process}
+              alt="Fire Noc Process in Haryana"
+              className="w-full h-auto rounded-lg"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section
@@ -305,7 +272,7 @@ export default function FireNocLicenceHaryanaPage() {
               <li className="text-justify">Large factories, warehouses, malls, hospitals: Rs.15,000 – Rs.50,000+</li>
             </ul>
             <p className="text-justify mb-4">
-              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <a href="https://factorylicence.in/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Factory License</a> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Haryana approval.
+              Apart from government fees, professional charges may apply if you engage experts for drawings, inspections, and compliance management. Businesses holding a <Link href="/factory-licence-in-haryana" className="text-blue-600 underline">Factory License</Link> often benefit from streamlined coordination between departments, reducing delays in Fire NOC Haryana approval.
             </p>
             <p className="text-justify italic text-gray-600">
               The Fire NOC Haryana cost may also increase if re-inspection is required due to non-compliance.
@@ -468,13 +435,16 @@ export default function FireNocLicenceHaryanaPage() {
               Choose us for tension-free legal licence registration. Give a call now!
             </p>
           </Section>
+          </>
+          )}
 
 
         </div>
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -573,6 +543,8 @@ export default function FireNocLicenceHaryanaPage() {
         </aside>
       </section>
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSectionHaryanaFireNoc />
 
       {/* Contact Form Popup */}

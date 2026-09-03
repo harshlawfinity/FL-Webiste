@@ -66,8 +66,7 @@ const NocFeeCalculatorHaryana = () => {
   return (
     <div className="max-w-7xl mx-auto  ">
       <h2 className="md:text-3xl text-xl font-semibold text-[#7A3EF2] text-ce nter md:mb-10 mb-5  ">
-        Haryana Pollution NOC Fee Calculator
-      </h2>
+      Pollution NOC Fee Calculator in Haryana      </h2>
 
       {/* Form */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black">

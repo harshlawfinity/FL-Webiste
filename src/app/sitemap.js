@@ -1,17 +1,81 @@
-const API_BASE = "https://internal.lawfinity.in";
+import nextConfig from "../../next.config.mjs";
+import { getCmsMarqueeServices } from "@/lib/cms";
 
-// Helper function to safely fetch JSON data
+const API_BASE = "https://internal.lawfinity.in";
+const BASE_URL = "https://factorylicence.in";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+function normalizePath(value) {
+  let path = String(value || "").trim();
+  if (!path) return "";
+
+  try {
+    if (/^https?:\/\//i.test(path)) {
+      path = new URL(path).pathname;
+    }
+  } catch {
+    return "";
+  }
+
+  path = path.split("?")[0].split("#")[0];
+  if (!path.startsWith("/")) path = `/${path}`;
+  return path.length > 1 ? path.replace(/\/+$/, "") : path;
+}
+
+function normalizeSlug(value) {
+  return normalizePath(value).replace(/^\/?blogs\//, "").replace(/^\/+/, "");
+}
+
+function isTruthyFlag(value) {
+  if (value === true || value === 1) return true;
+  if (typeof value === "string") {
+    return ["true", "1", "yes", "y"].includes(value.trim().toLowerCase());
+  }
+  return false;
+}
+
+function robotsIncludes(value, directive) {
+  return String(value || "")
+    .toLowerCase()
+    .split(/[,\s]+/)
+    .includes(directive);
+}
+
+function seoBlocksSitemap(seo = {}) {
+  return (
+    isTruthyFlag(seo.noIndex) ||
+    isTruthyFlag(seo.noFollow) ||
+    robotsIncludes(seo.robots, "noindex") ||
+    robotsIncludes(seo.robots, "nofollow")
+  );
+}
+
+function blogBlocksSitemap(blog) {
+  const status = String(blog?.status || "visible").toLowerCase();
+  const robots = blog?.robots || blog?.seo?.robots || "";
+
+  return (
+    !blog?.urlSlug ||
+    !["visible", "published", "publish", "active"].includes(status) ||
+    isTruthyFlag(blog.noIndex) ||
+    isTruthyFlag(blog.noFollow) ||
+    isTruthyFlag(blog?.seo?.noIndex) ||
+    isTruthyFlag(blog?.seo?.noFollow) ||
+    robotsIncludes(robots, "noindex") ||
+    robotsIncludes(robots, "nofollow")
+  );
+}
+
 async function safeFetchJson(url) {
   try {
-    const res = await fetch(url, {
-      next: { revalidate: 3600 }, // Cache and revalidate every hour
-    });
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return null;
 
-    const ct = res.headers.get("content-type") || "";
-    if (!ct.includes("application/json")) {
-      return null;
-    }
+    const contentType = res.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) return null;
+
     return await res.json();
   } catch (error) {
     console.error("Error fetching sitemap data:", error);
@@ -19,205 +83,199 @@ async function safeFetchJson(url) {
   }
 }
 
-// Function to fetch ALL blogs using parallel requests for better performance
+function getBlogsFromResponse(data) {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.blogs)) return data.blogs;
+  if (Array.isArray(data?.data)) return data.data;
+  return [];
+}
+
 async function fetchAllBlogs() {
-  const pageSize = 100; // Increased page size for fewer requests
-  const firstUrl = `${API_BASE}/api/public/published-fl?page=1&limit=${pageSize}`;
+  const pageSize = 100;
+  const firstPageData = await safeFetchJson(
+    `${API_BASE}/api/public/published-fl?page=1&limit=${pageSize}`
+  );
+  if (!firstPageData) return [];
 
-  try {
-    const firstPageData = await safeFetchJson(firstUrl);
-    if (!firstPageData) return [];
+  const firstPageBlogs = getBlogsFromResponse(firstPageData);
+  const total = firstPageData.total || firstPageBlogs.length;
+  const allBlogs = [...firstPageBlogs];
+  const totalPages = Math.ceil(Math.min(total, 1000) / pageSize);
 
-    const blogs = Array.isArray(firstPageData)
-      ? firstPageData
-      : Array.isArray(firstPageData?.blogs)
-        ? firstPageData.blogs
-        : Array.isArray(firstPageData?.data)
-          ? firstPageData.data
-          : [];
-
-    const total = firstPageData.total || blogs.length;
-    const allBlogs = [...blogs];
-
-    if (total > pageSize) {
-      const remainingPages = Math.ceil(Math.min(total, 1000) / pageSize);
-      const promises = [];
-
-      for (let page = 2; page <= remainingPages; page++) {
-        const url = `${API_BASE}/api/public/published-fl?page=${page}&limit=${pageSize}`;
-        promises.push(safeFetchJson(url));
-      }
-
-      const results = await Promise.all(promises);
-      results.forEach((pageData) => {
-        if (pageData) {
-          const pageBlogs = Array.isArray(pageData)
-            ? pageData
-            : Array.isArray(pageData?.blogs)
-              ? pageData.blogs
-              : Array.isArray(pageData?.data)
-                ? pageData.data
-                : [];
-          allBlogs.push(...pageBlogs);
-        }
-      });
+  if (totalPages > 1) {
+    const pageRequests = [];
+    for (let page = 2; page <= totalPages; page += 1) {
+      pageRequests.push(
+        safeFetchJson(`${API_BASE}/api/public/published-fl?page=${page}&limit=${pageSize}`)
+      );
     }
 
-    console.log(`Fetched ${allBlogs.length} blogs for sitemap`);
-    return allBlogs;
+    const pages = await Promise.all(pageRequests);
+    pages.forEach((pageData) => {
+      allBlogs.push(...getBlogsFromResponse(pageData));
+    });
+  }
+
+  return allBlogs;
+}
+
+async function fetchFactoryCmsPage(type, key) {
+  const endpoint =
+    type === "landing"
+      ? `/api/public/factorylicence/landing-pages/${key}`
+      : `/api/public/factorylicence/static-pages/${key}`;
+  const data = await safeFetchJson(`${API_BASE}${endpoint}`);
+  return data?.success ? data.page : null;
+}
+
+async function getRedirectSourcePaths() {
+  try {
+    const redirects = await nextConfig.redirects?.();
+    if (!Array.isArray(redirects)) return new Set();
+
+    return new Set(
+      redirects
+        .filter((redirect) => redirect?.statusCode === 301 || redirect?.permanent === true)
+        .map((redirect) => normalizePath(redirect.source))
+        .filter(Boolean)
+    );
   } catch (error) {
-    console.error("Error fetching all blogs for sitemap:", error);
-    return [];
+    console.error("Error loading redirect sources for sitemap:", error);
+    return new Set();
   }
 }
 
-// Main sitemap generation function
+function toSitemapEntry(path, options = {}) {
+  return {
+    url: `${BASE_URL}${path === "/" ? "" : path}`,
+    lastModified: options.lastModified || new Date(),
+    changeFrequency: options.changeFrequency || "monthly",
+    priority: options.priority ?? 0.7,
+    cms: options.cms,
+  };
+}
+
+function withoutInternalFields(route) {
+  const { cms, ...publicRoute } = route;
+  return publicRoute;
+}
+
+async function filterIndexableRoutes(routes, redirectSourcePaths) {
+  const uniqueRoutes = new Map();
+
+  for (const route of routes) {
+    const path = normalizePath(route.url.replace(BASE_URL, "") || "/");
+    if (!path || redirectSourcePaths.has(path)) continue;
+
+    let cmsPage = null;
+    if (route.cms) {
+      cmsPage = await fetchFactoryCmsPage(route.cms.type, route.cms.key);
+    }
+
+    if (seoBlocksSitemap(cmsPage?.seo)) continue;
+    uniqueRoutes.set(route.url, withoutInternalFields(route));
+  }
+
+  return Array.from(uniqueRoutes.values());
+}
+
 export default async function sitemap() {
-  const baseUrl = "https://factorylicence.in"; // Replace with your actual domain
+  const redirectSourcePaths = await getRedirectSourcePaths();
 
-  // Static routes - these are your fixed pages
   const staticRoutes = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
+    toSitemapEntry("/", {
       changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      priority: 1,
+      cms: { type: "static", key: "home" },
+    }),
+    toSitemapEntry("/about", {
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      cms: { type: "static", key: "about" },
+    }),
+    toSitemapEntry("/contact", {
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blogs`,
-      lastModified: new Date(),
+      cms: { type: "static", key: "contact" },
+    }),
+    toSitemapEntry("/blogs", {
       changeFrequency: "daily",
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
+      cms: { type: "static", key: "blogs" },
+    }),
+    toSitemapEntry("/privacy-policy", {
       changeFrequency: "yearly",
       priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms-conditions`,
-      lastModified: new Date(),
+      cms: { type: "static", key: "privacy-policy" },
+    }),
+    toSitemapEntry("/terms-conditions", {
       changeFrequency: "yearly",
       priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/refund-cancellation`,
-      lastModified: new Date(),
+      cms: { type: "static", key: "terms-conditions" },
+    }),
+    toSitemapEntry("/refund-cancellation", {
       changeFrequency: "yearly",
       priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/payments`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      cms: { type: "static", key: "refund-cancellation" },
+    }),
+    toSitemapEntry("/payments", {
       priority: 0.5,
-    },
+      cms: { type: "static", key: "payments" },
+    }),
   ];
 
-  // Service pages - Factory Licence
-  const factoryLicenceRoutes = [
-    {
-      url: `${baseUrl}/factory-licence-in-delhi`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+  const serviceRoutes = [
+    "/factory-licence-in-delhi",
+    "/factory-licence-in-haryana",
+    "/factory-licence-in-uttar-pradesh",
+    "/fire-noc-in-delhi",
+    "/fire-noc-in-haryana",
+    "/fire-noc-in-uttar-pradesh",
+    "/pollution-noc-in-delhi",
+    "/pollution-noc-in-haryana",
+    "/pollution-noc-in-uttar-pradesh",
+  ].map((path) =>
+    toSitemapEntry(path, {
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/factory-licence-in-haryana`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/factory-licence-in-uttar-pradesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ];
+      cms: { type: "landing", key: path.replace(/^\//, "") },
+    })
+  );
 
-  // Service pages - Fire NOC
-  const fireNocRoutes = [
-    {
-      url: `${baseUrl}/fire-noc-in-delhi`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/fire-noc-in-haryana`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/fire-noc-in-uttar-pradesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ];
+  // CMS-only landing pages (e.g. hazardous-waste-registration) — index/follow checked below.
+  let dynamicLandingRoutes = [];
+  try {
+    const dynamicPages = await getCmsMarqueeServices();
+    dynamicLandingRoutes = dynamicPages.map((page) =>
+      toSitemapEntry(page.href, {
+        priority: 0.9,
+        cms: { type: "landing", key: page.slug },
+      })
+    );
+  } catch (error) {
+    console.error("Error fetching dynamic CMS landing routes for sitemap:", error);
+  }
 
-  // Service pages - Pollution NOC
-  const pollutionNocRoutes = [
-    {
-      url: `${baseUrl}/pollution-noc-in-delhi`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/pollution-noc-in-haryana`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/pollution-noc-in-uttar-pradesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ];
-
-  // Fetch dynamic blog routes - now fetches ALL blogs using pagination
   let blogRoutes = [];
   try {
     const blogs = await fetchAllBlogs();
-
     blogRoutes = blogs
-      .filter((blog) => blog && blog.urlSlug)
-      .map((blog) => ({
-        url: `${baseUrl}/blogs/${blog.urlSlug}`,
-        lastModified: blog.updatedAt
-          ? new Date(blog.updatedAt)
-          : new Date(blog.createdAt || Date.now()),
-        changeFrequency: "weekly",
-        priority: 0.7,
-      }));
+      .filter((blog) => {
+        const path = normalizePath(`/blogs/${normalizeSlug(blog?.urlSlug)}`);
+        return !blogBlocksSitemap(blog) && !redirectSourcePaths.has(path);
+      })
+      .map((blog) =>
+        toSitemapEntry(`/blogs/${normalizeSlug(blog.urlSlug)}`, {
+          lastModified: blog.updatedAt
+            ? new Date(blog.updatedAt)
+            : new Date(blog.createdAt || Date.now()),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        })
+      );
   } catch (error) {
     console.error("Error fetching blog routes for sitemap:", error);
   }
 
-  // Combine all routes
-  return [
-    ...staticRoutes,
-    ...factoryLicenceRoutes,
-    ...fireNocRoutes,
-    ...pollutionNocRoutes,
-    ...blogRoutes,
-  ];
+  return filterIndexableRoutes(
+    [...staticRoutes, ...serviceRoutes, ...dynamicLandingRoutes, ...blogRoutes],
+    redirectSourcePaths
+  );
 }

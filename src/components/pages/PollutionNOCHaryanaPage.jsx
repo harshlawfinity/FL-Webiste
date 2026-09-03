@@ -1,13 +1,12 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import { HiOfficeBuilding } from "react-icons/hi";
 import { FaCalculator } from "react-icons/fa";
 
@@ -21,154 +20,68 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import FaqSectionPollutionHaryana from "@/components/FaqSectionPollutionHaryana"; // You can rename this if needed
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-import img from "@/assets/pollution/haryana.png";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
-import Head from "next/head";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function PollutionNocLicenceHaryanaPage() {
+export default function PollutionNocLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
-  const [currentBg, setCurrentBg] = useState(0);
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Pollution NOC Registration in Haryana" },
+      ];
+  const heroBackgroundAlts = [
+    "Factory Pollution Certificate in Haryana",
+    "Pollution Certificate Apply Online in Haryana",
+    "Pollution Noc in Haryana",
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Pollution NOC & Waste Management Authorization Consultant in Haryana";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure safety compliance and secure Pollution Department clearance for your building or business in Haryana with expert Pollution NOC assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
-      <Head>
-        <title>Pollution NOC in Haryana | Hazardous, Scrap & Biomedical Waste Authorization Consultant</title>
-        <meta
-          name="description"
-          content="Get Pollution NOC in Haryana with expert consultants for hazardous waste authorization, scrap import license, biomedical waste license, plastic & paper waste management and pollution board approvals."
-        />
-        <meta
-          name="keywords"
-          content="pollution noc in haryana,
-noc pollution control board in haryana,
-pollution noc certificate in haryana
-noc from pollution control board in haryana
-cto pollution control board in haryana
-pollution noc for factory in haryana
-pollution noc Apply online in haryana
-aluminium scrap management Haryana
-aluminum scrape management
-brass scrap management Haryana
-copper scrap management Haryana
-iron and steel scrap management Haryana
-metal scrap import license Haryana
-paper waste management in Haryana
-plastic waste management in Haryana
-scrap import consultant Haryana
-scrap import waste management in Haryana
-scrap recycling & waste management Haryana
-waste management scrap import Haryana
-hazardous waste authorization Haryana
-hazardous waste consultant Haryana
-hazardous waste disposal authorization Haryana
-hazardous waste handling permission Haryana
-hazardous waste license Haryana
-hazardous waste management authorisation Haryana
-hazardous waste management authorization in Haryana
-waste management authorization Haryana
-bio medical waste authorization in Haryana
-bio medical waste consultant in Haryana
-bio medical waste license Haryana
-biomedical waste authorization consultant Haryana
-biomedical waste consultant Haryana
-biomedical waste management authorization Haryana
-biomedical waste permission Haryana
-bmw authorization Haryana
-clinic biomedical waste license Haryana
-medical waste disposal authorization Haryana
-medical waste recycling authorization Haryana"
-        />
-        <meta
-          property="og:title"
-          content="Pollution NOC in Haryana – Apply Online, Certificate & Fees"
-        />
-        <meta
-          property="og:description"
-          content="Get pollution noc in haryana & noc from pollution control board in haryana. Apply online for factory, certificate, CTO & waste authorisation services."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/pollution-noc-in-haryana"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/pollution-noc-in-haryana"
-        />
-      </Head>
       {/* Hero Section */}
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              key={index}
-              src={img}
-              alt={`Pollution Noc In Haryana`}
-              width="1920"
-              height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover ${currentBg === index ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-1000 ease-in-out`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.pollutionNocHaryana.hero}
+        />
 
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0 md:py-12 relative z-20">
           <div className="md:w-1/2">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px -4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Pollution NOC Registration in Haryana" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-white hover:underline"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC & Waste Management Authorization Consultant in Haryana
+              {heroTitle}
             </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure safety compliance and secure Pollution Department clearance
-              for your building or business in Haryana with expert Pollution NOC
-              assistance.
-            </p>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -191,6 +104,14 @@ medical waste recycling authorization Haryana"
             <PollutionFeeCalculatorHaryana />
           </Section>
 
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -261,7 +182,7 @@ medical waste recycling authorization Haryana"
             </ul>
             <p className="text-justify">
               Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance
-              can help you obtain all the <a href="https://factorylicence.in/" className="text-blue-600 underline">Factory license</a> you need to set up and operate a factory in
+              can help you obtain all the <Link href="/factory-licence-in-haryana" className="text-blue-600 underline">Factory license</Link> you need to set up and operate a factory in
               Haryana.
             </p>
           </Section>
@@ -584,7 +505,14 @@ medical waste recycling authorization Haryana"
                 <strong>Follow-up</strong>: Respond to notices and follow up with authorities to ensure a smooth process.
               </li>
             </ol>
-            <Image src={img} alt="Pollution Noc In Haryana" className="w-full h-auto rounded-l g s hadow-md" />
+            <img
+              src={PAGE_IMAGES.pollutionNocHaryana.process}
+              alt="Pollution Noc Process in Haryana"
+              className="w-full h-auto rounded-lg shadow-md"
+              loading="lazy"
+              width={1200}
+              height={800}
+            />
           </Section>
 
           <Section
@@ -737,11 +665,14 @@ medical waste recycling authorization Haryana"
               Factorylicence.in provides various services like guidance in obtaining a factory license, fire NOC, and pollution NOC. With our professional assistance, Document preparation, fees, and security processing and renewal process become easy. Contact us and get the benefits of our expert consultation during HSPCB inspections for smooth verification.
             </p>
           </Section>
+          </>
+          )}
         </div>
 
         {/* Sidebar Quick Links */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -877,7 +808,9 @@ medical waste recycling authorization Haryana"
       </section>
 
       {/* FAQs */}
-      <div id="faqs">
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
+      <div>
         <FaqSectionPollutionHaryana />
       </div>
 

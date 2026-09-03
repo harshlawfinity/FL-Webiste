@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 const FaIndustry = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaIndustry }))
 );
@@ -9,7 +9,6 @@ import { FaCalculator } from "react-icons/fa";
 import { RiTimeLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import TH from "@/components/TH";
-import Image from "next/image";
 import FactoryLicenseCalculatorHaryana from '@/components/FactoryLicenseCalculatorHaryana'
 
 import { HiOfficeBuilding } from "react-icons/hi";
@@ -23,129 +22,72 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 
-import hhhhh from "../../assets/hhhhh.webp";
-
+import HeroRotatingBackground from "@/components/HeroRotatingBackground";
+import { PAGE_IMAGES } from "@/lib/heroBackgrounds";
 import ContactFormModal from "@/components/ContactFormModal";
 import ContactForm from "@/components/ContactForm";
+import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
-
-import bg1 from "../../assets/f1.webp";
-import bg2 from "../../assets/f2.webp";
-import bg3 from "../../assets/f3.webp";
 import FaqSection from "@/components/FaqSectionHaryana";
-import Head from "next/head";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function FactoryLicenceDelhiPage() {
+export default function FactoryLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const heroBackgrounds = [bg1, bg2, bg3];
-  const [currentBg, setCurrentBg] = useState(0);
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Factory Licence Registration & Renewal Services in Haryana" },
+      ];
+  const heroBackgroundAlts = [
+    "Factory Act in Haryana",
+    "Haryana Factory Licence Verification",
+    "Haryana Factory License",
+  ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 2000); // 2 seconds
-
-    return () => clearInterval(interval);
-  }, []);
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Factory License in Haryana – Apply Online & Check Fees";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure compliance and legal security for your manufacturing unit in Haryana with our expert licensing assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
-      <Head>
-        <title>Factory License in Haryana – Online Apply, Fees & Registration</title>
-        <meta
-          name="description"
-          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
-        />
-        <meta
-          name="keywords"
-          content="factory license haryana, factory license in haryana, factory license in haryana, factory licence fees in haryana, factory licence haryana"
-        />
-        <meta
-          property="og:title"
-          content="Factory License in Haryana – Online Apply, Fees & Registration"
-        />
-        <meta
-          property="og:description"
-          content="Get factory license Haryana with online registration support. Apply factory license in Haryana, check factory licence fees in Haryana & expert factory licence Haryana help.."
-        />
-        <meta
-          property="og:url"
-          content="https://factorylicence.in/factory-licence-in-haryana"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://factorylicence.in/assets/factory-license-haryana-og.jpg"
-        />
-        <meta property="og:site_name" content="FactoryLicence.in" />
-        <link
-          rel="canonical"
-          href="https://factorylicence.in/factory-licence-in-haryana"
-        />
-      </Head>
       {/* Hero Section */}
 
       <section className="relative text-white md:py-0 py-20 md:px-0 px-4 mt-20 overflow-hidden">
-        {/* Rotating background images */}
-        <div className="absolute inset-0 z-0">
-          {heroBackgrounds.map((img, index) => (
-            <Image
-              priority={index === 0}
-              key={index}
-              src={img}
-              alt={`bg-${index}`}
-              width="1920"
-              height="1080"
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${currentBg === index ? "opacity-100" : "opacity-0"
-                }`}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7A3EF2]/80 to-[#a674f7]/80 z-10" />
-        </div>
+        <HeroRotatingBackground
+          alts={heroBackgroundAlts}
+          images={PAGE_IMAGES.factoryLicenceHaryana.hero}
+        />
 
         {/* Hero Content */}
         <div className=" max-w-7xl   mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:px-0  md:py-12 relative z-20">
           {/* Left Content */}
           <div className="md:w-1/2">
 
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto md:px-0 px-4 mt-6">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap mb-4 items-center gap-2 text-sm"
-              >
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Factory Licence Registration & Renewal Services in Haryana" },
-                ]
-                  .filter(Boolean)
-                  .map((item, idx) => (
-                    <div key={idx} className="flex items-center">
-                      {idx > 0 && <span className="px-2 text-gray-400">›</span>}
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="text-gray-50"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <span className="text-gray-50">
-                          {item.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-              </nav>
-            </div>
+            <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Factory License in Haryana – Apply Online & Check Fees
+              {heroTitle}
             </h1>
-            <p className="text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure compliance and legal security for your manufacturing unit
-              in Haryana with our expert licensing assistance.
-            </p>
+            <p
+              className="text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -166,9 +108,17 @@ export default function FactoryLicenceDelhiPage() {
         {/* Left Side Content */}
         <div className="md:col-span-3 space-y-14">
 
-          <Section>
+          <Section id="calc">
             <FactoryLicenseCalculatorHaryana />
           </Section>
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -186,7 +136,7 @@ export default function FactoryLicenceDelhiPage() {
             <br />
 
             <p className="text-justify">
-              Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance can help you obtain all the <a href="https://factorylicence.in/" className="text-blue-600 underline">factory licences</a> you need to set up and operate a factory in Haryana.
+              Factorylicence.in is one of the best legal service providers in Haryana. Our expert assistance can help you obtain all the <Link href="/factory-licence-in-haryana" className="text-blue-600 underline">factory licences</Link> you need to set up and operate a factory in Haryana.
 
             </p>
           </Section>
@@ -224,25 +174,7 @@ export default function FactoryLicenceDelhiPage() {
                 Eligibility Criteria For The Factory Licence In Haryana
               </>
             }
-          >
-            <p className="text-justify mb-4">
-              The eligibility criteria for the registration of the <span className="n-300 px-1">Factory licence in Haryana</span> are:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-4">
-              <li className="text-justify">
-                Factories employing 10 or more workers with power.
-              </li>
-              <li className="text-justify">
-                Factories employing 20 or more workers without power.
-              </li>
-            </ul>
-            <p className="text-justify mb-4">
-              According to the Factories Act, 1948, and the Haryana Factories Rules, 1950, if your unit falls under any of these categories, it is mandatory to register it through the Labour Department, Government of Haryana.
-            </p>
-            <p className="text-justify">
-              Hire factorylicence.in to help you with all the legal formalities to apply Factory license Haryana.
-            </p>
-          </Section>
+          />
 
 
 
@@ -364,84 +296,56 @@ export default function FactoryLicenceDelhiPage() {
             </ol>
           </Section>
 
-          <Image src={hhhhh} alt="Factory Licence In Haryana" />
+          <img
+            src={PAGE_IMAGES.factoryLicenceHaryana.process}
+            alt="Factory Licence in Haryana"
+            loading="lazy"
+            className="w-full h-auto"
+            width={1200}
+            height={800}
+          />
 
 
 
 
-          <section className="p max-w-7xl mx-auto overflow-hidden" id="fee">
+          <section id="fee" className="space-y-4">
             <h2 className="text-3xl font-semibold flex items-center gap-2 mb-4 text-[#7c4bdf]">
               <HiOfficeBuilding className="text-[#7c4bdf]" />
-              Factory licence fees in Haryana
+              Factory Licence Fees in Haryana
             </h2>
-            <div className="md:w-full w-[90vw]">
+
+            <div data-cms-preserve="true" className="md:w-full w-[90vw]">
               <TH />
-            </div>
-
-            {/* Renewal & Amendment Section */}
-            <div className="mt-10" id="renewal">
-              <h2 className="text-3xl font-semibold text-[#7c4bdf] mb-4 flex items-center gap-2">
-                <RiTimeLine className="text-[#7c4bdf]" />
-                Renewal & Amendment For the Factory Licence in Haryana
-              </h2>
-              <p className="text-justify mb-4">
-                A <span className="n-300 px-1 font-medium text-black">Factory License in Haryana</span> is generally issued for a duration of 1 to 5 years. The validity of the license can be chosen while applying for a factory licence Haryana. Renewal applications are due before expiration to avoid penalties.
-              </p>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Renewal Fee</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">
-                  Haryana follows an HP and manpower based renewal fee structure. The exact amount may differ depending on the type and size of the factory.
-                </li>
-                <li className="text-justify">
-                  <strong>Renewal includes:</strong>
-                  <ul className="list-disc pl-8 mt-2 space-y-1">
-                    <li>Applicable license fees based on HP and manpower.</li>
-                    <li>Processing charges and government treasury fees.</li>
-                    <li>Note: Exact renewal charges are disclosed during the application process on the Haryana Labour Department's official portal.</li>
-                  </ul>
-                </li>
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Amendment Fee</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-8">
-                <li className="text-justify">
-                  ₹100 per change (e.g., change in name, occupier, address).
-                </li>
-              </ul>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Penalties & Timelines</h3>
-              <ul className="list-disc pl-6 space-y-2 text-gray-800 mb-6">
-                <li className="text-justify">
-                  Non-compliance with the Factories Act, 1948, may result in fines up to ₹1,00,000 or imprisonment up to 2 years.
-                </li>
-                <li className="text-justify">
-                  A late <Link href="/" className="text-blue-600 underline">factory licence renewal</Link> fee of 25% is payable, which is charged after the renewal application is submitted. The date of submission of the application will be noted to calculate the late fee.
-                </li>
-              </ul>
-
-              <p className="text-justify mt-8">
-                <strong>Timeline</strong> - The timeline for obtaining a factory licence in the state of Haryana generally takes 15 to 18 working days, subject to document availability and government approvals.
-              </p>
             </div>
           </section>
 
           <Section
+            id="renewal"
+            title={
+              <>
+                <RiTimeLine className="inline mr-2" />
+                Renewal & Amendment For the Factory Licence in Haryana
+              </>
+            }
+          />
+
+          <Section
             id="why-choose"
-            title="Why choose us?"
-          >
-            <p className="text-justify mb-4">
-              The registration process of a factory license in Haryana may seem easy, but a single mistake can cause a delay in the process. To save time and any possible rejection, you will need a professional factory license consultant who will guide you throughout the process. We have a team of expert legal advisors who will provide you with comprehensive support to ensure your error-free applications.
-            </p>
-            <p className="text-justify">
-              So don't waste more time, call Factorylicence.in now and get your factory registered as soon as possible!
-            </p>
-          </Section>
+            title={
+              <>
+                <FaCheckCircle className="inline mr-2" />
+                Why Choose Us?
+              </>
+            }
+          />
+          </>
+          )}
         </div>
 
         {/* Right Side Navigation */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 space-y-4">
+            <ContactFormBlogs />
             <div className="bg-white rounded-xl shadow-md p-6 space-y-4 border border-violet-100">
               <h3 className="text-lg font-semibold text-[#7A3EF2] mb-2">
                 Quick Links
@@ -489,21 +393,14 @@ export default function FactoryLicenceDelhiPage() {
                     icon: <FaListOl className="inline mr-2" />,
                   },
                   {
-                    label: "Timelines",
-                    id: "timelines",
-                    icon: <FaClock className="inline mr-2" />,
-                  },
-                  {
-                    label: "Penalties",
-                    id: "penalties",
-                    icon: (
-                      <FaExclamationTriangle className="inline mr-2 text-red-500" />
-                    ),
+                    label: "Renewal & Amendment",
+                    id: "renewal",
+                    icon: <RiTimeLine className="inline mr-2" />,
                   },
                   {
                     label: "Why choose us?",
                     id: "why-choose",
-                    icon: <FaQuestionCircle className="inline mr-2" />,
+                    icon: <FaCheckCircle className="inline mr-2" />,
                   },
                   {
                     label: "FAQS",
@@ -539,14 +436,20 @@ export default function FactoryLicenceDelhiPage() {
       {/* Contact Form Popup */}
       <ContactFormModal isOpen={showPopup} onClose={() => setShowPopup(false)} />
 
+      <BreadcrumbNav items={breadcrumbItems} placement="mobile" />
+      <StateFaqCTA onClick={() => setShowPopup(true)} />
       <FaqSection />
     </div>
   );
 }
 function Section({ id, title, children }) {
   return (
-    <div id={id}>
-      <h2 className="md:text-3xl text-2xl  font-semibold text-[#7A3EF2] mb-4">{title}</h2>
+    <div id={id} className="space-y-4">
+      {title ? (
+        <h2 className="md:text-3xl text-2xl font-semibold text-[#7A3EF2] flex items-center gap-2">
+          {title}
+        </h2>
+      ) : null}
       {children}
     </div>
   );

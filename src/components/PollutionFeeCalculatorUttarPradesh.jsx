@@ -47,8 +47,8 @@ const NocFeeUP = () => {
   return (
     <div className="max-w-5xl mx-auto  ">
       <h2 className="md:text-3xl text-2xl font-semibold   text-[#7A3EF2] md:mb-10 mb-5">
-        Uttar Pradesh Pollution NOC Fee Calculator
-      </h2>
+      Pollution NOC Fee Calculator in Uttar Pradesh
+            </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black mb-6">
         <div>

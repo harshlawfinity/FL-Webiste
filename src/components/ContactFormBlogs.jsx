@@ -3,20 +3,31 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
+import StateSelect from "@/components/StateSelect";
+import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
-const HeroForm = () => {
+const HeroForm = ({ title, description, serviceName }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
+    state: "",
     description: "",
     pageSource: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDuplicateThankYou, setShowDuplicateThankYou] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
+  const formCopy = getLeadFormCopy(pathname);
+  const heading = title || formCopy.title;
+  const subheading = description || formCopy.description;
+  // CMS service pages pass pageTitle so CRM stores the correct service (not default Factory License).
+  const resolvedServiceName = String(serviceName || "").trim();
 
   const phoneRegex = /^\d{10}$/;
 
@@ -34,6 +45,14 @@ const HeroForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Duplicacy check (organic leads only): same phone + same pageUrl + same date
+    // already submitted → thank-you popup, do not create another lead.
+    if (hasSubmittedLead(formData.phone, formData.pageSource)) {
+      setShowDuplicateThankYou(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -46,10 +65,15 @@ const HeroForm = () => {
       formBody.append("name", formData.name);
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
+      formBody.append("state", formData.state);
       formBody.append("description", formData.description);
       formBody.append("pageSource", formData.pageSource);
       formBody.append("timestamp", timestamp);
-      formBody.append("source", "organic");  
+      formBody.append("source", "organic");
+      if (resolvedServiceName) {
+        formBody.append("serviceName", resolvedServiceName);
+        formBody.append("service", resolvedServiceName);
+      }
 
       const response = await fetch("/api/submit-contact", {
         method: "POST",
@@ -57,6 +81,7 @@ const HeroForm = () => {
       });
 
       if (response.ok) {
+         markLeadSubmitted(formData.phone, formData.pageSource);
          router.push("/thankyou");
       } else {
         const err = await response.json();
@@ -79,9 +104,17 @@ const HeroForm = () => {
   }, [pathname]);
 
   return (
-    <div className="max-w-lg shadow-2xl mx-auto bg-white md:p-8 p-4 rounded-2xl">
-      
-
+    <div className="max-w-lg shadow-2xl mx-auto bg-white md:p-4 p-2 rounded-2xl">
+      <DuplicateLeadThankYouModal
+        isOpen={showDuplicateThankYou}
+        onClose={() => setShowDuplicateThankYou(false)}
+      />
+      <h2 className="text-xl font-semibold text-[#7A3EF2] mb-2">
+        Talk To Our Experts
+      </h2>
+      <p className="text-gray-600 text-sm font-normal mb-2">
+        We're Here To Help You
+      </p>
       <form className="space-y-3 " onSubmit={handleSubmit}>
         {/* Name */}
         <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
@@ -127,8 +160,13 @@ const HeroForm = () => {
           />
         </div>
 
+        <StateSelect
+          value={formData.state}
+          onChange={(state) => setFormData((prev) => ({ ...prev, state }))}
+          variant="sidebar"
+        />
+
         {/* Description */}
-       
 
         {/* Submit Button */}
         <button

@@ -63,7 +63,7 @@ export default function FactoryLicenseCalculatorHaryana() {
   return (
     <div className=" ">
       <h2 className="text-xl md:text-3xl font-semibold text-[#7A3EF2] text- center mb-4">
-        Haryana Factory License Fee Calculator
+      Calculate Factory License Fees Online in Haryana
       </h2>
 
       {/* Form */}

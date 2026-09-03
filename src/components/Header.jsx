@@ -77,9 +77,14 @@ const Nav = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 h-20 transition-all duration-300 ${isScrolled ? "bg-white shadow" : "bg-white"}`}>
-      <div className="max-w-7xl mx-auto flex justify-between items-center h-full">
+      <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-4 sm:px-6">
         <Link href="/" aria-label="Factory Licence Home">
-          <div><FL /></div>
+          <div className="hidden md:block">
+            <FL />
+          </div>
+          <div className="md:hidden">
+            <FL mobile />
+          </div>
         </Link>
 
         {/* Desktop Nav */}
@@ -132,10 +137,17 @@ const Nav = () => {
 
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} aria-label="Toggle Menu" className=" text-black font-semibold">
-            {isOpen ? <FiX size={26} /> : <FiMenu size={26}  className="text-black"/>}
+        {/* Mobile phone + menu toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <a
+            href="tel:+919910774687"
+            className="border border-gray-400 px-3 py-1.5 rounded-full text-xs flex items-center gap-1.5 hover:bg-gray-100 text-black font-semibold transition whitespace-nowrap"
+          >
+            <PhoneCall size={16} />
+            +91 99107 74687
+          </a>
+          <button onClick={toggleMenu} aria-label="Toggle Menu" className="text-black font-semibold">
+            {isOpen ? <FiX size={26} /> : <FiMenu size={26} className="text-black" />}
           </button>
         </div>
       </div>
@@ -156,7 +168,7 @@ const Nav = () => {
       >
         <div className="flex justify-between items-center p-5">
           <Link href="/" onClick={toggleMenu}>
-            <div className="text-xl font-bold text-purple-700">Factory Licence</div>
+            <FL mobile />
           </Link>
           <button onClick={toggleMenu} aria-label="Close menu">
             <FiX size={28} className="text-black" />

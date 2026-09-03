@@ -3,20 +3,33 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FiUser, FiPhone, FiMail } from "react-icons/fi";
+import { getLeadFormCopy } from "@/lib/leadFormCopy";
+import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
+import StateSelect from "@/components/StateSelect";
+import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
-const HeroForm = () => {
+// onClose is only passed when this form is rendered inside ContactFormModal —
+// undefined (and safely no-op'd via `onClose?.()`) for the inline hero/sidebar usage.
+const HeroForm = ({ title, description, serviceName, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
+    state: "",
     description: "",
     pageSource: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDuplicateThankYou, setShowDuplicateThankYou] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
+  const formCopy = getLeadFormCopy(pathname);
+  const heading = title || formCopy.title;
+  const subheading = description || formCopy.description;
+  // CMS service pages pass pageTitle so CRM stores the correct service (not default Factory License).
+  const resolvedServiceName = String(serviceName || "").trim();
 
   const phoneRegex = /^\d{10}$/;
 
@@ -34,6 +47,16 @@ const HeroForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const pageSourceValue = typeof window !== "undefined" ? window.location.href : formData.pageSource;
+
+    // Duplicacy check (organic leads only): same phone + same pageUrl + same date
+    // already submitted → thank-you popup, do not create another lead.
+    if (hasSubmittedLead(formData.phone, pageSourceValue)) {
+      setShowDuplicateThankYou(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -42,16 +65,19 @@ const HeroForm = () => {
       const istTime = new Date(now.getTime() + istOffset);
       const timestamp = istTime.toISOString().replace("T", " ").split(".")[0];
 
-      const pageSourceValue = typeof window !== "undefined" ? window.location.href : formData.pageSource;
-
       const formBody = new URLSearchParams();
       formBody.append("name", formData.name);
       formBody.append("phone", formData.phone);
       formBody.append("email", formData.email);
+      formBody.append("state", formData.state);
       formBody.append("description", formData.description);
       formBody.append("pageSource", pageSourceValue);
       formBody.append("timestamp", timestamp);
       formBody.append("source", "organic");
+      if (resolvedServiceName) {
+        formBody.append("serviceName", resolvedServiceName);
+        formBody.append("service", resolvedServiceName);
+      }
 
       const response = await fetch("/api/submit-contact", {
         method: "POST",
@@ -59,6 +85,11 @@ const HeroForm = () => {
       });
 
       if (response.ok) {
+        markLeadSubmitted(formData.phone, pageSourceValue);
+        // Close the popup immediately on success instead of relying solely on the
+        // /thankyou navigation to unmount it — on mobile the modal was staying open
+        // since ContactFormModal never had a way to be told the submission succeeded.
+        onClose?.();
         router.push("/thankyou");
       } else {
         const err = await response.json();
@@ -81,41 +112,48 @@ const HeroForm = () => {
   }, [pathname]);
 
   return (
-    <div className="max-w-lg mx-auto bg-white md:p-8 p-4 rounded-2xl">
-      <div className="text-center mb-4">
-        <h2 className="md:text-2xl text-xl font-semibold text-[#7A3EF2]">
-          Let’s Connect Together
+    <div
+      className="w-full max-w-lg mx-auto bg-white md:p-8 p-5 rounded-2xl shadow-xl"
+      data-cms-skip-heading-icon="true"
+    >
+      <DuplicateLeadThankYouModal
+        isOpen={showDuplicateThankYou}
+        onClose={() => setShowDuplicateThankYou(false)}
+      />
+      <div className="text-left mb-5">
+        <h2 className="md:text-xl text-lg font-semibold text-[#7A3EF2]">
+          {heading}
         </h2>
-        <p className="text-gray-600 mt-2 text-sm">
-          Share your details & we’ll connect with you.
+        <p className="text-gray-600 mt-1.5 text-sm leading-relaxed">
+          {subheading}
         </p>
       </div>
 
-      <form className="space-y-3" onSubmit={handleSubmit}>
+      <form className="space-y-2.5" onSubmit={handleSubmit}>
         {/* Name */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiUser className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiUser className="text-gray-400 text-lg shrink-0" />
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Your name*"
-            className="w-full bg-transparent outline-none text-gray-700"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             required
           />
         </div>
 
         {/* Phone */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiPhone className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiPhone className="text-gray-400 text-lg shrink-0" />
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleInputChange}
             placeholder="10-digit mobile number*"
-            className="w-full bg-transparent outline-none text-gray-700"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             pattern="^\d{10}$"
             title="Phone number must be exactly 10 digits"
             required
@@ -123,38 +161,43 @@ const HeroForm = () => {
         </div>
 
         {/* Email */}
-        <div className="flex items-center border border-gray-300 rounded-md p-3 shadow-sm">
-          <FiMail className="text-gray-400 text-xl mr-3" />
+        <div className="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50/50 focus-within:border-[#7A3EF2] focus-within:ring-1 focus-within:ring-[#7A3EF2]/25 transition">
+          <FiMail className="text-gray-400 text-lg shrink-0" />
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="Your email address"
-            className="w-full bg-transparent outline-none text-gray-700"
+            placeholder="Your email address*"
+            className="w-full min-w-0 bg-transparent outline-none text-gray-700 text-sm placeholder:text-gray-400"
             required
           />
         </div>
 
-        {/* Description */}
+        <StateSelect
+          value={formData.state}
+          onChange={(state) => setFormData((prev) => ({ ...prev, state }))}
+        />
+
+        {/* Message */}
         <textarea
           name="description"
           value={formData.description}
           onChange={handleInputChange}
           placeholder="What do you need help with?"
-          className="w-full border border-gray-300 rounded-md p-3 shadow-sm bg-white text-gray-700 outline-none"
-          rows="3"
+          className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 bg-gray-50/50 outline-none resize-y min-h-[88px] max-h-32 focus:border-[#7A3EF2] focus:ring-1 focus:ring-[#7A3EF2]/25 transition"
+          rows={3}
         />
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full ${
+          className={`w-full mt-1 ${
             isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-[#7A3EF2] hover:bg-[#612ce0]"
-          } text-white font-semibold py-3 rounded-md transition duration-300`}
+          } text-white font-semibold py-3 rounded-lg transition duration-300 text-sm`}
         >
           {isSubmitting ? "Submitting..." : "Let's Talk"}
         </button>

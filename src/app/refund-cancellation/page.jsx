@@ -1,14 +1,21 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import FactoryCmsStaticPage from "@/components/cms/FactoryCmsStaticPage";
+import FactoryCmsJsonLd from "@/components/cms/FactoryCmsJsonLd";
+import { buildCmsMetadata, getFactoryCmsStaticPageFresh } from "@/lib/cms";
 
-export const metadata = {
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
+
+const fallbackMetadata = {
   title: "Refund Cancellation - Factorylicence",
   description:
-    "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
+    "Transparency, a satisfied customer, and delivering a service efficiently are our top priorities at FactoryLicence.in. Before ordering, please check out our cancellation and refund statements.",
   keywords: ["Refund Cancellation"],
   openGraph: {
     title: "Refund Cancellation - Factorylicence",
     description:
-      "At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.",
+      "Transparency, a satisfied customer, and delivering a service efficiently are our top priorities at FactoryLicence.in. Before ordering, please check out our cancellation and refund statements.",
     url: "https://factorylicence.in/refund-cancellation",
     type: "website",
     siteName: "FactoryLicence.in",
@@ -22,81 +29,105 @@ export const metadata = {
   },
 };
 
-const RefundCancellation = () => {
+export async function generateMetadata() {
+  const cmsPage = await getFactoryCmsStaticPageFresh("refund-cancellation");
+  return buildCmsMetadata(cmsPage, fallbackMetadata);
+}
+
+function RefundCancellationFallback() {
   return (
     <div className="mt-20">
-      <div>
-        <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-40 py-20 md:px-0 px-4">
-          <div className="max-w-7xl mx-auto">
-            <nav className="mb-4 text-sm text-purple-100 font-medium">
-              <Link href="/" className="hover:text-white cursor-pointer">
-                Home
-              </Link>
-              {" >> "}
-              <span className="text-white">Refund Cancellation</span>
-            </nav>
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
-              Refund Cancellation
-            </h1>
-          </div>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-[#7A3EF2] to-[#a674f7] text-white md:py-40 py-20 md:px-0 px-4">
+        <div className="max-w-7xl mx-auto">
+          <nav className="mb-4 text-sm text-purple-100 font-medium">
+            <Link href="/" className="hover:text-white cursor-pointer">
+              Home
+            </Link>
+            {" >> "}
+            <span className="text-white">Refund Cancellation</span>
+          </nav>
+          <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6">
+            Refund Cancellation
+          </h1>
+          <p className="max-w-4xl text-base md:text-lg leading-relaxed text-purple-50">
+            Transparency, a satisfied customer, and delivering a service efficiently are our top priorities at FactoryLicence.in. Before ordering, please check out our cancellation and refund statements.
+          </p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto  text-gray-800 py-8 md:px-0 px-4">
-        <h2 className="text-2xl capitalize font-semibold text-[#7A3EF2]    border-[#7A3EF2]  ">
-          Refund & Cancellation Policy
 
+      <div className="max-w-7xl mx-auto text-gray-800 py-8 md:px-0 px-4">
+        <h2 className="text-2xl capitalize font-semibold text-[#7A3EF2]">
+          Refund &amp; Cancellation Policy
         </h2>
-        <section className="space-y-6 text-base leading-relaxed mt-8">
+
+        <section className="space-y-10 text-base leading-relaxed mt-8">
           <p className="text-justify">
-            <strong>LAWFINITY INDIA PRIVATE LIMITED</strong> is your trusted
-            partner in achieving your goals and laying a significant foundation
-            for your startup. We believe in long-term relationship building and
-            maximizing value through mutual trust.
+            At FactoryLicence.in, they can help you reach your goals and create a solid base on which to build your startup. We promote a consistent and sustainable relationship strategy by adding value to each through mutual trust.
           </p>
 
-          <p className="text-justify">
-            At FactoryLicence.in, we prioritize transparency, client satisfaction, and efficient service delivery. We understand that sometimes plans change, and clients may need to cancel their service requests. To ensure a fair and smooth process, we have outlined our cancellation and refund policy below. Please review it carefully before placing an order.
-          </p>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-[#7A3EF2]">Policy Overview</h2>
+            <p className="text-justify">
+              Transparency, happy customers, and quick service are our motto and what we believe in at FactoryLicence.in. We know that sometimes things might change, and often our clients would like to cancel the service requests that they have opted for. Therefore, we have outlined our cancellation and refund policy below for a fair and level play. Before requesting a cancellation, please read it carefully and thoroughly.
+            </p>
+          </div>
 
-          <p className="text-justify">
-            If a cancellation request is made within <span className="font-semibold">24 hours</span> of successful payment, the client will be eligible for a <span className="font-semibold"> 100% refund  </span> of the total amount paid. This full refund will be issued without any deductions, provided that the request is communicated within the stipulated time frame. This policy is in place to accommodate any immediate changes in decision before our team initiates substantial work on the assignment.
-            <br />
-            <span className="text-sm italic">Please note that any Government fees paid on behalf of the client are non-refundable under any circumstances. However, the official fee receipt or acknowledgment issued by the relevant government department will be handed over to the client as proof of payment.</span>
-          </p>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-[#7A3EF2]">Cancellation within 24 hours</h2>
+            <p className="text-justify">
+              In case of cancellation within <span className="font-semibold">24 hours</span> after successful payment, the customer can get a <span className="font-semibold">100% refund</span> of the total amount paid. This will be a full refund, and no deductions will be made if it is communicated within the stipulated time frame mentioned.
+            </p>
+            <p className="text-justify text-sm italic">
+              Please note that the costs of any Government fees paid on behalf of the client cannot be recovered in any event. However, the fee receipt, or acknowledgment, from the relevant government department, will be handed over to the client as the proof of payment.
+            </p>
+          </div>
 
-          <p className="text-justify">
-            For cancellation requests received after <span className="font-semibold"> 24 hours but within 7 calendar days </span> from the date of payment, a <span className="font-semibold"> deduction of 20% </span>  will be applied to the total amount paid. This deduction covers the administrative charges, documentation processing, and initial operational efforts carried out by our team during this period. The remaining 80% will be refunded to the client through the original payment method within a reasonable timeframe.
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-[#7A3EF2]">Cancellation within 7 days</h2>
+            <p className="text-justify">
+              If you cancel your order within <span className="font-semibold">7 calendar days</span> of your payment, a <span className="font-semibold">20% deduction</span> will be applied to the total payment. This is to reflect administration costs, cost of documentation and startup effort of our staff during this period. 80% of the remainder of the funds will be returned to the client via the same payment method that was used to pay, but will be returned within a reasonable time.
+            </p>
+          </div>
 
-          </p>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-[#7A3EF2]">Cancellation after 7 days</h2>
+            <p className="text-justify">
+              In the event of a client&apos;s request to cancel the service from 7 days after the receipt of the payment, the refund payment made will be handled in a pro-rata manner in relation to the work done by our team. In such cases, our internal operations team will make the final determination after a comprehensive review of the refund.
+            </p>
+          </div>
 
-          <p className="text-justify">
-            If a client wishes to cancel the service after 7 days from the date of payment, the refund amount will be determined on a pro-rata basis, depending on the stage and percentage of work completed by our team. By this time, a significant portion of the service is usually underway or near completion. Therefore, the refundable amount, if any, will reflect the actual work progress, resources utilized, and time invested by our experts. The final decision regarding the refund in such cases will be made by our internal operations team after a thorough review.
-
-          </p>
-
-          <p className="text-justify">
-            For all refund-related queries, concerns, or cancellation requests, clients are required to send an email to refunds@factorylicence.in. The timestamp of the email received at this address will be considered the official time of refund intimation. This helps us maintain an accurate and transparent record of all refund communications. We advise clients to include their order number, registered email address, payment details, and a brief reason for cancellation to ensure faster processing.
-
-          </p>
-
-          {/* <h2 className="text-2xl font-semibold mt-10 text-[#7A3EF2]">Cancellation Policy</h2>
-          <p>
-            Cancellation of an order is not permitted once the payment has been
-            made. No refunds will be issued except in the case of:
-          </p>
-          <ul className="list-disc ml-6">
-            <li>Service cancellation by LAWFINITY</li>
-            <li>Non-performance of the promised service</li>
-          </ul>
-
-          <p className="mt-4">
-            All transactions are transparent and milestone-based, ensuring your
-            payments are secure and processed with fairness.
-          </p> */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-[#7A3EF2]">Refund queries</h2>
+            <p className="text-justify">
+              All queries, concerns, or cancellation requests relating to refund are to be done by email to refunds@factorylicence.in. The date and timestamp of the e-mail received to this address will be deemed as the time of the intimation of refund. For easier processing we suggest clients to provide their order number, registered e-mail address, payment details and a brief reason with regards to the cancellation.
+            </p>
+          </div>
         </section>
       </div>
     </div>
   );
-};
+}
 
-export default RefundCancellation;
+export default function Page() {
+  return (
+    <Suspense fallback={<RefundCancellationFallback />}>
+      <RefundCmsContent />
+    </Suspense>
+  );
+}
+
+async function RefundCmsContent() {
+  const cmsPage = await getFactoryCmsStaticPageFresh("refund-cancellation");
+
+  if (cmsPage) {
+    return (
+      <>
+        <FactoryCmsJsonLd page={cmsPage} />
+        <FactoryCmsStaticPage page={cmsPage} fallbackTitle="Refund Cancellation" />
+      </>
+    );
+  }
+
+  return <RefundCancellationFallback />;
+}

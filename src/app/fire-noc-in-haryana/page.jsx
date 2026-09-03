@@ -1,10 +1,15 @@
 // app/factory-licence-in-delhi/page.jsx
 
 import FireNOCHaryanaPage from "@/components/pages/FireNOCHaryanaPage";
-import FactoryCmsDomSync from "@/components/cms/FactoryCmsDomSync";
-import { getFactoryCmsLandingPage } from "@/lib/cms";
+import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
 
-export const metadata = {
+const LANDING_SLUG = "fire-noc-in-haryana";
+
+// ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
+export const revalidate = 300;
+
+const fallbackMetadata = {
   title: "Fire NOC in Haryana, Apply & Renew Fire NOC Online in Haryana - Factorylicence",
   description:
     "Fire NOC in Haryana - Apply for Fire NOC in Haryana online, download Fire NOC certificate, and manage Fire NOC renewal in Haryana through a simple and secure online process.",
@@ -35,12 +40,19 @@ export const metadata = {
   },
 };
 
+export async function generateMetadata() {
+  return buildLandingPageMetadata(LANDING_SLUG, fallbackMetadata);
+}
+
 export default async function Page() {
-  const cmsPage = await getFactoryCmsLandingPage("fire-noc-in-haryana");
+  // Server-rendered so the CMS body ships in the initial HTML — avoids the
+  // hardcoded-then-CMS-content flash that the old client-only DOM sync caused.
+  const page = await getFactoryCmsLandingPage(LANDING_SLUG);
+
   return (
     <>
-      <FireNOCHaryanaPage />
-      <FactoryCmsDomSync page={cmsPage} />
+      <FireNOCHaryanaPage page={page} />
+      <CmsLandingBoundary slug={LANDING_SLUG} />
     </>
   );
 }

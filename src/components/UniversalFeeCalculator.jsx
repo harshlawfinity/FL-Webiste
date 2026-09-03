@@ -57,7 +57,7 @@ const UniversalNocFeeCalculator = () => {
   return (
     <div className="max-w-5xl mx-auto p-8 my- bg-white rounded-3xl shadow">
       <h2 className="md:text-3xl text-2xl font-bold text-purple-600 text-center mb-10">
-        Pollution NOC Fee Calculator
+      Online Factory Licence Fee Calculator
       </h2>
 
       {/* State Selector */}

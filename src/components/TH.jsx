@@ -49,7 +49,7 @@ const workerHeaders = [
   ];
 export default function ResponsiveFeeTable() {
   return (
-    <div className="overflow-x-auto w-full">
+    <div className="cms-table-scroll w-full">
       <table className="min-w-[1000px] border-collapse w-full text-sm text-left border border-gray-300">
         <thead className="bg-gray-100 text-gray-700 font-medium">
           <tr>
