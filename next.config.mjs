@@ -139,9 +139,16 @@ const additionalBlogRedirects = [
 const nextConfig = {
   //      output: "export",
   //   trailingSlash: true,
-  // SEO tools inspect the initial HTML source; keep CMS metadata tags in <head>
-  // instead of streaming them after </head>.
-  htmlLimitedBots: /.*/,
+  // Non-JS crawlers (SEO audit tools) need blocking metadata so <title>/canonical/
+  // robots land in <head> on the raw HTML instead of Next's streamed-then-relocated
+  // tags. Next already blocks streaming by default for Googlebot, Bingbot, social
+  // preview bots and Lighthouse (see next/dist/shared/lib/router/utils/html-bots) —
+  // this only *adds* generic SEO crawlers (e.g. Screaming Frog) that aren't in that
+  // default list. Matching everything here (e.g. `/.*/`) would also block streaming
+  // for real mobile visitors, forcing every request to wait on the CMS fetch before
+  // any HTML is sent — directly hurting TTFB/LCP, so keep this scoped to bots only.
+  htmlLimitedBots:
+    /[\w-]+-Google|Google-[\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight|Screaming Frog|AhrefsBot|SemrushBot|MJ12bot|DotBot/i,
   images: {
     unoptimized: true,
   },

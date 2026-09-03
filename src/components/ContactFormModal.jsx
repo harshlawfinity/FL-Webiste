@@ -29,7 +29,7 @@ export default function ContactFormModal({ isOpen, onClose, title, description, 
                         <div className="py-10 text-center">Loading form...</div>
                     }
                 >
-                    <ContactForm title={title} description={description} serviceName={serviceName} />
+                    <ContactForm title={title} description={description} serviceName={serviceName} onClose={onClose} />
                 </Suspense>
             </div>
         </div>

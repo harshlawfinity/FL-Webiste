@@ -1,0 +1,90 @@
+[00:00:11.536] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:12.364] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/static/development/_buildManifest.js.tmp.t1vcgo4cqm'
+[00:00:15.413] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:15.615] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:15.636] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:15.680] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:15.710] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:15.724] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:15.756] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:15.770] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:37.560] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:37.633] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:37.648] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:37.676] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:37.714] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:45.365] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:45.423] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:45.445] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:45.489] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:45.502] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:57.926] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:58.019] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:58.036] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:00:58.078] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:00:58.102] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:03:51.451] Server  ERROR    ⨯ Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:03:51.572] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:03:51.646] Server  ERROR   Error: Cannot find module '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/server/middleware-manifest.json'
+Require stack:
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/dev/next-dev-server.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/next.js
+- /Users/lawfinity/Dev/FL-Webiste/node_modules/next/dist/server/lib/start-server.js
+[00:03:51.690] Server  ERROR    ⨯ Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'
+[00:03:51.727] Server  ERROR   Error: ENOENT: no such file or directory, open '/Users/lawfinity/Dev/FL-Webiste/.next-seoverify/dev/routes-manifest.json'

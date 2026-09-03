@@ -56,8 +56,12 @@ const BULLET_BODY_SECTION_KEYS = new Set(["penalties", "benefits"]);
 // Exported so CmsDynamicLandingPage can apply identical CMS rich-text styling
 // when server-rendering a unified `contentBody` (single ordered section, see
 // runSync's isUnifiedBody branch below) instead of the legacy per-section shells.
+// [&_h2]:relative + pl-12/md:pl-16 reserve the decorative heading icon's
+// footprint (ensureHeadingIcon below inserts it absolutely-positioned) from
+// the very first server-rendered paint — otherwise the icon lands after
+// hydration and reflows heading text, a real CLS hit on every CMS page.
 export const CMS_RICH_TEXT_CLASS =
-  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 text-sm md:text-base leading-relaxed space-y-4 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:text-left md:[&_p]:text-justify [&_p]:mb-4 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th_*]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
+  "cms-rich-text max-w-full min-w-0 break-words text-gray-800 text-sm md:text-base leading-relaxed space-y-4 [&_h2]:relative [&_h2]:pl-12 [&_h2]:md:pl-16 [&_h2]:text-2xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:text-[#7A3EF2] [&_h2]:mt-10 [&_h2]:mb-5 [&_h2]:text-left [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold [&_h3]:text-[#7A3EF2] [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:border-l-4 [&_h3]:border-[#7A3EF2] [&_h3]:pl-4 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2 [&_p]:text-left md:[&_p]:text-justify [&_p]:mb-4 [&_a]:text-blue-600 [&_a]:font-semibold [&_a]:underline [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_li_p]:inline [&_li]:text-left md:[&_li]:text-justify [&_strong]:font-bold [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:bg-[#7A3EF2] [&_th]:text-white [&_th_*]:text-white [&_th]:font-semibold [&_th]:border [&_th]:border-[#7A3EF2] [&_th]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:p-3";
 
 function hasInlineFormatting(html = "") {
   return /<(strong|b|em|i|u|s|strike|mark)\b/i.test(String(html));
@@ -1028,11 +1032,13 @@ function createHeadingIcon(heading = "") {
   // width/height attrs stop flex h2 layouts from blowing the SVG up to ~300px on mobile.
   svg.setAttribute("width", "32");
   svg.setAttribute("height", "32");
+  // Absolutely positioned into the [&_h2]:pl-* gutter CMS_RICH_TEXT_CLASS reserves —
+  // inserting/removing it never reflows the heading text, so no post-paint CLS.
   svg.classList.add(
-    "inline-block",
-    "shrink-0",
-    "mr-2",
-    "mt-0.5",
+    "absolute",
+    "left-0",
+    "top-1/2",
+    "-translate-y-1/2",
     "h-10",
     "w-10",
     "md:h-12",
@@ -1051,12 +1057,22 @@ function applyHeadingIconSizing(svg) {
   svg.dataset.cmsHeadingIcon = "true";
   svg.setAttribute("width", "32");
   svg.setAttribute("height", "32");
-  svg.classList.remove("inline", "h-[1em]", "w-[1em]", "align-[-0.125em]");
-  svg.classList.add(
+  svg.classList.remove(
+    "inline",
     "inline-block",
     "shrink-0",
     "mr-2",
     "mt-0.5",
+    "h-[1em]",
+    "w-[1em]",
+    "align-[-0.125em]"
+  );
+  // Same absolute positioning as createHeadingIcon — see comment there.
+  svg.classList.add(
+    "absolute",
+    "left-0",
+    "top-1/2",
+    "-translate-y-1/2",
     "h-10",
     "w-10",
     "md:h-12",

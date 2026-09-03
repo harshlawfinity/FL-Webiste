@@ -8,7 +8,9 @@ import { hasSubmittedLead, markLeadSubmitted } from "@/lib/lead-dedupe";
 import StateSelect from "@/components/StateSelect";
 import DuplicateLeadThankYouModal from "@/components/DuplicateLeadThankYouModal";
 
-const HeroForm = ({ title, description, serviceName }) => {
+// onClose is only passed when this form is rendered inside ContactFormModal —
+// undefined (and safely no-op'd via `onClose?.()`) for the inline hero/sidebar usage.
+const HeroForm = ({ title, description, serviceName, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -84,6 +86,10 @@ const HeroForm = ({ title, description, serviceName }) => {
 
       if (response.ok) {
         markLeadSubmitted(formData.phone, pageSourceValue);
+        // Close the popup immediately on success instead of relying solely on the
+        // /thankyou navigation to unmount it — on mobile the modal was staying open
+        // since ContactFormModal never had a way to be told the submission succeeded.
+        onClose?.();
         router.push("/thankyou");
       } else {
         const err = await response.json();
