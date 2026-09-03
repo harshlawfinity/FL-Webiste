@@ -2,7 +2,9 @@
 
 import FireNOCUPPage from "@/components/pages/FireNOCUPPage";
 import { CmsLandingBoundary } from "@/components/cms/FactoryCmsJsonLd";
-import { buildLandingPageMetadata } from "@/lib/cms";
+import { buildLandingPageMetadata, getFactoryCmsLandingPage } from "@/lib/cms";
+
+const LANDING_SLUG = "fire-noc-in-uttar-pradesh";
 
 // ISR: cache rendered page for 5 minutes instead of blocking on CMS every request.
 export const revalidate = 300;
@@ -39,14 +41,18 @@ const fallbackMetadata = {
 };
 
 export async function generateMetadata() {
-  return buildLandingPageMetadata("fire-noc-in-uttar-pradesh", fallbackMetadata);
+  return buildLandingPageMetadata(LANDING_SLUG, fallbackMetadata);
 }
 
-export default function Page() {
+export default async function Page() {
+  // Server-rendered so the CMS body ships in the initial HTML — avoids the
+  // hardcoded-then-CMS-content flash that the old client-only DOM sync caused.
+  const page = await getFactoryCmsLandingPage(LANDING_SLUG);
+
   return (
     <>
-      <FireNOCUPPage />
-      <CmsLandingBoundary slug="fire-noc-in-uttar-pradesh" />
+      <FireNOCUPPage page={page} />
+      <CmsLandingBoundary slug={LANDING_SLUG} />
     </>
   );
 }

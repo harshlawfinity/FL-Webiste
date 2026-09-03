@@ -547,14 +547,28 @@ function upsertMeta(attr, key, value) {
   el.setAttribute("content", value);
 }
 
+function firstNonEmpty(...values) {
+  return values.find((value) => typeof value === "string" ? value.trim() : value);
+}
+
+function isTruthyCmsFlag(value) {
+  if (typeof value === "string") return ["true", "1", "yes"].includes(value.toLowerCase());
+  return value === true || value === 1;
+}
+
+function isFalseyCmsFlag(value) {
+  if (typeof value === "string") return ["false", "0", "no"].includes(value.toLowerCase());
+  return value === false || value === 0;
+}
+
 // Push fresh CRM seo fields to <head> when server metadata is still ISR-cached.
 function syncDocumentSeo(page) {
   if (!page) return;
   const seo = page.seo || {};
-  const title = seo.title || page.title;
+  const title = firstNonEmpty(seo.title, seo.metaTitle, page.metaTitle, page.title);
   if (title) document.title = title;
 
-  upsertMeta("name", "description", seo.description);
+  upsertMeta("name", "description", firstNonEmpty(seo.description, seo.metaDescription, page.metaDescription));
 
   const keywords = Array.isArray(seo.keywords)
     ? seo.keywords.filter(Boolean).join(", ")
@@ -563,16 +577,33 @@ function syncDocumentSeo(page) {
 
   upsertMeta("property", "og:title", seo.ogTitle || seo.title || page.title);
   upsertMeta("property", "og:description", seo.ogDescription || seo.description);
-  if (seo.canonicalUrl) upsertMeta("property", "og:url", seo.canonicalUrl);
+  const canonicalUrl = firstNonEmpty(seo.canonicalUrl, seo.canonical, page.canonicalUrl, page.canonical);
+  if (canonicalUrl) upsertMeta("property", "og:url", canonicalUrl);
 
-  if (seo.canonicalUrl) {
+  const robots = seo.robots;
+  const robotsText = typeof robots === "string"
+    ? robots.toLowerCase()
+    : String(seo.robotsTag || seo.metaRobots || "").toLowerCase();
+  const noIndex =
+    isTruthyCmsFlag(seo.noIndex) ||
+    isTruthyCmsFlag(robots?.noIndex) ||
+    isFalseyCmsFlag(robots?.index) ||
+    robotsText.includes("noindex");
+  const noFollow =
+    isTruthyCmsFlag(seo.noFollow) ||
+    isTruthyCmsFlag(robots?.noFollow) ||
+    isFalseyCmsFlag(robots?.follow) ||
+    robotsText.includes("nofollow");
+  upsertMeta("name", "robots", `${noIndex ? "noindex" : "index"}, ${noFollow ? "nofollow" : "follow"}`);
+
+  if (canonicalUrl) {
     let link = document.querySelector('link[rel="canonical"]');
     if (!link) {
       link = document.createElement("link");
       link.rel = "canonical";
       document.head.appendChild(link);
     }
-    link.href = seo.canonicalUrl;
+    link.href = canonicalUrl;
   }
 }
 

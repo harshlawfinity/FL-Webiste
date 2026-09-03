@@ -30,18 +30,38 @@ import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorHaryana from "@/components/PollutionFeeCalculatorHaryana";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function PollutionNocLicenceHaryanaPage() {
+export default function PollutionNocLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Pollution NOC Registration in Haryana" },
-  ];
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Pollution NOC Registration in Haryana" },
+      ];
   const heroBackgroundAlts = [
     "Factory Pollution Certificate in Haryana",
     "Pollution Certificate Apply Online in Haryana",
     "Pollution Noc in Haryana",
   ];
+
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Pollution NOC & Waste Management Authorization Consultant in Haryana";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure safety compliance and secure Pollution Department clearance for your building or business in Haryana with expert Pollution NOC assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
@@ -56,13 +76,12 @@ export default function PollutionNocLicenceHaryanaPage() {
           <div className="md:w-1/2">
             <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC & Waste Management Authorization Consultant in Haryana
+              {heroTitle}
             </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure safety compliance and secure Pollution Department clearance
-              for your building or business in Haryana with expert Pollution NOC
-              assistance.
-            </p>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -85,6 +104,14 @@ export default function PollutionNocLicenceHaryanaPage() {
             <PollutionFeeCalculatorHaryana />
           </Section>
 
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -638,6 +665,8 @@ export default function PollutionNocLicenceHaryanaPage() {
               Factorylicence.in provides various services like guidance in obtaining a factory license, fire NOC, and pollution NOC. With our professional assistance, Document preparation, fees, and security processing and renewal process become easy. Contact us and get the benefits of our expert consultation during HSPCB inspections for smooth verification.
             </p>
           </Section>
+          </>
+          )}
         </div>
 
         {/* Sidebar Quick Links */}

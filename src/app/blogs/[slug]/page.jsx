@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import BlogsClientUI from '@/components/BlogsClientUI';
-import { getBlogBySlug } from '@/lib/blogs';
+import { getBlogBySlug, getBlogRobots } from '@/lib/blogs';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -54,21 +54,23 @@ export async function generateMetadata({ params }) {
 
   // URLs ko rewrite karna metadata ke liye
   const rewrittenBlog = rewriteImageUrls(blog);
+  // Self-referencing canonical when CRM hasn't set one — every page should emit
+  // a canonical tag (resolved to an absolute URL via the root layout's metadataBase).
+  const canonical = rewrittenBlog.canonicalUrl || `/blogs/${resolvedParams.slug}`;
 
   return {
     title: rewrittenBlog.metaTitle || rewrittenBlog.title || 'Blog',
     description: rewrittenBlog.metaDescription || '',
-    alternates: rewrittenBlog.canonicalUrl ? { canonical: rewrittenBlog.canonicalUrl } : undefined,
+    alternates: { canonical },
     openGraph: {
       title: rewrittenBlog.metaTitle || rewrittenBlog.title || 'Blog',
       description: rewrittenBlog.metaDescription || '',
-      url: rewrittenBlog.canonicalUrl || undefined,
+      url: canonical,
       images: rewrittenBlog.image ? [{ url: rewrittenBlog.image }] : undefined,
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    // CRM's noIndex/noFollow must reach the live <meta name="robots"> tag —
+    // previously hardcoded to index/follow regardless of what CRM set.
+    robots: getBlogRobots(rewrittenBlog),
   };
 }
 

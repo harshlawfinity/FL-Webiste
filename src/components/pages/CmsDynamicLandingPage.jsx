@@ -9,6 +9,7 @@ import HeroVideoSection from "@/components/HeroVideoSection";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml } from "@/lib/cms";
 import { getCmsServiceLeadFormCopy, getCmsServiceFaqHeading, getCmsServiceHeroSlides } from "@/lib/leadFormCopy";
 
 // Empty section shells for FactoryCmsDomSync — IDs must match SECTION_IDS in FactoryCmsDomSync.jsx.
@@ -22,49 +23,6 @@ const STANDARD_SECTIONS = [
   { id: "timelines", title: "Timelines" },
   { id: "penalties", title: "Penalties" },
 ];
-
-function promoteCmsTableHeaderCells(html = "") {
-  return String(html || "").replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
-    if (/<th\b/i.test(table)) return table;
-    return table.replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/i, (firstRow) =>
-      firstRow.replace(/<\/?td\b/gi, (tag) => tag.replace(/td/i, "th"))
-    );
-  });
-}
-
-function stripCmsHtml(value = "") {
-  return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
-}
-
-function stripCmsHighlightArtifacts(html = "") {
-  return String(html || "")
-    .replace(/<\/?mark\b[^>]*>/gi, "")
-    .replace(/\sstyle=(["'])((?:(?!\1).)*background-color\s*:[^"']*)((?:(?!\1).)*)\1/gi, (_match, quote, before, after) => {
-      const nextStyle = `${before}${after}`
-        .replace(/background-color\s*:\s*[^;]+;?/gi, "")
-        .replace(/;;+/g, ";")
-        .trim();
-      return nextStyle ? ` style=${quote}${nextStyle}${quote}` : "";
-    });
-}
-
-function normalizeCmsBodyHtml(html = "") {
-  let paragraphFingerprints = new Set();
-  return promoteCmsTableHeaderCells(stripCmsHighlightArtifacts(html)).replace(
-    /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
-    (node) => {
-      if (/^<h[1-6]\b/i.test(node)) {
-        paragraphFingerprints = new Set();
-        return node;
-      }
-
-      const fingerprint = stripCmsHtml(node);
-      if (fingerprint && paragraphFingerprints.has(fingerprint)) return "";
-      if (fingerprint) paragraphFingerprints.add(fingerprint);
-      return node;
-    }
-  );
-}
 
 function SectionShell({ id, title }) {
   return (
@@ -129,7 +87,7 @@ export default function CmsDynamicLandingPage({ page }) {
 
       <HeroVideoSection />
 
-      <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
+      <section className="max-w-7xl mx-auto py-6 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
         <div className="md:col-span-3 space-y-14">
           {content.contentBody ? (
             // Single merged "body para" — same section order the SEO person

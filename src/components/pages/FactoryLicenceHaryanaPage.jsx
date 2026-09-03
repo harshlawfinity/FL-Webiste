@@ -32,18 +32,38 @@ import FaqSection from "@/components/FaqSectionHaryana";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function FactoryLicenceHaryanaPage() {
+export default function FactoryLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Factory Licence Registration & Renewal Services in Haryana" },
-  ];
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Factory Licence Registration & Renewal Services in Haryana" },
+      ];
   const heroBackgroundAlts = [
     "Factory Act in Haryana",
     "Haryana Factory Licence Verification",
     "Haryana Factory License",
   ];
+
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Factory License in Haryana – Apply Online & Check Fees";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure compliance and legal security for your manufacturing unit in Haryana with our expert licensing assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
@@ -62,12 +82,12 @@ export default function FactoryLicenceHaryanaPage() {
 
             <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Factory License in Haryana – Apply Online & Check Fees
+              {heroTitle}
             </h1>
-            <p className="text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure compliance and legal security for your manufacturing unit
-              in Haryana with our expert licensing assistance.
-            </p>
+            <p
+              className="text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -91,6 +111,14 @@ export default function FactoryLicenceHaryanaPage() {
           <Section id="calc">
             <FactoryLicenseCalculatorHaryana />
           </Section>
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -310,6 +338,8 @@ export default function FactoryLicenceHaryanaPage() {
               </>
             }
           />
+          </>
+          )}
         </div>
 
         {/* Right Side Navigation */}

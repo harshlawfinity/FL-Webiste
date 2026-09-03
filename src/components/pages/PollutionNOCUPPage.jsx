@@ -30,18 +30,38 @@ import ContactForm from "@/components/ContactForm";
 import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function PollutionNocLicenceHaryanaPage() {
+export default function PollutionNocLicenceHaryanaPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Pollution NOC Registration in uttar pradesh" },
-  ];
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Pollution NOC Registration in uttar pradesh" },
+      ];
   const heroBackgroundAlts = [
     "Pollution Control Board License in Up",
     "Up Pollution Control Board Online Application",
     "Pollution Noc in Uttar Pradesh",
   ];
+
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Pollution NOC & Waste Management Authorization Consultant in Uttar Pradesh";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure safety compliance and secure Pollution Department clearance for your building or business in Uttar Pradesh with expert Pollution NOC assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
@@ -56,13 +76,12 @@ export default function PollutionNocLicenceHaryanaPage() {
           <div className="md:w-1/2">
             <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-              Pollution NOC & Waste Management Authorization Consultant in Uttar Pradesh
+              {heroTitle}
             </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure safety compliance and secure Pollution Department clearance
-              for your building or business in Uttar Pradesh with expert
-              Pollution NOC assistance.
-            </p>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -85,6 +104,14 @@ export default function PollutionNocLicenceHaryanaPage() {
             <PollutionFeeCalculatorUttarPradesh />
 
           </Section>
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -710,6 +737,8 @@ export default function PollutionNocLicenceHaryanaPage() {
               Factorylicence.in is a trusted law consulting firm that helps businesses and industries obtain the Pollution Noc certificate in Uttar Pradesh, Delhi and Haryana. With expert guidance and end-to-end application support, our team ensures the process is smooth, compliant, and hassle-free so your operations can run without interruptions.
             </p>
           </Section>
+          </>
+          )}
 
 
         </div>

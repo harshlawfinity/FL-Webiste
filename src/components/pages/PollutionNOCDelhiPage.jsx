@@ -30,18 +30,38 @@ import ContactFormBlogs from "@/components/ContactFormBlogs";
 import HeroVideoSection from "@/components/HeroVideoSection";
 import PollutionFeeCalculatorDelhi from "@/components/PollutionFeeCalculatorDelhi";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function PollutionNocLicenceDelhiPage() {
+export default function PollutionNocLicenceDelhiPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Pollution NOC Registration in Delhi" },
-  ];
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Pollution NOC Registration in Delhi" },
+      ];
   const heroBackgroundAlts = [
     "Pollution Noc For Factory in Delhi",
     "Factory Pollution Certificate Apply Online in Delhi",
     "Pollution Certificate For Factory in Delhi",
   ];
+
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Pollution NOC & Waste Management Authorization Consultant in Delhi";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure safety compliance and secure Pollution Department clearance for your building or business in Delhi with expert Pollution NOC assistance.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
@@ -56,12 +76,12 @@ export default function PollutionNocLicenceDelhiPage() {
           <div className="md:w-1/2">
             <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold md:mb-6 mb-2">
-Pollution NOC & Waste Management Authorization Consultant in Delhi            </h1>
-            <p className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50">
-              Ensure safety compliance and secure Pollution Department clearance
-              for your building or business in Delhi with expert Pollution NOC
-              assistance.
-            </p>
+              {heroTitle}
+            </h1>
+            <p
+              className="md:text-lg md:mb-6 mb-4 text-justify text-gray-50"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -82,6 +102,14 @@ Pollution NOC & Waste Management Authorization Consultant in Delhi            </
           <Section id="calculator" className="mb-10">
             <PollutionFeeCalculatorDelhi />
           </Section>
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -580,6 +608,8 @@ e.g., ₹500 for CTE ( &lt;₹5 lakh investment) up to ₹1,00,000 for CTE, and 
               In this case of getting pollution NOC in Delhi, our professional consultant team will guide you in drafting the application for NOC, arranging and providing the required documents. Applying for a Pollution NOC will become easy with our end-to-end assistance.
             </p>
           </Section>
+          </>
+          )}
         </div>
 
         <aside className="hidden md:block">

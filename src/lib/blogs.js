@@ -51,6 +51,17 @@ export function getBlogSchema(blog) {
   return null;
 }
 
+// <meta name="robots"> directive for a single blog page — honors the CRM's
+// noIndex/noFollow flags (or a raw robots string), mirroring the same check
+// isSearchablePublishedBlog below already uses to filter the blog list/related posts.
+export function getBlogRobots(blog) {
+  const robotsText = String(blog?.robots || "").toLowerCase();
+  return {
+    index: !(blog?.noIndex || robotsText.includes("noindex")),
+    follow: !(blog?.noFollow || robotsText.includes("nofollow")),
+  };
+}
+
 export const fetchPublishedBlogs = cache(async () => {
   const res = await fetch(`${API_BASE}/api/public/published-fl?limit=1000`, {
     cache: "no-store",

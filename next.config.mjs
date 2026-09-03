@@ -139,6 +139,9 @@ const additionalBlogRedirects = [
 const nextConfig = {
   //      output: "export",
   //   trailingSlash: true,
+  // SEO tools inspect the initial HTML source; keep CMS metadata tags in <head>
+  // instead of streaming them after </head>.
+  htmlLimitedBots: /.*/,
   images: {
     unoptimized: true,
   },

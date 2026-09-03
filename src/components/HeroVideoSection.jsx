@@ -7,7 +7,7 @@ import HeroVideoPlayer from "./HeroVideoPlayer";
 
 export default function HeroVideoSection() {
   return (
-    <section className="w-full py-12 md:py-16 bg-white">
+    <section className="w-full py-6 md:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <figure className="w-full max-w-4xl mx-auto">
           <HeroVideoPlayer

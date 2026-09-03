@@ -73,24 +73,70 @@ function normalizeCmsKeywords(keywords) {
   return keywords;
 }
 
+function firstNonEmpty(...values) {
+  return values.find((value) => typeof value === "string" ? value.trim() : value);
+}
+
+function isTruthyCmsFlag(value) {
+  if (typeof value === "string") return ["true", "1", "yes"].includes(value.toLowerCase());
+  return value === true || value === 1;
+}
+
+function isFalseyCmsFlag(value) {
+  if (typeof value === "string") return ["false", "0", "no"].includes(value.toLowerCase());
+  return value === false || value === 0;
+}
+
+function parseCmsRobots(seo = {}, fallbackRobots = {}) {
+  const robots = seo.robots;
+  const robotsText = typeof robots === "string"
+    ? robots.toLowerCase()
+    : String(seo.robotsTag || seo.metaRobots || "").toLowerCase();
+  const noIndex =
+    isTruthyCmsFlag(seo.noIndex) ||
+    isTruthyCmsFlag(robots?.noIndex) ||
+    isFalseyCmsFlag(robots?.index) ||
+    robotsText.includes("noindex");
+  const noFollow =
+    isTruthyCmsFlag(seo.noFollow) ||
+    isTruthyCmsFlag(robots?.noFollow) ||
+    isFalseyCmsFlag(robots?.follow) ||
+    robotsText.includes("nofollow");
+
+  return {
+    index: noIndex ? false : fallbackRobots.index ?? true,
+    follow: noFollow ? false : fallbackRobots.follow ?? true,
+  };
+}
+
 export function buildCmsMetadata(page, fallback = {}) {
   if (!page) return fallback;
   const seo = page.seo || {};
-  const canonical = seo.canonicalUrl || fallback.alternates?.canonical;
+  const canonical = firstNonEmpty(
+    seo.canonicalUrl,
+    seo.canonical,
+    page.canonicalUrl,
+    page.canonical,
+    fallback.alternates?.canonical
+  );
   const keywords = normalizeCmsKeywords(seo.keywords) || fallback.keywords;
+  const title = firstNonEmpty(seo.title, seo.metaTitle, page.metaTitle, page.title, fallback.title);
+  const description = firstNonEmpty(
+    seo.description,
+    seo.metaDescription,
+    page.metaDescription,
+    fallback.description
+  );
   return {
     ...fallback,
-    title: seo.title || page.title || fallback.title,
-    description: seo.description || fallback.description,
+    title,
+    description,
     keywords,
     openGraph: {
       ...(fallback.openGraph || {}),
-      title: seo.ogTitle || seo.title || page.title || fallback.openGraph?.title,
+      title: firstNonEmpty(seo.ogTitle, seo.title, title, fallback.openGraph?.title),
       description:
-        seo.ogDescription ||
-        seo.description ||
-        fallback.openGraph?.description ||
-        fallback.description,
+        firstNonEmpty(seo.ogDescription, seo.description, description, fallback.openGraph?.description),
       url: canonical || fallback.openGraph?.url,
       images: seo.ogImage
         ? [{ url: seo.ogImage, alt: seo.ogImageAlt || page.title || "" }]
@@ -100,15 +146,12 @@ export function buildCmsMetadata(page, fallback = {}) {
       ...(fallback.alternates || {}),
       canonical,
     },
-    robots: {
-      index: seo.noIndex ? false : fallback.robots?.index ?? true,
-      follow: seo.noFollow ? false : fallback.robots?.follow ?? true,
-    },
+    robots: parseCmsRobots(seo, fallback.robots),
   };
 }
 
 export async function buildLandingPageMetadata(slug, fallback = {}) {
-  const page = await getFactoryCmsLandingPage(slug);
+  const page = await getFactoryCmsLandingPageLive(slug);
   return buildCmsMetadata(page, fallback);
 }
 
@@ -138,6 +181,77 @@ export function getCmsSchema(page) {
     }
     return null;
   }
+}
+
+// CRM rich text sometimes ships <mark> highlights / inline background-color from
+// pasted content — strip those so published pages don't show stray highlighting.
+function stripCmsBodyHighlightArtifacts(html = "") {
+  return String(html || "")
+    .replace(/<\/?mark\b[^>]*>/gi, "")
+    .replace(/\sstyle=(["'])((?:(?!\1).)*background-color\s*:[^"']*)((?:(?!\1).)*)\1/gi, (_match, quote, before, after) => {
+      const nextStyle = `${before}${after}`
+        .replace(/background-color\s*:\s*[^;]+;?/gi, "")
+        .replace(/;;+/g, ";")
+        .trim();
+      return nextStyle ? ` style=${quote}${nextStyle}${quote}` : "";
+    });
+}
+
+// Promote bare <td> header cells to <th> for the CMS's first table row (CRM authors
+// tables without explicit header markup).
+function promoteCmsBodyTableHeaderCells(html = "") {
+  return String(html || "").replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
+    if (/<th\b/i.test(table)) return table;
+    return table.replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/i, (firstRow) =>
+      firstRow.replace(/<\/?td\b/gi, (tag) => tag.replace(/td/i, "th"))
+    );
+  });
+}
+
+function stripCmsBodyTags(value = "") {
+  return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+// CRM sometimes repeats a paragraph across the unified body — drop exact repeats
+// within the same heading section (a new heading resets the dedupe window).
+export function normalizeCmsBodyHtml(html = "") {
+  let paragraphFingerprints = new Set();
+  return promoteCmsBodyTableHeaderCells(stripCmsBodyHighlightArtifacts(html)).replace(
+    /<h[1-6]\b[\s\S]*?<\/h[1-6]>|<p\b[\s\S]*?<\/p>/gi,
+    (node) => {
+      if (/^<h[1-6]\b/i.test(node)) {
+        paragraphFingerprints = new Set();
+        return node;
+      }
+
+      const fingerprint = stripCmsBodyTags(node);
+      if (fingerprint && paragraphFingerprints.has(fingerprint)) return "";
+      if (fingerprint) paragraphFingerprints.add(fingerprint);
+      return node;
+    }
+  );
+}
+
+// CMS breadcrumb trail (content.breadcrumbs / page.breadcrumbs) for server-side
+// rendering — mirrors FactoryCmsDomSync's cmsBreadcrumbs() client-side mapping so
+// the hardcoded BreadcrumbNav items don't flash before the client sync replaces them.
+export function getCmsBreadcrumbs(page) {
+  const crumbs = page?.content?.breadcrumbs || page?.breadcrumbs;
+  if (!Array.isArray(crumbs)) return [];
+
+  const items = crumbs
+    .map((item) => ({
+      label: String(item?.label || item?.text || item?.name || "").replace(/<[^>]*>/g, "").trim(),
+      href: item?.href || item?.link || item?.url || "",
+    }))
+    .filter((item) => item.label);
+
+  // The current page is never a link — matches appendBreadcrumbCrumb's isLast
+  // check in FactoryCmsDomSync and every hardcoded breadcrumbItems array, which
+  // omit href on the last entry.
+  if (items.length) items[items.length - 1] = { label: items[items.length - 1].label };
+
+  return items;
 }
 
 // Dedicated static routes — excluded from the footer marquee (already in footer Services list).

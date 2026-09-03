@@ -27,18 +27,38 @@ import FaqSectionFireDelhi from "@/components/FaqSectionFireDelhi";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import StateFaqCTA from "@/components/StateFaqCTA";
 import Link from "next/link";
+import { CMS_RICH_TEXT_CLASS } from "@/components/cms/FactoryCmsDomSync";
+import { normalizeCmsBodyHtml, getCmsBreadcrumbs } from "@/lib/cms";
 
-export default function FireNocLicenceDelhiPage() {
+export default function FireNocLicenceDelhiPage({ page }) {
   const [showPopup, setShowPopup] = useState(false);
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Fire NOC Registration in Delhi" },
-  ];
+  // CMS breadcrumbs take priority — same source FactoryCmsDomSync uses client-side,
+  // rendered here up front so it doesn't flash from the hardcoded trail on load.
+  const cmsBreadcrumbs = getCmsBreadcrumbs(page);
+  const breadcrumbItems = cmsBreadcrumbs.length
+    ? cmsBreadcrumbs
+    : [
+        { label: "Home", href: "/" },
+        { label: "Fire NOC Registration in Delhi" },
+      ];
   const heroBackgroundAlts = [
     "Fire Certificate Renewal Online in Delhi",
     "Fire Noc For Residential Buildings in Delhi",
     "Fire Noc in Delhi",
   ];
+
+  // CMS-driven hero + body — same fields FactoryCmsDomSync applies client-side.
+  // Rendering them server-side here means the initial HTML already matches what
+  // used to only appear after the client DOM sync ran (no more flash/mismatch).
+  const content = page?.content || {};
+  const hero = content.hero || {};
+  const heroTitle =
+    hero.headline || hero.heading || page?.mainHeading || page?.title ||
+    "Fire NOC Registration in Delhi";
+  const heroSubtitle =
+    hero.subtext || page?.seo?.description ||
+    "Ensure compliance and protect your building or business in Delhi with expert Fire NOC assistance. We help simplify approvals, inspections, and documentation.";
+  const cmsBodyHtml = content.contentBody ? normalizeCmsBodyHtml(content.contentBody) : "";
 
   return (
     <div>
@@ -54,13 +74,12 @@ export default function FireNocLicenceDelhiPage() {
 
             <BreadcrumbNav items={breadcrumbItems} placement="hero" />
             <h1 className="text-4xl md:text-5xl font-semibold mb-4">
-              Fire NOC Registration in Delhi
+              {heroTitle}
             </h1>
-            <p className="text-lg mb-6 text-gray-50 text-justify">
-              Ensure compliance and protect your building or business in Delhi
-              with expert Fire NOC assistance. We help simplify approvals,
-              inspections, and documentation.
-            </p>
+            <p
+              className="text-lg mb-6 text-gray-50 text-justify"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
             <button
               onClick={() => setShowPopup(true)}
               className="bg-white text-[#7A3EF2] font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
@@ -76,8 +95,16 @@ export default function FireNocLicenceDelhiPage() {
       </section>
       <HeroVideoSection />
       {/* Main Content */}
-      <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
+      <section className="max-w-7xl mx-auto py-6 px-4 grid md:grid-cols-4 gap-10 text-gray-800">
         <div className="md:col-span-3 space-y-14">
+          {cmsBodyHtml ? (
+            <div
+              id="cms-unified-body"
+              className={CMS_RICH_TEXT_CLASS}
+              dangerouslySetInnerHTML={{ __html: cmsBodyHtml }}
+            />
+          ) : (
+          <>
           <Section
             id="what-is"
             title={
@@ -388,6 +415,8 @@ export default function FireNocLicenceDelhiPage() {
               Failure to obtain a Fire NOC or non-compliance with fire safety standards may lead to monetary fines, closure notices or disconnection of electricity/water supply by the civic authority. In case of fire incidents, the lack of a Fire NOC may attract criminal liabilities for negligence.
             </p>
           </Section>
+          </>
+          )}
 
         </div>
 

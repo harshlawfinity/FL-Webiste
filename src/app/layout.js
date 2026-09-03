@@ -10,6 +10,8 @@ import { Poppins } from "next/font/google";
 import TrackingScript from "@/components/TrackingScript";
 import { getBlogBySlug, getBlogSchema } from "@/lib/blogs";
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://factorylicence.in").replace(/\/+$/, "");
+
 const poppins = Poppins({
   subsets: ["latin"],
   // 400/600/700 cover body, semibold headings, and bold — drop 500 to save a font file.
@@ -20,6 +22,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Factory Licence Registration & Renewal Online in India | Apply Now",
   description:
     "Apply factory license online in India with expert Factory License Consultant support. Get factory licence registration, renewal online, fees, certificate & process help.",
